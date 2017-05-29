@@ -1,0 +1,2167 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: Rect</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="utils.html">utils</a>.<wbr><a href="utils.geometry2d.html">geometry2d</a>.<wbr></small><span class="symbol-name">Rect</span></h1>
+            <p class="source-link">Source: <a href="utils_utils_2.js.html#source-line-477">utils/<wbr>utils_2.<wbr>js:477</a></p>
+            <div class="symbol-classdesc">
+              <p>a class with four attributes : <code><a href="utils.geometry2d.Rect.html#left">left</a></code>,
+                <!--
+--><code><a href="utils.geometry2d.Rect.html#top">top</a></code>,
+                <!--
+--><code><a href="utils.geometry2d.Rect.html#right">right</a></code> and
+                <!--
+--><code><a href="utils.geometry2d.Rect.html#bottom">bottom</a></code>, used to represent a non-rotated rectangle.</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Rect.html#area">area</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#bottom">bottom</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#center">center</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#center">center</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#glPointsNumber">glPointsNumber</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Rect.html#glTrianglesNumber">glTrianglesNumber</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#height">height</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#left">left</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#perimeter">perimeter</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#ratio">ratio</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Rect.html#right">right</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#top">top</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#width">width</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Rect.html#.createFromCenterWidthHeight">createFromCenterWidthHeight(center, width, height)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#.createFromPoint">createFromPoint(p)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#.createFromPoints">createFromPoints(array)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#.createFromXY">createFromXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#.getIntersection">getIntersection(rects)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#.getUnion">getUnion(rects)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#above">above(p)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#aboveRect">aboveRect(r)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#aboveY">aboveY(y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#addMargin">addMargin(margin)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#addMargins">addMargins(marginLeft, marginTop, marginRight, marginBottom)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#addMarginsXY">addMarginsXY(marginX, marginY)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#below">below(p)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Rect.html#belowRect">belowRect(r)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#belowY">belowY(y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#clone">clone()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#contains">contains(p)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#containsRect">containsRect(rect)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#containsXY">containsXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#draw">draw(context[, fill][, stroke])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#getPercentPoint">getPercentPoint(percent)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#getShape">getShape()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#glAddTriangles">glAddTriangles(pointsArray, indicesArray, pOs, iOs)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#move">move(delta)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#moveXY">moveXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#onLeftOf">onLeftOf(p)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Rect.html#onLeftOfRect">onLeftOfRect(r)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#onLeftOfX">onLeftOfX(x)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#onRightOf">onRightOf(p)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#onRightOfRect">onRightOfRect(r)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#onRightOfX">onRightOfX(x)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#overlap">overlap(rect)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#pushPath">pushPath(context)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#scale">scale(scaleX, scaleY)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#set">set(left, top, right, bottom)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#setCenter">setCenter(center)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#setCenterXY">setCenterXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#setRect">setRect(rect)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Rect.html#toString">toString()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="Rect">new&nbsp;<span class="symbol-name">Rect</span><span class="signature"><span class="signature-params">(left, top, right, bottom)</span></span>
+            </h2>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>left</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>top</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>right</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>bottom</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="area"><span class="symbol-name">area</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>area (= <a href="utils.geometry2d.Rect.html#width">width</a> *
+                <!--
+--><a href="utils.geometry2d.Rect.html#height">height</a>) of the instance.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="bottom"><span class="symbol-name">bottom</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="center"><span class="symbol-name">center</span><small class="property-type">
+            &nbsp;<a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></small></h3>
+              <p>center of the instance. when modified, keeps the dimensions.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="center"><span class="symbol-name">center</span></h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>center</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="glPointsNumber"><span class="symbol-name">glPointsNumber</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>number of points used to draw this shape.</p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="glTrianglesNumber"><span class="symbol-name">glTrianglesNumber</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>numbers of triangles used to draw this shape</p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="height"><span class="symbol-name">height</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>height (= bottom - top) of the instance.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="left"><span class="symbol-name">left</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="perimeter"><span class="symbol-name">perimeter</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>perimeter (= <a href="utils.geometry2d.Rect.html#width">width</a><em>2 + <!--
+--><a href="utils.geometry2d.Rect.html#height">height</a></em>2) of the instance.</p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="ratio"><span class="symbol-name">ratio</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>dimensions ratio(= <a href="utils.geometry2d.Rect.html#width">width</a> /
+                <!--
+--><a href="utils.geometry2d.Rect.html#height">height</a>) of the instance.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="right"><span class="symbol-name">right</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="top"><span class="symbol-name">top</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="width"><span class="symbol-name">width</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>width (= right - left) of the instance.</p>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".createFromCenterWidthHeight"><span class="symbol-name">createFromCenterWidthHeight</span><span class="signature"><span class="signature-params">(center, width, height)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>creates a <a href="utils.geometry2d.Rect.html">Rect</a> with the specified center, width and height.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>center</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>width</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>height</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".createFromPoint"><span class="symbol-name">createFromPoint</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>create a <a href="utils.geometry2d.Rect.html">Rect</a> where the <code>left</code> and <code>right</code>
+                <!--
+-->components are equal to the x coordinate
+                <!--
+-->and the <code>top</code> and <code>bottom</code> components to the y coordinate of the given point.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the point to build the rectangle around</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Rect#createFromXY</dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;the newly created <a href="utils.geometry2d.Rect.html">Rect</a></p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".createFromPoints"><span class="symbol-name">createFromPoints</span><span class="signature"><span class="signature-params">(array)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>create a <a href="utils.geometry2d.Rect.html">Rect</a> where :
+                <code>left = min(array[].x)</code>
+                <code>top = min(array[].y)</code>
+                <code>right = max(array[].x)</code>
+                <code>bottom = max(array[].y)</code>. If the given array is empty, this function returns null.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>array</p>
+                      </td>
+                      <td>
+                        <p>Array of <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>a points array</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;the newly created <a href="utils.geometry2d.Rect.html">Rect</a>, or null if no points were given</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".createFromXY"><span class="symbol-name">createFromXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>create a <a href="utils.geometry2d.Rect.html">Rect</a> where the <code>left</code> and <code>right</code>
+                <!--
+-->components are equal to the x parameter
+                <!--
+-->and the <code>top</code> and <code>bottom</code> components to the y parameter.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the value of the <code>left</code> and <code>right</code> components of the new
+                          <a href="utils.geometry2d.Rect.html">Rect</a>.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the value of the <code>top</code> and <code>bottom</code> components of the new
+                          <a href="utils.geometry2d.Rect.html">Rect</a>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;the newly created <a href="utils.geometry2d.Rect.html">Rect</a></p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".getIntersection"><span class="symbol-name">getIntersection</span><span class="signature"><span class="signature-params">(rects)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>returns the intersection of the given rectangles, i.e. the rectangle formed by the maximum left and top, and the minimum right and bottom of all rects. if the max left(resp. top) happen to be higher than the minimum right(resp. bottom),
+                or if the given array is null, this function returns <code>null</code>.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rects</p>
+                      </td>
+                      <td>
+                        <p>Array of <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>nullable <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;intersection of the rects, or null.</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".getUnion"><span class="symbol-name">getUnion</span><span class="signature"><span class="signature-params">(rects)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>returns the union of the given rectangles, i.e. the rectangle formed by the minimum left and top, and the maximum right and bottom of all rects. If the given array is empty, returns <code>null</code>.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rects</p>
+                      </td>
+                      <td>
+                        <p>Array of <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>nullable <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;union of the rectangles, or null if no rectangles were passed as arguments</p>
+                </dd>
+              </dl>
+              <h3 id="above"><span class="symbol-name">above</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#aboveY">utils.geometry2d.Rect#aboveY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveRect">utils.geometry2d.Rect#aboveRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOf">utils.geometry2d.Rect#onLeftOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOf">utils.geometry2d.Rect#onRightOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#below">utils.geometry2d.Rect#below</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>bottom &lt; y</code></p>
+                </dd>
+              </dl>
+              <h3 id="aboveRect"><span class="symbol-name">aboveRect</span><span class="signature"><span class="signature-params">(r)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>r</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#aboveY">utils.geometry2d.Rect#aboveY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#above">utils.geometry2d.Rect#above</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfRect">utils.geometry2d.Rect#onLeftOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfRect">utils.geometry2d.Rect#onRightOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowRect">utils.geometry2d.Rect#belowRect</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>bottom &lt; r.top</code></p>
+                </dd>
+              </dl>
+              <h3 id="aboveY"><span class="symbol-name">aboveY</span><span class="signature"><span class="signature-params">(y)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#aboveRect">utils.geometry2d.Rect#aboveRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#above">utils.geometry2d.Rect#above</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfX">utils.geometry2d.Rect#onLeftOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfX">utils.geometry2d.Rect#onRightOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowY">utils.geometry2d.Rect#belowY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>bottom &lt; y</code></p>
+                </dd>
+              </dl>
+              <h3 id="addMargin"><span class="symbol-name">addMargin</span><span class="signature"><span class="signature-params">(margin)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>makes the instance bigger by adding the margin to it's dimensions. keeps the center at the same position.
+                <code>left -= margin; right += margin
+top -= margin; bottom += margin</code></p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>margin</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#addMarginsXY">utils.geometry2d.Rect#addMarginsXY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#addMargins">utils.geometry2d.Rect#addMargins</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="addMargins"><span class="symbol-name">addMargins</span><span class="signature"><span class="signature-params">(marginLeft, marginTop, marginRight, marginBottom)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>makes the instance bigger by adding the margins to it's dimensions. keeps the center at the same position.
+                <code>left -= marginLeft; right += marginRight
+top -= marginTop; bottom += marginBottom</code></p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>marginLeft</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginTop</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginRight</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginBottom</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#addMargin">utils.geometry2d.Rect#addMargin</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#addMarginsXY">utils.geometry2d.Rect#addMarginsXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="addMarginsXY"><span class="symbol-name">addMarginsXY</span><span class="signature"><span class="signature-params">(marginX, marginY)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>makes the instance bigger by adding the margins to it's dimensions. keeps the center at the same position.
+                <code>left -= marginX; right += marginX
+top -= marginY; bottom += marginY</code></p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>marginX</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginY</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#addMargin">utils.geometry2d.Rect#addMargin</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#addMargins">utils.geometry2d.Rect#addMargins</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="below"><span class="symbol-name">below</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#belowY">utils.geometry2d.Rect#belowY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowRect">utils.geometry2d.Rect#belowRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOf">utils.geometry2d.Rect#onLeftOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOf">utils.geometry2d.Rect#onRightOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#above">utils.geometry2d.Rect#above</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>top &gt; y</code></p>
+                </dd>
+              </dl>
+              <h3 id="belowRect"><span class="symbol-name">belowRect</span><span class="signature"><span class="signature-params">(r)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>r</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#belowY">utils.geometry2d.Rect#belowY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#below">utils.geometry2d.Rect#below</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfRect">utils.geometry2d.Rect#onLeftOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfRect">utils.geometry2d.Rect#onRightOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveRect">utils.geometry2d.Rect#aboveRect</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>top &gt; r.bottom</code></p>
+                </dd>
+              </dl>
+              <h3 id="belowY"><span class="symbol-name">belowY</span><span class="signature"><span class="signature-params">(y)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#belowRect">utils.geometry2d.Rect#belowRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#below">utils.geometry2d.Rect#below</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfX">utils.geometry2d.Rect#onLeftOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfX">utils.geometry2d.Rect#onRightOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveY">utils.geometry2d.Rect#aboveY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>top &gt; y</code></p>
+                </dd>
+              </dl>
+              <h3 id="clone"><span class="symbol-name">clone</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>creates and returns a copy of the instance</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="contains"><span class="symbol-name">contains</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>a point</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#containsXY">utils.geometry2d.Rect#containsXY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#containsRect">utils.geometry2d.Rect#containsRect</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if the point (p) is located inside the rectangle.</p>
+                </dd>
+              </dl>
+              <h3 id="containsRect"><span class="symbol-name">containsRect</span><span class="signature"><span class="signature-params">(rect)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rect</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#containsXY">utils.geometry2d.Rect#containsXY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#contains">utils.geometry2d.Rect#contains</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if the given rect is completely inside the instance rect.</p>
+                </dd>
+              </dl>
+              <h3 id="containsXY"><span class="symbol-name">containsXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>x coordinate of the point</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>y coordinate of the point</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#containsRect">utils.geometry2d.Rect#containsRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#contains">utils.geometry2d.Rect#contains</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if the point (x,y) is located inside the rectangle.</p>
+                </dd>
+              </dl>
+              <h3 id="draw"><span class="symbol-name">draw</span><span class="signature"><span class="signature-params">(context[, fill][, stroke])</span></span>
+              </h3>
+              <p>draws the rect on the canvas</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context</p>
+                      </td>
+                      <td>
+                        <p><a href="CanvasRenderingContext2D.html">CanvasRenderingContext2D</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>fill</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>false</code>.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>stroke</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>!fill</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#pushPath">utils.geometry2d.Rect#pushPath</a></dd>
+              </dl>
+              <h3 id="getPercentPoint"><span class="symbol-name">getPercentPoint</span><span class="signature"><span class="signature-params">(percent)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the point corresponding to a certain percent of the instance's outline, starting at the top left corner. For example, getPercentPoint(0.5) will return the bottom-right corner.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>percent</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>percentage. must be in [0-1[.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;the corresponding point.</p>
+                </dd>
+              </dl>
+              <h3 id="getShape"><span class="symbol-name">getShape</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Polygon.html">utils.geometry2d.Polygon</a></span></span>
+              </h3>
+              <p>creates a rectangular <a href="utils.geometry2d.Polygon.html">utils.geometry2d.Polygon</a> corresponding to the instance</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Polygon.html">utils.geometry2d.Polygon</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="glAddTriangles"><span class="symbol-name">glAddTriangles</span><span class="signature"><span class="signature-params">(pointsArray, indicesArray, pOs, iOs)</span></span>
+              </h3>
+              <p>adds the triangles to draw this shape to the array.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>pointsArray</p>
+                      </td>
+                      <td>
+                        <p>Float32Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>indicesArray</p>
+                      </td>
+                      <td>
+                        <p>Float32Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>pOs</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>points offset</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>iOs</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>indices offset</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="move"><span class="symbol-name">move</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>moves the instance according to the given parameter's attributes :
+                <code>left += delta.x; right += delta.x;
+top += delta.y; bottom += delta.y;</code></p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>delta</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#moveXY">utils.geometry2d.Rect#moveXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="moveXY"><span class="symbol-name">moveXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>moves the instance according to the given x and y values :
+                <code>left += x; right += x;
+top += y; bottom += y;</code></p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#move">utils.geometry2d.Rect#move</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="onLeftOf"><span class="symbol-name">onLeftOf</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfX">utils.geometry2d.Rect#onLeftOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfRect">utils.geometry2d.Rect#onLeftOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOf">utils.geometry2d.Rect#onRightOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#above">utils.geometry2d.Rect#above</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#below">utils.geometry2d.Rect#below</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>right &lt; p.x</code></p>
+                </dd>
+              </dl>
+              <h3 id="onLeftOfRect"><span class="symbol-name">onLeftOfRect</span><span class="signature"><span class="signature-params">(r)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>r</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfX">utils.geometry2d.Rect#onLeftOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOf">utils.geometry2d.Rect#onLeftOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfRect">utils.geometry2d.Rect#onRightOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveRect">utils.geometry2d.Rect#aboveRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowRect">utils.geometry2d.Rect#belowRect</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>right &lt; r.left</code></p>
+                </dd>
+              </dl>
+              <h3 id="onLeftOfX"><span class="symbol-name">onLeftOfX</span><span class="signature"><span class="signature-params">(x)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfRect">utils.geometry2d.Rect#onLeftOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOf">utils.geometry2d.Rect#onLeftOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfX">utils.geometry2d.Rect#onRightOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveY">utils.geometry2d.Rect#aboveY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowY">utils.geometry2d.Rect#belowY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>right &lt; x</code></p>
+                </dd>
+              </dl>
+              <h3 id="onRightOf"><span class="symbol-name">onRightOf</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfX">utils.geometry2d.Rect#onRightOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfRect">utils.geometry2d.Rect#onRightOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOf">utils.geometry2d.Rect#onLeftOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#above">utils.geometry2d.Rect#above</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#below">utils.geometry2d.Rect#below</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>left &gt; p.x</code></p>
+                </dd>
+              </dl>
+              <h3 id="onRightOfRect"><span class="symbol-name">onRightOfRect</span><span class="signature"><span class="signature-params">(r)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>r</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfX">utils.geometry2d.Rect#onRightOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOf">utils.geometry2d.Rect#onRightOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfRect">utils.geometry2d.Rect#onLeftOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveRect">utils.geometry2d.Rect#aboveRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowRect">utils.geometry2d.Rect#belowRect</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>left &gt; r.right</code></p>
+                </dd>
+              </dl>
+              <h3 id="onRightOfX"><span class="symbol-name">onRightOfX</span><span class="signature"><span class="signature-params">(x)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOfRect">utils.geometry2d.Rect#onRightOfRect</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onRightOf">utils.geometry2d.Rect#onRightOf</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#onLeftOfX">utils.geometry2d.Rect#onLeftOfX</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#aboveY">utils.geometry2d.Rect#aboveY</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#belowY">utils.geometry2d.Rect#belowY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;<code>left &gt; x</code></p>
+                </dd>
+              </dl>
+              <h3 id="overlap"><span class="symbol-name">overlap</span><span class="signature"><span class="signature-params">(rect)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rect</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if the instance the object is called from and the parameter have a common point</p>
+                </dd>
+              </dl>
+              <h3 id="pushPath"><span class="symbol-name">pushPath</span><span class="signature"><span class="signature-params">(context)</span></span>
+              </h3>
+              <p>adds the drawing instructions for this instance to the context.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context</p>
+                      </td>
+                      <td>
+                        <p><a href="CanvasRenderingContext2D.html">CanvasRenderingContext2D</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#draw">utils.geometry2d.Rect#draw</a></dd>
+              </dl>
+              <h3 id="scale"><span class="symbol-name">scale</span><span class="signature"><span class="signature-params">(scaleX, scaleY)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>modifes the width and height and keep the center</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>scaleX</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>scaleY</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code>.</p>
+                </dd>
+              </dl>
+              <h3 id="set"><span class="symbol-name">set</span><span class="signature"><span class="signature-params">(left, top, right, bottom)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>sets the attributes' values to the parameters</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>left</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>top</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>right</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>bottom</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#setRect">utils.geometry2d.Rect#setRect</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setCenter"><span class="symbol-name">setCenter</span><span class="signature"><span class="signature-params">(center)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>sets the center of the instance to the given point.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>center</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Rect#setCenterXY(x,y)</dd>
+                <dd><a href="utils.geometry2d.Rect.html#center">utils.geometry2d.Rect#center</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code>.</p>
+                </dd>
+              </dl>
+              <h3 id="setCenterXY"><span class="symbol-name">setCenterXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>sets the center to the given coordinates</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>new x coordinate of the center</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>new y coordinate of the center</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#setCenter">utils.geometry2d.Rect#setCenter</a></dd>
+                <dd><a href="utils.geometry2d.Rect.html#center">utils.geometry2d.Rect#center</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code>.</p>
+                </dd>
+              </dl>
+              <h3 id="setRect"><span class="symbol-name">setRect</span><span class="signature"><span class="signature-params">(rect)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>sets the attributes' values of the instance to the attributes' values of the parameter</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rect</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Rect.html#set">utils.geometry2d.Rect#set</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="toString"><span class="symbol-name">toString</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> string</span></span>
+              </h3>
+              <p>returns a string representing the instance.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;[left, top, right, bottom]</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

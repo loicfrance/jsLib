@@ -1,0 +1,374 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: game2/board.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: game2/board.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * Created by rfrance on 1/21/2017.
+ */
+window.game.Board &#x3D; (function(){
+	&quot;use strict&quot;;
+	/**
+	 * @memberOf game
+	 * @class game.Board
+	 * @augments game.Object
+	 * @classdesc An object defining a board on the field.
+	 */
+	class Board extends game.Object {
+		/**
+		 * @constructor
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {number} columns
+		 * @param {number} lines
+		 * @param {number} cellWidth
+		 * @param {number} cellHeight
+		 */
+		constructor(position, columns, lines, cellWidth, cellHeight) {
+			super(position);
+			/**
+			 * @name game.Board#lines
+			 * @type {number}
+			 */
+			this.lines &#x3D; lines;
+			/**
+			 * @name game.Board#columns
+			 * @type {number}
+			 */
+			this.columns &#x3D; columns;
+			/**
+			 * @name game.Board#cellWidth
+			 * @type {number}
+			 */
+			this.cellWidth &#x3D; cellWidth;
+			/**
+			 * @name game.Board#cellHeight
+			 * @type {number}
+			 */
+			this.cellHeight &#x3D; cellHeight;
+			/**
+			 * @name game.Board#occupationMap
+			 * @type {Array.&amp;lt;Array.&amp;lt;number&gt;&gt;}
+			 */
+			this.occupationMap &#x3D; new Array(lines);
+			let i, j;
+			for(i&#x3D;0; i&amp;lt;lines; i++) {
+				this.occupationMap[i] &#x3D; new Array(columns);
+				for(j&#x3D;0; j&amp;lt;columns; j++) {
+					this.occupationMap[i][j] &#x3D; 0;
+				}
+			}
+		}
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - -board getters - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+		/**
+		 * @name game.Board#boardRect
+		 * @type {utils.geometry2d.Rect}
+		 * @readonly
+		 */
+		get boardRect() {
+			return utils.geometry2d.Rect.createFromCenterWidthHeight(this.position, this.boardWidth, this.boardHeight);
+		}
+		/**
+		 * @name game.Board#boardWidth
+		 * @type {number}
+		 * @readonly
+		 */
+		get boardWidth() {
+			return this.cellWidth * this.columns;
+		}
+		/**
+		 * @name game.Board#boardHeight
+		 * @type {number}
+		 * @readonly
+		 */
+		get boardHeight() {
+			return this.cellHeight * this.lines;
+		}
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - cell getters - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+		/**
+		 * returns the Rect corresponding to the selected cell of the board
+		 * @param {number} line
+		 * @param {number} column
+		 * @returns {utils.geometry2d.Rect}
+		 */
+		getCellRect(column, line) {
+			let left &#x3D; this.position.x + (column - this.columns*0.5)*this.cellWidth,
+				top  &#x3D; this.position.y + (line - this.lines*0.5)*this.cellHeight;
+			return new utils.geometry2d.Rect(left, top, left+this.cellWidth, top+this.cellHeight);
+		}
+		/**
+		 * returns the center of the selected cell
+		 * @param {number} column
+		 * @param {number} line
+		 * @returns {utils.geometry2d.Vec2}
+		 */
+		getCellCenter(column, line) {
+			let dX &#x3D; (this.columns*0.5 - 0.5 - column)*this.cellWidth, dY &#x3D; (this.lines*0.5 - 0.5 - line)*this.cellHeight;
+			return this.position.clone().addXY(-dX, -dY);
+		}
+		/**
+		 * returns the index of the board column containing the specified x coordinate
+		 * @param {number} gameX
+		 * @returns {number}
+		 */
+		getColumn( gameX ) {
+			//return Math.floor((gameX - this.position.x + this.boardWidth/2)/this.cellWidth)
+			return Math.floor(this.columns*0.5 + (gameX - this.position.x)/this.cellWidth);
+		}
+		/**
+		 * returns the index of the board line containing the specified y coordinate
+		 * @param {number} gameY
+		 * @returns {number}
+		 */
+		getLine( gameY ) {
+			return Math.floor(this.lines*0.5 + (gameY - this.position.y)/this.cellHeight);
+		}
+
+		getCellIndices( gamePos ) {
+			return new utils.geometry2d.Vec2(this.getColumn(gamePos.x), this.getLine(gamePos.y));
+		}
+
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -grid render - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+		/**
+		 * draws the grid on the canvas with the specified color
+		 * @param {CanvasRenderingContext2D}context
+		 * @param {string} color
+		 */
+		renderGrid(context, color) {
+			context.strokeStyle &#x3D; color;
+			let r &#x3D; this.boardRect;
+			let t &#x3D; r.left;
+			context.beginPath();
+			while(t &amp;lt;&#x3D; r.right) {
+				context.moveTo(t, r.top);
+				context.lineTo(t, r.bottom);
+				t +&#x3D; this.cellWidth;
+			}
+			t &#x3D; r.top;
+			while(t &amp;lt;&#x3D; r.bottom) {
+				context.moveTo(r.left, t);
+				context.lineTo(r.right, t);
+				t +&#x3D; this.cellHeight;
+			}
+			context.stroke();
+		}
+		scale(factor) {
+			super.scale(factor);
+			this.cellWidth *&#x3D; factor;
+			this.cellHeight *&#x3D; factor;
+		}
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - -occupation methods- - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+		isOccupated(column, line) {
+			return column &amp;lt; this.columns &amp;amp;&amp;amp; line &amp;lt; this.lines &amp;amp;&amp;amp; this.occupationMap[line][column] &#x3D;&#x3D; 1;
+		}
+		setOccupated(column, line, occupated) {
+			return (column &amp;lt; this.columns &amp;amp;&amp;amp; line &amp;amp;&amp;amp; this.lines) ?
+				!!(this.occupationMap[line][column] &#x3D; occupated ? 1 : 0) &amp;amp;&amp;amp; true : false;
+		}
+		addOccupation(column, line, occupationSubMap) {
+			let subH &#x3D; occupationSubMap.length, subW;
+			let top &#x3D; line - Math.floor(subH/2), left;
+			let i, j;
+			for(i &#x3D; 0; i &amp;lt; subH; i++) {
+				subW &#x3D; occupationSubMap[i].length;
+				left &#x3D; column - Math.floor(subW/2);
+				for(j &#x3D; 0; j &amp;lt; subW; j++) {
+					this.occupationMap[top+i][left+j] &#x3D; occupationSubMap[i][j] ? 1 : 0;
+				}
+			}
+		}
+
+		/**
+		 * adds an occupation submap to the occupation map
+		 * @param columns
+		 * @param lines
+		 * @param occupationSubMaps
+		 */
+		addOccupations(columns, lines, occupationSubMaps) {
+			let i&#x3D;Math.min(columns.length, lines.length, occupationSubMaps.length);
+			while(i--) {
+				this.addOccupation(columns[i], lines[i], occupationSubMaps[i]);
+			}
+		}
+		/**
+		 * reset the occupation map by filling it with 0
+		 */
+		clearOccupation() {
+			for(i&#x3D;0; i&amp;lt;this.lines; i++) {
+				for(j&#x3D;0; j&amp;lt;this.columns; j++) {
+					this.occupationMap[i][j] &#x3D; 0;
+				}
+			}
+		}
+
+		/**
+		 * Must be called when you change the board dimension for the occupation map to be changed too.
+		 * The right column and bottom lines will be changed (added or removed, not the left and top :
+		 * @example
+		 * .________.......__________
+		 * |.#....# |.....|.#....#...|
+		 * |...#...#| --&gt; |...#...#..|
+		 * |....#...|.....|____#_____|
+		 * |_#______|.......(10 x 3)
+		 * .(8 x 4)
+		 */
+		onDimensionsChange() {
+			let newMap &#x3D; new Array(this.lines);
+			let oldHeight &#x3D; this.occupationMap.length, oldWidth;
+			let i, j;
+			for(i &#x3D; Math.min(oldHeight, this.lines)-1; i &gt;&#x3D; 0; i--) {
+				newMap &#x3D; new Array(this.columns);
+				oldWidth &#x3D; this.occupationMap[i].length;
+				for(j &#x3D; Math.min(oldWidth, this.columns)-1; j &gt;&#x3D; 0; j--) {
+					newMap[i][j] &#x3D; this.occupationMap[i][j];
+				}
+				for(j &#x3D; oldWidth; j&amp;lt; this.columns; j++) {
+					newMap[i][j] &#x3D; 0;
+				}
+			}
+			for(i &#x3D; oldHeight; i &amp;lt; this.lines; i++) {
+				for(j&#x3D;0; j&amp;lt; this.columns; j++) {
+					newMap[i][j] &#x3D; 0;
+				}
+			}
+		}
+		/**
+		 * returns an optimized path from the start point (given in index coordinates) and the end point &amp;lt;!--
+		 * --&gt;(given in index coordinates). The result is an array of {@link utils.geometry2d.Vec2|Vec2} &amp;lt;!--
+		 * --&gt;in index coordinates describing the path from the start point to the end point, including &amp;lt;!--
+		 * --&gt;the end point but excluding the start point.
+		 * @param {utils.geometry2d.Vec2} start - x &#x3D; column index, y &#x3D; line index
+		 * @param {utils.geometry2d.Vec2} end   - x &#x3D; column index, y &#x3D; line index
+		 * @returns {utils.geometry2d.Vec2[]} [(i,j), (i,j), (i,j)]
+		 */
+		leePath(start, end) {
+
+			if(this.occupationMap[start.y][start.x] || this.occupationMap[end.y][end.x]) return [];
+			let heatMap &#x3D; new Array(this.lines),
+				i, j, list, newFifo, p, len;
+
+			for(i &#x3D; 0; i &amp;lt; this.lines; i++) {
+				heatMap[i] &#x3D; new Array(this.columns);
+				for(j &#x3D; 0; j &amp;lt; this.columns; j++) {
+					heatMap[i][j] &#x3D; this.occupationMap[i][j]? -1 : 0;
+				}
+			}
+
+			list &#x3D; [];
+			newFifo &#x3D; [start];
+			heatMap[start.y][start.x] &#x3D; 1;
+			while(newFifo.length &amp;amp;&amp;amp; heatMap[end.y][end.x] &#x3D;&#x3D; 0) {
+				list &#x3D; newFifo;
+				newFifo &#x3D; [];
+				len &#x3D; list.length;
+				i &#x3D; -1;
+				while(++i &amp;lt; len) { p &#x3D; list[i];
+					if (p.y &gt; 0 &amp;amp;&amp;amp; this.occupationMap[p.y - 1][p.x] &#x3D;&#x3D; 0 &amp;amp;&amp;amp; heatMap[p.y - 1][p.x] &#x3D;&#x3D; 0) {
+						heatMap[p.y-1][p.x] &#x3D; heatMap[p.y][p.x] + 1;
+						newFifo.push(p.clone().addXY(0, -1));
+					}
+					if (p.y &amp;lt; this.lines-1 &amp;amp;&amp;amp; this.occupationMap[p.y + 1][p.x] &#x3D;&#x3D; 0 &amp;amp;&amp;amp; heatMap[p.y + 1][p.x] &#x3D;&#x3D; 0) {
+						heatMap[p.y+1][p.x] &#x3D; heatMap[p.y][p.x] + 1;
+						newFifo.push(p.clone().addXY(0, 1));
+					}
+					if (p.x &gt; 0 &amp;amp;&amp;amp; this.occupationMap[p.y][p.x - 1] &#x3D;&#x3D; 0 &amp;amp;&amp;amp; heatMap[p.y][p.x - 1] &#x3D;&#x3D; 0) {
+						heatMap[p.y][p.x-1] &#x3D; heatMap[p.y][p.x] + 1;
+						newFifo.push(p.clone().addXY(-1, 0));
+					}
+					if (p.x &amp;lt; this.columns-1 &amp;amp;&amp;amp; this.occupationMap[p.y][p.x + 1] &#x3D;&#x3D; 0 &amp;amp;&amp;amp; heatMap[p.y][p.x + 1] &#x3D;&#x3D; 0) {
+						heatMap[p.y][p.x+1] &#x3D; heatMap[p.y][p.x] + 1;
+						newFifo.push(p.clone().addXY(1, 0));
+					}
+				}
+			}
+			let heat &#x3D; heatMap[end.y][end.x];
+			if(heat !&#x3D; 0) {
+				let path &#x3D; new Array(heat-1);
+				p &#x3D; end.clone();
+				let lastDir &#x3D; 0;
+				let nextDir &#x3D; 0;
+				while(heat !&#x3D; 1) {
+					path[--heat - 1] &#x3D; p.clone();
+					if(p.y &gt; 0 &amp;amp;&amp;amp; heatMap[p.y-1][p.x] &#x3D;&#x3D; heat) {
+						nextDir &#x3D; 1 // go up
+					}
+					if(p.y &amp;lt; this.lines-1 &amp;amp;&amp;amp; heatMap[p.y+1][p.x] &#x3D;&#x3D; heat) {
+						if(lastDir&#x3D;&#x3D;0 || nextDir &#x3D;&#x3D; lastDir) nextDir &#x3D; 2; // go down
+					}
+					if(p.x &gt; 0 &amp;amp;&amp;amp; heatMap[p.y][p.x-1] &#x3D;&#x3D; heat) {
+						if(lastDir&#x3D;&#x3D;0 || nextDir &#x3D;&#x3D; lastDir) nextDir &#x3D; 3; // go left
+					}
+					if(p.x &amp;lt; this.columns-1 &amp;amp;&amp;amp; heatMap[p.y][p.x+1] &#x3D;&#x3D; heat) {
+						if(lastDir&#x3D;&#x3D;0 || nextDir &#x3D;&#x3D; lastDir) nextDir &#x3D; 4; // go right
+					}
+					switch(nextDir) {
+						case 1 : p.addXY( 0,-1); break;
+						case 2 : p.addXY( 0, 1); break;
+						case 3 : p.addXY(-1, 0); break;
+						case 4 : p.addXY( 1, 0); break;
+					}
+					lastDir &#x3D; nextDir;
+				}
+				return path;
+			}
+			else return [];
+		}
+	}
+	return Board;
+})();</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on May 9, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

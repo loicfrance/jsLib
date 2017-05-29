@@ -1,0 +1,1134 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: Ray</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="utils.html">utils</a>.<wbr><a href="utils.geometry2d.html">geometry2d</a>.<wbr></small><span class="symbol-name">Ray</span></h1>
+            <p class="source-link">Source: <a href="utils_utils_2.js.html#source-line-2956">utils/<wbr>utils_2.<wbr>js:2956</a></p>
+            <div class="symbol-classdesc">
+              <p>a class representing an infinite ray, defined by an origin point and the angle of the direction
+                <!--
+-->it is pointing toward. the origin of the ray is defined by the
+                <!--
+--><a href="utils.geometry2d.Shape.html#center">center</a> attribute.</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Ray.html#angle">angle</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#area">area</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#center">center</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Ray.html#directorVect">directorVect</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#glPointsNumber">glPointsNumber</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#glTrianglesNumber">glTrianglesNumber</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Ray.html#perimeter">perimeter</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Ray.html#clone">clone()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#closestPointTo">closestPointTo(p)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#closestpointTo">closestpointTo(p)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#contains">contains(point)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#copyCenter">copyCenter()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#draw">draw(context[, fill][, stroke])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#endPoint">endPoint(length)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#getCircle">getCircle()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Ray.html#getPercentPoint">getPercentPoint(percent)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#getRadius">getRadius()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#getRect">getRect()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#glAddTriangles">glAddTriangles(pointsArray, indicesArray, pOs, iOs)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#growDistance">growDistance(delta)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#intersect">intersect(shape)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#mirrorHorizontally">mirrorHorizontally([axisX])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#mirrorVertically">mirrorVertically([axisY])</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Ray.html#move">move(delta)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#moveXY">moveXY(dX, dY)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#pushPath">pushPath(context)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#rotate">rotate(radians)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#scale">scale(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#setCenter">setCenter(center)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Ray.html#setCenterXY">setCenterXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="Ray">new&nbsp;<span class="symbol-name">Ray</span><span class="signature"><span class="signature-params">(origin, radians)</span></span>
+            </h2>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>origin</p>
+                    </td>
+                    <td>
+                      <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>radians</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+              <dt>Extends</dt>
+              <dd><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></dd>
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="angle"><span class="symbol-name">angle</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="area"><span class="symbol-name">area</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>area of the instance.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#area">utils.geometry2d.Shape#area</a></dd>
+              </dl>
+              <h3 id="center"><span class="symbol-name">center</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#center">utils.geometry2d.Shape#center</a></dd>
+              </dl>
+              <h3 id="directorVect"><span class="symbol-name">directorVect</span></h3>
+              <p>returns the director vector of the instance.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="glPointsNumber"><span class="symbol-name">glPointsNumber</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>number of points used to draw this shape.</p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="glTrianglesNumber"><span class="symbol-name">glTrianglesNumber</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>numbers of triangles used to draw this shape</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="perimeter"><span class="symbol-name">perimeter</span><small class="property-type">
+            &nbsp;Number</small></h3>
+              <p><code>=Infinity</code></p>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="clone"><span class="symbol-name">clone</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></span></span>
+              </h3>
+              <p>returns a copy of the instance.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="closestPointTo"><span class="symbol-name">closestPointTo</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the closest point of the shape to the given point</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#closestPointTo">utils.geometry2d.Shape#closestPointTo</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p>closest point of the shape.</p>
+                </dd>
+              </dl>
+              <h3 id="closestpointTo"><span class="symbol-name">closestpointTo</span><span class="signature"><span class="signature-params">(p)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the closest point of the instance to the specified point</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>p</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="contains"><span class="symbol-name">contains</span><span class="signature"><span class="signature-params">(point)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns whether or not the line contains the given point. The result is not really realistic because of number precision</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>point</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="copyCenter"><span class="symbol-name">copyCenter</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns a copy of the <code><a href="utils.geometry2d.Shape.html#center">center</a></code> attribute of the instance.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#copyCenter">utils.geometry2d.Shape#copyCenter</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p>a copy of the center</p>
+                </dd>
+              </dl>
+              <h3 id="draw"><span class="symbol-name">draw</span><span class="signature"><span class="signature-params">(context[, fill][, stroke])</span></span>
+              </h3>
+              <p>draws the shape on the canvas</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>fill</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>false</code>.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>stroke</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>!fill</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#draw">utils.geometry2d.Shape#draw</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#pushPath">utils.geometry2d.Shape#pushPath</a></dd>
+              </dl>
+              <h3 id="endPoint"><span class="symbol-name">endPoint</span><span class="signature"><span class="signature-params">(length)</span>&nbsp;&rarr; <span class="signature-returns"> (<a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a> or Vec2)</span></span>
+              </h3>
+              <p>returns the calculated end point of the instance as if the ray was a line stating at the origin
+                <!--
+-->and with the specified length.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>length</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>(<a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a> or Vec2)</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getCircle"><span class="symbol-name">getCircle</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Circle.html">utils.geometry2d.Circle</a></span></span>
+              </h3>
+              <p>creates a <code><a href="utils.geometry2d.Circle.html">Circle</a></code> with the same center as the shape, and the radius returned by <code><a href="utils.geometry2d.Shape.html#getRadius">getRadius</a></code>.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#getCircle">utils.geometry2d.Shape#getCircle</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getPercentPoint"><span class="symbol-name">getPercentPoint</span><span class="signature"><span class="signature-params">(percent)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the point corresponding to a certain percent of the instance's outline, the start point depends on the shape.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>percent</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>percentage. must be in [0-1[.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#getPercentPoint">utils.geometry2d.Shape#getPercentPoint</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p>the corresponding point.</p>
+                </dd>
+              </dl>
+              <h3 id="getRadius"><span class="symbol-name">getRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>implemented for the needs of getCircle function, but not very useful as it only returns an infinite number</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getRect"><span class="symbol-name">getRect</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>creates and returns a <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a> instance fitting the ray, with pone corner
+                <!--
+-->at an infinite position.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="glAddTriangles"><span class="symbol-name">glAddTriangles</span><span class="signature"><span class="signature-params">(pointsArray, indicesArray, pOs, iOs)</span></span>
+              </h3>
+              <p>adds the points to draw this shape to the pointsArray and the points indices to draw
+                <!--
+-->the triangles to the indicesArray.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>pointsArray</p>
+                      </td>
+                      <td>
+                        <p>Float32Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>indicesArray</p>
+                      </td>
+                      <td>
+                        <p>Float32Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>pOs</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>points offset</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>iOs</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>indices offset</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="growDistance"><span class="symbol-name">growDistance</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>makes the shape bigger by adding to it's dimensions the given distance</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>delta</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the number to add to the dimensions</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#growDistance">utils.geometry2d.Shape#growDistance</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#scale">utils.geometry2d.Shape#scale</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="intersect"><span class="symbol-name">intersect</span><span class="signature"><span class="signature-params">(shape)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>check if the ray intersect with the shape.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>shape</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.html#.shapes">utils.geometry2d.shapes</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="mirrorHorizontally"><span class="symbol-name">mirrorHorizontally</span><span class="signature"><span class="signature-params">([axisX])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></span></span>
+              </h3>
+              <p>makes the ray the opposite of itself relative to the given vertical axis if no value is set for axisX, the mirror will be made relative to the origin's x coordinate.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisX</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>abscissa of the vertical axis</p>
+                        <p>Defaults to <code>center.x</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Ray.html#mirrorVertically">utils.geometry2d.Ray#mirrorVertically</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="mirrorVertically"><span class="symbol-name">mirrorVertically</span><span class="signature"><span class="signature-params">([axisY])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></span></span>
+              </h3>
+              <p>makes the ray the opposite of itself relative to the given horizontal axis if no value is set for axisY, the mirror will be made relative to the origin's y coordinate.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisY</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>ordinate of the horizontal axis</p>
+                        <p>Defaults to <code>center.y</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Ray.html#mirrorHorizontally">utils.geometry2d.Ray#mirrorHorizontally</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="move"><span class="symbol-name">move</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> (<a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a> or <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a>)</span></span>
+              </h3>
+              <p>moves the shape according to the parameter</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>delta</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#move">utils.geometry2d.Shape#move</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#moveXY">utils.geometry2d.Shape#moveXY</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="moveXY"><span class="symbol-name">moveXY</span><span class="signature"><span class="signature-params">(dX, dY)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>moves the shape according to the parameters</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>dX</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>dY</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#moveXY">utils.geometry2d.Shape#moveXY</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#move">utils.geometry2d.Shape#move</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="pushPath"><span class="symbol-name">pushPath</span><span class="signature"><span class="signature-params">(context)</span></span>
+              </h3>
+              <p>adds the drawing instructions to the context. Be aware that if you just &quot;fill&quot; the line,
+                <!--
+-->it won't be drawn on the canvas, you must &quot;stroke&quot; it to make it appear on the canvas.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context</p>
+                      </td>
+                      <td>
+                        <p><a href="CanvasRenderingContext2D.html">CanvasRenderingContext2D</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="rotate"><span class="symbol-name">rotate</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></span></span>
+              </h3>
+              <p>rotates the ray around its origin.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ray.html">utils.geometry2d.Ray</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="scale"><span class="symbol-name">scale</span><span class="signature"><span class="signature-params">(factor)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>makes the shape bigger by multiplying it's dimensions by the given factor</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the number which will multiply the dimensions</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#scale">utils.geometry2d.Shape#scale</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#growDistance">utils.geometry2d.Shape#growDistance</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setCenter"><span class="symbol-name">setCenter</span><span class="signature"><span class="signature-params">(center)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>sets the center's attributes to the same as the parameter's</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>center</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#setCenter">utils.geometry2d.Shape#setCenter</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#setCenterXY">utils.geometry2d.Shape#setCenterXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setCenterXY"><span class="symbol-name">setCenterXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>sets the center's attributes to the parameters</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="utils.geometry2d.Shape.html#setCenterXY">utils.geometry2d.Shape#setCenterXY</a></dd>
+                <dt>See also</dt>
+                <dd><a href="utils.geometry2d.Shape.html#setCenter">utils.geometry2d.Shape#setCenter</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

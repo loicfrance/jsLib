@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../file_watchers/node_modules/1_utils-compiled.js" />
+      <root url="file://$PROJECT_DIR$/utils/1_utils-compiled.js" />
+      <root url="file://$PROJECT_DIR$/../file_watchers/node_modules/1_utils-compiled.js" />
+      <root url="file://$PROJECT_DIR$/utils/1_utils-compiled.js" />
+      <root url="file://$PROJECT_DIR$/game/GameMap2.min.js" />
+      <root url="file://$PROJECT_DIR$/utils.min.js" />
+      <root url="file://$PROJECT_DIR$/utils_min.min.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

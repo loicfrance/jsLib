@@ -1,0 +1,523 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: BulletCollider</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="game.html">game</a>.<wbr></small><span class="symbol-name">BulletCollider</span></h1>
+            <p class="source-link">Source: <a href="game2_game_2.js.html#source-line-1691">game2/<wbr>game_2.<wbr>js:1691</a></p>
+            <div class="symbol-classdesc">
+              <p>the collider to use with bullets. the difference with a standard shaped collider is that
+                <!--
+-->it can collide when it is inside an object but not touching the outline. it allows bullets to go faster
+                <!--
+-->than normal objects even if they are small, because the collision will happen event if the the object moves
+                <!--
+-->too fast to intersect with the outline of the opposite object's collider.</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.BulletCollider.html#rect">rect</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.BulletCollider.html#shape%257D">shape}</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.BulletCollider.html#collides">collides(collider)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#collidesInside">collidesInside(collider)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#finishCollision">finishCollision()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#getRadius">getRadius()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.BulletCollider.html#getRect">getRect()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#getShape">getShape()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#prepareCollision">prepareCollision(position)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#render">render(context2d)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.BulletCollider.html#rotate">rotate(radians)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#scale">scale(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#setPosition">setPosition(pos)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.BulletCollider.html#setShape">setShape(shape)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="BulletCollider">new&nbsp;<span class="symbol-name">BulletCollider</span><span class="signature"><span class="signature-params">(shape)</span></span>
+            </h2>
+            <section>
+              <h3>Parameter</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>shape</p>
+                    </td>
+                    <td>
+                      <p><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+              <dt>Extends</dt>
+              <dd><a href="game.ShapedObjectCollider.html">game.ShapedObjectCollider</a></dd>
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="rect"><span class="symbol-name">rect</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ObjectCollider.html#rect">game.ObjectCollider#rect</a></dd>
+              </dl>
+              <h3 id="shape%7D"><span class="symbol-name">shape}</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#shape%257D">game.ShapedObjectCollider#shape}</a></dd>
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="collides"><span class="symbol-name">collides</span><span class="signature"><span class="signature-params">(collider)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns true if the two colliders are colliding.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>collider</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#collides">game.ShapedObjectCollider#collides</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="collidesInside"><span class="symbol-name">collidesInside</span><span class="signature"><span class="signature-params">(collider)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns true because bullets collide when they are inside other objects.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>collider</p>
+                      </td>
+                      <td>
+                        <p><a href="game.ObjectCollider.html">game.ObjectCollider</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="finishCollision"><span class="symbol-name">finishCollision</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>tells the collider that the collision detection is over for this object on this frame.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ObjectCollider.html#finishCollision">game.ObjectCollider#finishCollision</a></dd>
+              </dl>
+              <h3 id="getRadius"><span class="symbol-name">getRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#getRadius">game.ShapedObjectCollider#getRadius</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getRect"><span class="symbol-name">getRect</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>returns the <a href="game.ObjectCollider.html#rect">rect</a> attribute of the collider after setting the
+                <!--
+--><a href="game.ObjectCollider.html#rect">rect</a> to the return value of the
+                <!--
+-->shape's <a href="utils.geometry2d.Shape.html#getRect">getRect</a> method.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#getRect">game.ShapedObjectCollider#getRect</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getShape"><span class="symbol-name">getShape</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>returns the game.ShapedObjectCollider#shape.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#getShape">game.ShapedObjectCollider#getShape</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="prepareCollision"><span class="symbol-name">prepareCollision</span><span class="signature"><span class="signature-params">(position)</span></span>
+              </h3>
+              <p>prepare the collision detection by acquiring necessary variables, such as the the
+                <!--
+--><a href="game.ObjectCollider.html#rect">rect</a> attribute.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>position</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ObjectCollider.html#prepareCollision">game.ObjectCollider#prepareCollision</a></dd>
+              </dl>
+              <h3 id="render"><span class="symbol-name">render</span><span class="signature"><span class="signature-params">(context2d)</span></span>
+              </h3>
+              <p>draws the rect and the shape on the canvas.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context2d</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#render">game.ShapedObjectCollider#render</a></dd>
+              </dl>
+              <h3 id="rotate"><span class="symbol-name">rotate</span><span class="signature"><span class="signature-params">(radians)</span></span>
+              </h3>
+              <p>rotates the game.ShapedObjectCollider#shape.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#rotate">game.ShapedObjectCollider#rotate</a></dd>
+              </dl>
+              <h3 id="scale"><span class="symbol-name">scale</span><span class="signature"><span class="signature-params">(factor)</span></span>
+              </h3>
+              <p>scales the game.ShapedObjectCollider#shape.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#scale">game.ShapedObjectCollider#scale</a></dd>
+              </dl>
+              <h3 id="setPosition"><span class="symbol-name">setPosition</span><span class="signature"><span class="signature-params">(pos)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.ShapedObjectCollider.html">game.ShapedObjectCollider</a></span></span>
+              </h3>
+              <p>sets the position of the collider.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>pos</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#setPosition">game.ShapedObjectCollider#setPosition</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setShape"><span class="symbol-name">setShape</span><span class="signature"><span class="signature-params">(shape)</span></span>
+              </h3>
+              <p>sets the game.ShapedObjectCollider#shape to a copy of the argument.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>shape</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ShapedObjectCollider.html#setShape">game.ShapedObjectCollider#setShape</a></dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

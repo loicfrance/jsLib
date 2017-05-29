@@ -1,0 +1,585 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: GameManager</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="game.html">game</a>.<wbr></small><span class="symbol-name">GameManager</span></h1>
+            <p class="source-link">Source: <a href="game2_game_1.js.html#source-line-48">game2/<wbr>game_1.<wbr>js:48</a></p>
+            <div class="symbol-classdesc">
+              <p>the most important class of a game. call the frame, death and collision methods of all objects,
+                <!--
+-->call the render method of the gameMap, ... To add an object to the game, you must call the <a href="game.GameManager.html#addObject">addObject</a> method, and to
+                <!--
+-->remove an object, you must call the <a href="game.GameManager.html#removeObject">removeObject</a> method. This way, <a href="game.Object.html#onDeath">game.Object#onDeath</a> method of the destroyed objects when they are removed from the
+                game. To start or resume the game, call the <a href="game.GameManager.html#start">start</a> method,
+                <!--
+-->and to pause or stop the game, call the <a href="game.GameManager.html#stop">stop</a> method. You can get
+                <!--
+-->the current state (running or not) by calling the <a href="game.GameManager.html#isRunning">isRunning</a> method. You can apply a <a href="game.html#.gameEventCallback">callback</a> method which will be called when the game
+                <!--
+-->is started or resumed, when it is stopped or paused, and when a frame begins.</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Property</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.GameManager.html#gameMap">gameMap</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.GameManager.html#addObject">addObject(obj[, check])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#addObjects">addObjects(objects[, check])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#clearObjects">clearObjects()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#getEventsCallback">getEventsCallback()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#getInstancesOf">getInstancesOf(objClass)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.GameManager.html#getObjectAt">getObjectAt(index)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#getObjectIndex">getObjectIndex(obj)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#getObjects">getObjects([filter])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#isRunning">isRunning()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#removeObject">removeObject(obj[, check])</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.GameManager.html#removeObjects">removeObjects(objects[, check])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#setEventsCallback">setEventsCallback(cb)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#start">start()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.GameManager.html#stop">stop()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="GameManager">new&nbsp;<span class="symbol-name">GameManager</span><span class="signature"><span class="signature-params">()</span></span>
+            </h2>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Property</h2>
+            <section>
+              <h3 id="gameMap"><span class="symbol-name">gameMap</span><small class="property-type">
+            &nbsp;nullable <a href="game.AbstractGameMap.html">game.AbstractGameMap</a></small></h3>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="addObject"><span class="symbol-name">addObject</span><span class="signature"><span class="signature-params">(obj[, check])</span></span>
+              </h3>
+              <p>adds an object to the game. It will actually be added between the current frame and the next one.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>obj</p>
+                      </td>
+                      <td>
+                        <p><a href="game.Object.html">game.Object</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>check</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>if true or not set, the method will make sure the object is not
+                          <!--
+-->already being added to the game</p>
+                        <p>Defaults to <code>true</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="addObjects"><span class="symbol-name">addObjects</span><span class="signature"><span class="signature-params">(objects[, check])</span></span>
+              </h3>
+              <p>adds several objects to the game. They will be added between the current frame and the next one</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>objects</p>
+                      </td>
+                      <td>
+                        <p>Array of <a href="game.Object.html">game.Object</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>check</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>if true or not set, the method will only add objects that are not
+                          <!--
+-->already being added to the game</p>
+                        <p>Defaults to <code>true</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="clearObjects"><span class="symbol-name">clearObjects</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>removes all current objects from the game. They will be removed between the current frame
+                <!--
+-->and the next one, before new objects are added. This method does not prevent objects that are about to be added to appear.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="getEventsCallback"><span class="symbol-name">getEventsCallback</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.html#.gameEventCallback">game.gameEventCallback</a></span></span>
+              </h3>
+              <p>returns the callback method called for events, or null if not set</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>nullable <a href="game.html#.gameEventCallback">game.gameEventCallback</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getInstancesOf"><span class="symbol-name">getInstancesOf</span><span class="signature"><span class="signature-params">(objClass)</span>&nbsp;&rarr; <span class="signature-returns"> Array of <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>returns all instances of the specified gameObject class.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>objClass</p>
+                      </td>
+                      <td>
+                        <p>class</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>Array of <a href="game.Object.html">game.Object</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getObjectAt"><span class="symbol-name">getObjectAt</span><span class="signature"><span class="signature-params">(index)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>returns the object located at the specified index.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>index</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="game.Object.html">game.Object</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getObjectIndex"><span class="symbol-name">getObjectIndex</span><span class="signature"><span class="signature-params">(obj)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>get the index of the object in the game's list of objects.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>obj</p>
+                      </td>
+                      <td>
+                        <p><a href="game.Object.html">game.Object</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;index of obj</p>
+                </dd>
+              </dl>
+              <h3 id="getObjects"><span class="symbol-name">getObjects</span><span class="signature"><span class="signature-params">([filter])</span>&nbsp;&rarr; <span class="signature-returns"> Array of <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>get all objects of the game matching the specified filter</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>filter</p>
+                      </td>
+                      <td>
+                        <p>function(<a href="game.Object.html">game.Object</a>)</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>null</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>Array of <a href="game.Object.html">game.Object</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="isRunning"><span class="symbol-name">isRunning</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>tells if the game is currently running.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="removeObject"><span class="symbol-name">removeObject</span><span class="signature"><span class="signature-params">(obj[, check])</span></span>
+              </h3>
+              <p>removes an object from the game. It will actually be removed between the current frame
+                <!--
+-->and the next one, before new objects are added.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>obj</p>
+                      </td>
+                      <td>
+                        <p><a href="game.Object.html">game.Object</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>check</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>if true or not set, the method will make sure the object is not
+                          <!--
+-->already being removed from the game</p>
+                        <p>Defaults to <code>true</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="removeObjects"><span class="symbol-name">removeObjects</span><span class="signature"><span class="signature-params">(objects[, check])</span></span>
+              </h3>
+              <p>removes several objects from the game. They will be removed between the current frame
+                <!--
+-->and the next one, before new objects are added</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>objects</p>
+                      </td>
+                      <td>
+                        <p>Array of <a href="game.Object.html">game.Object</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>check</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>if true or not set, the method will only remove objects that are not
+                          <!--
+-->already being removed to the game</p>
+                        <p>Defaults to <code>true</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="setEventsCallback"><span class="symbol-name">setEventsCallback</span><span class="signature"><span class="signature-params">(cb)</span></span>
+              </h3>
+              <p>sets the callback method called for events.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>cb</p>
+                      </td>
+                      <td>
+                        <p><a href="game.html#.gameEventCallback">game.gameEventCallback</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Value can be null.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="start"><span class="symbol-name">start</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>starts or resumes the game, and call the callback method with first parameter &lt;!-- equal to <a href="game.html#.GameEvent#.GAME_START">game.GameEvent.GAME_START</a>, and the second one equal to 0.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="stop"><span class="symbol-name">stop</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>stops or pauses the game, and call the callback method with first parameter &lt;!-- equal to <a href="game.html#.GameEvent#.GAME_STOP">game.GameEvent.GAME_STOP</a>, and the second one equal to 0.</p>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

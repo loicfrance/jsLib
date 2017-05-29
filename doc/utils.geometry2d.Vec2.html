@@ -1,0 +1,1643 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: Vec2</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="utils.html">utils</a>.<wbr><a href="utils.geometry2d.html">geometry2d</a>.<wbr></small><span class="symbol-name">Vec2</span></h1>
+            <p class="source-link">Source: <a href="utils_utils_2.js.html#source-line-17">utils/<wbr>utils_2.<wbr>js:17</a></p>
+            <div class="symbol-classdesc">
+              <p>a simple class with 2 members : <code><a href="utils.geometry2d.Vec2.html#x">x</a></code> and
+                <!--
+--><code><a href="utils.geometry2d.Vec2.html#y">y</a></code>,
+                <!--
+-->used to represent points and vectors</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Vec2.html#angle">angle</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#angle">angle</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#magnitude">magnitude</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Vec2.html#squareMagnitude">squareMagnitude</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#x">x</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#y">y</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Vec2.html#.zero">zero</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Vec2.html#add">add(vec)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#addXY">addXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#clampMagnitude">clampMagnitude(min, max)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#clone">clone()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#equals">equals()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#equalsXY">equalsXY()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#getHorizontalMirror">getHorizontalMirror([axisX])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#getMirror">getMirror([center])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#getRoundedX">getRoundedX([digits])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#getRoundedY">getRoundedY([digits])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#getUnit">getUnit()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#getVerticalMirror">getVerticalMirror([axisY])</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Vec2.html#isZero">isZero()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#mirrorHorizontally">mirrorHorizontally([axisX])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#mirrorVertically">mirrorVertically([axisY])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#mul">mul(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#normalize">normalize()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#remove">remove(vec)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#reset">reset()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#rotate">rotate(a)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#rotateAround">rotateAround(center, a)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#roundedVec">roundedVec([digits])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#set">set(vec)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#setAngle">setAngle(a)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.geometry2d.Vec2.html#setMagnitude">setMagnitude(mag)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#setXY">setXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#toString">toString()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.ccw">ccw(A, B, C)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.ccw2">ccw2(AB, AC)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.createFromAngle">createFromAngle(rad[, mag])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.createVec2Array">createVec2Array(xyxyArray)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.distance">distance(A, B)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.dotProd">dotProd(u, v)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.squareDistance">squareDistance(A, B)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.translation">translation(A, B)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.geometry2d.Vec2.html#.vectProd">vectProd(u, v)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="Vec2">new&nbsp;<span class="symbol-name">Vec2</span><span class="signature"><span class="signature-params">(x, y)</span></span>
+            </h2>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>x</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>x coordinate</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>y</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>y coordinate</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="angle"><span class="symbol-name">angle</span></h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>a</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="angle"><span class="symbol-name">angle</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>angle of this Vec2, calculated from the coordinates : <code>atan2(y, x)</code>. when used as setter, the <a href="utils.geometry2d.Vec2.html#x">x</a> and <a href="utils.geometry2d.Vec2.html#y">y</a>
+                <!--
+-->attributes are caluclated like this : <code>x= cos(a)*magnitude, y= sin(a)*magnitude</code></p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="magnitude"><span class="symbol-name">magnitude</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>magnitude of this Vec2, calculated from the coordinates : <code>&radic;(<!--
+       --><a href="utils.geometry2d.Vec2.html#x">x</a><sup>2</sup> + <!--
+       --><a href="utils.geometry2d.Vec2.html#y">y</a><sup>2</sup>)</code>. when used as setter, the <a href="utils.geometry2d.Vec2.html#x">x</a> and <a href="utils.geometry2d.Vec2.html#y">y</a>
+                <!--
+-->attributes are modified to make the magnitude equal to the given one, and to keep the
+                <!--
+--><a href="utils.geometry2d.Vec2.html#angle">angle</a> value.</p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="squareMagnitude"><span class="symbol-name">squareMagnitude</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>square magnitude of this vector, calculated from the coordinates : <code><!--
+       --><a href="utils.geometry2d.Vec2.html#x">x</a><sup>2</sup> + <a href="utils.geometry2d.Vec2.html#y">y</a><sup>2</sup> <!--
+       --></code></p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="x"><span class="symbol-name">x</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="y"><span class="symbol-name">y</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-constant">constant</span>&nbsp;<span class="label label-readonly">read-only</span>&nbsp;<span class="label label-static">static</span></div>
+              <h3 id=".zero"><span class="symbol-name">zero</span><small class="property-type">
+            &nbsp;<a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></small></h3>
+              <p>a new <code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code> with <code>x = y = 0</code></p>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="add"><span class="symbol-name">add</span><span class="signature"><span class="signature-params">(vec)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>vec</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="addXY"><span class="symbol-name">addXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>number to be added to x coordinate</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>number to be added to y coordinate</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="clampMagnitude"><span class="symbol-name">clampMagnitude</span><span class="signature"><span class="signature-params">(min, max)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>if the magnitude of this Vec2 is not in the interval [min, max], this method modifies the coordinate to make the magnitude to the max(if magnitude is higher) or the min (if magnitude is lower).</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>min</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the minimum magnitude</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>max</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the maximum magnitude</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="clone"><span class="symbol-name">clone</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;a Vec2 with the same x and y properties</p>
+                </dd>
+              </dl>
+              <h3 id="equals"><span class="symbol-name">equals</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if this.x=vec.x and this.y=vec.y, false otherwise.</p>
+                </dd>
+              </dl>
+              <h3 id="equalsXY"><span class="symbol-name">equalsXY</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if this.x=x and this.y=y, false otherwise.</p>
+                </dd>
+              </dl>
+              <h3 id="getHorizontalMirror"><span class="symbol-name">getHorizontalMirror</span><span class="signature"><span class="signature-params">([axisX])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisX</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;the horizontal mirror Vec2 of this Vec2, relative to the axisX x coordinate</p>
+                </dd>
+              </dl>
+              <h3 id="getMirror"><span class="symbol-name">getMirror</span><span class="signature"><span class="signature-params">([center])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>center</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>Vec2.ZERO</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;the mirror Vec2 of this Vec2, relative to the center</p>
+                </dd>
+              </dl>
+              <h3 id="getRoundedX"><span class="symbol-name">getRoundedX</span><span class="signature"><span class="signature-params">([digits])</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>digits</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>number of digits the result must have. if not set (= 0), the result will be the closest integer.</p>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;rounded value of x coordinate.</p>
+                </dd>
+              </dl>
+              <h3 id="getRoundedY"><span class="symbol-name">getRoundedY</span><span class="signature"><span class="signature-params">([digits])</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>digits</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>number of digits the result must have. if not set (= 0), the result will be the closest integer.</p>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;rounded value of y coordinate.</p>
+                </dd>
+              </dl>
+              <h3 id="getUnit"><span class="symbol-name">getUnit</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;new Vec2 containing unit (magnitude=1) version of this Vec2</p>
+                </dd>
+              </dl>
+              <h3 id="getVerticalMirror"><span class="symbol-name">getVerticalMirror</span><span class="signature"><span class="signature-params">([axisY])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisY</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;the vertical mirror Vec2 of this Vec2, relative to the axisY y coordinate</p>
+                </dd>
+              </dl>
+              <h3 id="isZero"><span class="symbol-name">isZero</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if x=y=0, false otherwise.</p>
+                </dd>
+              </dl>
+              <h3 id="mirrorHorizontally"><span class="symbol-name">mirrorHorizontally</span><span class="signature"><span class="signature-params">([axisX])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>same (but faster) as instance.set(instance.getHorizontalMirror(axisX))</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisX</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="mirrorVertically"><span class="symbol-name">mirrorVertically</span><span class="signature"><span class="signature-params">([axisY])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>same (but faster) as instance.set(instance.getVerticalMirror(axisY))</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisY</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="mul"><span class="symbol-name">mul</span><span class="signature"><span class="signature-params">(factor)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>multiplies x and y coordinates by the parameter.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="normalize"><span class="symbol-name">normalize</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>sets x and y coordinates to make the magnitude = 1. if x = y = 0, this function does nothing.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="remove"><span class="symbol-name">remove</span><span class="signature"><span class="signature-params">(vec)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>vec</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="reset"><span class="symbol-name">reset</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>sets x and y coordinates to 0</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="rotate"><span class="symbol-name">rotate</span><span class="signature"><span class="signature-params">(a)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>a</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>angle(radians) to rotate this Vec2 this.angle += a;</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="rotateAround"><span class="symbol-name">rotateAround</span><span class="signature"><span class="signature-params">(center, a)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>rotate this Vec2 around the center, and keep the distance to the center</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>center</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>point to rotate this Vec2 around</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>a</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>angle(radians) to rotate this Vec2</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="roundedVec"><span class="symbol-name">roundedVec</span><span class="signature"><span class="signature-params">([digits])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>digits</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>number of digits the result must have. if not set (= 0), the result will be the closest integer.</p>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;copy of this Vec2 with rounded coordinates.</p>
+                </dd>
+              </dl>
+              <h3 id="set"><span class="symbol-name">set</span><span class="signature"><span class="signature-params">(vec)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>sets x and y coordinates to the same as the 'vec' parameter</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>vec</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="setAngle"><span class="symbol-name">setAngle</span><span class="signature"><span class="signature-params">(a)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>x= cos(a)<em>magnitude, y= sin(a)</em>magnitude</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>a</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>new angle(radians) of this Vec2</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="setMagnitude"><span class="symbol-name">setMagnitude</span><span class="signature"><span class="signature-params">(mag)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>sets x and y coordinates to make the magnitude = mag.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>mag</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>the new magnitude of this Vec2</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="setXY"><span class="symbol-name">setXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>sets x and y coordinates of this Vec2</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>new x coordinate</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>new y coordinate</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;this</p>
+                </dd>
+              </dl>
+              <h3 id="toString"><span class="symbol-name">toString</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> string</span></span>
+              </h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;&quot;(x,y)&quot;</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".ccw"><span class="symbol-name">ccw</span><span class="signature"><span class="signature-params">(A, B, C)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>A</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>B</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>C</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if AB and AC are in counter-clockwise order, false otherwise</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".ccw2"><span class="symbol-name">ccw2</span><span class="signature"><span class="signature-params">(AB, AC)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>AB</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>AC</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if AB and AC are in counter-clockwise order, false otherwise</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".createFromAngle"><span class="symbol-name">createFromAngle</span><span class="signature"><span class="signature-params">(rad[, mag])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rad</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>mag</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>magnitude</p>
+                        <p>Defaults to <code>1</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;(cos(rad)<em>mag, sin(rad)</em>mag)</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".createVec2Array"><span class="symbol-name">createVec2Array</span><span class="signature"><span class="signature-params">(xyxyArray)</span>&nbsp;&rarr; <span class="signature-returns"> Array of <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>xyxyArray</p>
+                      </td>
+                      <td>
+                        <p>Array of number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>array of points coordinates ordered like this : [x1, y1, x2, y2, x3, y3, ...].</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>Array of <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;a Vec2 array : [(x1,y1), (x2,y2), (x3,y3), ...].</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".distance"><span class="symbol-name">distance</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>A</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>B</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;the distance between A and B</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".dotProd"><span class="symbol-name">dotProd</span><span class="signature"><span class="signature-params">(u, v)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>u</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>v</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;the result of the dot product of u and v.</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".squareDistance"><span class="symbol-name">squareDistance</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>A</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>B</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;the square distance between A and B</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".translation"><span class="symbol-name">translation</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>A</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>start point</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>B</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>end point</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;the translation from A to B</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".vectProd"><span class="symbol-name">vectProd</span><span class="signature"><span class="signature-params">(u, v)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>u</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>v</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;the result of the vectorial product of u and v.</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

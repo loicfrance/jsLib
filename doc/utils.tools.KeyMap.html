@@ -1,0 +1,455 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: KeyMap</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="utils.html">utils</a>.<wbr><a href="utils.tools.html">tools</a>.<wbr></small><span class="symbol-name">KeyMap</span></h1>
+            <p class="source-link">Source: <a href="utils_utils_1.js.html#source-line-287">utils/<wbr>utils_1.<wbr>js:287</a></p>
+            <div class="symbol-classdesc">
+              <p>a useful class to use with <a href="utils.tools.InputManager.html">InputManager</a> class to make
+                <!--
+-->easy-to-use keymaps. call apply method to use it,
+                <!--
+--><a href="utils.tools.KeyMap.html#setAction">setAction</a> to add mappings, and
+                <!--
+--><a href="utils.tools.KeyMap.html#setCallback">setCallback</a> to add a callback method called when event occur on
+                <!--
+-->selected keys.</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.tools.KeyMap.html#disable">disable(inputManager)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.tools.KeyMap.html#enable">enable(inputManager)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.tools.KeyMap.html#getAction">getAction(keyCode)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.tools.KeyMap.html#getKeys">getKeys(action)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.tools.KeyMap.html#isKeyDown">isKeyDown(inputManager, action)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="utils.tools.KeyMap.html#setAction">setAction(keyCode, action)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.tools.KeyMap.html#setCallback">setCallback(callback)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Abstract type</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.tools.KeyMap.html#.keyMapCallback">keyMapCallback(action, keyState)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="KeyMap">new&nbsp;<span class="symbol-name">KeyMap</span><span class="signature"><span class="signature-params">()</span></span>
+            </h2>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="disable"><span class="symbol-name">disable</span><span class="signature"><span class="signature-params">(inputManager)</span></span>
+              </h3>
+              <p>removes the callback function from the keyboard listener of the parameter.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>inputManager</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.tools.InputManager.html">utils.tools.InputManager</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="enable"><span class="symbol-name">enable</span><span class="signature"><span class="signature-params">(inputManager)</span></span>
+              </h3>
+              <p>allow the instance to catch keyboard events by adding a callback function using the parameter's
+                <!--
+--><a href="utils.tools.InputManager.html#addKeyCallback">addKeyCallback</a> method.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>inputManager</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.tools.InputManager.html">utils.tools.InputManager</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="getAction"><span class="symbol-name">getAction</span><span class="signature"><span class="signature-params">(keyCode)</span>&nbsp;&rarr; <span class="signature-returns"> any type</span></span>
+              </h3>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>keyCode</p>
+                      </td>
+                      <td>
+                        <p>(<a href="utils.tools.InputManager.html#.Key">utils.tools.InputManager.Key</a> or number)</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>any type</code>&nbsp;action associated to the key</p>
+                </dd>
+              </dl>
+              <h3 id="getKeys"><span class="symbol-name">getKeys</span><span class="signature"><span class="signature-params">(action)</span>&nbsp;&rarr; <span class="signature-returns"> (Array of <a href="utils.tools.InputManager.html#.Key">utils.tools.InputManager.Key</a> or Array of number)</span></span>
+              </h3>
+              <p>returns the set of keys associated with the specified action.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>action</p>
+                      </td>
+                      <td>
+                        <p>any type</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>(Array of <a href="utils.tools.InputManager.html#.Key">utils.tools.InputManager.Key</a> or Array of number)</code>&nbsp;key codes</p>
+                </dd>
+              </dl>
+              <h3 id="isKeyDown"><span class="symbol-name">isKeyDown</span><span class="signature"><span class="signature-params">(inputManager, action)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns whether or not at least one key associated to the specified action is pressed</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>inputManager</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.tools.InputManager.html">utils.tools.InputManager</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>action</p>
+                      </td>
+                      <td>
+                        <p>any type</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;true if at least one key associated to the specified action is pressed</p>
+                </dd>
+              </dl>
+              <h3 id="setAction"><span class="symbol-name">setAction</span><span class="signature"><span class="signature-params">(keyCode, action)</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>keyCode</p>
+                      </td>
+                      <td>
+                        <p>(<a href="utils.tools.InputManager.html#.Key">utils.tools.InputManager.Key</a>, Array of <a href="utils.tools.InputManager.html#.Key">utils.tools.InputManager.Key</a>, number, or Array of number)</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>action</p>
+                      </td>
+                      <td>
+                        <p>any type</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="setCallback"><span class="symbol-name">setCallback</span><span class="signature"><span class="signature-params">(callback)</span></span>
+              </h3>
+              <p>sets the callback function which will be called when a useful keyboard event happen.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>callback</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+            <h2>Abstract type</h2>
+            <section>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".keyMapCallback"><span class="symbol-name">keyMapCallback</span><span class="signature"><span class="signature-params">(action, keyState)</span>&nbsp;&rarr; <span class="signature-returns"> (void or boolean)</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>action</p>
+                      </td>
+                      <td>
+                        <p>any type</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>associated to the event's key</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>keyState</p>
+                      </td>
+                      <td>
+                        <p>utils.tools.InputManager.KeyState</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>(void or boolean)</code>&nbsp;prevent default key behavior</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

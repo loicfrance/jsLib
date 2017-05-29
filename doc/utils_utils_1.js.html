@@ -1,0 +1,827 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: utils/utils_1.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: utils/utils_1.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * Created by Loic France on 11/11/2016.
+ */
+{
+//######################################################################################################################
+//######################################################## tools #######################################################
+//######################################################################################################################
+
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - InputManager - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @callback utils.tools.InputManager.keyboardCallback
+ * @param {utils.tools.InputManager.Key|number} keyCode
+ * @param {utils.tools.InputManager.KeyState|number} keyState
+ * @returns {void|boolean} prevent default behavior
+ */
+/**
+ * @callback utils.tools.InputManager.mouseCallback
+ * @param {utils.tools.InputManager.MouseEvent} event
+ * @param {utils.tools.InputManager.MouseButton} button
+ * @param {utils.geometry2d.Vec2} position
+ * @returns {void|boolean} prevent default behavior.
+ */
+/**
+ * @callback utils.tools.InputManager.focusCallback
+ * @param {boolean} hasFocus
+ */
+/**
+ * @classdesc a class managing keyboard and mouse events, related to a particular HTMLElement
+ * @class
+ * @memberOf utils.tools
+ */
+class InputManager{
+	/**
+	 * @constructor
+	 * @param {HTMLElement}element
+	 */
+	constructor(element) {
+		this.element &#x3D; element;
+		let keyState &#x3D; new Uint8Array(256);
+		for (let i &#x3D; keyState.length-1; i &gt;&#x3D; 0; i--) {
+			keyState[i] &#x3D; InputManager.KeyState.UP;
+		}
+		let keyboardCallbacks &#x3D; [];
+//--------------------------------------------------- private methods --------------------------------------------------
+		const onKeyUp &#x3D; evt &#x3D;&gt; {
+			if (!keyState[evt.keyCode]) {
+				keyState[evt.keyCode] &#x3D; InputManager.KeyState.UP;
+				let len &#x3D; keyboardCallbacks.length;
+				for (let i &#x3D; 0; i &amp;lt; len; i++)
+					if (keyboardCallbacks[i](evt.keyCode, InputManager.KeyState.UP)) evt.preventDefault();
+			}
+		};
+		const onKeyDown &#x3D; evt &#x3D;&gt; {
+			if (keyState[evt.keyCode]) {
+				keyState[evt.keyCode] &#x3D; InputManager.KeyState.DOWN;
+				let len &#x3D; keyboardCallbacks.length;
+				for (let i &#x3D; 0; i &amp;lt; len; i++)
+					if (keyboardCallbacks[i](evt.keyCode, InputManager.KeyState.DOWN)) evt.preventDefault();
+			}
+		};
+		const fixMouseWhich &#x3D; evt &#x3D;&gt; {
+			if(!evt.which &amp;amp;&amp;amp; evt.button) {
+				evt.which &#x3D;
+					((evt.button % 8 - evt.button % 4)&#x3D;&#x3D;4) ? InputManager.MouseButton.MOUSE_MIDDLE :
+						((evt.button % 4 - evt.button % 2)&#x3D;&#x3D;2) ? InputManager.MouseButton.MOUSE_RIGHT :
+							((evt.button % 2				 )&#x3D;&#x3D;1) ? InputManager.MouseButton.MOUSE_LEFT :
+								InputManager.MouseButton.MOUSE_UNKNOWN;
+			}
+		};
+		const getVec &#x3D; function(evt){
+			return new Vec2(evt.pageX - this.element.offsetLeft, evt.pageY - this.element.offsetTop); };
+//--------------------------------------------------- public methods ---------------------------------------------------
+// * * * * * * * * * * * * * * * * * * * * * * * * * keyboard methods * * * * * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 * enable or disable the keyboard listener in capturing on bubbling mode, depending &amp;lt;!--
+		 * --&gt;on the 2nd parameter value
+		 * @function
+		 * @name utils.tools.InputManager#enableKeyboardListener
+		 * @param {boolean} enable
+		 * @param {boolean} [capturingMode&#x3D;true]
+		 */
+		this.enableKeyboardListener &#x3D; function(enable, capturingMode&#x3D;true) {
+			if(enable) {
+				this.element.addEventListener(&#x27;keydown&#x27;, onKeyDown, capturingMode);
+				this.element.addEventListener(&#x27;keyup&#x27;, onKeyUp, capturingMode);
+			} else {
+				this.element.removeEventListener(&#x27;keydown&#x27;, onKeyDown);
+				this.element.removeEventListener(&#x27;keyup&#x27;, onKeyUp);
+			}
+		};
+		/**
+		 * adds a keyboard events callback. don&#x27;t forget to launch the capture of keyboard events by calling &amp;lt;!--
+		 * --&gt;{@link utils.tools.InputManager#enableKeyboardListener} method
+		 * @function
+		 * @name utils.tools.InputManager#addKeyCallback
+		 * @param {utils.tools.InputManager.keyboardCallback} callback
+		 */
+		this.addKeyCallback &#x3D; (callback)&#x3D;&gt; {
+			keyboardCallbacks.push(callback);
+		};
+		/**
+		 * removes a keyboard events callback.
+		 * @function
+		 * @name utils.tools.InputManager#removeKeyCallback
+		 * @param {utils.tools.InputManager.keyboardCallback} callback
+		 */
+		this.removeKeyCallback &#x3D; (callback)&#x3D;&gt; {
+			keyboardCallbacks.remove(callback);
+		};
+		/**
+		 * returns the state of the key
+		 * @function
+		 * @name utils.tools.InputManager#getKeyState
+		 * @param {number} keyCode
+		 * @returns {utils.tools.InputManager.KeyState} key state : one of &amp;lt;!--
+		 * --&gt;{@link utils.tools.InputManager.KeyState.UP|UP} and &amp;lt;!--
+		 * --&gt;{@link utils.tools.InputManager.KeyState.DOWN|DOWN}
+		 */
+		this.getKeyState &#x3D; keyCode&#x3D;&gt; keyState[keyCode];
+		// * * * * * * * * * * * * * * * * * * * * * * * * * *mouse methods * * * * * * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 * @function
+		 * @name utils.tools.InputManager#setMouseEventsCallback
+		 * @param {utils.tools.InputManager.mouseCallback}callback
+		 */
+		this.setMouseEventsCallback &#x3D; function(callback) {
+			if(callback) {
+				this.element.onclick &#x3D; evt &#x3D;&gt; {
+					fixMouseWhich(evt);
+					return callback(InputManager.MouseEvent.MOUSE_CLICK, evt.which, getVec(evt));
+				};
+				this.element.onmousedown &#x3D; evt &#x3D;&gt; {
+					fixMouseWhich(evt);
+					return callback(InputManager.MouseEvent.MOUSE_DOWN, evt.which, getVec(evt));
+				};
+				this.element.onmouseup &#x3D; evt &#x3D;&gt; {
+					fixMouseWhich(evt);
+					return callback(InputManager.MouseEvent.MOUSE_UP, evt.which, getVec(evt));
+				};
+				this.element.ondblclick &#x3D; evt &#x3D;&gt; {
+					fixMouseWhich(evt);
+					return callback(InputManager.MouseEvent.MOUSE_DBCLICK, evt.which, getVec(evt));
+				};
+				this.element.onmousemove &#x3D; function (evt) {
+					fixMouseWhich(evt);
+					callback(InputManager.MouseEvent.MOUSE_MOVE, evt.which, getVec(evt));
+				};
+				this.element.onmouseover &#x3D; function (evt) {
+					fixMouseWhich(evt);
+					callback(InputManager.MouseEvent.MOUSE_ENTER, evt.which, getVec(evt));
+				};
+				this.element.onmouseout &#x3D; function (evt) {
+					fixMouseWhich(evt);
+					callback(InputManager.MouseEvent.MOUSE_EXIT, evt.which, getVec(evt));
+				};
+			} else {
+				this.element.onclick &#x3D; null; this.element.onmousedown &#x3D; null; this.element.onmouseup &#x3D; null;
+				this.element.ondblclick &#x3D; null;
+				this.element.onmousemove &#x3D; null; this.element.onmouseover &#x3D; null; this.element.onmouseout &#x3D; null;
+			}
+		};
+// * * * * * * * * * * * * * * * * * * * * * *focus, pointer lock, fullScreen * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 * @function
+		 * @name utils.tools.InputManager#setFocusCallback
+		 * @param {utils.tools.InputManager.focusCallback} callback
+		 */
+		this.setFocusCallback &#x3D; (callback)&#x3D;&gt; {
+			if(callback) {
+				this.element.onfocus &#x3D; _ &#x3D;&gt; callback(true);
+				this.element.onblur &#x3D; _ &#x3D;&gt; callback(false);
+			} else {
+				this.element.onfocus &#x3D; null;
+				this.element.onblur &#x3D; null;
+			}
+		};
+		/**
+		 * requests pointer lock
+		 * @function
+		 * @name utils.tools.InputManager#pointerLock
+		 * @param eventListener
+		 */
+		this.pointerLock &#x3D; (eventListener) &#x3D;&gt; {
+			if(eventListener) {
+				if(eventListener.pointerLockChange) {
+					document.addEventListener(&#x27;pointerlockchange&#x27;, eventListener.pointerLockChange, false);
+					document.addEventListener(&#x27;mozpointerlockchange&#x27;, eventListener.pointerLockChange, false);
+					document.addEventListener(&#x27;webkitpointerlockchange&#x27;, eventListener.pointerLockChange, false);
+				}
+				if(eventListener.pointerLockError) {
+					document.addEventListener(&#x27;pointerlockerror&#x27;, eventListener.pointerLockError, false);
+					document.addEventListener(&#x27;mozpointerlockerror&#x27;, eventListener.pointerLockError, false);
+					document.addEventListener(&#x27;webkitpointerlockerror&#x27;, eventListener.pointerLockError, false);
+				}
+			}
+			if(document.webkitFullscreenElement &#x3D;&#x3D;&#x3D; this.element ||
+				document.mozFullscreenElement &#x3D;&#x3D;&#x3D; this.element ||
+				document.fullscreenElement &#x3D;&#x3D;&#x3D; this.element) {
+				this.element.requestPointerLock &#x3D; this.element.requestPointerLock ||
+					this.element.mozRequestPointerLock ||
+					this.element.webkitRequestPointerLock;
+				this.element.requestPointerLock();
+			}
+		};
+		/**
+		 * requests full screen
+		 * @function
+		 * @name utils.tools.InputManager#fullScreen
+		 * @param callback
+		 */
+		this.fullScreen &#x3D; (callback)&#x3D;&gt; {
+			element.requestFullscreen &#x3D; element.requestFullscreen ||
+				element.mozRequestFullscreen ||
+				element.mozRequestFullScreen || // Le caractère &#x27;S&#x27; majuscule de l&#x27;ancienne API.
+				element.webkitRequestFullscreen;
+			element.requestFullscreen();
+			if (callback) {
+				document.addEventListener(&#x27;fullscreenchange&#x27;, callback, false);
+				document.addEventListener(&#x27;mozfullscreenchange&#x27;, callback, false);
+				document.addEventListener(&#x27;webkitfullscreenchange&#x27;, callback, false);
+			}
+		};
+	}
+}
+/**
+ * @readonly
+ * @enum {number}
+ */
+InputManager.Key &#x3D; {
+	&#x27;BACKSPACE&#x27;: 8, &#x27;TAB&#x27;: 9, &#x27;ENTER&#x27;: 13, &#x27;CAPS&#x27;: 16,
+	&#x27;CTRL&#x27;: 17,  &#x27;ALT&#x27;: 18,  &#x27;CAPS_LOCK&#x27;: 20,  &#x27;ESCAPE&#x27;: 27,  &#x27;SPACE&#x27;: 32, &#x27;PAGE_UP&#x27;: 33,
+	&#x27;PAGE_DOWN&#x27;: 34, &#x27;END&#x27;: 35, &#x27;BEGINNING&#x27;: 36, &#x27;LEFT&#x27;: 37, &#x27;UP&#x27;: 38, &#x27;RIGHT&#x27;: 39,
+	&#x27;DOWN&#x27;: 40, &#x27;PRINT_SCR&#x27;: 44, &#x27;INSERT&#x27;: 45, &#x27;DELETE&#x27;: 46, &#x27;ZERO&#x27;: 48, &#x27;ONE&#x27;: 49,
+	&#x27;TWO&#x27;: 50, &#x27;THREE&#x27;: 51, &#x27;FOUR&#x27;: 52, &#x27;FIVE&#x27;: 53, &#x27;SIX&#x27;: 54, &#x27;SEVEN&#x27;: 55, &#x27;EIGHT&#x27;: 56,
+	&#x27;NINE&#x27;: 57, &#x27;A&#x27;: 65, &#x27;B&#x27;: 66, &#x27;C&#x27;: 67, &#x27;D&#x27;: 68, &#x27;E&#x27;: 69, &#x27;F&#x27;: 70, &#x27;G&#x27;: 71,
+	&#x27;H&#x27;: 72, &#x27;I&#x27;: 73, &#x27;J&#x27;: 74, &#x27;K&#x27;: 75, &#x27;L&#x27;: 76, &#x27;M&#x27;: 77, &#x27;N&#x27;: 78, &#x27;O&#x27;: 79,
+	&#x27;P&#x27;: 80, &#x27;Q&#x27;: 81, &#x27;R&#x27;: 82, &#x27;S&#x27;: 83, &#x27;T&#x27;: 84, &#x27;U&#x27;: 85, &#x27;V&#x27;: 86, &#x27;W&#x27;: 87,
+	&#x27;X&#x27;: 88, &#x27;Y&#x27;: 89, &#x27;Z&#x27;: 90, &#x27;NUM_0&#x27;: 96, &#x27;NUM_1&#x27;: 97, &#x27;NUM_2&#x27;: 98, &#x27;NUM_3&#x27;: 99,
+	&#x27;NUM_4&#x27;: 100, &#x27;NUM_5&#x27;: 101, &#x27;NUM_6&#x27;: 102, &#x27;NUM_7&#x27;: 103, &#x27;NUM_8&#x27;: 104, &#x27;NUM_9&#x27;: 105,
+	&#x27;F1&#x27;: 112, &#x27;F2&#x27;: 113, &#x27;F3&#x27;: 114, &#x27;F4&#x27;: 115, &#x27;F5&#x27;: 116, &#x27;F6&#x27;: 117, &#x27;F7&#x27;: 118,
+	&#x27;F8&#x27;: 119, &#x27;F9&#x27;: 120, &#x27;F10&#x27;: 121, &#x27;F11&#x27;: 122, &#x27;F12&#x27;: 123, &#x27;NUM_LOCK&#x27;: 144,
+	&#x27;FN&#x27;: 255,
+};
+/**
+ * @memberOf utils.tools.InputManager
+ * @readonly
+ * @enum {number}
+ */
+InputManager.KeyState &#x3D; {
+	&#x27;UP&#x27;: 0, &#x27;DOWN&#x27;: 1,
+};
+/**
+ * @memberOf utils.tools.InputManager
+ * @readonly
+ * @enum {number}
+ */
+InputManager.MouseEvent &#x3D; {
+	&#x27;MOUSE_UP&#x27;: 0, &#x27;MOUSE_DOWN&#x27;: 1, &#x27;MOUSE_CLICK&#x27;: 2, &#x27;MOUSE_DBCLICK&#x27;: 3,
+	&#x27;MOUSE_EXIT&#x27;: 4, &#x27;MOUSE_ENTER&#x27;: 5, &#x27;MOUSE_MOVE&#x27;: 6
+};
+/**
+ * @memberOf utils.tools.InputManager
+ * @readonly
+ * @enum {number}
+ */
+InputManager.MouseButton &#x3D; { &#x27;MOUSE_UNKNOWN&#x27;: 0, &#x27;MOUSE_LEFT&#x27;: 1, &#x27;MOUSE_MIDDLE&#x27;: 2, &#x27;MOUSE_RIGHT&#x27;: 3 };
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -KeyMap- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @callback utils.tools.KeyMap.keyMapCallback
+ * @param {*} action associated to the event&#x27;s key
+ * @param {utils.tools.InputManager.KeyState} keyState
+ * @returns {void|boolean} prevent default key behavior
+ */
+/**
+ * @memberOf utils.tools
+ * @class
+ * @classdesc a useful class to use with {@link utils.tools.InputManager|InputManager} class to make &amp;lt;!--
+ * --&gt;easy-to-use keymaps. call {@link utils.tools.KeyMap#apply|apply} method to use it, &amp;lt;!--
+ * --&gt;{@link utils.tools.KeyMap#setAction|setAction} to add mappings, and &amp;lt;!--
+ * --&gt;{@link utils.tools.KeyMap#setCallback|setCallback} to add a callback method called when event occur on &amp;lt;!--
+ * --&gt;selected keys.
+ */
+class KeyMap {
+	/**
+	 * @constructor
+	 */
+	constructor() {
+		let actions &#x3D; new Array(256);
+		let cb &#x3D; undefined;
+//--------------------------------------------------- private methods --------------------------------------------------
+		const callback &#x3D; (keyCode, keyState)&#x3D;&gt; {
+			if (callback) {
+				let a &#x3D; this.getAction(keyCode);
+				return (a &amp;amp;&amp;amp; callback(a, keyState)) || false;
+			}
+		};
+//--------------------------------------------------- public methods ---------------------------------------------------
+		/**
+		 * @function
+		 * @name utils.tools.KeyMap#setAction
+		 * @param {utils.tools.InputManager.Key|utils.tools.InputManager.Key[]|number|number[]} keyCode
+		 * @param {*} action
+		 */
+		this.setAction &#x3D; (keyCode, action)&#x3D;&gt; {
+			if(keyCode.length) {
+				for(let i&#x3D;0; i&amp;lt;keyCode.length; i++) {
+					this.setAction(keyCode[i], action);
+				}
+			}
+			else {
+				if(action &#x3D;&#x3D;&#x3D; null || action &#x3D;&#x3D;&#x3D; undefined) {
+					if(actions[keyCode] !&#x3D;&#x3D; undefined) actions[keyCode] &#x3D; undefined;
+				} else actions[keyCode] &#x3D; action;
+			}
+		};
+		/**
+		 * @function
+		 * @name utils.tools.KeyMap#getAction
+		 * @param {utils.tools.InputManager.Key|number} keyCode
+		 * @returns {*} action associated to the key
+		 */
+		this.getAction &#x3D; keyCode &#x3D;&gt; {
+			return actions[keyCode];
+		};
+		/**
+		 * returns whether or not at least one key associated to the specified action is pressed
+		 * @function
+		 * @name utils.tools.KeyMap#isKeyDown
+		 * @param {utils.tools.InputManager} inputManager
+		 * @param {*} action
+		 * @returns {boolean} true if at least one key associated to the specified action is pressed
+		 */
+		this.isKeyDown &#x3D; (inputManager, action) &#x3D;&gt; {
+			let code&#x3D;-1;
+			do {
+				code &#x3D; actions.indexOf(action, code+1);
+				if(code!&#x3D; -1)
+					if(inputManager.getKeyState(code) &#x3D;&#x3D; utils.tools.InputManager.KeyState.DOWN) return true;
+			} while(code!&#x3D;-1);
+			return false;
+		};
+		/**
+		 * returns the set of keys associated with the specified action.
+		 * @function
+		 * @name utils.tools.KeyMap#getKeys
+		 * @param {*} action
+		 * @returns {utils.tools.InputManager.Key[]|number[]} key codes
+		 */
+		this.getKeys &#x3D; action &#x3D;&gt; {
+			let codes &#x3D; [], i &#x3D; actions.indexOf(action);
+			while(i !&#x3D; -1) { codes.push(i); i &#x3D; actions.indexOf(action, i+1); }
+			return codes;
+		};
+		/**
+		 * sets the callback function which will be called when a useful keyboard event happen.
+		 * @function
+		 * @name utils.tools.KeyMap#setCallback
+		 * @param callback
+		 */
+		this.setCallback &#x3D; callback &#x3D;&gt; { cb &#x3D; callback; };
+		/**
+		 * allow the instance to catch keyboard events by adding a callback function using the parameter&#x27;s &amp;lt;!--
+		 * --&gt;{@link utils.tools.InputManager#addKeyCallback|addKeyCallback} method.
+		 * @function
+		 * @name utils.tools.KeyMap#enable
+		 * @param {utils.tools.InputManager} inputManager
+		 */
+		this.enable &#x3D; function(inputManager) {
+			inputManager.addKeyCallback(callback);
+		};
+		/**
+		 * removes the callback function from the keyboard listener of the parameter.
+		 * @function
+		 * @name utils.tools.KeyMap#disable
+		 * @param {utils.tools.InputManager} inputManager
+		 */
+		this.disable &#x3D; function(inputManager) {
+			inputManager.removeKeyCallback(callback);
+		};
+	}
+}
+
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - graphics - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+let G;
+let LayoutGravity &#x3D; G &#x3D; {
+	LEFT: 1, TOP: 2, RIGHT: 4, BOTTOM: 8, CENTER: 16,
+	getRect: (gravity, availableRect, width, height, marginX&#x3D;0, marginY&#x3D;marginX)&#x3D;&gt; {
+		availableRect &#x3D; availableRect.clone().addMarginsXY(-marginX, -marginY);
+		if (!(gravity &amp;amp; G.CENTER)) {
+			if (gravity) {
+				if (!(gravity &amp;amp; G.LEFT) &amp;amp;&amp;amp; !(gravity &amp;amp; G.RIGHT)) gravity |&#x3D; G.LEFT;
+				if (!(gravity &amp;amp; G.TOP) &amp;amp;&amp;amp; (gravity &amp;amp; G.BOTTOM)) gravity |&#x3D; G.TOP;
+			} else gravity &#x3D; G.LEFT | G.TOP;
+		}
+		var left &#x3D; NaN, top &#x3D; NaN, right &#x3D; NaN, bottom &#x3D; NaN;
+		if (gravity &amp;amp; G.CENTER) {
+			let w &#x3D; (availableRect.width - width)/2, h &#x3D; (availableRect.h.height-height)/2;
+			left &#x3D; availableRect.left + w; right &#x3D; availableRect.right - w;
+			top &#x3D; availableRect.top + h; bottom &#x3D; availableRect.bottom - h;
+		}
+		if (gravity &amp;amp; G.LEFT !&#x3D;&#x3D; 0) left &#x3D; availableRect.left;
+		if (gravity &amp;amp; G.TOP !&#x3D;&#x3D; 0) top &#x3D; availableRect.top;
+		if (gravity &amp;amp; G.RIGHT !&#x3D;&#x3D; 0) right &#x3D; availableRect.right;
+		if (gravity &amp;amp; G.BOTTOM !&#x3D;&#x3D; 0) bottom &#x3D; availableRect.bottom;
+		if (isNaN(left)) left &#x3D; right - width;
+		else if (isNaN(right)) right &#x3D; left + width;
+		if (isNaN(top)) top &#x3D; bottom - height;
+		else if (isNaN(bottom)) bottom &#x3D; top + height;
+		return new Rect(left, top, right, bottom);
+	},
+	getHorizontalGravity: function (g, defaultG &#x3D; null) {
+		return (g &amp;amp; G.LEFT) ? G.LEFT : (g &amp;amp; G.RIGHT) ? G.RIGHT :
+			(g &amp;amp; G.CENTER) ? G.CENTER :
+				defaultG ? defaultG : G.LEFT;
+	},
+	getVerticalGravity: function (g, defaultG &#x3D; null) {
+		return (g &amp;amp; G.TOP) ? G.TOP : (g &amp;amp; G.BOTTOM) ? G.BOTTOM :
+			(g &amp;amp; G.CENTER) ? G.CENTER :
+				defaultG ? defaultG : G.TOP;
+	}
+};;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//######################################################################################################################
+//################################################ library concatenation ###############################################
+//######################################################################################################################
+/**
+ * @typedef {Object} rgb
+ * @property {number} r
+ * @property {number} g
+ * @property {number} b
+ */
+/**
+ * @typedef {Object} hsv
+ * @property {number} h
+ * @property {number} s
+ * @property {number} v
+ */
+/**
+ * contains utils library : geometry and tools
+ * @namespace utils
+ */
+window.utils &#x3D; {
+//######################################################################################################################
+//############################################## tools&#x27; additional methods #############################################
+//######################################################################################################################
+	/**
+	 * @memberOf utils
+	 * @namespace tools
+	 */
+	tools: {
+		InputManager,
+		KeyMap,
+		/**
+		 * creates a mix of a superclass and several mixins to make a class extend a class and implements mixins.
+		 * @memberOf utils.tools
+		 * @example
+		 * class A {
+		 * 	   constructor(x) {
+		 * 	       this.x &#x3D; x;
+		 * 	   }
+		 * 	   hello() {
+		 * 	   	   alert(&#x27;hello &#x27; + this.x);
+		 * 	   }
+		 * };
+		 * var B &#x3D; {
+		 *      hello: function() {
+		 * 	       		alert(&#x27;Hi &#x27; + this.x + &#x27;!&#x27;);
+		 * 	       }
+		 * 	   }
+		 * };
+		 * class C extends utils.tools.mix(A, B) {
+		 *     constructor(x) {
+		 * 		   super(x);
+		 *	   }
+		 *	   hello() {
+		 *	       super.hello();
+		 *	       alert(&#x27;How are you ?&#x27;);
+		 *	   }
+		 * }
+		 *
+		 * var d &#x3D; new D(&#x27;John&#x27;);
+		 * d.hello(); // alert(&#x27;Hi John !&#x27;); alert(&#x27;how are you ?&#x27;);
+		 * @param {class} superclass
+		 * @param {Object} mixins
+		 * @returns {class}
+		 */
+		mix: (superclass, ...mixins) &#x3D;&gt; {
+			class C extends superclass { }
+			let len &#x3D; mixins.length, i &#x3D; -1;
+			while (++i &amp;lt; len) utils.tools.merge(C, mixins[i], true);
+			return C;
+		},
+		/**
+		 * puts all properties of src in out. if override is false or not set, if a property, &amp;lt;!--
+		 * --&gt;of src already exist in the parameter out, they are not overridden.
+		 * @memberOf utils.tools
+		 * @param {object} out
+		 * @param {object} src
+		 * @param {boolean} [override&#x3D;false]
+		 */
+		merge: (out, src, override &#x3D; false) &#x3D;&gt; {
+			for (let p in src) if (override || !out.hasOwnProperty(p)) out[p] &#x3D; src[p];
+		},
+		/**
+		 * adds all properties of the parameter to the window object. if a property of obj already exists, &amp;lt;!--
+		 * --&gt;an error message is printed in the console.
+		 * @memberOf utils.tools
+		 * @param {object} obj
+		 */
+		globalize: (obj) &#x3D;&gt; {
+			for (let p in obj) {
+				if (window.hasOwnProperty(p)) console.error(&#x27;the property &#x27; + p + &#x27; already exists in global space.&#x27;);
+				else window[p] &#x3D; obj[p];
+			}
+		},
+		/**
+		 * a filter to use with Array.prototype.filter function, by binding the first argument &amp;lt;!--
+		 * --&gt;to the array elements you want to keep.
+		 * @memberOf utils.tools
+		 * @example [1,2,3,4].filter(utils.tools.intersectionFilter.bind(undefined, [1,4,5,6])); //[1,4]
+		 * @param {Array} array
+		 * @param {object} x
+		 */
+		intersectionFilter: (array, x) &#x3D;&gt; array.indexOf(x) !&#x3D; -1,
+		/**
+		 * a filter to use with Array.prototype.filter function, by binding the first argument &amp;lt;!--
+		 * --&gt;to the array of element you want to exclude.
+		 * @memberOf utils.tools
+		 * @example [1,2,3,4].filter(utils.tools.exclusionFilter.bind(undefined, [1,4,5,6])); //[2,3]
+		 * @param {Array} array
+		 * @param {object} x
+		 */
+		exclusionFilter: (array, x) &#x3D;&gt; array.indexOf(x) &#x3D;&#x3D; -1,
+		/**
+		 * a filter to use with Array.prototype.filter function, by binding the first argument &amp;lt;!--
+		 * --&gt;to the class you want your objects to be instances of.
+		 * @memberOf utils.tools
+		 * @param {class} _class
+		 * @param {object} x
+		 */
+		instanceFilter : (_class, x) &#x3D;&gt; x instanceof _class,
+		/**
+		 * generates a random 24 bits color
+		 * @memberOf utils.tools
+		 * @param {number} bits - number of bits this color will be on (32 or 24)
+		 * @returns {string}
+		 */
+		randomColor: (bits&#x3D;24) &#x3D;&gt; &#x27;#&#x27;+Math.round(Math.random() * (1&amp;lt;&amp;lt;bits)).toString(16),
+		/**
+		 * overrides a function of a class by the specified function, and returns the old function.
+		 * @memberOf utils.tools
+		 * @param {class} _class
+		 * @param {string} funcName
+		 * @param {function} newFunc
+		 * @returns {function}
+		 */
+		override: (_class, funcName, newFunc) &#x3D;&gt; {
+			let _super &#x3D; _class.prototype[funcName];
+			_class.prototype[funcName] &#x3D; newFunc;
+			return _super;
+		},
+		/**
+		 * gets a string returned by a specified url by calling the callback function with the returned &amp;lt;!--
+		 * --&gt;text as argument.
+		 * @memberOf utils.tools
+		 * @param {string} url
+		 * @param {function(string)} callback
+		 */
+		getStringFromUrl: (url, callback) &#x3D;&gt; {
+			let client &#x3D; new XMLHttpRequest();
+			client.open(&#x27;GET&#x27;, url);
+			client.onreadystatechange &#x3D; _ &#x3D;&gt; callback(client.responseText);
+			client.send();
+		},
+		/**
+		 * convert hsv color to rgb
+		 * @memberOf utils.tools
+		 * @param {number} h - integer in [0;359]
+		 * @param {number} s - integer in [0;255]
+		 * @param {number} v - integer in [0;255]
+		 * @returns {rgb}
+		 */
+		HSVtoRGB: (h, s, v)&#x3D;&gt; {
+			let i &#x3D; Math.floor(h * 6),
+				f &#x3D; h * 6 - i,
+				p &#x3D; Math.round((v * (1 - s))*255),
+				q &#x3D; Math.round((v * (1 - f * s))*255),
+				t &#x3D; Math.round((v * (1 - (1 - f) * s))*255);
+			v &#x3D; Math.round(v*255);
+			switch (i % 6) {
+				case 0: return {r: v, g: t, b: p};
+				case 1: return {r: q, g: v, b: p};
+				case 2: return {r: p, g: v, b: t};
+				case 3: return {r: p, g: q, b: v};
+				case 4: return {r: t, g: p, b: v};
+				case 5: return {r: v, g: p, b: q};
+				default : return {r: 0, g: 0, b: 0};
+			}
+		},
+		/**
+		 * convert rgb color to hsv
+		 * @memberOf utils.tools
+		 * @param {number} r - integer in [0;359]
+		 * @param {number} g - integer in [0;255]
+		 * @param {number} b - integer in [0;255]
+		 * @returns {hsv}
+		 */
+		RBGtoHSV : (r, g, b)&#x3D;&gt; {
+			let max &#x3D; Math.max(r, g, b), min &#x3D; Math.min(r, g, b),
+				d &#x3D; max - min,
+				s &#x3D; (max &#x3D;&#x3D;&#x3D; 0 ? 0 : d / max),
+				v &#x3D; max / 255;
+
+			switch (max) {
+				case min: return {h: 0, s: s, v: v};
+				case r: return { h: ((g - b) + d * (g &amp;lt; b ? 6: 0))/(6*d), s: s, v: v};
+				case g: return { h: ((b - r) + d * 2)/(6*d), s: s, v: v};
+				case b: return { h: ((r - g) + d * 4)/(6*d), s: s, v: v};
+				default : return {h: 0, s: 0, s: 0};
+			}
+		},
+		/**
+		 * convert rgb color to hexadecimal string formated color
+		 * @memberOf utils.tools
+		 * @param {number} r
+		 * @param {number} g
+		 * @param {number} b
+		 * @returns {string}
+		 */
+		RGBToHex : (r, g, b)&#x3D;&gt; (r&gt;15?&#x27;#&#x27;:&#x27;#0&#x27;)+((r&amp;lt;&amp;lt;16)+(g&amp;lt;&amp;lt;8)+b).toString(16),
+
+		LayoutGravity
+	}
+};
+
+//######################################################################################################################
+//######################################### additional methods to base objects #########################################
+//######################################################################################################################
+
+utils.tools.merge(console, {
+	/**
+	 * equivalent of &amp;lt;code&gt;console.error(new Error(msg).stack);&amp;lt;/code&gt;
+	 * @memberOf console
+	 * @param {*} msg
+	 */
+	stack : (msg) &#x3D;&gt; console.error(new Error(msg).stack),
+	/**
+	 * equivalent of &amp;lt;code&gt;console.stack(\&#x60;deprecated : ${msg}\&#x60;)&amp;lt;/code&gt;
+	 * @memberOf console
+	 * @param {*} msg
+	 */
+	deprecated : (msg) &#x3D;&gt; console.stack(&#x60;deprecated : ${msg}&#x60;),
+	/**
+	 * prints the 2d array in the console, where every cell in a line is separated by the separation &amp;lt;!--
+	 * --&gt;character and every line is separated by line breaks
+	 * @memberOf console
+	 * @param {Array.&amp;lt;Array.&amp;lt;*&gt;&gt;} mat
+	 * @param {string} sepChar
+	 */
+	log2dMatrix : (mat, sepChar&#x3D;&#x27;,&#x27;)&#x3D;&gt; {
+		for(let i&#x3D;0; i&amp;lt;mat.length; i++) {
+			if(mat[i].join) console.log(mat[i].join(sepChar));
+			else console.log(mat[i]);
+		}
+	}
+});
+utils.tools.merge(window,  {
+	/** result of &amp;lt;code&gt; typeof x&amp;lt;/code&gt; when x is undefined
+	 * @type {string}
+	 */
+	&#x27;TYPE_UNDEFINED&#x27; : typeof undefined,
+	/** result of &amp;lt;code&gt; typeof x&amp;lt;/code&gt; when x is an object
+	 * @type {string}
+	 */
+	&#x27;TYPE_OBJECT&#x27;    : typeof {},
+	/** result of &amp;lt;code&gt; typeof x&amp;lt;/code&gt; when x is a boolean
+	 * @type {string}
+	 */
+	&#x27;TYPE_BOOLEAN&#x27;   : typeof true,
+	/** result of &amp;lt;code&gt; typeof x&amp;lt;/code&gt; when x is a number
+	 * @type {string}
+	 */
+	&#x27;TYPE_NUMBER&#x27;    : typeof 1,
+	/** result of &amp;lt;code&gt; typeof x&amp;lt;/code&gt; when x is a string
+	 * @type {string}
+	 */
+	&#x27;TYPE_STRING&#x27;    : typeof &#x27;&#x27;,
+	/** result of &amp;lt;code&gt; typeof x&amp;lt;/code&gt; when x is a function
+	 * @type {string}
+	 */
+	&#x27;TYPE_FUNCTION&#x27;  : typeof console.stack,
+});
+utils.tools.merge(CanvasRenderingContext2D.prototype, {
+	/**
+	 * @function
+	 * draws the text on the canvas with the specified gravity and add line breaks to make sure the text is clamped
+	 * in the specified rectangle
+	 * @name CanvasRenderingContext2D#wrapText
+	 * @param {string} text
+	 * @param {utils.geometry2d.Rect} rect
+	 * @param {number} lineHeight
+	 * @param {number} textGravity
+	 * @param {boolean} [fill&#x3D;true]
+	 * @param {boolean} [stroke&#x3D;!fill]
+	 */
+	wrapText: function(text, rect, lineHeight, textGravity, fill&#x3D;true, stroke&#x3D;!fill) {
+		let paragraphs &#x3D; text.split(&#x27;\n&#x27;),
+			parLen &#x3D; paragraphs.length,
+			lines &#x3D; [], line,
+			linesX &#x3D; [], lineX &#x3D; 0,
+			words, len,
+			testLine,
+			metrics,
+			width &#x3D; 0,
+			rectWidth &#x3D; rect.width,
+			n, y;
+		for (let i &#x3D; 0; i &amp;lt; parLen; i++) {
+			words &#x3D; paragraphs[i].split(&#x27; &#x27;);
+			len &#x3D; words.length;
+			if (!len) {
+				lines.push(paragraphs[i]);
+				linesX.push(0);
+				continue;
+			}
+			line &#x3D; words[0];
+			for (n &#x3D; 1; n &amp;lt; len; n++) {
+				testLine &#x3D; line + &#x27; &#x27; + words[n];
+				metrics &#x3D; this.measureText(testLine);
+				width &#x3D; metrics.width;
+				if (width &gt; rectWidth &amp;amp;&amp;amp; n &gt; 0) {
+					lineX &#x3D; rect.left;
+					if (!(textGravity &amp;amp; Gravity.LEFT)) {
+						if (textGravity &amp;amp; Gravity.RIGHT) lineX +&#x3D; this.measureText(line).width - width;
+						else if (textGravity &amp;amp; Gravity.CENTER) lineX +&#x3D; (this.measureText(line).width - width) / 2;
+					}
+					lines.push(line);
+					line &#x3D; words[n];
+					linesX.push(lineX);
+				}
+				else {
+					line &#x3D; testLine;
+				}
+			}
+			lineX &#x3D; rect.left;
+			if (!(textGravity &amp;amp; Gravity.LEFT)) {
+				metrics &#x3D; this.measureText(line);
+				width &#x3D; metrics.width;
+				if (textGravity &amp;amp; Gravity.RIGHT) lineX +&#x3D; rectWidth - width;
+				else if (textGravity &amp;amp; Gravity.CENTER) lineX +&#x3D; (rectWidth - width) / 2;
+			}
+			lines.push(line);
+			linesX.push(lineX);
+		}
+		len &#x3D; lines.length;
+		y &#x3D; rect.top + lineHeight;
+		if (!(textGravity &amp;amp; Gravity.TOP)) {
+			if (textGravity &amp;amp; Gravity.BOTTOM) y &#x3D; rect.bottom - lineHeight * (len - 1);
+			else if (textGravity &amp;amp; Gravity.CENTER) y +&#x3D; (rect.height - lineHeight * len) / 2;
+		}
+		for (n &#x3D; 0; n &amp;lt; len; n++) {
+			if (fill)   this.fillText(lines[n], linesX[n], y);
+			if (stroke) this.strokeText(lines[n], linesX[n], y);
+			y +&#x3D; lineHeight;
+		}
+	}
+});
+}
+</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

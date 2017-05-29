@@ -1,0 +1,444 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: utils/input.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: utils/input.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * Created by rfrance on 12/20/2016.
+ */
+window.utils &#x3D; window.utils || {};
+//######################################################################################################################
+//#                                             enumerations and callbacks                                             #
+//######################################################################################################################
+/**
+ * @callback utils.input.keyboardCallback
+ * @param {utils.input.Key|number} keyCode
+ * @param {utils.input.KeyState|number} keyState
+ * @returns {void|boolean} prevent default behavior
+ */
+/**
+ * @callback utils.input.mouseCallback
+ * @param {utils.input.MouseEvent} event
+ * @param {utils.input.MouseButton} button
+ * @param {utils.geometry2d.Vec2} position
+ * @returns {void|boolean} prevent default behavior.
+ */
+/**
+ * @callback utils.input.InputManager.focusCallback
+ * @param {boolean} hasFocus
+ */
+/**
+ * @callback utils.input.KeyMap.keyMapCallback
+ * @param {*} action associated to the event&#x27;s key
+ * @param {utils.input.InputManager.KeyState} keyState
+ * @returns {void|boolean} prevent default key behavior
+ */
+/**
+ * @memberOf utils
+ * @namespace input
+ */
+utils.input &#x3D; {};
+/**
+ * @memberOf utils.input
+ * @enum {number}
+ * @readonly
+ */
+utils.input.KeyState &#x3D; { RELEASED: 0, PRESSED:1 };
+/**
+ * @memberOf utils.input
+ * @enum {number}
+ * @readonly
+ */
+utils.input.Key &#x3D; {
+	BACKSPACE: 8, TAB: 9, ENTER: 13, SHIFT: 16, CTRL: 17,  ALT: 18,  CAPS_LOCK: 20,  ESCAPE: 27, SPACE: 32,
+	PAGE_UP: 33, PAGE_DOWN: 34, END: 35, BEGINNING: 36, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, PRINT_SCR: 44,
+	INSERT: 45, DELETE: 46, ZERO: 48, ONE: 49, TWO: 50, THREE: 51, FOUR: 52, FIVE: 53, SIX: 54, SEVEN: 55, EIGHT: 56,
+	NINE: 57, A: 65, B: 66, C: 67, D: 68, E: 69, F: 70, G: 71, H: 72, I: 73, J: 74, K: 75, L: 76, M: 77, N: 78, O: 79,
+	P: 80, Q: 81, R: 82, S: 83, T: 84, U: 85, V: 86, W: 87, X: 88, Y: 89, Z: 90, NUM_0: 96, NUM_1: 97, NUM_2: 98,
+	NUM_3: 99, NUM_4: 100, NUM_5: 101, NUM_6: 102, NUM_7: 103, NUM_8: 104, NUM_9: 105, F1: 112, F2: 113, F3: 114,
+	F4: 115, F5: 116, F6: 117, F7: 118, F8: 119, F9: 120, F10: 121, F11: 122, F12: 123, NUM_LOCK: 144, FN: 255,
+	number: 256
+};
+/**
+ * @memberOf utils.input
+ * @enum {string}
+ * @readonly
+ */
+utils.input.MouseEvent &#x3D; {
+	UP: &#x27;onmouseup&#x27;, DOWN: &#x27;onmousedown&#x27;, CLICK: &#x27;onclick&#x27;, DBCLICK: &#x27;ondbclick&#x27;,
+	MOVE: &#x27;onmousemove&#x27;, ENTER: &#x27;onmouseover&#x27;, EXIT: &#x27;onmouseout&#x27;
+};
+/**
+ * @memberOf utils.input
+ * @enum {number}
+ * @readonly
+ */
+utils.input.MouseButton &#x3D; { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 }
+
+//######################################################################################################################
+//#                                                    InputManager                                                    #
+//######################################################################################################################
+utils.input.InputManager &#x3D; (function() {
+//___________________________________________________private constants__________________________________________________
+	const KEYS_NUMBER &#x3D; utils.input.Key.number;
+	const KEY_STATE &#x3D; utils.input.KeyState;
+	const MOUSE_BTN &#x3D; utils.input.MouseButton;
+
+	const fixMouseWhich &#x3D; evt &#x3D;&gt; {
+		if(!evt.which &amp;amp;&amp;amp; evt.button) {
+			evt.which &#x3D;
+				((evt.button % 8 - evt.button % 4)&#x3D;&#x3D;&#x3D;4) ? MOUSE_BTN.MIDDLE :
+				((evt.button % 4 - evt.button % 2)&#x3D;&#x3D;&#x3D;2) ? MOUSE_BTN.RIGHT :
+				((evt.button % 2				 )&#x3D;&#x3D;&#x3D;1) ? MOUSE_BTN.LEFT :
+				MOUSE_BTN.UNKNOWN;
+		}
+	};
+	const onKeyEvt &#x3D; (keyStates, callbacks, state, evt)&#x3D;&gt; {
+		if (keyStates[evt.keyCode] !&#x3D;&#x3D; state) {
+			keyStates[evt.keyCode] &#x3D; state;
+			let len &#x3D; callbacks.length;
+			for (let i &#x3D; 0; i &amp;lt; len; i++)
+				if (callbacks[i](evt.keyCode, state))
+					evt.preventDefault();
+		}
+	}
+	/**
+	 * @class utils.input.InputManager
+	 * @memberOf utils.input
+	 * @classdesc a class managing keyboard and mouse events, related to a particular HTMLElement
+	 */
+	class InputManager {
+		/**
+		 * @constructor
+		 * @param {HTMLElement} element
+		 */
+		constructor(element) {
+			/**
+			 * @name utils.input.InputManager#element
+			 * @type {HTMLElement}
+			 */
+			this.element &#x3D; element;
+
+			let keyStates&#x3D; new Uint8Array(KEYS_NUMBER);
+			for (let i &#x3D; KEYS_NUMBER - 1; i &gt;&#x3D; 0; i--) {
+				keyStates[i] &#x3D; KEY_STATE.RELEASED;
+			}
+			/**
+			 * @name utils.input.InputManager~_keyboardCallbacks
+			 * @type {Array.&amp;lt;utils.input.keyboardCallback&gt;}
+			 * @private
+			 */
+			let keyboardCallbacks &#x3D; [];
+//____________________________________________________private methods___________________________________________________
+			const onKeyUp   &#x3D; onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.RELEASED);
+			const onKeyDown &#x3D; onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.PRESSED);
+			const getVec &#x3D; evt &#x3D;&gt; new utils.geometry2d.Vec2(
+				evt.pageX - this.element.offsetLeft,
+				evt.pageY - this.element.offsetTop);
+			const onMouseEvt &#x3D; (callback, evtType, evt) &#x3D;&gt; {
+				fixMouseWhich(evt);
+				return callback(evtType, evt.which, getVec(evt));
+			}
+//____________________________________________________public methods____________________________________________________
+//* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+			/**
+			 * enable or disable the keyboard listener in capturing on bubbling mode, depending &amp;lt;!--
+			 * --&gt;on the 2nd parameter value
+			 * @function
+			 * @name utils.input.InputManager#enableKeyboardListener
+			 * @param {boolean} enable
+			 * @param {boolean} [capturingMode&#x3D;true]
+			 */
+			this.enableKeyboardListener &#x3D; function(enable, capturingMode &#x3D; true) {
+				if(enable) {
+					if(this.element !&#x3D; document &amp;amp;&amp;amp; !this.element.hasAttribute(&#x27;tabindex&#x27;)) {
+						this.element.setAttribute(&#x27;tabindex&#x27;, -1); // so it can receive keyboard events
+					}
+					this.element.addEventListener(&#x27;keydown&#x27;, onKeyDown, capturingMode);
+					this.element.addEventListener(&#x27;keyup&#x27;, onKeyUp, capturingMode);
+				} else {
+					this.element.removeEventListener(&#x27;keydown&#x27;, onKeyDown);
+					this.element.removeEventListener(&#x27;keyup&#x27;, onKeyUp);
+				}
+			};
+			/**
+			 * adds a keyboard events callback. don&#x27;t forget to launch the capture of keyboard events by calling &amp;lt;!--
+			 * --&gt;{@link utils.input.InputManager#enableKeyboardListener} method
+			 * @function
+			 * @name utils.input.InputManager#addKeyCallback
+			 * @param {utils.input.keyboardCallback} callback
+			 */
+			this.addKeyCallback &#x3D; (callback)&#x3D;&gt; {
+				keyboardCallbacks.push(callback);
+			};
+			/**
+			 * removes a keyboard events callback.
+			 * @function
+			 * @name utils.input.InputManager#removeKeyCallback
+			 * @param {utils.input.keyboardCallback} callback
+			 */
+			this.removeKeyCallback &#x3D; (callback)&#x3D;&gt; {
+				keyboardCallbacks.remove(callback);
+			};
+			/**
+			 * returns the state of the key
+			 * @function
+			 * @name utils.input.InputManager#getKeyState
+			 * @param {number} keyCode
+			 * @returns {utils.input.KeyState} key state : one of &amp;lt;!--
+			 * --&gt;{@link utils.input.KeyState.RELEASED|RELEASED} and &amp;lt;!--
+			 * --&gt;{@link utils.input.KeyState.PRESSED|PRESSED}
+			 */
+			this.getKeyState &#x3D; keyCode&#x3D;&gt; keyStates[keyCode];
+//* * * * * * * * * * * * * * * * * * * * * * * * * * * * mouse* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+			/**
+			 * @function
+			 * @name utils.input.InputManager#setMouseEventsCallback
+			 * @param {utils.input.mouseCallback}callback
+			 */
+			this.setMouseEventsCallback &#x3D; function(callback) {
+				if(callback) {
+					let e;
+					for(let evtType in utils.input.MouseEvent) {
+						if(utils.input.MouseEvent.hasOwnProperty(evtType)) {
+							e &#x3D; utils.input.MouseEvent[evtType];
+							this.element[e] &#x3D; onMouseEvt.bind(this, callback, e);
+						}
+					}
+				} else {
+					for(let evtType in utils.input.MouseEvent) {
+						if(utils.input.MouseEvent.hasOwnProperty(evtType)) {
+							this.element[utils.input.MouseEvent[evtType]] &#x3D; null;
+						}
+					}
+				}
+			};
+//* * * * * * * * * * * * * * * * * * * * * * focus, pointer lock, fullscreen* * * * * * * * * * * * * * * * * * * * * *
+			/**
+			 * @function
+			 * @name utils.input.InputManager#setFocusCallback
+			 * @param {utils.input.focusCallback} callback
+			 */
+			this.setFocusCallback &#x3D; (callback)&#x3D;&gt; {
+				if(callback) {
+					this.element.onfocus &#x3D; _ &#x3D;&gt; callback(true);
+					this.element.onblur &#x3D; _ &#x3D;&gt; callback(false);
+				} else {
+					this.element.onfocus &#x3D; null;
+					this.element.onblur &#x3D; null;
+				}
+			};
+			/**
+			 * requests pointer lock
+			 * @function
+			 * @name utils.input.InputManager#pointerLock
+			 * @param eventListener
+			 */
+			this.pointerLock &#x3D; (eventListener) &#x3D;&gt; {
+				if(eventListener) {
+					if(eventListener.pointerLockChange) {
+						document.addEventListener(&#x27;pointerlockchange&#x27;, eventListener.pointerLockChange, false);
+						document.addEventListener(&#x27;mozpointerlockchange&#x27;, eventListener.pointerLockChange, false);
+						document.addEventListener(&#x27;webkitpointerlockchange&#x27;, eventListener.pointerLockChange, false);
+					}
+					if(eventListener.pointerLockError) {
+						document.addEventListener(&#x27;pointerlockerror&#x27;, eventListener.pointerLockError, false);
+						document.addEventListener(&#x27;mozpointerlockerror&#x27;, eventListener.pointerLockError, false);
+						document.addEventListener(&#x27;webkitpointerlockerror&#x27;, eventListener.pointerLockError, false);
+					}
+				}
+				if(document.webkitFullscreenElement &#x3D;&#x3D;&#x3D; this.element ||
+					document.mozFullscreenElement &#x3D;&#x3D;&#x3D; this.element ||
+					document.fullscreenElement &#x3D;&#x3D;&#x3D; this.element) {
+					this.element.requestPointerLock &#x3D; this.element.requestPointerLock ||
+						this.element.mozRequestPointerLock ||
+						this.element.webkitRequestPointerLock;
+					this.element.requestPointerLock();
+				}
+			};
+			/**
+			 * requests full screen
+			 * @function
+			 * @name utils.input.InputManager#fullScreen
+			 * @param callback
+			 */
+			this.fullScreen &#x3D; (callback)&#x3D;&gt; {
+				element.requestFullscreen &#x3D; element.requestFullscreen ||
+					element.mozRequestFullscreen ||
+					element.mozRequestFullScreen || // &#x27;S&#x27; instead of &#x27;s&#x27; in the old API.
+					element.webkitRequestFullscreen;
+				element.requestFullscreen();
+				if (callback) {
+					document.addEventListener(&#x27;fullscreenchange&#x27;, callback, false);
+					document.addEventListener(&#x27;mozfullscreenchange&#x27;, callback, false);
+					document.addEventListener(&#x27;webkitfullscreenchange&#x27;, callback, false);
+				}
+			};
+		}
+	}
+    return InputManager;
+})();
+//######################################################################################################################
+//#                                                       KeyMap                                                       #
+//######################################################################################################################
+utils.input.KeyMap &#x3D; (function() {
+	/**
+	 * @memberOf utils.input
+	 * @class utils.input.KeyMap
+	 * @classdesc a useful class to use with {@link utils.input.InputManager|InputManager} class to make &amp;lt;!--
+	 * --&gt;easy-to-use keymaps. call {@link utils.input.KeyMap#apply|apply} method to use it, &amp;lt;!--
+	 * --&gt;{@link utils.input.KeyMap#setAction|setAction} to add mappings, and &amp;lt;!--
+	 * --&gt;{@link utils.input.KeyMap#setCallback|setCallback} to add a callback method called when event occur on &amp;lt;!--
+	 * --&gt;selected keys.
+	 */
+    class KeyMap {
+		/**
+		 * @constructor
+		 */
+		constructor() {
+			let actions &#x3D; new Array(utils.input.Key.number);
+			let cb &#x3D; undefined;
+//--------------------------------------------------- private methods --------------------------------------------------
+			const callback &#x3D; (keyCode, keyState)&#x3D;&gt; {
+				if (cb) {
+					let a &#x3D; this.getAction(keyCode);
+					return (a &amp;amp;&amp;amp; cb(a, keyState)) || false;
+				}
+			};
+//--------------------------------------------------- public methods ---------------------------------------------------
+			/**
+			 * @function
+			 * @name utils.input.KeyMap#setAction
+			 * @param {utils.input.Key|utils.input.Key[]|number|number[]} keyCode
+			 * @param {number|string|*} action
+			 */
+			this.setAction &#x3D; (keyCode, action)&#x3D;&gt; {
+				if(keyCode.length) {
+					for(let i&#x3D;0; i&amp;lt;keyCode.length; i++) {
+						this.setAction(keyCode[i], action);
+					}
+				}
+				else {
+					if(action &#x3D;&#x3D; undefined) {
+						if(actions[keyCode] !&#x3D; undefined) actions[keyCode] &#x3D; undefined;
+					} else actions[keyCode] &#x3D; action;
+				}
+			};
+			/**
+			 * @function
+			 * @name utils.input.KeyMap#getAction
+			 * @param {utils.input.Key|number} keyCode
+			 * @returns {number|string|*} action associated to the key
+			 */
+			this.getAction &#x3D; keyCode &#x3D;&gt; {
+				return actions[keyCode];
+			};
+			/**
+			 * returns whether or not at least one key associated to the specified action is pressed
+			 * @function
+			 * @name utils.input.KeyMap#isKeyDown
+			 * @param {utils.input.InputManager} inputManager
+			 * @param {*} action
+			 * @returns {boolean} true if at least one key associated to the specified action is pressed
+			 */
+			this.isKeyDown &#x3D; (inputManager, action) &#x3D;&gt; {
+				let code&#x3D;-1;
+				do {
+					code &#x3D; actions.indexOf(action, code+1);
+					if(code!&#x3D;&#x3D; -1)
+						if(inputManager.getKeyState(code) &#x3D;&#x3D;&#x3D; utils.input.InputManager.KeyState.DOWN) return true;
+				} while(code!&#x3D;&#x3D;-1);
+				return false;
+			};
+			/**
+			 * returns the set of keys associated with the specified action.
+			 * @function
+			 * @name utils.input.KeyMap#getKeys
+			 * @param {*} action
+			 * @returns {utils.input.InputManager.Key[]|number[]} key codes
+			 */
+			this.getKeys &#x3D; action &#x3D;&gt; {
+				let codes &#x3D; [], i &#x3D; actions.indexOf(action);
+				while(i !&#x3D;&#x3D; -1) { codes.push(i); i &#x3D; actions.indexOf(action, i+1); }
+				return codes;
+			};
+			/**
+			 * sets the callback function which will be called when a useful keyboard event happens.
+			 * @function
+			 * @name utils.input.KeyMap#setCallback
+			 * @param {utils.input.KeyMap.keyMapCallback} callback
+			 */
+			this.setCallback &#x3D; callback &#x3D;&gt; { cb &#x3D; callback; };
+			/**
+			 * allow the instance to catch keyboard events by adding a callback function using the parameter&#x27;s &amp;lt;!--
+			 * --&gt;{@link utils.input.InputManager#addKeyCallback|addKeyCallback} method.
+			 * @function
+			 * @name utils.input.KeyMap#enable
+			 * @param {utils.input.InputManager} inputManager
+			 */
+			this.enable &#x3D; function(inputManager) {
+				inputManager.addKeyCallback(callback);
+			};
+			/**
+			 * removes the callback function from the keyboard listener of the parameter.
+			 * @function
+			 * @name utils.input.KeyMap#disable
+			 * @param {utils.input.InputManager} inputManager
+			 */
+			this.disable &#x3D; function(inputManager) {
+				inputManager.removeKeyCallback(callback);
+			};
+		}
+	}
+	return KeyMap;
+})();
+</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on May 9, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

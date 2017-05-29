@@ -1,0 +1,655 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: game2/game_1.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: game2/game_1.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * Created by Loic France on 11/21/2016.
+ */
+{
+	const tools &#x3D; utils.tools;
+	const Vec2 &#x3D; utils.geometry2d.Vec2;
+	/**
+	 * @callback game.gameEventCallback
+	 * @param {game.GameEvent} event
+	 * @param {number} dT - time since last frame (0 if not necessary).
+	 */
+	/**
+	 * an enumeration for game events. Some values are never used by the game engine itself, &amp;lt;!--
+	 * --&gt;but you can use them yourself
+	 * @readonly
+	 * @enum {number}
+	 * @memberOf game
+	 */
+	const GameEvent &#x3D; {
+		/** a frame just began */
+		GAME_FRAME 		 : 1,
+		/** the game just resumed/started */
+		GAME_START 		 : 2,
+		/** the game just stopped/paused */
+		GAME_STOP  		 : 3,
+		/** an object as been created (never called automatically) */
+		OBJECT_CREATED   : 4,
+		/** an object as been destroyed (never called automatically) */
+		OBJECT_DESTROYED : 5
+	};
+//######################################################################################################################
+//##################################################### GameManager ####################################################
+//######################################################################################################################
+	/**
+	 * @class
+	 * @memberOf game
+	 * @classdesc the most important class of a game. call the frame, death and collision methods of all objects, &amp;lt;!--
+	 * --&gt;call the render method of the gameMap, ...
+	 * To add an object to the game, you must call the {@link game.GameManager#addObject|addObject} method, and to &amp;lt;!--
+	 * --&gt;remove an object, you must call the {@link game.GameManager#removeObject|removeObject} method.
+	 * This way, {@link game.Object#onDeath} method of the destroyed objects when they are removed from the game.
+	 * To start or resume the game, call the {@link game.GameManager#start|start} method, &amp;lt;!--
+	 * --&gt;and to pause or stop the game, call the {@link game.GameManager#stop|stop} method. You can get &amp;lt;!--
+	 * --&gt;the current state (running or not) by calling the {@link game.GameManager#isRunning|isRunning} method.
+	 * You can apply a {@link game.gameEventCallback|callback} method which will be called when the game &amp;lt;!--
+	 * --&gt;is started or resumed, when it is stopped or paused, and when a frame begins.
+	 */
+	class GameManager {
+		constructor() {
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -attributes- - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+
+//------------------------------------------------- private attributes -------------------------------------------------
+			let objects &#x3D; [];
+			let objectsToAdd &#x3D; [];
+			let objectsToRemove &#x3D; [];
+			let objects_length &#x3D; 0;
+			let lastStamp &#x3D; 0;
+			let callback &#x3D; null;
+			let running &#x3D; false;
+//-------------------------------------------------- public attributes -------------------------------------------------
+			/**
+			 * @name game.GameManager#gameMap
+			 * @type {?game.AbstractGameMap}
+			 */
+			this.gameMap &#x3D; null;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -methods - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+
+//--------------------------------------------------- objects methods --------------------------------------------------
+// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -getters  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+			/**
+			 * get all objects of the game matching the specified filter
+			 * @method
+			 * @name game.GameManager#getObjects
+			 * @param {function(game.Object):boolean} [filter&#x3D;null]
+			 * @returns {game.Object[]}
+			 */
+			this.getObjects &#x3D; function( filter &#x3D; null ) {
+				return filter ?  objects.filter(filter) : objects;
+			};
+			/**
+			 * get the index of the object in the game&#x27;s list of objects.
+			 * @method
+			 * @name game.GameManager#getObjectIndex
+			 * @param {game.Object} obj
+			 * @returns {number} index of obj
+			 */
+			this.getObjectIndex &#x3D; function( obj ) {
+				return objects.indexOf(obj);
+			};
+			/**
+			 * returns the object located at the specified index.
+			 * @method
+			 * @name game.GameManager#getObjectAt
+			 * @param {number} index
+			 * @returns {game.Object}
+			 */
+			this.getObjectAt &#x3D; function( index ) {
+				return objects[index];
+			};
+			/**
+			 * returns all instances of the specified gameObject class.
+			 * @method
+			 * @name game.GameManager#getInstancesOf
+			 * @param {class} objClass
+			 * @returns {game.Object[]}
+			 */
+			this.getInstancesOf &#x3D; function( objClass ) {
+				return this.getObjects(tools.instanceFilter.bind(undefined, objClass));
+			};
+// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -adders-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+			/**
+			 * adds an object to the game. It will actually be added between the current frame and the next one.
+			 * @method
+			 * @name game.GameManager#addObject
+			 * @param {game.Object} obj
+			 * @param {boolean} [check&#x3D;true] - if true or not set, the method will make sure the object is not &amp;lt;!--
+			 * --&gt;already being added to the game
+			 */
+			this.addObject &#x3D; function( obj, check&#x3D;true ) {
+				if(check &amp;amp;&amp;amp; objectsToAdd.indexOf(obj)!&#x3D;-1)
+					console.stack(&quot;the object &quot; + obj + &quot; is already being added to the game&quot;);
+				else objectsToAdd.push(obj);
+			};
+			/**
+			 * adds several objects to the game. They will be added between the current frame and the next one
+			 * @method
+			 * @name game.GameManager#addObjects
+			 * @param {game.Object[]} objects
+			 * @param {boolean} [check&#x3D;true] - if true or not set, the method will only add objects that are not &amp;lt;!--
+			 * --&gt;already being added to the game
+			 */
+			this.addObjects &#x3D; function( objects, check&#x3D;true ) {
+				Array.prototype.push.apply(objectsToAdd,
+					check ? objects.filter(tools.exclusionFilter.bind(undefined, objectsToAdd))
+						  : objects);
+			};
+// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  removers  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+			/**
+			 * removes an object from the game. It will actually be removed between the current frame &amp;lt;!--
+			 * --&gt;and the next one, before new objects are added.
+			 * @method
+			 * @name game.GameManager#removeObject
+			 * @param {game.Object} obj
+			 * @param {boolean} [check&#x3D;true] - if true or not set, the method will make sure the object is not &amp;lt;!--
+			 * --&gt;already being removed from the game
+			 */
+			this.removeObject &#x3D; function( obj, check&#x3D;true ) {
+				if(check &amp;amp;&amp;amp; objectsToRemove.indexOf(obj) !&#x3D; -1)
+					console.stack(&quot;the object &quot; + obj + &quot; is already being removed from the game&quot;);
+				else objectsToRemove.push(obj);
+			};
+			/**
+			 * removes several objects from the game. They will be removed between the current frame &amp;lt;!--
+			 * --&gt;and the next one, before new objects are added
+			 * @method
+			 * @name game.GameManager#removeObjects
+			 * @param {game.Object[]} objects
+			 * @param {boolean} [check&#x3D;true] - if true or not set, the method will only remove objects that are not &amp;lt;!--
+			 * --&gt;already being removed to the game
+			 */
+			this.removeObjects &#x3D; function( objects, check&#x3D;true ) {
+				Array.prototype.push.apply(objectsToRemove,
+					check ? objects.filter(tools.exclusionFilter.bind(undefined, objectsToRemove))
+						  : objects);
+			};
+			/**
+			 * removes all current objects from the game. They will be removed between the current frame &amp;lt;!--
+			 * --&gt;and the next one, before new objects are added.
+			 * This method does not prevent objects that are about to be added to appear.
+			 * @method
+			 * @name game.GameManager#clearObjects
+			 */
+			this.clearObjects &#x3D; function() {
+				this.removeObjects(objects);
+			};
+//--------------------------------------------------- events methods ---------------------------------------------------
+			/**
+			 * starts or resumes the game, and call the callback method with first parameter &amp;lt;!--
+			 * equal to {@link game.GameEvent.GAME_START}, and the second one equal to 0.
+			 * @method
+			 * @name game.GameManager#start
+			 */
+			this.start &#x3D; function() {
+				running &#x3D; true;
+				lastStamp &#x3D; 0;
+				if(callback) callback(GameEvent.GAME_START, 0);
+				requestAnimationFrame(onFrame.bind(this));
+			};
+			/**
+			 * stops or pauses the game, and call the callback method with first parameter &amp;lt;!--
+			 * equal to {@link game.GameEvent.GAME_STOP}, and the second one equal to 0.
+			 * @method
+			 * @name game.GameManager#stop
+			 */
+			this.stop &#x3D; function() {
+				running &#x3D; false;
+				if(callback) callback(GameEvent.GAME_STOP, 0);
+			};
+			/**
+			 * tells if the game is currently running.
+			 * @returns {boolean}
+			 * @method
+			 * @name game.GameManager#isRunning
+			 */
+			this.isRunning &#x3D; function () {
+				return running;
+			};
+			/**
+			 * sets the callback method called for events.
+			 * @method
+			 * @name game.GameManager#setEventsCallback
+			 * @param {?game.gameEventCallback} cb
+			 */
+			this.setEventsCallback &#x3D; function( cb ) {
+				callback &#x3D; cb;
+			};
+			/**
+			 * returns the callback method called for events, or null if not set
+			 * @method
+			 * @name game.GameManager#getEventsCallback
+			 * @returns {?game.gameEventCallback}
+			 */
+			this.getEventsCallback &#x3D; function() {
+				return callback;
+			};
+// -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -onFrame  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+			let onFrame &#x3D; function(timeStamp) {
+				if(running) {
+					let obj, index &#x3D; -1, i, dT, j, bodies, len, other;
+					// 1 : remove dead objects
+					while(obj &#x3D; objectsToRemove.pop()) {
+						index &#x3D; objects.indexOf(obj);
+						if(index &gt; -1) {
+							obj.onDeath(this);
+							objects.splice(index, 1);
+							objects_length--;
+						}
+					}
+					// 2 : add new objects
+					while(obj&#x3D;objectsToAdd.pop()) {
+						objects.push(obj);
+						objects_length++;
+					}
+					// 3 : get dT
+					dT &#x3D; (timeStamp - lastStamp)/1000;
+					if(!dT) return;
+					lastStamp &#x3D; timeStamp;
+					if(dT &gt; 0.1) dT &#x3D; 0.1;
+					// 4  : call callback method
+					if(callback) callback(GameEvent.GAME_FRAME, dT);
+					if(this.gameMap &amp;amp;&amp;amp; this.gameMap.isAsynchronousUsed()) {
+						this.gameMap.render(this, objects);
+					}
+					// 5 : call onFrame of all objects
+					i &#x3D; objects_length;
+					while(i--) objects[i].onFrame(this, dT);
+					// 6 : get all objects with a collider
+					bodies &#x3D; objects.filter(game.Object.canCollideFilter);
+					len &#x3D; bodies.length;
+					if(len) {
+						i &#x3D; len;
+						// 7 : for each object, prepare the collision
+						while(i--) bodies[i].prepareCollision();
+						while(obj &#x3D; bodies.pop()) {
+							// 9 : get all other objects able to collide with the object
+							other &#x3D; bodies.filter(game.Object.collisionFilter.bind(obj.bodyLayer));
+							j &#x3D; other.length;
+							while(j--) {
+								// 10 : check collision
+								if(obj.canCollide(other[j]) &amp;amp;&amp;amp; other[j].canCollide(obj) &amp;amp;&amp;amp; obj.collides(other[j])) {
+									// 11 : call onCollision method
+									obj.onCollision(this, other[j]);
+									other[j].onCollision(this, obj);
+								}
+							}
+							//12 : tell all objects that collision is finished
+							obj.finishCollision();
+						}
+					}
+				}
+				// 13 : render all objects on the screen
+				if(this.gameMap &amp;amp;&amp;amp; !this.gameMap.isAsynchronousUsed()) {
+					this.gameMap.render(this, objects);
+				}
+				// 14 : request next frame
+				requestAnimationFrame(onFrame.bind(this));
+			};
+		}
+	}
+	/**
+	 * @callback game.renderEventCallback
+	 * @param {game.RenderEvent} event
+	 * @param {CanvasRenderingContext2D} context
+	 */
+	/**
+	 * @memberOf game
+	 * @enum {number}
+	 */
+	const RenderEvent &#x3D; {
+		RENDER_BEGIN : 6,
+		RENDER_END : 7,
+		RENDER_LAYER_BEGIN : 8,
+		RENDER_LAYER_END : 9,
+		CANVAS_RESIZE : 10
+	};
+	/**
+	 * @memberOf game
+	 * @enum {number}
+	 */
+	const RenderLayer &#x3D; {
+		NONE : -1,
+		BG1 : 0,
+		BG2 : 1,
+		BG3 : 2,
+		OBJ1 : 3,
+		OBJ2 : 4,
+		OBJ3 : 5,
+		PARTICLES : 6,
+		UI : 7
+	};
+	/**
+	 * @class
+	 * @abstract
+	 * @memberOf game
+	 */
+	class AbstractGameMap {
+		constructor( canvas, gameRect ) { }
+		/**
+		 * sets the callback function called for rendering events. See {@link game.RenderEvent}
+		 * for a list of all possible events
+		 * @param {?game.renderEventCallback} cb
+		 */
+		setCallback( cb ) { }
+		/**
+		 * manually changes the size of the canvas, and modifies the scale for the visible rectangle &amp;lt;!--
+		 * --&gt;to fit the canvas without the visible rectangle to change. you can change the visible rect and &amp;lt;!--
+		 * --&gt;the {@link game.GameMap#updateScale} method to change the scale.
+		 * The callback function is then called with the first parameter equal to &amp;lt;!--
+		 * --&gt;{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
+		 * @param {number} width
+		 * @param {number} height
+		 * @param {number} marginX
+		 * @param {number} marginY
+		 */
+		setCanvasSize( width, height, marginX, marginY ) { }
+		render( gameManager, objects ) { }
+		getContext() { }
+	}
+	/**
+	 * @class
+	 * @augments game.AbstractGameMap
+	 * @extends game.AbstractGameMap
+	 * @memberOf game
+	 */
+	class GameMap extends AbstractGameMap {
+		constructor( canvas, gameRect ) {
+			super(canvas, gameRect);
+			/**
+			 * @name game.GameMap#context
+			 * @type {CanvasRenderingContext2D}
+			 */
+			this.context &#x3D; canvas.getContext(&#x27;2d&#x27;);
+			this.context.font &#x3D; &quot;20px Verdana&quot;;
+			/**
+			 * @name game.GameMap#gameRect
+			 * @type {utils.geometry2d.Rect}
+			 */
+			this.gameRect &#x3D; gameRect.clone();
+			/**
+			 * @name game.GameMap#visibleRect
+			 * @type {utils.geometry2d.Rect}
+			 */
+			this.visibleRect &#x3D; gameRect.clone();
+			/**
+			 * @name game.GameMap#layer_min
+			 * @type {game.RenderLayer}
+			 */
+			this.layer_min &#x3D; RenderLayer.BG1;
+			/**
+			 * @name game.GameMap#layer_max
+			 * @type {game.RenderLayer}
+			 */
+			this.layer_max &#x3D; RenderLayer.UI;
+
+			//private variables used for resize
+			let autoResize &#x3D; false;
+			let onWindowResize &#x3D; null;
+			let resizeMargin&#x3D;4;
+			let callback &#x3D; null;
+			let worker &#x3D; null;
+			/**
+			 * allows the canvas to resize automatically when the window size changes.
+			 * The callback function is called after the resize with the first parameter equal to &amp;lt;!--
+			 * --&gt;{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
+			 * @method
+			 * @name game.GameMap#useAutoResize
+			 * @param {boolean} use
+			 * @param {number} [borderMargin]. first use : default to 1. next uses : default to previous values.
+			 */
+			this.useAutoResize &#x3D; function(use&#x3D;true, borderMargin&#x3D;resizeMargin) {
+				resizeMargin &#x3D; borderMargin;
+				if(autoResize &amp;amp;&amp;amp; !use) {
+					window.removeEventListener(&#x27;resize&#x27;, onWindowResize, false);
+					window.removeEventListener(&#x27;fullscreenchange&#x27;, onWindowResize, false);
+				}
+				else if(!autoResize &amp;amp;&amp;amp; use) {
+					autoResize &#x3D; true;
+					if(!onWindowResize) {
+						onWindowResize &#x3D; function(event) {
+							let parent &#x3D; this.context.canvas.parentNode,
+								parentW &#x3D; parent.offsetWidth,
+								parentH &#x3D; parent.offsetHeight,
+								ratio &#x3D; this.visibleRect.ratio,
+								w &#x3D; parentW - borderMargin,
+								h &#x3D; Math.min(parentH-borderMargin, w/ratio);
+							w &#x3D; h*ratio;
+							let left &#x3D; (parentW-w)*0.5,
+								top &#x3D; (parentH-h)*0.5-borderMargin;
+							this.setCanvasSize(w, h, left, top);
+						}.bind(this);
+					}
+					window.addEventListener(&#x27;resize&#x27;, onWindowResize, false);
+					window.addEventListener(&#x27;fullscreenchange&#x27;, onWindowResize, false);
+					onWindowResize(null);
+				}
+			};
+			/**
+			 * manually changes the size of the canvas, and modifies the scale for the visible rectangle &amp;lt;!--
+			 * --&gt;to fit the canvas without the visible rectangle to change. you can change the visible rect and &amp;lt;!--
+			 * --&gt;the {@link game.GameMap#updateScale} method to change the scale.
+			 * The callback function is then with the first parameter equal to &amp;lt;!--
+			 * --&gt;{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
+			 * @method
+			 * @name game.GameMap#setCanvasSize
+			 * @param {number} width
+			 * @param {number} height
+			 * @param {number} marginX
+			 * @param {number} marginY
+			 */
+			this.setCanvasSize &#x3D; function(width, height, marginX, marginY) {
+				let canvas &#x3D; this.context.canvas;
+				canvas.width &#x3D; width; canvas.height &#x3D; height;
+				canvas.style.marginLeft &#x3D; marginX.toString() + &quot;px&quot;;
+				canvas.style.marginTop &#x3D; marginY.toString() + &quot;px&quot;;
+				this.updateScale();
+				if(callback) callback(RenderEvent.CANVAS_RESIZE, this.context);
+			};
+			/**
+			 * sets the callback function called for rendering events. See {@link game.RenderEvent}
+			 * for a list of all possible events
+			 * @method
+			 * @name game.GameMap#setCallback
+			 * @param {?game.renderEventCallback} cb
+			 */
+			this.setCallback &#x3D; function( cb ) { callback &#x3D; cb; };
+			/**
+			 * use this function if you want to activate the asynchronous rendering.
+			 * @method
+			 * @name game.GameMap#useAsynchronous
+			 * @param {boolean} use
+			 */
+			this.useAsynchronous &#x3D; function( use ) {
+				if(use &amp;amp;&amp;amp; !worker) {
+					worker &#x3D; new Worker(&quot;async_render.js&quot;);
+				} else if(worker !&#x3D; null) {
+					worker.terminate();
+				}
+			};
+			/**
+			 * return true if the asynchronous mode is enabled.
+			 * @method
+			 * @name game.GameMap#isAsynchronousUsed
+			 * @returns {boolean}
+			 */
+			this.isAsynchronousUsed &#x3D; function() {
+				return worker !&#x3D; null;
+			};
+			/**
+			 * called by the game manager after a frame to draw objects on the canvas.
+			 * The callback function is called at the beginning and at the end of the function, and at the &amp;lt;!--
+			 * --&gt;beginning and the end of the drawing of every layer, with the first parameter equal to &amp;lt;!--
+			 * --&gt;{@link game.RenderEvent.RENDER_BEGIN}, {@link game.RenderEvent.RENDER_END}, &amp;lt;!--
+			 * --&gt;{@link game.RenderEvent.RENDER_LAYER_BEGIN} or {@link game.RenderEvent.RENDER_LAYER_END} &amp;lt;!--
+			 * and the second one equal to the rendering context.
+			 * @method
+			 * @name game.GameMap#render
+			 * @param {game.GameManager} gameManager
+			 * @param {game.Object[]} objects
+			 */
+			this.render &#x3D; function( gameManager, objects) {
+				if(worker) {
+					worker.postMessage({
+						ctx: this.context,
+						rect: this.visibleRect,
+						objects: objects,
+						filter: game.Object.renderLayerFilter,
+						layerMin: this.layer_min,
+						layerMax: this.layer_max,
+						callback: callback,
+						renderEvents: RenderEvent
+					});
+				} else {
+					let rect &#x3D; this.visibleRect, objs, ctx &#x3D; this.context, l, i;
+					ctx.clearRect(rect.left, rect.top, rect.right, rect.bottom);
+					if(callback) {
+						ctx.save();
+						callback(RenderEvent.RENDER_BEGIN, ctx);
+					}
+					l &#x3D; this.layer_min-1;
+					while(l++ &amp;lt; this.layer_max) {
+						ctx.save();
+						if(callback) callback(RenderEvent.RENDER_LAYER_BEGIN, ctx);
+						objs &#x3D; objects.filter(game.Object.renderLayerFilter.bind(undefined, l));
+						i &#x3D; objs.length;
+						while(i--) if(!objs[i].isOutOfRect(rect)) objs[i].render(ctx);
+						if(callback) callback(RenderEvent.RENDER_LAYER_END, ctx);
+						ctx.restore();
+					}
+					if(callback) {
+						callback(RenderEvent.RENDER_END, ctx);
+						ctx.restore();
+					}
+
+				}
+			}
+		}
+		/**
+		 * background of the canvas
+		 * @name game.GameMap#background
+		 * @type {*}
+		 */
+		get background() { return this.context.canvas.style.background; }
+		set background( bg ) { this.context.canvas.style.background &#x3D; bg; return bg; }
+
+		/**
+		 * number of game units by pixel (&#x3D;(visible game width)/(canvas width))
+		 * @name game.GameMap#background
+		 * @type {number}
+		 * @readonly
+		 */
+		get scaleX() { return this.visibleRect.width/this.context.canvas.width; }
+		/**
+		 * number of game units by pixel (&#x3D;(visible game height)/(canvas height))
+		 * @name game.GameMap#background
+		 * @type {number}
+		 * @readonly
+		 */
+		get scaleY() { return this.visibleRect.height/this.context.canvas.height; }
+
+		/**
+		 * changes the scale for the visible rect size to fit the canvas. Don&#x27;t forget to call this method after &amp;lt;!--
+		 * --&gt; you made manual modifications on the visible rect to avoid errors.
+		 * Be aware that the game may look stretched if the aspect of the canvas is not the same &amp;lt;!--
+		 * --&gt;as the rectangle&#x27;s {@link utils.geometry2d.Rect#ratio|ratio}
+		 */
+		updateScale() {
+			this.context.setTransform(
+				this.context.canvas.width/this.visibleRect.width, 0, 0,
+				this.context.canvas.height/this.visibleRect.height, 0, 0);
+		}
+		/**
+		 * gives you the game coordinates of a point given in pixel coordinates relative to the canvas.
+		 * @param {utils.geometry2d.Vec2} pixelCoords
+		 * @param {utils.geometry2d.Vec2} out
+		 * @returns {utils.geometry2d.Vec2} out
+		 */
+		pixelToGameCoordinatesTransform(pixelCoords, out &#x3D; Vec2.zero) {
+			return out.setXY(
+				pixelCoords.x*this.scaleX+this.visibleRect.left,
+				pixelCoords.y*this.scaleY+this.visibleRect.top);
+		}
+		/**
+		 * gives you the pixel coordinates, relative to the canvas, of a point in the game.
+		 * @param {utils.geometry2d.Vec2} gameCoords
+		 * @param {utils.geometry2d.Vec2} out
+		 * @returns {utils.geometry2d.Vec2} out
+		 */
+		gameToPixelCoordinatesTransform(gameCoords, out &#x3D; Vec2.zero) {
+			return out.setXY(
+				(gameCoords.x-this.visibleRect.left)/this.scaleX,
+				(gameCoords.y-this.visibleRect.top)/this.scaleY);
+		}
+	}
+	/**
+	 * contains the game library
+	 * @namespace game
+	 */
+	window[&#x27;game&#x27;] &#x3D; {
+		GameManager,
+		GameEvent,
+		AbstractGameMap,
+		GameMap,
+		RenderEvent,
+		RenderLayer,
+	}
+}
+</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

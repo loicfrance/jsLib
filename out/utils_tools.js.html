@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: utils/tools.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: utils/tools.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * @typedef {Object} utils.tools.rgb
+ * @property {number} r
+ * @property {number} g
+ * @property {number} b
+ */
+/**
+ * @typedef {Object} utils.tools.hsv
+ * @property {number} h
+ * @property {number} s
+ * @property {number} v
+ */
+/**
+ * @namespace utils
+ */
+window.utils &#x3D; window.utils || {};
+/**
+ * @memberOf utils
+ * @namespace tools
+ */
+utils.tools &#x3D; {
+//######################################################################################################################
+//#                                                    LayoutGravity                                                   #
+//######################################################################################################################
+
+	LayoutGravity: (function() {
+		let LayoutGravity &#x3D; G &#x3D; {
+			LEFT: 1, TOP: 2, RIGHT: 4, BOTTOM: 8, CENTER: 16,
+			getRect: (gravity, availableRect, width, height, marginX&#x3D;0, marginY&#x3D;marginX)&#x3D;&gt; {
+				availableRect &#x3D; availableRect.clone().addMarginsXY(-marginX, -marginY);
+				if (!(gravity &amp;amp; G.CENTER)) {
+					if (gravity) {
+						if (!(gravity &amp;amp; G.LEFT) &amp;amp;&amp;amp; !(gravity &amp;amp; G.RIGHT)) gravity |&#x3D; G.LEFT;
+						if (!(gravity &amp;amp; G.TOP) &amp;amp;&amp;amp; (gravity &amp;amp; G.BOTTOM)) gravity |&#x3D; G.TOP;
+					} else gravity &#x3D; G.LEFT | G.TOP;
+				}
+				var left &#x3D; NaN, top &#x3D; NaN, right &#x3D; NaN, bottom &#x3D; NaN;
+				if (gravity &amp;amp; G.CENTER) {
+					let w &#x3D; (availableRect.width - width)/2, h &#x3D; (availableRect.h.height-height)/2;
+					left &#x3D; availableRect.left + w; right &#x3D; availableRect.right - w;
+					top &#x3D; availableRect.top + h; bottom &#x3D; availableRect.bottom - h;
+				}
+				if (gravity &amp;amp; G.LEFT !&#x3D;&#x3D; 0) left &#x3D; availableRect.left;
+				if (gravity &amp;amp; G.TOP !&#x3D;&#x3D; 0) top &#x3D; availableRect.top;
+				if (gravity &amp;amp; G.RIGHT !&#x3D;&#x3D; 0) right &#x3D; availableRect.right;
+				if (gravity &amp;amp; G.BOTTOM !&#x3D;&#x3D; 0) bottom &#x3D; availableRect.bottom;
+				if (isNaN(left)) left &#x3D; right - width;
+				else if (isNaN(right)) right &#x3D; left + width;
+				if (isNaN(top)) top &#x3D; bottom - height;
+				else if (isNaN(bottom)) bottom &#x3D; top + height;
+				return new Rect(left, top, right, bottom);
+			},
+			getHorizontalGravity: (g, defaultG &#x3D; null) &#x3D;&gt;
+				(g &amp;amp; G.LEFT) ? G.LEFT : (g &amp;amp; G.RIGHT) ? G.RIGHT :
+						(g &amp;amp; G.CENTER) ? G.CENTER :
+							defaultG ? defaultG : G.LEFT,
+			getVerticalGravity: (g, defaultG &#x3D; null) &#x3D;&gt;
+				(g &amp;amp; G.TOP) ? G.TOP : (g &amp;amp; G.BOTTOM) ? G.BOTTOM :
+						(g &amp;amp; G.CENTER) ? G.CENTER :
+							defaultG ? defaultG : G.TOP
+		};
+		return LayoutGravity;
+	})(),
+//######################################################################################################################
+//#                                                       filters                                                      #
+//######################################################################################################################
+	/**
+	 * a filter to use with Array.prototype.filter function, by binding the first argument &amp;lt;!--
+	 * --&gt;to the array elements you want to keep.
+	 * @memberOf utils.tools
+	 * @example [1,2,3,4].filter(utils.tools.intersectionFilter.bind(undefined, [1,4,5,6])); //[1,4]
+	 * @param {Array} array
+	 * @param {object} x
+	 */
+	intersectionFilter: (array, x) &#x3D;&gt; array.indexOf(x) !&#x3D;&#x3D; -1,
+	/**
+	 * a filter to use with Array.prototype.filter function, by binding the first argument &amp;lt;!--
+	 * --&gt;to the array of element you want to exclude.
+	 * @memberOf utils.tools
+	 * @example [1,2,3,4].filter(utils.tools.exclusionFilter.bind(undefined, [1,4,5,6])); //[2,3]
+	 * @param {Array} array
+	 * @param {object} x
+	 */
+	exclusionFilter: (array, x) &#x3D;&gt; array.indexOf(x) &#x3D;&#x3D;&#x3D; -1,
+	/**
+	 * a filter to use with Array.prototype.filter function, by binding the first argument &amp;lt;!--
+	 * --&gt;to the class you want your objects to be instances of.
+	 * @memberOf utils.tools
+	 * @param {class} _class
+	 * @param {object} x
+	 */
+	instanceFilter : (_class, x) &#x3D;&gt; x instanceof _class,
+
+//######################################################################################################################
+//#                                                  color conversion                                                  #
+//######################################################################################################################
+	/**
+	 * generates a random hex color
+	 * @memberOf utils.tools
+	 * @param {number} [octets&#x3D;3] - number of bits this color will be on (32 or 24)
+	 * @returns {string}
+	 */
+	randomColor: (octets&#x3D;3) &#x3D;&gt; &#x27;#&#x27;+Math.random().toString(16).substr(2,2*octets),
+	/**
+	 * convert hsv color to rgb
+	 * @memberOf utils.tools
+	 * @param {number} h - integer in [0;359]
+	 * @param {number} s - integer in [0;255]
+	 * @param {number} v - integer in [0;255]
+	 * @returns {utils.tools.rgb}
+	 */
+	HSVtoRGB: (h, s, v)&#x3D;&gt; {
+		let i &#x3D; Math.floor(h * 6),
+			f &#x3D; h * 6 - i,
+			p &#x3D; Math.round((v * (1 - s))*255),
+			q &#x3D; Math.round((v * (1 - f * s))*255),
+			t &#x3D; Math.round((v * (1 - (1 - f) * s))*255);
+		v &#x3D; Math.round(v*255);
+		switch (i % 6) {
+			case 0: return {r: v, g: t, b: p};
+			case 1: return {r: q, g: v, b: p};
+			case 2: return {r: p, g: v, b: t};
+			case 3: return {r: p, g: q, b: v};
+			case 4: return {r: t, g: p, b: v};
+			case 5: return {r: v, g: p, b: q};
+			default : return {r: 0, g: 0, b: 0};
+		}
+	},
+	/**
+	 * convert rgb color to hsv
+	 * @memberOf utils.tools
+	 * @param {number} r - integer in [0;359]
+	 * @param {number} g - integer in [0;255]
+	 * @param {number} b - integer in [0;255]
+	 * @returns {utils.tools.hsv}
+	 */
+	RBGtoHSV : (r, g, b)&#x3D;&gt; {
+		let max &#x3D; Math.max(r, g, b), min &#x3D; Math.min(r, g, b),
+			d &#x3D; max - min,
+			s &#x3D; (max &#x3D;&#x3D;&#x3D; 0 ? 0 : d / max),
+			v &#x3D; max / 255;
+
+		switch (max) {
+			case min: return {h: 0, s: s, v: v};
+			case r: return { h: ((g - b) + d * (g &amp;lt; b ? 6: 0))/(6*d), s: s, v: v};
+			case g: return { h: ((b - r) + d * 2)/(6*d), s: s, v: v};
+			case b: return { h: ((r - g) + d * 4)/(6*d), s: s, v: v};
+			default : return {h: 0, s: 0, s: 0};
+		}
+	},
+	/**
+	 * convert rgb color to hexadecimal string formated color
+	 * @memberOf utils.tools
+	 * @param {number} r
+	 * @param {number} g
+	 * @param {number} b
+	 * @returns {string}
+	 */
+	RGBToHex : (r, g, b)&#x3D;&gt; (r&gt;15?&#x27;#&#x27;:&#x27;#0&#x27;)+((r&amp;lt;&amp;lt;16)+(g&amp;lt;&amp;lt;8)+b).toString(16),
+//######################################################################################################################
+//#                                                    other methods                                                   #
+//######################################################################################################################
+	/**
+	 * creates a mix of a superclass and several mixins to make a class extend a class and implements mixins.
+	 * @memberOf utils.tools
+	 * @example
+	 * class A {
+	 * 	 constructor(x) {
+	 * 	   this.x &#x3D; x;
+	 * 	 }
+	 *   hello() {
+	 *     alert(&#x27;hello &#x27; + this.x);
+	 * 	 }
+	 * };
+	 * var B &#x3D; {
+	 *   howRU() {
+	 *     alert(&#x27;How are you ?&#x27;);
+	 *   }
+	 * };
+	 * class C extends utils.tools.mix(A, B) {
+	 *   constructor(x) {
+	 *     super(x);
+	 *	 }
+	 *	 hello() {
+	 *	   super.hello();
+	 *	   this.howRU();
+	 *	 }
+	 * }
+	 *
+	 * var d &#x3D; new D(&#x27;John&#x27;);
+	 * d.hello(); // alert(&#x27;Hi John !&#x27;); alert(&#x27;how are you ?&#x27;);
+	 * @param {class} superclass
+	 * @param {Object} mixins
+	 * @returns {class}
+	 */
+	mix: (superclass, ...mixins) &#x3D;&gt; {
+		class C extends superclass { }
+		let len &#x3D; mixins.length, i &#x3D; -1;
+		while (++i &amp;lt; len) utils.tools.merge(C.prototype, mixins[i], true);
+		return C;
+	},
+	/**
+	 * puts all properties of src in out. if override is false or not set, if a property, &amp;lt;!--
+	 * --&gt;of src already exist in the parameter out, they are not overridden.
+	 * @memberOf utils.tools
+	 * @param {object} out
+	 * @param {object} src
+	 * @param {boolean} [override&#x3D;false]
+	 */
+	merge: (out, src, override &#x3D; false) &#x3D;&gt; {
+		for (let p in src) if (src.hasOwnProperty(p) &amp;amp;&amp;amp; (override || !out.hasOwnProperty(p))) out[p] &#x3D; src[p];
+	},
+	/**
+	 * gets a string returned by a specified url by calling the callback function with the returned &amp;lt;!--
+	 * --&gt;text as argument.
+	 * @memberOf utils.tools
+	 * @param {string} url
+	 * @param {function(string)} callback
+	 */
+	getStringFromUrl: (url, callback) &#x3D;&gt; {
+		let client &#x3D; new XMLHttpRequest();
+		client.open(&#x27;GET&#x27;, url);
+		client.onreadystatechange &#x3D; _ &#x3D;&gt; callback(client.responseText);
+		client.send();
+	},
+	/**
+	 * creates a worker containing the specified script
+	 * @memberOf utils.tools
+	 * @param {string} script
+	 * @returns {Worker} newly created web worker containing the script
+	 */
+	createScriptWorker: (script) &#x3D;&gt; {
+		let blob &#x3D; new Blob([script],
+			{type: &#x27;application/javascript&#x27;});
+		let url &#x3D; URL.createObjectURL(blob)
+		let worker &#x3D; new Worker(url);
+		URL.revokeObjectURL(url)
+		return worker;
+	},
+	/**
+	 * replaces a function that does not exists by the same function with the vendor prefixes.
+	 * @example
+	 * polyfill(window, &#x27;requestAnimationFrame&#x27;, [&#x27;ms&#x27;, &#x27;moz&#x27;, &#x27;webkit&#x27;, &#x27;o&#x27;]);
+	 * window.reaquestAnimationFrame(frameFunction);
+	 * @param {Object} container
+	 * @param {string} name
+	 * @param {string[]} vendors
+	 */
+	polyfill: (container, name, vendors) &#x3D;&gt; {
+		for(let i &#x3D; 0; i &amp;lt; vendors.length &amp;amp;&amp;amp; !container[name]; i++) {
+			container[name] &#x3D; container[vendors[i] + name] ||
+							  container[vendors[i] + name[0].toUpperCase() + name.substr(1)];
+		}
+	}
+};
+console.stack &#x3D; ( str ) &#x3D;&gt;{
+	console.error(new Error(str).stack);
+};
+console.deprecated &#x3D; ( str ) &#x3D;&gt;{
+	console.stack(&#x27;deprecated : &#x27; + str);
+};</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on May 9, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

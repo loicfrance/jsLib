@@ -1,0 +1,2601 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: ParticleExplosion</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="game.html">game</a>.<wbr></small><span class="symbol-name">ParticleExplosion</span></h1>
+            <p class="source-link">Source: <a href="game2_game_2.js.html#source-line-1562">game2/<wbr>game_2.<wbr>js:1562</a></p>
+            <div class="symbol-classdesc">
+              <p>a type of particle emitter that generates all of its particles in one frame to simulate an explosion</p>
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.ParticleExplosion.html#accel">accel</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#bodyLayer">bodyLayer</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#collisionLayers">collisionLayers</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#emitDistance">emitDistance</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#emited">emited</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#emitedParticles">emitedParticles</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#max">max</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.ParticleExplosion.html#maxAngle">maxAngle</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#maxLifeTime">maxLifeTime</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#maxSpeed">maxSpeed</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#minAngle">minAngle</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#minLifeTime">minLifeTime</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#minSpeed">minSpeed</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#particleGenerator">particleGenerator</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.ParticleExplosion.html#position">position</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#rate">rate</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#reduceSizeFactor">reduceSizeFactor</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#renderLayer">renderLayer</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#speed">speed</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#speedDampFactor">speedDampFactor</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.ParticleExplosion.html#accelerate">accelerate(deltaSpd)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#accelerateOnFrame">accelerateOnFrame(gameManager, dT)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#accelerateXY">accelerateXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#canCollide">canCollide(object)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#collides">collides(obj)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#copyAcceleration">copyAcceleration()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#copyPosition">copyPosition()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#copySpeed">copySpeed()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#createParticle">createParticle(lifeTime, position, angle, speed)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#createParticles">createParticles(number)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getAcceleration">getAcceleration()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getColliderRadius">getColliderRadius()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getColliderRect">getColliderRect()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getEmitDistance">getEmitDistance()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getEmitRate">getEmitRate()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getMaxAngle">getMaxAngle()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getMinAngle">getMinAngle()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getParticleGenerator">getParticleGenerator()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getParticlesMaxLifeTime">getParticlesMaxLifeTime()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getParticlesMinLifeTime">getParticlesMinLifeTime()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getPosition">getPosition()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getRadius">getRadius()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getRect">getRect()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.ParticleExplosion.html#getRenderRadius">getRenderRadius()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getRenderRect">getRenderRect()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getRotationSpeed">getRotationSpeed()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getSizeReduceFactor">getSizeReduceFactor()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getSpeed">getSpeed()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#getSpeedDampFactor">getSpeedDampFactor()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#isInCollisionLayer">isInCollisionLayer(layer)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#isOutOfRect">isOutOfRect(rect[, marginX][, marginY])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#isRunning">isRunning()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#kill">kill(gameManager)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#maintainInRect">maintainInRect(rect, marginX, marginY)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#move">move(delta)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#moveOnFrame">moveOnFrame(gameManager, dT)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#moveXY">moveXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#onCollision">onCollision(gameManager, object)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#onDeath">onDeath(gameManager)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#onFinished">onFinished(gameManager)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#onFrame">onFrame(gameManager, dT)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#prepareCollision">prepareCollision()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#render">render(context2d)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#renderDebug">renderDebug(context2d)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#restart">restart()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#rotate">rotate(radians)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.ParticleExplosion.html#rotateOnFrame">rotateOnFrame(gameManager, dT)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#scale">scale(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setAcceleration">setAcceleration(acc)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setAccelerationXY">setAccelerationXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setAngles">setAngles(min, max)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setCollider">setCollider(collider)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setEmitDistance">setEmitDistance(emitDistance)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setEmitRate">setEmitRate(rate)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setMaxAngle">setMaxAngle(max)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setMinAngle">setMinAngle(min)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setParticleGenerator">setParticleGenerator(generator)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setParticlesLifeTime">setParticlesLifeTime(min[, max])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setParticlesMaxLifeTime">setParticlesMaxLifeTime()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setParticlesMinLifeTime">setParticlesMinLifeTime(mlt)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setPosition">setPosition(pos)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setPositionXY">setPositionXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setRenderer">setRenderer(renderer)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setRotationSpeed">setRotationSpeed(radPerSec)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setSizeReduceFactor">setSizeReduceFactor(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setSpeed">setSpeed(spd)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setSpeedDampFactor">setSpeedDampFactor(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#setSpeedXY">setSpeedXY(x, y)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.ParticleExplosion.html#stop">stop()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="ParticleExplosion">new&nbsp;<span class="symbol-name">ParticleExplosion</span><span class="signature"><span class="signature-params">()</span></span>
+            </h2>
+            <dl class="dl-compact">
+              <dt>Extends</dt>
+              <dd><a href="game.ParticleEmitter.html">game.ParticleEmitter</a></dd>
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="accel"><span class="symbol-name">accel</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#accel">game.Object#accel</a></dd>
+              </dl>
+              <h3 id="bodyLayer"><span class="symbol-name">bodyLayer</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>the body layer of this object. As it is generally common to all objects of the same class,
+                <!--
+-->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want
+                <!--
+-->for your objects. This number defines where the body of the object is located. If an other object want to be able
+                <!--
+-->to collide with it, it must have the same number in its <a href="game.Object.html#collisionLayers">game.Object#collisionLayers</a> array.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#bodyLayer">game.Object#bodyLayer</a></dd>
+              </dl>
+              <h3 id="collisionLayers"><span class="symbol-name">collisionLayers</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>the collision layers of this object. As it is generally common to all objects of the same class,
+                <!--
+-->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want
+                <!--
+-->for your objects. This array defines which objects this object can collide with. To collide with an object,
+                <!--
+-->this array must contain the <a href="game.Object.html#bodyLayer">bodyLayer</a> value.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#collisionLayers">game.Object#collisionLayers</a></dd>
+              </dl>
+              <h3 id="emitDistance"><span class="symbol-name">emitDistance</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#emitDistance">game.ParticleEmitter#emitDistance</a></dd>
+              </dl>
+              <h3 id="emited"><span class="symbol-name">emited</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>number of particles emitted. equal to -1 if the emitter is paused, this value is equal to -1. When the emitter is restarted, this value is set to 0.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#emited">game.ParticleEmitter#emited</a></dd>
+              </dl>
+              <h3 id="emitedParticles"><span class="symbol-name">emitedParticles</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>a list of all living particles in the game. Used to perform actions such as
+                <!--
+-->speed damping or size damping.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#emitedParticles">game.ParticleEmitter#emitedParticles</a></dd>
+              </dl>
+              <h3 id="max"><span class="symbol-name">max</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>maximum number of particles this emitter can create in its lifetime. When this number is reached,
+                <!--
+-->the emitter stops creating particles and when no particles are living anymore, the emitter kills itself. If this value is equal to 0, the maximum is disabled : the emitter will continuously create particles
+                <!--
+-->until the game is over.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#max">game.ParticleEmitter#max</a></dd>
+              </dl>
+              <h3 id="maxAngle"><span class="symbol-name">maxAngle</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#maxAngle">game.ParticleEmitter#maxAngle</a></dd>
+              </dl>
+              <h3 id="maxLifeTime"><span class="symbol-name">maxLifeTime</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#maxLifeTime">game.ParticleEmitter#maxLifeTime</a></dd>
+              </dl>
+              <h3 id="maxSpeed"><span class="symbol-name">maxSpeed</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#maxSpeed">game.ParticleEmitter#maxSpeed</a></dd>
+              </dl>
+              <h3 id="minAngle"><span class="symbol-name">minAngle</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#minAngle">game.ParticleEmitter#minAngle</a></dd>
+              </dl>
+              <h3 id="minLifeTime"><span class="symbol-name">minLifeTime</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#minLifeTime">game.ParticleEmitter#minLifeTime</a></dd>
+              </dl>
+              <h3 id="minSpeed"><span class="symbol-name">minSpeed</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#minSpeed">game.ParticleEmitter#minSpeed</a></dd>
+              </dl>
+              <h3 id="particleGenerator"><span class="symbol-name">particleGenerator</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#particleGenerator">game.ParticleEmitter#particleGenerator</a></dd>
+              </dl>
+              <h3 id="position"><span class="symbol-name">position</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#position">game.Object#position</a></dd>
+              </dl>
+              <h3 id="rate"><span class="symbol-name">rate</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>number of particles created in one second.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#rate">game.ParticleEmitter#rate</a></dd>
+              </dl>
+              <h3 id="reduceSizeFactor"><span class="symbol-name">reduceSizeFactor</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#reduceSizeFactor">game.ParticleEmitter#reduceSizeFactor</a></dd>
+              </dl>
+              <h3 id="renderLayer"><span class="symbol-name">renderLayer</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>the render layer of this object. As it is generally common to all objects of the same class,
+                <!--
+-->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want
+                <!--
+-->for your objects. The default value is <a href="game.html#.RenderLayer#.OBJ1">game.RenderLayer.OBJ1</a>; This attributes is used to define an order for the objects to be drawn on the screen, and must be part of
+                <!--
+-->the <a href="game.html#.RenderLayer">game.RenderLayer</a> enumeration, or an other number if you handle it in your own game map.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#renderLayer">game.Object#renderLayer</a></dd>
+              </dl>
+              <h3 id="speed"><span class="symbol-name">speed</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#speed">game.Object#speed</a></dd>
+              </dl>
+              <h3 id="speedDampFactor"><span class="symbol-name">speedDampFactor</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#speedDampFactor">game.ParticleEmitter#speedDampFactor</a></dd>
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="accelerate"><span class="symbol-name">accelerate</span><span class="signature"><span class="signature-params">(deltaSpd)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>increase the object's speed according to the parameter</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>deltaSpd</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#accelerate">game.Object#accelerate</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="accelerateOnFrame"><span class="symbol-name">accelerateOnFrame</span><span class="signature"><span class="signature-params">(gameManager, dT)</span></span>
+              </h3>
+              <p>called by the <a href="game.Object.html#onFrame">onFrame</a> method. increase speed according acceleration.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>dT</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#accelerateOnFrame">game.Object#accelerateOnFrame</a></dd>
+              </dl>
+              <h3 id="accelerateXY"><span class="symbol-name">accelerateXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>increase the object's speed according to the parameters</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#accelerateXY">game.Object#accelerateXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="canCollide"><span class="symbol-name">canCollide</span><span class="signature"><span class="signature-params">(object)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns whether or not this objects can collide with other objects. Particles emitters do not collide.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>object</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#canCollide">game.ParticleEmitter#canCollide</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p>false</p>
+                </dd>
+              </dl>
+              <h3 id="collides"><span class="symbol-name">collides</span><span class="signature"><span class="signature-params">(obj)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns true if the instances collides with the parameter object. This method is called after &lt;!-- the <a href="game.Object.html#canCollide">canCollide</a> method and before the onCollision method, for both objects</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>obj</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#collides">game.Object#collides</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="copyAcceleration"><span class="symbol-name">copyAcceleration</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> (<a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a> or Vec2)</span></span>
+              </h3>
+              <p>returns a copy of the acceleration of the object.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#copyAcceleration">game.Object#copyAcceleration</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="copyPosition"><span class="symbol-name">copyPosition</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> (<a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a> or Vec2)</span></span>
+              </h3>
+              <p>returns a copy of the position of the object</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#copyPosition">game.Object#copyPosition</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="copySpeed"><span class="symbol-name">copySpeed</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns a copy of the speed of the object</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#copySpeed">game.Object#copySpeed</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="createParticle"><span class="symbol-name">createParticle</span><span class="signature"><span class="signature-params">(lifeTime, position, angle, speed)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Particle.html">game.Particle</a></span></span>
+              </h3>
+              <p>create a particle using the particle generator.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>lifeTime</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>position</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>angle</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>speed</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#createParticle">game.ParticleEmitter#createParticle</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="createParticles"><span class="symbol-name">createParticles</span><span class="signature"><span class="signature-params">(number)</span>&nbsp;&rarr; <span class="signature-returns"> Array of <a href="game.Particle.html">game.Particle</a></span></span>
+              </h3>
+              <p>create the specified number of particles using random values for lifeTime, position, angle and speed</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#createParticles">game.ParticleEmitter#createParticles</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getAcceleration"><span class="symbol-name">getAcceleration</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> (Vec2 or <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a>)</span></span>
+              </h3>
+              <p>returns the acceleration of the object, or Vec2.ZERO
+                <!--
+-->if the attrbute does not exist.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getAcceleration">game.Object#getAcceleration</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getColliderRadius"><span class="symbol-name">getColliderRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the radius of the collider or 0 if it doesn't exist.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getColliderRadius">game.Object#getColliderRadius</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getColliderRect"><span class="symbol-name">getColliderRect</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>returns the Rect containing the object's collider, or at least the position.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getColliderRect">game.Object#getColliderRect</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getEmitDistance"><span class="symbol-name">getEmitDistance</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the distance from the emitter center the particles are created at.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getEmitDistance">game.ParticleEmitter#getEmitDistance</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getEmitRate"><span class="symbol-name">getEmitRate</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the number of particles created per second</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getEmitRate">game.ParticleEmitter#getEmitRate</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getMaxAngle"><span class="symbol-name">getMaxAngle</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the maximum emission angle.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getMaxAngle">game.ParticleEmitter#getMaxAngle</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getMinAngle"><span class="symbol-name">getMinAngle</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the minimum emission angle.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getMinAngle">game.ParticleEmitter#getMinAngle</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getParticleGenerator"><span class="symbol-name">getParticleGenerator</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.html#.particleGenerator">game.particleGenerator</a></span></span>
+              </h3>
+              <p>returns the particleGenerator that generates all particles</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getParticleGenerator">game.ParticleEmitter#getParticleGenerator</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getParticlesMaxLifeTime"><span class="symbol-name">getParticlesMaxLifeTime</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the maximum lifetime of the particles created.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getParticlesMaxLifeTime">game.ParticleEmitter#getParticlesMaxLifeTime</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getParticlesMinLifeTime"><span class="symbol-name">getParticlesMinLifeTime</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the minimum lifetime of the particles created.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getParticlesMinLifeTime">game.ParticleEmitter#getParticlesMinLifeTime</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getPosition"><span class="symbol-name">getPosition</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> Vec2</span></span>
+              </h3>
+              <p>returns the position of the object, or Vec2.ZERO
+                <!--
+-->if the attribute does not exist.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getPosition">game.Object#getPosition</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getRadius"><span class="symbol-name">getRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the radius of the object, ie the maximum between the radius of the collider and the one of the
+                <!--
+-->renderer if they exists, or 0.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getRadius">game.Object#getRadius</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getRect"><span class="symbol-name">getRect</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>returns the Rect containing the object, ie the collider and the renderer if they exists,
+                <!--
+-->and the position point.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getRect">game.Object#getRect</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getRenderRadius"><span class="symbol-name">getRenderRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the radius of the renderer or 0 if it doesn't exist.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getRenderRadius">game.Object#getRenderRadius</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getRenderRect"><span class="symbol-name">getRenderRect</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
+              </h3>
+              <p>returns the Rect containing the object's renderer, or at least the position.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getRenderRect">game.Object#getRenderRect</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getRotationSpeed"><span class="symbol-name">getRotationSpeed</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the rotation speed (in radians per second) of the object if it exists, or 0.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getRotationSpeed">game.Object#getRotationSpeed</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getSizeReduceFactor"><span class="symbol-name">getSizeReduceFactor</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the size reduce factor</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getSizeReduceFactor">game.ParticleEmitter#getSizeReduceFactor</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getSpeed"><span class="symbol-name">getSpeed</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the speed of the object, or Vec2.ZERO
+                <!--
+-->if the attribute does not exist.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#getSpeed">game.Object#getSpeed</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="getSpeedDampFactor"><span class="symbol-name">getSpeedDampFactor</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the speed damping factor.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#getSpeedDampFactor">game.ParticleEmitter#getSpeedDampFactor</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="isInCollisionLayer"><span class="symbol-name">isInCollisionLayer</span><span class="signature"><span class="signature-params">(layer)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns true if this object can collide with objects which are in the specified layer.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>layer</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#isInCollisionLayer">game.Object#isInCollisionLayer</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="isOutOfRect"><span class="symbol-name">isOutOfRect</span><span class="signature"><span class="signature-params">(rect[, marginX][, marginY])</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns whether or not the object is outside the specified rectangle.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rect</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginX</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginY</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>marginX</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#isOutOfRect">game.Object#isOutOfRect</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="isRunning"><span class="symbol-name">isRunning</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              </h3>
+              <p>returns true if the emitter is creating particles every frame (i.e if it hasn't been stopped
+                <!--
+-->and if the maximum hasn't been reached).</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#isRunning">game.ParticleEmitter#isRunning</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="kill"><span class="symbol-name">kill</span><span class="signature"><span class="signature-params">(gameManager)</span></span>
+              </h3>
+              <p>kills the object and removes it from the game before the next frame. The
+                <!--
+--><a href="game.Object.html#onDeath">onDeath</a> method is then called</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#kill">game.Object#kill</a></dd>
+              </dl>
+              <h3 id="maintainInRect"><span class="symbol-name">maintainInRect</span><span class="signature"><span class="signature-params">(rect, marginX, marginY)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>maintains the object inside the specified rectangle. you can call this method inside the
+                <!--
+--><a href="game.Object.html#moveOnFrame">game.Object#moveOnFrame</a> method, for example, to make sure the object
+                <!--
+-->does not go out of a rectangle. This function returns the vector used to move the object inside the rectangle.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rect</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginX</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginY</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#maintainInRect">game.Object#maintainInRect</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="move"><span class="symbol-name">move</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>moves the object of the specified translation.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>delta</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#move">game.Object#move</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="moveOnFrame"><span class="symbol-name">moveOnFrame</span><span class="signature"><span class="signature-params">(gameManager, dT)</span></span>
+              </h3>
+              <p>called by the <a href="game.Object.html#onFrame">onFrame</a> method. moves according speed.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>dT</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#moveOnFrame">game.Object#moveOnFrame</a></dd>
+              </dl>
+              <h3 id="moveXY"><span class="symbol-name">moveXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>moves the object according to the specified translation coordinates</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#moveXY">game.Object#moveXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="onCollision"><span class="symbol-name">onCollision</span><span class="signature"><span class="signature-params">(gameManager, object)</span></span>
+              </h3>
+              <p>called by the game manager on the collision with the specified object.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>object</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#onCollision">game.Object#onCollision</a></dd>
+              </dl>
+              <h3 id="onDeath"><span class="symbol-name">onDeath</span><span class="signature"><span class="signature-params">(gameManager)</span></span>
+              </h3>
+              <p>called by the game manager the moment the object is removed from the game.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#onDeath">game.Object#onDeath</a></dd>
+              </dl>
+              <h3 id="onFinished"><span class="symbol-name">onFinished</span><span class="signature"><span class="signature-params">(gameManager)</span></span>
+              </h3>
+              <p>method called by the object itself when all particles are generated and dead. kills the emitter</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#onFinished">game.ParticleEmitter#onFinished</a></dd>
+              </dl>
+              <h3 id="onFrame"><span class="symbol-name">onFrame</span><span class="signature"><span class="signature-params">(gameManager, dT)</span></span>
+              </h3>
+              <p>called every frame by the game manager. creates the needed particles and add them to the game,
+                <!--
+-->change their size and speed, ...</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>dT</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#onFrame">game.ParticleEmitter#onFrame</a></dd>
+              </dl>
+              <h3 id="prepareCollision"><span class="symbol-name">prepareCollision</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>called at the beginning of the collision part of a frame, after the game manager has called
+                <!--
+-->the onFrame method for all objects. This method is only called for objects with a
+                <!--
+--><a href="game.Object.html#bodyLayer">bodyLayer</a> greater or equal to 0.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#prepareCollision">game.Object#prepareCollision</a></dd>
+              </dl>
+              <h3 id="render"><span class="symbol-name">render</span><span class="signature"><span class="signature-params">(context2d)</span></span>
+              </h3>
+              <p>called by the game map to draw the object on the canvas</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context2d</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#render">game.Object#render</a></dd>
+              </dl>
+              <h3 id="renderDebug"><span class="symbol-name">renderDebug</span><span class="signature"><span class="signature-params">(context2d)</span></span>
+              </h3>
+              <p>call this function if you want to draw debug informations on the canvas. draws the collider.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context2d</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#renderDebug">game.Object#renderDebug</a></dd>
+              </dl>
+              <h3 id="restart"><span class="symbol-name">restart</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>restarts the particle emission by setting the <code><a href="game.ParticleEmitter.html#emited">game.ParticleEmitter#emited</a></code> attribute to 0.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#restart">game.ParticleEmitter#restart</a></dd>
+              </dl>
+              <h3 id="rotate"><span class="symbol-name">rotate</span><span class="signature"><span class="signature-params">(radians)</span></span>
+              </h3>
+              <p>rotates the emitter, changing the min and max angles</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#rotate">game.ParticleEmitter#rotate</a></dd>
+              </dl>
+              <h3 id="rotateOnFrame"><span class="symbol-name">rotateOnFrame</span><span class="signature"><span class="signature-params">(gameManager, dT)</span></span>
+              </h3>
+              <p>called by the <a href="game.Object.html#onFrame">onFrame</a> method. rotate according to rotation speed if exists.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>dT</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#rotateOnFrame">game.Object#rotateOnFrame</a></dd>
+              </dl>
+              <h3 id="scale"><span class="symbol-name">scale</span><span class="signature"><span class="signature-params">(factor)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>change the object size by multiplying it's dimensions by the given factor</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#scale">game.Object#scale</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setAcceleration"><span class="symbol-name">setAcceleration</span><span class="signature"><span class="signature-params">(acc)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>sets the acceleration of the object to the specified one if the attribute exists, useless otherwise</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>acc</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setAcceleration">game.Object#setAcceleration</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setAccelerationXY"><span class="symbol-name">setAccelerationXY</span><span class="signature"><span class="signature-params">(x, y)</span></span>
+              </h3>
+              <p>sets the acceleration coordinates of the object to the specified values if the attribute exists,
+                <!--
+-->useless otherwise</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setAccelerationXY">game.Object#setAccelerationXY</a></dd>
+              </dl>
+              <h3 id="setAngles"><span class="symbol-name">setAngles</span><span class="signature"><span class="signature-params">(min, max)</span></span>
+              </h3>
+              <p>sets the maximum and minimum emission angles to the specified values.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>min</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>max</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setAngles">game.ParticleEmitter#setAngles</a></dd>
+              </dl>
+              <h3 id="setCollider"><span class="symbol-name">setCollider</span><span class="signature"><span class="signature-params">(collider)</span></span>
+              </h3>
+              <p>sets the <code>collider</code> attribute of the object.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>collider</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setCollider">game.Object#setCollider</a></dd>
+              </dl>
+              <h3 id="setEmitDistance"><span class="symbol-name">setEmitDistance</span><span class="signature"><span class="signature-params">(emitDistance)</span></span>
+              </h3>
+              <p>sets the distance from the emitter center the particles are created at.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>emitDistance</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setEmitDistance">game.ParticleEmitter#setEmitDistance</a></dd>
+              </dl>
+              <h3 id="setEmitRate"><span class="symbol-name">setEmitRate</span><span class="signature"><span class="signature-params">(rate)</span></span>
+              </h3>
+              <p>sets the number of particles created per second</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>rate</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setEmitRate">game.ParticleEmitter#setEmitRate</a></dd>
+              </dl>
+              <h3 id="setMaxAngle"><span class="symbol-name">setMaxAngle</span><span class="signature"><span class="signature-params">(max)</span></span>
+              </h3>
+              <p>sets the maximum emission angle to the specified value.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>max</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setMaxAngle">game.ParticleEmitter#setMaxAngle</a></dd>
+              </dl>
+              <h3 id="setMinAngle"><span class="symbol-name">setMinAngle</span><span class="signature"><span class="signature-params">(min)</span></span>
+              </h3>
+              <p>sets the minimum emission angle to the specified value.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>min</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setMinAngle">game.ParticleEmitter#setMinAngle</a></dd>
+              </dl>
+              <h3 id="setParticleGenerator"><span class="symbol-name">setParticleGenerator</span><span class="signature"><span class="signature-params">(generator)</span></span>
+              </h3>
+              <p>sets the particle generator of the particle emitter.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>generator</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setParticleGenerator">game.ParticleEmitter#setParticleGenerator</a></dd>
+              </dl>
+              <h3 id="setParticlesLifeTime"><span class="symbol-name">setParticlesLifeTime</span><span class="signature"><span class="signature-params">(min[, max])</span></span>
+              </h3>
+              <p>sets the minimum and maximum lifetime of the particles created.
+                <!--
+-->The actual lifetime of the particles will be a random value between the maximum and the minimum.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>min</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>max</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>if max &lt; min, then max = min.</p>
+                        <p>Defaults to <code>min</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setParticlesLifeTime">game.ParticleEmitter#setParticlesLifeTime</a></dd>
+              </dl>
+              <h3 id="setParticlesMaxLifeTime"><span class="symbol-name">setParticlesMaxLifeTime</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>sets the maximum lifetime of the particles created.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>mlt.</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>no check is performed to make sure the maximum is above or equal to the maximum.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setParticlesMaxLifeTime">game.ParticleEmitter#setParticlesMaxLifeTime</a></dd>
+              </dl>
+              <h3 id="setParticlesMinLifeTime"><span class="symbol-name">setParticlesMinLifeTime</span><span class="signature"><span class="signature-params">(mlt)</span></span>
+              </h3>
+              <p>sets the minimum lifetime of the particles created.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>mlt</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setParticlesMinLifeTime">game.ParticleEmitter#setParticlesMinLifeTime</a></dd>
+              </dl>
+              <h3 id="setPosition"><span class="symbol-name">setPosition</span><span class="signature"><span class="signature-params">(pos)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>sets the position of the object to the specified one if the attribute exists, creates it otherwise</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>pos</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setPosition">game.Object#setPosition</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setPositionXY"><span class="symbol-name">setPositionXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>sets the position of the object to the specified coordinates if the attribute exists,
+                <!--
+-->creates it otherwise</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setPositionXY">game.Object#setPositionXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setRenderer"><span class="symbol-name">setRenderer</span><span class="signature"><span class="signature-params">(renderer)</span></span>
+              </h3>
+              <p>sets the <code>renderer</code> attribute of the object.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>renderer</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setRenderer">game.Object#setRenderer</a></dd>
+              </dl>
+              <h3 id="setRotationSpeed"><span class="symbol-name">setRotationSpeed</span><span class="signature"><span class="signature-params">(radPerSec)</span></span>
+              </h3>
+              <p>set the rotation speed of the object to the specified value in radians per seconds.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radPerSec</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setRotationSpeed">game.Object#setRotationSpeed</a></dd>
+              </dl>
+              <h3 id="setSizeReduceFactor"><span class="symbol-name">setSizeReduceFactor</span><span class="signature"><span class="signature-params">(factor)</span></span>
+              </h3>
+              <p>sets the size reduce factor</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setSizeReduceFactor">game.ParticleEmitter#setSizeReduceFactor</a></dd>
+              </dl>
+              <h3 id="setSpeed"><span class="symbol-name">setSpeed</span><span class="signature"><span class="signature-params">(spd)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>sets the speed of the object to the specified one if the attribute exists, creates it otherwise</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>spd</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setSpeed">game.Object#setSpeed</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setSpeedDampFactor"><span class="symbol-name">setSpeedDampFactor</span><span class="signature"><span class="signature-params">(factor)</span></span>
+              </h3>
+              <p>sets the speed damping factor.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#setSpeedDampFactor">game.ParticleEmitter#setSpeedDampFactor</a></dd>
+              </dl>
+              <h3 id="setSpeedXY"><span class="symbol-name">setSpeedXY</span><span class="signature"><span class="signature-params">(x, y)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.Object.html">game.Object</a></span></span>
+              </h3>
+              <p>sets the speed coordinates of the object to the specified values if the attribute exists,
+                <!--
+-->creates it otherwise</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>x</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>y</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Object.html#setSpeedXY">game.Object#setSpeedXY</a></dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="stop"><span class="symbol-name">stop</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <p>stops the particle emission by setting the <code><a href="game.ParticleEmitter.html#emited">game.ParticleEmitter#emited</a></code> attribute to 0.</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.ParticleEmitter.html#stop">game.ParticleEmitter#stop</a></dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

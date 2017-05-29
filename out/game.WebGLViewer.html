@@ -1,0 +1,381 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: WebGLViewer</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div>
+            <h1><small><a href="game.html">game</a>.<wbr></small><span class="symbol-name">WebGLViewer</span></h1>
+            <p class="source-link">Source: <a href="game2_viewers.js.html#source-line-243">game2/<wbr>viewers.<wbr>js:243</a></p>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.WebGLViewer.html#background">background</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.WebGLViewer.html#context">context</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.WebGLViewer.html#render">render</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.WebGLViewer.html#visibleRect">visibleRect</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.WebGLViewer.html#getCallback">getCallback()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.WebGLViewer.html#setCallback">setCallback(cb)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="game.WebGLViewer.html#setCanvasSize">setCanvasSize(width, height, marginX, marginY)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="game.WebGLViewer.html#useAutoResize">useAutoResize(use[, borderMargin])</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="WebGLViewer">new&nbsp;<span class="symbol-name">WebGLViewer</span><span class="signature"><span class="signature-params">()</span></span>
+            </h2>
+            <dl class="dl-compact">
+              <dt>Extends</dt>
+              <dd><a href="game.Viewer.html">game.Viewer</a></dd>
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="background"><span class="symbol-name">background</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <p>number of game units by pixel (=(visible game width)/(canvas width))</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#background">game.Viewer#background</a></dd>
+              </dl>
+              <h3 id="context"><span class="symbol-name">context</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#context">game.Viewer#context</a></dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-virtual">abstract</span></div>
+              <h3 id="render"><span class="symbol-name">render</span></h3>
+              <p>called by the game manager after a frame to draw objects on the canvas. The callback function is called at the beginning and at the end of the function, and at the
+                <!--
+-->beginning and the end of the drawing of every layer, with the first parameter equal to
+                <!--
+--><a href="game.html#.RenderEvent#.RENDER_BEGIN">game.RenderEvent.RENDER_BEGIN</a>, <a href="game.html#.RenderEvent#.RENDER_END">game.RenderEvent.RENDER_END</a>,
+                <!--
+--><a href="game.html#.RenderEvent#.RENDER_LAYER_BEGIN">game.RenderEvent.RENDER_LAYER_BEGIN</a> or <a href="game.html#.RenderEvent#.RENDER_LAYER_END">game.RenderEvent.RENDER_LAYER_END</a> &lt;!-- and the second one equal to the rendering
+                context.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>gameManager</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>objects</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#render">game.Viewer#render</a></dd>
+              </dl>
+              <h3 id="visibleRect"><span class="symbol-name">visibleRect</span><small class="property-type">
+            &nbsp;unknown</small></h3>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#visibleRect">game.Viewer#visibleRect</a></dd>
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="getCallback"><span class="symbol-name">getCallback</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.html#.renderEventCallback">game.renderEventCallback</a></span></span>
+              </h3>
+              <p>returns the callback function called for rendering events. See <a href="game.html#.RenderEvent">game.RenderEvent</a>
+                <!--
+-->for a list of all possible events</p>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#getCallback">game.Viewer#getCallback</a></dd>
+                <dt>Returns</dt>
+                <dd></dd>
+              </dl>
+              <h3 id="setCallback"><span class="symbol-name">setCallback</span><span class="signature"><span class="signature-params">(cb)</span></span>
+              </h3>
+              <p>sets the callback function called for rendering events. See <a href="game.html#.RenderEvent">game.RenderEvent</a>
+                <!--
+-->for a list of all possible events</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>cb</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Value can be null.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#setCallback">game.Viewer#setCallback</a></dd>
+              </dl>
+              <h3 id="setCanvasSize"><span class="symbol-name">setCanvasSize</span><span class="signature"><span class="signature-params">(width, height, marginX, marginY)</span></span>
+              </h3>
+              <p>manually changes the size of the canvas, and modifies the scale for the visible rectangle
+                <!--
+-->to fit the canvas without the visible rectangle to change. you can change the visible rect and
+                <!--
+-->the game.Viewer#updateScale method to change the scale. The callback function is then with the first parameter equal to
+                <!--
+--><a href="game.html#.RenderEvent#.CANVAS_RESIZE">game.RenderEvent.CANVAS_RESIZE</a> and the second one equal to the rendering context.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>width</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>height</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginX</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>marginY</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#setCanvasSize">game.Viewer#setCanvasSize</a></dd>
+              </dl>
+              <h3 id="useAutoResize"><span class="symbol-name">useAutoResize</span><span class="signature"><span class="signature-params">(use[, borderMargin])</span></span>
+              </h3>
+              <p>allows the canvas to resize automatically when the window size changes. The callback function is called after the resize with the first parameter equal to
+                <!--
+--><a href="game.html#.RenderEvent#.CANVAS_RESIZE">game.RenderEvent.CANVAS_RESIZE</a> and the second one equal to the rendering context.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>use</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>borderMargin</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>first use : default to 4. next uses : default to previous values.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Inherited from</dt>
+                <dd><a href="game.Viewer.html#useAutoResize">game.Viewer#useAutoResize</a></dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on May 9, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

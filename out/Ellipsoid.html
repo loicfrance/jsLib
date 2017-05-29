@@ -1,0 +1,855 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Class: Ellipsoid</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <div class="symbol-detail-labels"><span class="label label-kind">class</span></div>
+            <h1><small></small><span class="symbol-name">Ellipsoid</span></h1>
+            <p class="source-link">Source: <a href="utils_geometry2d.js.html#source-line-1652">utils/<wbr>geometry2d.<wbr>js:1652</a></p>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="Ellipsoid.html#area">area</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#excentricity">excentricity</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="Ellipsoid.html#focusDistance">focusDistance</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#perimeter">perimeter</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="Ellipsoid.html#squareFocusDistance">squareFocusDistance</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Methods</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="Ellipsoid.html#checkRadius">checkRadius()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#clone">clone()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#closestPointTo">closestPointTo()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#contains">contains()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#createPolygon">createPolygon(edges)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#draw">draw(context[, fill][, stroke])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#getPercentPoint">getPercentPoint()</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="Ellipsoid.html#getRadius">getRadius()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#getRect">getRect()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#glSetVertices">glSetVertices(verticesBuffer[, offset])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#growDistance">growDistance(delta)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#mirrorHorizontally">mirrorHorizontally([axisX])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#mirrorVertically">mirrorVertically([axisY])</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#pointForAngle">pointForAngle(radians)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="Ellipsoid.html#pushPath">pushPath()</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#radiusForAngle">radiusForAngle(radians)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#relativePointForAngle">relativePointForAngle(radians)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#rotate">rotate(radians)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#scale">scale(factor)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#setAngle">setAngle(radians)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Ellipsoid.html#squareRadiusForAngle">squareRadiusForAngle(radians)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="Ellipsoid">new&nbsp;<span class="symbol-name">Ellipsoid</span><span class="signature"><span class="signature-params">(center, radiusX, radiusY, radians)</span></span>
+            </h2>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>center</p>
+                    </td>
+                    <td>
+                      <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>radiusX</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>radiusY</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>radians</p>
+                    </td>
+                    <td>
+                      <p>number</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Defaults to <code>0</code>.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="area"><span class="symbol-name">area</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>area of the ellipsoid : <code><a href="utils.geometry2d.Ellipsoid.html#radiusX">radiusX</a> <!--
+-->* <a href="utils.geometry2d.Ellipsoid.html#radiusY">radiusY</a> * &pi;</code></p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="excentricity"><span class="symbol-name">excentricity</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>excentricity = <code>(focus distance) <!--
+-->/ (<a href="utils.geometry2d.Ellipsoid.html#radiusX">horizontal radius</a>)</code></p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="focusDistance"><span class="symbol-name">focusDistance</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>focus distance : <code>&radic;(<a href="utils.geometry2d.Ellipsoid.html#radiusX">radiusX</a><sup>2</sup> <!--
+-->- <a href="utils.geometry2d.Ellipsoid.html#radiusY">radiusY</a><sup>2</sup>)</code></p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="perimeter"><span class="symbol-name">perimeter</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>approximation of the perimeter of the ellipsoid : <code>&pi; * &radic;(2 * <!--
+-->(<a href="utils.geometry2d.Ellipsoid.html#radiusX">radiusX</a><sup>2</sup> <!--
+-->+ <a href="utils.geometry2d.Ellipsoid.html#radiusY">radiusY</a><sup>2</sup>))</code></p>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
+              <h3 id="squareFocusDistance"><span class="symbol-name">squareFocusDistance</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>square of the focus distance : <code><a href="utils.geometry2d.Ellipsoid.html#radiusX">radiusX</a><sup>2</sup> <!--
+-->- <a href="utils.geometry2d.Ellipsoid.html#radiusY">radiusY</a><sup>2</sup></code></p>
+              <dl class="dl-compact">
+              </dl>
+            </section>
+            <h2>Methods</h2>
+            <section>
+              <h3 id="checkRadius"><span class="symbol-name">checkRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></span></span>
+              </h3>
+              <p>checks if the horizontal radius is the same as the vertical radius. if they're not, they are inverted,
+                <!--
+-->and the ellipsoid rotated anticlockwise for it to look the same.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="clone"><span class="symbol-name">clone</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="closestPointTo"><span class="symbol-name">closestPointTo</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="contains"><span class="symbol-name">contains</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="createPolygon"><span class="symbol-name">createPolygon</span><span class="signature"><span class="signature-params">(edges)</span></span>
+              </h3>
+              <p>creates and returns the polygon equivalent of the ellipsoid</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>edges</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><a href="utils.geometry2d.Polygon.html">utils.geometry2d.Polygon</a> polygon equivalent of this ellipsoid</p>
+                </dd>
+              </dl>
+              <h3 id="draw"><span class="symbol-name">draw</span><span class="signature"><span class="signature-params">(context[, fill][, stroke])</span></span>
+              </h3>
+              <p>draws the shape on the canvas</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>context</p>
+                      </td>
+                      <td>
+                        <p>CanvasRenderingContext2D</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>fill</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>false</code>.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>stroke</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>!fill</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Shape#pushPath</dd>
+              </dl>
+              <h3 id="getPercentPoint"><span class="symbol-name">getPercentPoint</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="getRadius"><span class="symbol-name">getRadius</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="getRect"><span class="symbol-name">getRect</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="glSetVertices"><span class="symbol-name">glSetVertices</span><span class="signature"><span class="signature-params">(verticesBuffer[, offset])</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>draw the shape on the canvas using its webgl context. To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.</p>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>verticesBuffer</p>
+                      </td>
+                      <td>
+                        <p>Float32Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>offset</p>
+                      </td>
+                      <td>
+                        <p>nmuber</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>Defaults to <code>0</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;number of points added</p>
+                </dd>
+              </dl>
+              <h3 id="growDistance"><span class="symbol-name">growDistance</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></span></span>
+              </h3>
+              <p>adds the argument to the vertical and horizontal radius.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>delta</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="mirrorHorizontally"><span class="symbol-name">mirrorHorizontally</span><span class="signature"><span class="signature-params">([axisX])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>makes the ellipsoid the opposite of itself relative to the given vertical axis if no value is set for axisX, the mirror will be made relative to the center's x coordinate.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisX</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>abscissa of the vertical axis</p>
+                        <p>Defaults to <code>center.x</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="mirrorVertically"><span class="symbol-name">mirrorVertically</span><span class="signature"><span class="signature-params">([axisY])</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
+              </h3>
+              <p>makes the ellipsoid the opposite of itself relative to the given horizontal axis if no value is set for axisY, the mirror will be made relative to the center's y coordinate.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>axisY</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>Yes</p>
+                      </td>
+                      <td>
+                        <p>ordinate of the vertical axis</p>
+                        <p>Defaults to <code>center.y</code>.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="pointForAngle"><span class="symbol-name">pointForAngle</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the point of the ellipsoid, in absolute coordinates, corresponding to the given radians.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Ellipsoid#relativePointForAngle</dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="pushPath"><span class="symbol-name">pushPath</span><span class="signature"><span class="signature-params">()</span></span>
+              </h3>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="radiusForAngle"><span class="symbol-name">radiusForAngle</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the distance from the center to the ellipsoid for the specified angle in radians</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Ellipsoid#squareRadiusForAngle</dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="relativePointForAngle"><span class="symbol-name">relativePointForAngle</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
+              </h3>
+              <p>returns the point of the ellipsoid, relative to its center, corresponding to the given radians.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Ellipsoid#pointForAngle</dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="rotate"><span class="symbol-name">rotate</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></span></span>
+              </h3>
+              <p>rotate the ellipsoid by the specified angle, in radians</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="scale"><span class="symbol-name">scale</span><span class="signature"><span class="signature-params">(factor)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></span></span>
+              </h3>
+              <p>multiplies the vertical and horizontal radius by the given factor.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>factor</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="setAngle"><span class="symbol-name">setAngle</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></span></span>
+              </h3>
+              <p>sets the radians attribute to the specified value.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></code>&nbsp;<code>this</code></p>
+                </dd>
+              </dl>
+              <h3 id="squareRadiusForAngle"><span class="symbol-name">squareRadiusForAngle</span><span class="signature"><span class="signature-params">(radians)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <p>returns the square distance from the center to the ellipsoid for the specified angle in radians</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>radians</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>See also</dt>
+                <dd>utils.geometry2d.Ellipsoid#radiusForAngle</dd>
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on May 9, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

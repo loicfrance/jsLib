@@ -1,0 +1,3206 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: utils/utils_2.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: utils/utils_2.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+* Created by Loic France on 11/11/2016.
+*/
+{
+//######################################################################################################################
+//##################################################### geometry2d #####################################################
+//######################################################################################################################
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - Vec2 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/** @class
+ * @memberOf utils.geometry2d
+ * @classdesc a simple class with 2 members : &amp;lt;code&gt;{@link utils.geometry2d.Vec2#x|x}&amp;lt;/code&gt; and &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Vec2#y|y}&amp;lt;/code&gt;, &amp;lt;!--
+ * --&gt;used to represent points and vectors
+ */
+class Vec2 {
+	/** @constructor
+	 * @param {number} x - x coordinate
+	 * @param {number} y - y coordinate
+	 */
+	constructor(x, y) {
+		/**
+		 * @name utils.geometry2d.Vec2#x
+		 * @type {number}
+		 */
+		this.x &#x3D; x;
+		/**
+		 * @name utils.geometry2d.Vec2#y
+		 * @type {number}
+		 */
+		this.y &#x3D; y;
+	}
+
+	/**
+	 * angle of this Vec2, calculated from the coordinates : &amp;lt;code&gt;atan2(y, x)&amp;lt;/code&gt;.
+	 * when used as setter, the {@link utils.geometry2d.Vec2#x|x} and {@link utils.geometry2d.Vec2#y|y} &amp;lt;!--
+	 * --&gt;attributes are caluclated like this : &amp;lt;code&gt;x&#x3D; cos(a)\*magnitude, y&#x3D; sin(a)\*magnitude&amp;lt;/code&gt;
+	 * @type {number}
+	 */
+	get angle() {
+		return Math.atan2(this.y, this.x);
+	}
+
+	/**
+	 * @param {number} a
+	 */
+	set angle(a) {
+		const m &#x3D; this.magnitude;
+		if (m) {
+			this.x &#x3D; Math.cos(a) * m;
+			this.y &#x3D; Math.sin(a) * m;
+		}
+	}
+
+	/**
+	 * square magnitude of this vector, calculated from the coordinates : &amp;lt;code&gt;&amp;lt;!--
+	 *        --&gt;{@link utils.geometry2d.Vec2#x|x}&amp;lt;sup&gt;2&amp;lt;/sup&gt; + {@link utils.geometry2d.Vec2#y|y}&amp;lt;sup&gt;2&amp;lt;/sup&gt; &amp;lt;!--
+	 *        --&gt;&amp;lt;/code&gt;
+	 * @readonly
+	 * @type {number}
+	 */
+	get squareMagnitude() {
+		return this.x * this.x + this.y * this.y;
+	}
+
+	/**
+	 * magnitude of this Vec2, calculated from the coordinates : &amp;lt;code&gt;&amp;amp;radic;(&amp;lt;!--
+	 *        --&gt;{@link utils.geometry2d.Vec2#x|x}&amp;lt;sup&gt;2&amp;lt;/sup&gt; + &amp;lt;!--
+	 *        --&gt;{@link utils.geometry2d.Vec2#y|y}&amp;lt;sup&gt;2&amp;lt;/sup&gt;)&amp;lt;/code&gt;.
+	 * when used as setter, the {@link utils.geometry2d.Vec2#x|x} and {@link utils.geometry2d.Vec2#y|y} &amp;lt;!--
+	 * --&gt;attributes are modified to make the magnitude equal to the given one, and to keep the &amp;lt;!--
+	 * --&gt;{@link utils.geometry2d.Vec2#angle|angle} value.
+	 * @type {number}
+	 */
+	get magnitude() {
+		return Math.sqrt(this.x * this.x + this.y * this.y);
+	}
+	set magnitude(mag) {
+		let m &#x3D; this.magnitude;
+		if (m) this.mul(mag / m); else this.x &#x3D; mag;
+	}
+
+	/**
+	 * @return {utils.geometry2d.Vec2} a Vec2 with the same x and y properties
+	 */
+	clone() {
+		return new Vec2(this.x, this.y);
+	}
+
+	/**
+	 * sets x and y coordinates of this Vec2
+	 * @param {number} x - new x coordinate
+	 * @param {number} y - new y coordinate
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	setXY(x, y) {
+		this.x &#x3D; x;
+		this.y &#x3D; y;
+		return this;
+	}
+
+	/**
+	 * sets x and y coordinates to the same as the &#x27;vec&#x27; parameter
+	 * @param {utils.geometry2d.Vec2} vec
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	set(vec) {
+		this.x &#x3D; vec.x;
+		this.y &#x3D; vec.y;
+		return this;
+	}
+
+	/**
+	 * sets x and y coordinates to 0
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	reset() {
+		this.x &#x3D; this.y &#x3D; 0;
+		return this;
+	}
+
+	/**
+	 * @param {number} x - number to be added to x coordinate
+	 * @param {number} y - number to be added to y coordinate
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	addXY(x, y) {
+		this.x +&#x3D; x;
+		this.y +&#x3D; y;
+		return this;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} vec
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	add(vec) {
+		this.x +&#x3D; vec.x;
+		this.y +&#x3D; vec.y;
+		return this;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} vec
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	remove(vec) {
+		this.x -&#x3D; vec.x;
+		this.y -&#x3D; vec.y;
+		return this;
+	}
+
+	/**
+	 * multiplies x and y coordinates by the parameter.
+	 * @param {number} factor
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	mul(factor) {
+		this.x *&#x3D; factor;
+		this.y *&#x3D; factor;
+		return this;
+	}
+
+	/**
+	 * sets x and y coordinates to make the magnitude &#x3D; 1.
+	 * if x &#x3D; y &#x3D; 0, this function does nothing.
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	normalize() {
+		this.mul(1 / (this.magnitude || 1));
+		return this;
+	}
+
+	/**
+	 * sets x and y coordinates to make the magnitude &#x3D; mag.
+	 * @param {number} mag -the new magnitude of this Vec2
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	setMagnitude(mag) {
+		this.magnitude &#x3D; mag;
+		return this;
+	}
+
+	/**
+	 * x&#x3D; cos(a)*magnitude, y&#x3D; sin(a)*magnitude
+	 * @param {number} a - new angle(radians) of this Vec2
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	setAngle(a) {
+		this.angle &#x3D; a;
+		return this;
+	}
+
+	/**
+	 * @param {number} a - angle(radians) to rotate this Vec2
+	 * this.angle +&#x3D; a;
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	rotate(a) {
+		this.angle +&#x3D; a;
+		return this;
+	}
+
+	/**
+	 * rotate this Vec2 around the center, and keep the distance to the center
+	 * @param {utils.geometry2d.Vec2} center - point to rotate this Vec2 around
+	 * @param {number} a - angle(radians) to rotate this Vec2
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	rotateAround(center, a) {
+		return this.set(Vec2.translation(center, this).rotate(a).add(center));
+	}
+
+	/**
+	 * @return {string} &quot;(x,y)&quot;
+	 */
+	toString() {
+		return [&#x27;(&#x27;, this.x, &#x27;,&#x27;, this.y, &#x27;)&#x27;].join(&#x27;&#x27;);
+	}
+
+	/**
+	 * @return {boolean} true if this.x&#x3D;x and this.y&#x3D;y, false otherwise.
+	 */
+	equalsXY(x, y) {
+		return this.x &#x3D;&#x3D; x &amp;amp;&amp;amp; this.y &#x3D;&#x3D; y;
+	}
+
+	/**
+	 * @return {boolean} true if this.x&#x3D;vec.x and this.y&#x3D;vec.y, false otherwise.
+	 */
+	equals(vec) {
+		return this.x &#x3D;&#x3D; vec.x &amp;amp;&amp;amp; this.y &#x3D;&#x3D; vec.y;
+	}
+
+	/**
+	 * @return {boolean} true if x&#x3D;y&#x3D;0, false otherwise.
+	 */
+	isZero() {
+		return !(this.x || this.y);
+	}
+
+	/**
+	 * @return {utils.geometry2d.Vec2} new Vec2 containing unit (magnitude&#x3D;1) version of this Vec2
+	 */
+	getUnit() {
+		return this.clone().normalize();
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} [center&#x3D;Vec2.ZERO]
+	 * @return {utils.geometry2d.Vec2} the mirror Vec2 of this Vec2, relative to the center
+	 */
+	getMirror(center &#x3D; Vec2.ZERO) {
+		return Vec2.translation(this, center).add(center);
+	}
+
+	/**
+	 * @param {number} [axisX&#x3D;0]
+	 * @return {utils.geometry2d.Vec2} the horizontal mirror Vec2 of this Vec2,
+	 * relative to the axisX x coordinate
+	 */
+	getHorizontalMirror(axisX &#x3D; 0) {
+		return this.clone().mirrorHorizontally();
+	}
+
+	/**
+	 * @param {number} [axisY&#x3D;0]
+	 * @return {utils.geometry2d.Vec2} the vertical mirror Vec2 of this Vec2,
+	 * relative to the axisY y coordinate
+	 */
+	getVerticalMirror(axisY &#x3D; 0) {
+		return this.clone().mirrorVertically();
+	}
+
+	mirror(center &#x3D; Vec2.ZERO) {
+		this.x &#x3D; center.x ? 2 * center.x - this.x : -this.x;
+		this.y &#x3D; center.y ? 2 * center.y - this.y : -this.y;
+		return this;
+	}
+
+	/**
+	 * same (but faster) as instance.set(instance.getHorizontalMirror(axisX))
+	 * @param {number} [axisX&#x3D;0]
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	mirrorHorizontally(axisX &#x3D; 0) {
+		this.x &#x3D; axisX ? 2 * axisX - this.x : -this.x;
+		return this;
+	}
+
+	/**
+	 * same (but faster) as instance.set(instance.getVerticalMirror(axisY))
+	 * @param {number} [axisY&#x3D;0]
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	mirrorVertically(axisY &#x3D; 0) {
+		this.y &#x3D; axisY ? 2 * axisY - this.y : -this.y;
+		return this;
+	}
+
+	/**
+	 * @param {number} [digits&#x3D;0] - number of digits the result must have.
+	 *        if not set (&#x3D; 0), the result will be the closest integer.
+
+	 * @return {number} rounded value of x coordinate.
+	 */
+	getRoundedX(digits &#x3D; 0) {
+		if (digits) return parseInt(this.x.toPrecision(digits));
+		else return Math.round(this.x);
+	}
+
+	/**
+	 * @param {number} [digits&#x3D;0] - number of digits the result must have.
+	 *        if not set (&#x3D; 0), the result will be the closest integer.
+	 * @return {number} rounded value of y coordinate.
+	 */
+	getRoundedY(digits &#x3D; 0) {
+		if (digits) return parseInt(this.y.toPrecision(digits));
+		else return Math.round(this.y);
+	}
+
+	/**
+	 * @param {number} [digits&#x3D;0] - number of digits the result must have.
+	 *        if not set (&#x3D; 0), the result will be the closest integer.
+	 * @return {utils.geometry2d.Vec2} copy of this Vec2 with rounded coordinates.
+	 */
+	roundedVec(digits &#x3D; 0) {
+		return new Vec2(this.getRoundedX(digits), this.getRoundedY(digits));
+	}
+
+	/**
+	 * if the magnitude of this Vec2 is not in the interval [min, max],
+	 * this method modifies the coordinate to make the magnitude
+	 * to the max(if magnitude is higher) or the min (if magnitude is lower).
+	 * @param {number} min - the minimum magnitude
+	 * @param {number} max - the maximum magnitude
+	 * @return {utils.geometry2d.Vec2} this
+	 */
+	clampMagnitude(min, max) {
+		let m &#x3D; this.magnitude;
+		if (m) {
+			if (m &amp;lt; min) this.mul(min / m);
+			else if (m &gt; max) this.mul(max / m);
+		} else this.x &#x3D; min;
+		return this;
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} u
+	 * @param {utils.geometry2d.Vec2} v
+	 * @return {number} the result of the dot product of u and v.
+	 */
+	static dotProd(u, v) {
+		return u.x * v.x + u.y * v.y;
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} u
+	 * @param {utils.geometry2d.Vec2} v
+	 * @return {number} the result of the vectorial product of u and v.
+	 */
+	static vectProd(u, v) {
+		return u.x * v.y - u.y * v.x;
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} A - start point
+	 * @param {utils.geometry2d.Vec2} B - end point
+	 * @return {utils.geometry2d.Vec2} the translation from A to B
+	 */
+	static translation(A, B) {
+		return new Vec2(B.x - A.x, B.y - A.y);
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} A
+	 * @param {utils.geometry2d.Vec2} B
+	 * @return {number} the square distance between A and B
+	 */
+	static squareDistance(A, B) {
+		let dX &#x3D; B.x - A.x, dY &#x3D; B.y - A.y;
+		return dX * dX + dY * dY;
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} A
+	 * @param {utils.geometry2d.Vec2} B
+	 * @return {number} the distance between A and B
+	 */
+	static distance(A, B) {
+		return Math.sqrt(Vec2.squareDistance(A, B));
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} A
+	 * @param {utils.geometry2d.Vec2} B
+	 * @param {utils.geometry2d.Vec2} C
+	 * @return {boolean} true if AB and AC are in counter-clockwise order,
+	 *         false otherwise
+	 */
+	static ccw(A, B, C) {
+		return (C.y - A.y) * (B.x - A.x) &gt; (B.y - A.y) * (C.x - A.x);
+	}
+
+	/**
+	 * @static
+	 * @param {utils.geometry2d.Vec2} AB
+	 * @param {utils.geometry2d.Vec2} AC
+	 * @return {boolean} true if AB and AC are in counter-clockwise order,
+	 *         false otherwise
+	 */
+	static ccw2(AB, AC) {
+		return AC.y * AB.x &gt; AB.y * AC.x;
+	}
+
+	/**
+	 * @static
+	 * @param {number} rad radians
+	 * @param {number} [mag&#x3D;1] magnitude
+	 * @return {utils.geometry2d.Vec2} (cos(rad)*mag, sin(rad)*mag)
+	 */
+	static createFromAngle(rad, mag &#x3D; 1) {
+		return new Vec2(Math.cos(rad) * mag, Math.sin(rad) * mag);
+	}
+
+	/**
+	 * @static
+	 * @param {number[]} xyxyArray - array of points coordinates ordered
+	 *        like this : [x1, y1, x2, y2, x3, y3, ...].
+	 * @return {utils.geometry2d.Vec2[]} a Vec2 array : [(x1,y1), (x2,y2), (x3,y3), ...].
+	 */
+	static createVec2Array(xyxyArray) {
+		let len &#x3D; Math.floor(xyxyArray.length / 2), result &#x3D; new Array(len), i &#x3D; len, i2;
+		while (i--) {
+			i2 &#x3D; 2 * i;
+			result[i] &#x3D; new Vec2(xyxyArray[i2], xyxyArray[i2 + 1]);
+		}
+		return result;
+	}
+
+	/**
+	 * a new &amp;lt;code&gt;{@link utils.geometry2d.Vec2}&amp;lt;/code&gt; with &amp;lt;code&gt;x &#x3D; y &#x3D; 0&amp;lt;/code&gt;
+	 * @static
+	 * @constant
+	 * @readonly
+	 * @type {utils.geometry2d.Vec2}
+	 */
+	static get zero() {
+		return new Vec2(0, 0);
+	}
+}
+/**
+ * (0,0).
+ * @static
+ * @constant
+ * @memberOf utils.geometry2d.Vec2
+ * @type {utils.geometry2d.Vec2}
+ */
+Vec2.ZERO &#x3D; Vec2.zero;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - Rect - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/** @class
+ * @memberOf utils.geometry2d
+ * @classdesc a class with four attributes : &amp;lt;code&gt;{@link utils.geometry2d.Rect#left|left}&amp;lt;/code&gt;, &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Rect#top|top}&amp;lt;/code&gt;, &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Rect#right|right}&amp;lt;/code&gt; and &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Rect#bottom|bottom}&amp;lt;/code&gt;, used to represent a non-rotated rectangle.
+ */
+class Rect {
+	/** @constructor
+	 * @param {number} left
+	 * @param {number} top
+	 * @param {number} right
+	 * @param {number} bottom
+	 */
+	constructor(left, top, right, bottom) {
+		/**
+		 * @name utils.geometry2d.Rect#left
+		 * @type {number}
+		 */
+		this.left &#x3D; left;
+		/**
+		 * @name utils.geometry2d.Rect#top
+		 * @type {number}
+		 */
+		this.top &#x3D; top;
+		/**
+		 * @name utils.geometry2d.Rect#right
+		 * @type {number}
+		 */
+		this.right &#x3D; right;
+		/**
+		 * @name utils.geometry2d.Rect#bottom
+		 * @type {number}
+		 */
+		this.bottom &#x3D; bottom;
+	}
+
+	/**
+	 * width (&#x3D; right - left) of the instance.
+	 * @type {number}
+	 * @readonly
+	 */
+	get width() {
+		return this.right - this.left;
+	}
+
+	/**
+	 * height (&#x3D; bottom - top) of the instance.
+	 * @type {number}
+	 * @readonly
+	 */
+	get height() {
+		return this.bottom - this.top
+	}
+
+	/**
+	 * dimensions ratio(&#x3D; {@link utils.geometry2d.Rect#width|width} / &amp;lt;!--
+	 * --&gt;{@link utils.geometry2d.Rect#height|height}) of the instance.
+	 * @type {number}
+	 * @readonly
+	 */
+	get ratio() {
+		return this.width / this.height;
+	}
+
+	/**
+	 * perimeter (&#x3D; {@link utils.geometry2d.Rect#width|width}*2 + &amp;lt;!--
+	 * --&gt;{@link utils.geometry2d.Rect#height|height}*2) of the instance.
+	 * @type {number}
+	 * @readonly
+	 */
+	get perimeter() {
+		return (this.width + this.height) * 2;
+	}
+
+	/**
+	 * area (&#x3D; {@link utils.geometry2d.Rect#width|width} * &amp;lt;!--
+	 * --&gt;{@link utils.geometry2d.Rect#height|height}) of the instance.
+	 * @type {number}
+	 * @readonly
+	 */
+	get area() {
+		return this.width * this.height;
+	}
+
+	/**
+	 * center of the instance. when modified, keeps the dimensions.
+	 * @type {utils.geometry2d.Vec2}
+	 */
+	get center() {
+		return new Vec2(this.left + this.right, this.top + this.bottom).mul(0.5);
+	}
+
+	/** @param {utils.geometry2d.Vec2} center */
+	set center(center) {
+		this.setCenterXY(center.x, center.y);
+		return center;
+	}
+
+	/**
+	 * creates and returns a copy of the instance
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	clone() {
+		return new Rect(this.left, this.top, this.right, this.bottom);
+	}
+
+	/**
+	 * sets the center of the instance to the given point.
+	 * @param {utils.geometry2d.Vec2} center
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;.
+	 * @see {@link utils.geometry2d.Rect#setCenterXY(x,y)}
+	 * @see {@link utils.geometry2d.Rect#center}
+	 */
+	setCenter(center) {
+		return this.setCenterXY(center.x, center.y);
+	}
+
+	/**
+	 * sets the center to the given coordinates
+	 * @param {number} x new x coordinate of the center
+	 * @param {number} y new y coordinate of the center
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;.
+	 * @see {@link utils.geometry2d.Rect#setCenter}
+	 * @see {@link utils.geometry2d.Rect#center}
+	 */
+	setCenterXY(x, y) {
+		let w &#x3D; this.width / 2, h &#x3D; this.height / 2;
+		this.left &#x3D; x - w;
+		this.right &#x3D; x + w;
+		this.top &#x3D; y - h;
+		this.bottom &#x3D; y + h;
+		return this;
+	}
+
+	/**
+	 * modifes the width and height and keep the center
+	 * @param {number} scaleX
+	 * @param {number} scaleY
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;.
+	 */
+	scale(scaleX, scaleY &#x3D; scaleX) {
+		let dw &#x3D; this.width * (scaleX - 1) * 0.5, dh &#x3D; this.height * (scaleY - 1) * 0.5;
+		this.left -&#x3D; dw;
+		this.right +&#x3D; dw;
+		this.top -&#x3D; dh;
+		this.bottom +&#x3D; dh;
+		return this;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Rect} rect
+	 * @returns {boolean} true if the instance the object is called from and the parameter have a common point
+	 */
+	overlap(rect) {
+		return rect.left &amp;lt;&#x3D; this.right &amp;amp;&amp;amp; rect.top &amp;lt;&#x3D; this.bottom
+			&amp;amp;&amp;amp; rect.right &gt;&#x3D; this.left &amp;amp;&amp;amp; rect.bottom &gt;&#x3D; this.top;
+	}
+
+	/**
+	 * @param {number} x x coordinate of the point
+	 * @param {number} y y coordinate of the point
+	 * @returns {boolean} true if the point (x,y) is located inside the rectangle.
+	 * @see {@link utils.geometry2d.Rect#containsRect}
+	 * @see {@link utils.geometry2d.Rect#contains}
+	 */
+	containsXY(x, y) {
+		return x &gt;&#x3D; this.left &amp;amp;&amp;amp; x &amp;lt;&#x3D; this.right &amp;amp;&amp;amp; y &gt;&#x3D; this.top &amp;amp;&amp;amp; y &amp;lt;&#x3D; this.bottom;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Rect} rect
+	 * @returns {boolean} true if the given rect is completely inside the instance rect.
+	 * @see {@link utils.geometry2d.Rect#containsXY}
+	 * @see {@link utils.geometry2d.Rect#contains}
+	 */
+	containsRect(rect) {
+		return rect.left &gt;&#x3D; this.left &amp;amp;&amp;amp; rect.right &amp;lt;&#x3D; this.right
+			&amp;amp;&amp;amp; rect.top &gt;&#x3D; this.top &amp;amp;&amp;amp; rect.bottom &amp;lt;&#x3D; this.bottom;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p a point
+	 * @returns {boolean} true if the point (p) is located inside the rectangle.
+	 * @see {@link utils.geometry2d.Rect#containsXY}
+	 * @see {@link utils.geometry2d.Rect#containsRect}
+	 */
+	contains(p) {
+		return p.x &gt;&#x3D; this.left &amp;amp;&amp;amp; p.x &amp;lt;&#x3D; this.right &amp;amp;&amp;amp; p.y &gt;&#x3D; this.top &amp;amp;&amp;amp; p.y &amp;lt;&#x3D; this.bottom;
+	}
+
+	/**
+	 * @param {number} x
+	 * @returns {boolean} &amp;lt;code&gt;right &amp;amp;lt; x&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
+	 * @see {@link utils.geometry2d.Rect#onLeftOf}
+	 * @see {@link utils.geometry2d.Rect#onRightOfX}
+	 * @see {@link utils.geometry2d.Rect#aboveY}
+	 * @see {@link utils.geometry2d.Rect#belowY}
+	 */
+	onLeftOfX(x) {
+		return this.right &amp;lt; x;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Rect} r
+	 * @returns {boolean} &amp;lt;code&gt;right &amp;amp;lt; r.left&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#onLeftOfX}
+	 * @see {@link utils.geometry2d.Rect#onLeftOf}
+	 * @see {@link utils.geometry2d.Rect#onRightOfRect}
+	 * @see {@link utils.geometry2d.Rect#aboveRect}
+	 * @see {@link utils.geometry2d.Rect#belowRect}
+	 */
+	onLeftOfRect(r) {
+		return this.right &amp;lt; r.left;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {boolean} &amp;lt;code&gt;right &amp;amp;lt; p.x&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#onLeftOfX}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
+	 * @see {@link utils.geometry2d.Rect#onRightOf}
+	 * @see {@link utils.geometry2d.Rect#above}
+	 * @see {@link utils.geometry2d.Rect#below}
+	 */
+	onLeftOf(p) {
+		return this.right &amp;lt; p.x;
+	}
+
+	/**
+	 * @param {number} x
+	 * @returns {boolean} &amp;lt;code&gt;left &amp;amp;gt; x&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#onRightOfRect}
+	 * @see {@link utils.geometry2d.Rect#onRightOf}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfX}
+	 * @see {@link utils.geometry2d.Rect#aboveY}
+	 * @see {@link utils.geometry2d.Rect#belowY}
+	 */
+	onRightOfX(x) {
+		return this.left &gt; x;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Rect} r
+	 * @returns {boolean} &amp;lt;code&gt;left &amp;amp;gt; r.right&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#onRightOfX}
+	 * @see {@link utils.geometry2d.Rect#onRightOf}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
+	 * @see {@link utils.geometry2d.Rect#aboveRect}
+	 * @see {@link utils.geometry2d.Rect#belowRect}
+	 */
+	onRightOfRect(r) {
+		return this.left &gt; r.right;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {boolean} &amp;lt;code&gt;left &amp;amp;gt; p.x&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#onRightOfX}
+	 * @see {@link utils.geometry2d.Rect#onRightOfRect}
+	 * @see {@link utils.geometry2d.Rect#onLeftOf}
+	 * @see {@link utils.geometry2d.Rect#above}
+	 * @see {@link utils.geometry2d.Rect#below}
+	 */
+	onRightOf(p) {
+		return this.left &gt; p.x;
+	}
+
+	/**
+	 * @param {number} y
+	 * @returns {boolean} &amp;lt;code&gt;bottom &amp;amp;lt; y&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#aboveRect}
+	 * @see {@link utils.geometry2d.Rect#above}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfX}
+	 * @see {@link utils.geometry2d.Rect#onRightOfX}
+	 * @see {@link utils.geometry2d.Rect#belowY}
+	 */
+	aboveY(y) {
+		return this.bottom &amp;lt; y;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Rect} r
+	 * @returns {boolean} &amp;lt;code&gt;bottom &amp;amp;lt; r.top&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#aboveY}
+	 * @see {@link utils.geometry2d.Rect#above}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
+	 * @see {@link utils.geometry2d.Rect#onRightOfRect}
+	 * @see {@link utils.geometry2d.Rect#belowRect}
+	 */
+	aboveRect(r) {
+		return this.bottom &amp;lt; r.top;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {boolean} &amp;lt;code&gt;bottom &amp;amp;lt; y&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#aboveY}
+	 * @see {@link utils.geometry2d.Rect#aboveRect}
+	 * @see {@link utils.geometry2d.Rect#onLeftOf}
+	 * @see {@link utils.geometry2d.Rect#onRightOf}
+	 * @see {@link utils.geometry2d.Rect#below}
+	 */
+	above(p) {
+		return this.bottom &amp;lt; p.y;
+	}
+
+	/**
+	 * @param {number} y
+	 * @returns {boolean} &amp;lt;code&gt;top &amp;amp;gt; y&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#belowRect}
+	 * @see {@link utils.geometry2d.Rect#below}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfX}
+	 * @see {@link utils.geometry2d.Rect#onRightOfX}
+	 * @see {@link utils.geometry2d.Rect#aboveY}
+	 */
+	belowY(y) {
+		return this.top &gt; y;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Rect} r
+	 * @returns {boolean} &amp;lt;code&gt;top &amp;amp;gt; r.bottom&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#belowY}
+	 * @see {@link utils.geometry2d.Rect#below}
+	 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
+	 * @see {@link utils.geometry2d.Rect#onRightOfRect}
+	 * @see {@link utils.geometry2d.Rect#aboveRect}
+	 */
+	belowRect(r) {
+		return this.top &gt; r.bottom;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {boolean} &amp;lt;code&gt;top &amp;amp;gt; y&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#belowY}
+	 * @see {@link utils.geometry2d.Rect#belowRect}
+	 * @see {@link utils.geometry2d.Rect#onLeftOf}
+	 * @see {@link utils.geometry2d.Rect#onRightOf}
+	 * @see {@link utils.geometry2d.Rect#above}
+	 */
+	below(p) {
+		return this.top &gt; p.y;
+	}
+
+	/**
+	 * makes the instance bigger by adding the margin to it&#x27;s dimensions.
+	 * keeps the center at the same position.
+	 * &amp;lt;code&gt;left -&#x3D; margin; right +&#x3D; margin
+	 * top -&#x3D; margin; bottom +&#x3D; margin&amp;lt;/code&gt;
+	 * @param {number} margin
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#addMarginsXY}
+	 * @see {@link utils.geometry2d.Rect#addMargins}
+	 */
+	addMargin(margin) {
+		this.left -&#x3D; margin;
+		this.right +&#x3D; margin;
+		this.top -&#x3D; margin;
+		this.bottom +&#x3D; margin;
+		return this;
+	}
+
+	/**
+	 * makes the instance bigger by adding the margins to it&#x27;s dimensions.
+	 * keeps the center at the same position.
+	 * &amp;lt;code&gt;left -&#x3D; marginX; right +&#x3D; marginX
+	 * top -&#x3D; marginY; bottom +&#x3D; marginY&amp;lt;/code&gt;
+	 * @param {number} marginX
+	 * @param {number} marginY
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#addMargin}
+	 * @see {@link utils.geometry2d.Rect#addMargins}
+	 */
+	addMarginsXY(marginX, marginY) {
+		this.left -&#x3D; marginX;
+		this.right +&#x3D; marginX;
+		this.top -&#x3D; marginY;
+		this.bottom +&#x3D; marginY;
+		return this;
+	}
+
+	/**
+	 * makes the instance bigger by adding the margins to it&#x27;s dimensions.
+	 * keeps the center at the same position.
+	 * &amp;lt;code&gt;left -&#x3D; marginLeft; right +&#x3D; marginRight
+	 * top -&#x3D; marginTop; bottom +&#x3D; marginBottom&amp;lt;/code&gt;
+	 * @param {number} marginLeft
+	 * @param {number} marginTop
+	 * @param {number} marginRight
+	 * @param {number} marginBottom
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#addMargin}
+	 * @see {@link utils.geometry2d.Rect#addMarginsXY}
+	 */
+	addMargins(marginLeft, marginTop, marginRight, marginBottom) {
+		this.left -&#x3D; marginLeft;
+		this.right +&#x3D; marginRight;
+		this.top -&#x3D; marginTop;
+		this.bottom +&#x3D; marginBottom;
+		return this;
+	}
+
+	/**
+	 * adds the drawing instructions for this instance to the context.
+	 * @param {CanvasRenderingContext2D} context
+	 * @see {@link utils.geometry2d.Rect#draw}
+	 */
+	pushPath(context) {
+		context.rect(this.left, this.top, this.width, this.height);
+	}
+
+	/**
+	 * draws the rect on the canvas
+	 * @param {CanvasRenderingContext2D} context
+	 * @param {boolean} [fill&#x3D;false]
+	 * @param {boolean} [stroke&#x3D;!fill]
+	 * @see {@link utils.geometry2d.Rect#pushPath}
+	 */
+	draw(context, fill &#x3D; false, stroke &#x3D; !fill) {
+		context.beginPath();
+		this.pushPath(context);
+		fill &amp;amp;&amp;amp; context.fill();
+		stroke &amp;amp;&amp;amp; context.stroke();
+	}
+
+	/**
+	 * adds the triangles to draw this shape to the array.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		indicesArray[iOs] &#x3D; pOs;
+		indicesArray[iOs + 1] &#x3D; indicesArray[iOs + 4] &#x3D; pOs + 2;
+		indicesArray[iOs + 2] &#x3D; indicesArray[iOs + 3] &#x3D; pOs + 1;
+		indicesArray[iOs + 5] &#x3D; pOs + 3;
+		pOs *&#x3D; 2;
+		pointsArray[pOs] &#x3D; pointsArray[pOs + 4] &#x3D; this.left;
+		pointsArray[pOs + 2] &#x3D; pointsArray[pOs + 6] &#x3D; this.right;
+		pointsArray[pOs + 1] &#x3D; pointsArray[pOs + 3] &#x3D; this.top;
+		pointsArray[pOs + 5] &#x3D; pointsArray[pOs + 7] &#x3D; this.bottom;
+	}
+
+	/**
+	 * sets the attributes&#x27; values of the instance to the attributes&#x27; values of the parameter
+	 * @param {utils.geometry2d.Rect} rect
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#set}
+	 */
+	setRect(rect) {
+		this.left &#x3D; rect.left;
+		this.right &#x3D; rect.right;
+		this.top &#x3D; rect.top;
+		this.bottom &#x3D; rect.bottom;
+		return this;
+	}
+
+	/**
+	 * sets the attributes&#x27; values to the parameters
+	 * @param {number} left
+	 * @param {number} top
+	 * @param {number} right
+	 * @param {number} bottom
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#setRect}
+	 */
+	set(left, top, right, bottom) {
+		this.top &#x3D; top;
+		this.left &#x3D; left;
+		this.right &#x3D; right;
+		this.bottom &#x3D; bottom;
+		return this;
+	}
+
+	/**
+	 * moves the instance according to the given x and y values :
+	 * &amp;lt;code&gt;left +&#x3D; x; right +&#x3D; x;
+	 * top +&#x3D; y; bottom +&#x3D; y;&amp;lt;/code&gt;
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#move}
+	 */
+	moveXY(x, y) {
+		this.left +&#x3D; x;
+		this.right +&#x3D; x;
+		this.top +&#x3D; y;
+		this.bottom +&#x3D; y;
+		return this;
+	}
+
+	/**
+	 * moves the instance according to the given parameter&#x27;s attributes :
+	 * &amp;lt;code&gt;left +&#x3D; delta.x; right +&#x3D; delta.x;
+	 * top +&#x3D; delta.y; bottom +&#x3D; delta.y;&amp;lt;/code&gt;
+	 * @param {utils.geometry2d.Vec2} delta
+	 * @returns {utils.geometry2d.Rect} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Rect#moveXY}
+	 */
+	move(delta) {
+		this.left +&#x3D; delta.x;
+		this.right +&#x3D; delta.x;
+		this.top +&#x3D; delta.y;
+		this.bottom +&#x3D; delta.y;
+		return this;
+	}
+
+	/**
+	 * returns the point corresponding to a certain percent of the instance&#x27;s outline,
+	 * starting at the top left corner.
+	 * For example, getPercentPoint(0.5) will return the bottom-right corner.
+	 * @param {number} percent - percentage. must be in [0-1[.
+	 * @returns {utils.geometry2d.Vec2} the corresponding point.
+	 */
+	getPercentPoint(percent) {
+		if ((percent %&#x3D; 1) &amp;lt; 0.25) return new Vec2(this.left + percent * 4 * this.width, this.top);
+		if (percent &amp;lt; 0.5) return new Vec2(this.right, this.top + (percent * 4 - 1) * this.height);
+		if (percent &amp;lt; 0.75) return new Vec2(this.right - (percent * 4 - 2) * this.width, this.bottom);
+		return new Vec2(this.left, this.bottom - (percent * 4 - 3) * this.height);
+	}
+
+	/**
+	 * creates a rectangular {@link utils.geometry2d.Polygon} corresponding to the instance
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	getShape() {
+		return Polygon.Absolute(Vec2.createVec2Array([this.left, this.top, this.right, this.top,
+			this.right, this.bottom, this.left, this.bottom]));
+	}
+
+	/**
+	 * returns a string representing the instance.
+	 * @returns {string} [left, top, right, bottom]
+	 */
+	toString() {
+		return [&#x27;[&#x27;, this.left, &#x27;, &#x27;, this.top, &#x27;, &#x27;, this.right, &#x27;, &#x27;, this.bottom, &#x27;]&#x27;].join(&#x27;&#x27;);
+	}
+
+	/**
+	 * returns the union of the given rectangles, i.e. the rectangle formed by
+	 * the minimum left and top, and the maximum right and bottom of all rects.
+	 * If the given array is empty, returns &amp;lt;code&gt;null&amp;lt;/code&gt;.
+	 * @static
+	 * @param {utils.geometry2d.Rect[]} rects
+	 * @returns {?utils.geometry2d.Rect} union of the rectangles,
+	 *        or null if no rectangles were passed as arguments
+	 */
+	static getUnion(rects) {
+		let i &#x3D; rects.length;
+		if (i) {
+			let res &#x3D; rects[--i].clone();
+			while (i--) {
+				res.left &#x3D; Math.min(res.left, rects[i].left);
+				res.right &#x3D; Math.max(res.right, rects[i].right);
+				res.top &#x3D; Math.min(res.top, rects[i].top);
+				res.bottom &#x3D; Math.max(res.bottom, rects[i].bottom);
+			}
+			return res;
+		}
+		else return null;
+	}
+
+	/**
+	 * returns the intersection of the given rectangles, i.e. the rectangle formed by
+	 * the maximum left and top, and the minimum right and bottom of all rects.
+	 * if the max left(resp. top) happen to be higher than the minimum right(resp. bottom),
+	 * or if the given array is null, this function returns &amp;lt;code&gt;null&amp;lt;/code&gt;.
+	 * @static
+	 * @param {utils.geometry2d.Rect[]} rects
+	 * @returns {?utils.geometry2d.Rect} intersection of the rects, or null.
+	 */
+	static getIntersection(rects) {
+		let i &#x3D; rects.length;
+		if (i) {
+			let r &#x3D; rects[0], maxLeft &#x3D; r.left, maxTop &#x3D; r.top, minRight &#x3D; r.right, minBottom &#x3D; r.bottom;
+			while (--i) {
+				r &#x3D; rects[i];
+				if (r.top &gt; maxTop) maxTop &#x3D; r.top;
+				if (r.left &gt; maxLeft) maxLeft &#x3D; r.left;
+				if (r.right &amp;lt; minRight) minRight &#x3D; r.right;
+				if (r.bottom &amp;lt; minBottom) minBottom &#x3D; r.bottom;
+			}
+			if (maxLeft &amp;lt;&#x3D; minRight &amp;amp;&amp;amp; maxTop &amp;lt;&#x3D; minBottom) return new Rect(maxLeft, maxTop, minRight, minBottom);
+		}
+		return null;
+	}
+
+	/**
+	 * create a {@link utils.geometry2d.Rect|Rect} where the &amp;lt;code&gt;left&amp;lt;/code&gt; and &amp;lt;code&gt;right&amp;lt;/code&gt; &amp;lt;!--
+	 * --&gt;components are equal to the x coordinate &amp;lt;!--
+	 * --&gt;and the &amp;lt;code&gt;top&amp;lt;/code&gt; and &amp;lt;code&gt;bottom&amp;lt;/code&gt; components to the y coordinate of the given point.
+	 * @static
+	 * @param {utils.geometry2d.Vec2} p - the point to build the rectangle around
+	 * @returns {utils.geometry2d.Rect} the newly created {@link utils.geometry2d.Rect|Rect}
+	 * @see {@link utils.geometry2d.Rect#createFromXY}
+	 */
+	static createFromPoint(p) {
+		return new Rect(p.x, p.y, p.x, p.y);
+	}
+
+	/**
+	 * create a {@link utils.geometry2d.Rect|Rect} where the &amp;lt;code&gt;left&amp;lt;/code&gt; and &amp;lt;code&gt;right&amp;lt;/code&gt; &amp;lt;!--
+	 * --&gt;components are equal to the x parameter &amp;lt;!--
+	 * --&gt;and the &amp;lt;code&gt;top&amp;lt;/code&gt; and &amp;lt;code&gt;bottom&amp;lt;/code&gt; components to the y parameter.
+	 * @static
+	 * @param x the value of the &amp;lt;code&gt;left&amp;lt;/code&gt; and &amp;lt;code&gt;right&amp;lt;/code&gt; components of the new
+	 *            {@link utils.geometry2d.Rect|Rect}.
+	 * @param y the value of the &amp;lt;code&gt;top&amp;lt;/code&gt; and &amp;lt;code&gt;bottom&amp;lt;/code&gt; components of the new
+	 *            {@link utils.geometry2d.Rect|Rect}.
+	 * @returns {utils.geometry2d.Rect} the newly created {@link utils.geometry2d.Rect|Rect}
+	 */
+	static createFromXY(x, y) {
+		return new Rect(x, y, x, y);
+	}
+
+	/**
+	 * create a {@link utils.geometry2d.Rect|Rect} where :
+	 * &amp;lt;code&gt;left &#x3D; min(array[].x)&amp;lt;/code&gt;
+	 * &amp;lt;code&gt;top &#x3D; min(array[].y)&amp;lt;/code&gt;
+	 * &amp;lt;code&gt;right &#x3D; max(array[].x)&amp;lt;/code&gt;
+	 * &amp;lt;code&gt;bottom &#x3D; max(array[].y)&amp;lt;/code&gt;.
+	 * If the given array is empty, this function returns null.
+	 * @static
+	 * @param {utils.geometry2d.Vec2[]} array - a points array
+	 * @returns {utils.geometry2d.Rect} the newly created {@link utils.geometry2d.Rect|Rect},
+	 *        or null if no points were given
+	 */
+	static createFromPoints(array) {
+		let i &#x3D; array.length;
+		if (i) {
+			let minX &#x3D; array[0].x, maxX &#x3D; minX, minY &#x3D; array[0].y, maxY &#x3D; minY, p;
+			while (--i) {
+				p &#x3D; array[i];
+				if (p.x &amp;lt; minX) minX &#x3D; p.x; else if (p.x &gt; maxX) maxX &#x3D; p.x;
+				if (p.y &amp;lt; minY) minY &#x3D; p.y; else if (p.y &gt; maxY) maxY &#x3D; p.y;
+			}
+			return new Rect(minX, minY, maxX, maxY);
+		}
+	}
+
+	/**
+	 * creates a {@link utils.geometry2d.Rect|Rect} with the specified center, width and height.
+	 * @static
+	 * @param {utils.geometry2d.Vec2} center
+	 * @param {number} width
+	 * @param {number} height
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	static createFromCenterWidthHeight(center, width, height &#x3D; width) {
+		return Rect.createFromPoint(center).addMarginsXY(width / 2, height / 2);
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ * @name utils.geometry2d.Rect#glTrianglesNumber
+ */
+Rect.prototype.glTrianglesNumber &#x3D; 2;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ * @name utils.geometry2d.Rect#glPointsNumber
+ */
+Rect.prototype.glPointsNumber &#x3D; 4;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -Shape - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @typedef {utils.geometry2d.Shape|utils.geometry2d.Circle|
+ * 			 utils.geometry2d.Line|utils.geometry2d.Polygon|
+ * 			 utils.geometry2d.Polygon|utils.geometry2d.Ray} utils.geometry2d.shapes
+ */
+/**
+ * @class
+ * @abstract
+ * @memberOf utils.geometry2d
+ * @classdesc the base class of all shapes. has only one member : &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Shape#center|center}&amp;lt;/code&gt;, the center of the shape, &amp;lt;!--
+ * --&gt;and plenty of useful methods with default behavior.
+ */
+class Shape {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2} center the new center of the shape.
+	 * the member of the new instance is not the same, the attributes of the parameter are copied to the member.
+	 */
+	constructor(center) {
+		/**
+		 * @name utils.geometry2d.Shape#center
+		 * @type {utils.geometry2d.Vec2}
+		 */
+		this.center &#x3D; center.clone();
+	}
+
+	/**
+	 * perimeter of the instance.
+	 * @readonly
+	 * @type {number}
+	 */
+	get perimeter() {
+		return 0;
+	}
+
+	/**
+	 * area of the instance.
+	 * @readonly
+	 * @type {number}
+	 */
+	get area() {
+		return 0;
+	}
+
+	/**
+	 * returns a copy of the &amp;lt;code&gt;{@link utils.geometry2d.Shape#center|center}&amp;lt;/code&gt; attribute of the instance.
+	 * @returns {utils.geometry2d.Vec2} a copy of the center
+	 */
+	copyCenter() {
+		return this.center.clone();
+	}
+
+	/**
+	 * sets the center&#x27;s attributes to the same as the parameter&#x27;s
+	 * @param {utils.geometry2d.Vec2}center
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#setCenterXY}
+	 */
+	setCenter(center) {
+		this.center.set(center);
+		return this;
+	}
+
+	/**
+	 * sets the center&#x27;s attributes to the parameters
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#setCenter}
+	 */
+	setCenterXY(x, y) {
+		this.center.setXY(x, y);
+		return this;
+	}
+
+	/**
+	 * makes the shape bigger by multiplying it&#x27;s dimensions by the given factor
+	 * @param {number} factor - the number which will multiply the dimensions
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#growDistance}
+	 */
+	scale(factor) {
+		return this;
+	}
+
+	/**
+	 * makes the shape bigger by adding to it&#x27;s dimensions the given distance
+	 * @param {number} delta - the number to add to the dimensions
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#scale}
+	 */
+	growDistance(delta) {
+		return this;
+	}
+
+	/**
+	 * rotates the shape by the given angle in radians.
+	 * @param {number} radians - angle.
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	rotate(radians) {
+		return this;
+	}
+
+	/**
+	 * adds the instructions to draw this instance to the context.
+	 * @param {CanvasRenderingContext2D} context
+	 * @see {@link utils.geometry2d.Shape#draw}
+	 */
+	pushPath(context) {
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+	}
+
+	/**
+	 * draws the shape on the canvas
+	 * @param {CanvasRenderingContext2D} context
+	 * @param {boolean} [fill&#x3D;false]
+	 * @param {boolean} [stroke&#x3D;!fill]
+	 * @see {@link utils.geometry2d.Shape#pushPath}
+	 */
+	draw(context, fill &#x3D; false, stroke &#x3D; !fill) {
+		context.beginPath();
+		this.pushPath(context);
+		fill &amp;amp;&amp;amp; context.fill();
+		stroke &amp;amp;&amp;amp; context.stroke();
+	}
+
+	/**
+	 * returns whether or not the instance intersect (&#x3D;collide) with the given shape.
+	 * @param {utils.geometry2d.shapes} shape
+	 * @returns {boolean} true if the 2 shapes intersect.
+	 */
+	intersect(shape) {
+		return false;
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} point
+	 * @returns {boolean} true if the point is located inside the shape.
+	 */
+	contains(point) {
+		return false;
+	}
+
+	/**
+	 * returns a {@link utils.geometry2d.Rect|Rect} containing the entire shape.
+	 * @returns {utils.geometry2d.Rect} the outside {@link utils.geometry2d.Rect|Rect}
+	 */
+	getRect() {
+		return Rect.createFromPoint(this.center);
+	}
+
+	/**
+	 * returns the maximum distance to the &amp;lt;code&gt;{@link utils.geometry2d.Shape#center|center}&amp;lt;/code&gt; a point of the shape could have.
+	 * @returns {number} max distance to &amp;lt;code&gt;{@link utils.geometry2d.Shape#center|center}&amp;lt;/code&gt;
+	 */
+	getRadius() {
+		return 0;
+	}
+
+	/**
+	 * creates a &amp;lt;code&gt;{@link utils.geometry2d.Circle|Circle}&amp;lt;/code&gt; with the same center as the shape, and the radius returned by &amp;lt;code&gt;{@link utils.geometry2d.Shape#getRadius|getRadius}&amp;lt;/code&gt;.
+	 * @returns {utils.geometry2d.Circle}
+	 */
+	getCircle() {
+		return new Circle(this.center, this.getRadius());
+	}
+
+	/**
+	 * returns the point corresponding to a certain percent of the instance&#x27;s outline,
+	 * the start point depends on the shape.
+	 * @param {number} percent - percentage. must be in [0-1[.
+	 * @returns {utils.geometry2d.Vec2} the corresponding point.
+	 */
+	getPercentPoint(percent) {
+		return this.center
+	};
+
+	/**
+	 * returns the closest point of the shape to the given point
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {utils.geometry2d.Vec2} closest point of the shape.
+	 */
+	closestPointTo(p) {
+		return this.center;
+	}
+
+	/**
+	 * returns a copy of this shape.
+	 * @returns {utils.geometry2d.Shape} the instance&#x27;s copy
+	 */
+	clone() {
+		return new Shape(this.center);
+	}
+
+	/**
+	 * makes the shape the opposite of itself relative to the given horizontal axis
+	 * if no value is set for axisY, the mirror will be made relative to the center&#x27;s y coordinate.
+	 * @param {number} [axisY&#x3D;center.y]
+	 *          ordinate of the horizontal axis
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#mirrorHorizontally}
+	 */
+	mirrorVertically(axisY &#x3D; this.center.y) {
+		this.center.mirrorVertically(axisY);
+		return this;
+	}
+
+	/**
+	 * makes the shape the opposite of itself relative to the given vertical axis
+	 * if no value is set for axisX, the mirror will be made relative to the center&#x27;s x coordinate.
+	 * @param {number} [axisX&#x3D;center.x]
+	 *          abscissa of the vertical axis
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#mirrorVertically}
+	 */
+	mirrorHorizontally(axisX &#x3D; this.center.x) {
+		this.center.mirrorHorizontally(axisX);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameters
+	 * @param {number} dX
+	 * @param {number} dY
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#move}
+	 */
+	moveXY(dX, dY) {
+		this.center.addXY(dX, dY);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameter
+	 * @param {utils.geometry2d.Vec2} delta
+	 * @returns {utils.geometry2d.Shape}
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Shape#moveXY}
+	 */
+	move(delta) {
+		this.center.add(delta);
+		return this;
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ * @name utils.geometry2d.Shape#glTrianglesNumber
+ */
+Shape.prototype.glTrianglesNumber &#x3D; 0;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ * @name utils.geometry2d.Shape#glPointsNumber
+ */
+Shape.prototype.glPointsNumber &#x3D; 0;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -Circle- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @class
+ * @augments utils.geometry2d.Shape
+ * @memberOf utils.geometry2d
+ * @classdesc a shape representing a circle. Adds one member to the one present in &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Shape|Shape}&amp;lt;/code&gt; : &amp;lt;!--
+ * --&gt;&amp;lt;code&gt;{@link utils.geometry2d.Circle#radius|radius}&amp;lt;/code&gt;, &amp;lt;!--
+ * --&gt;the radius of the circle.
+ */
+class Circle extends Shape {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2} center
+	 * @param {number} radius
+	 */
+	constructor(center, radius) {
+		super(center);
+		/**
+		 * @name utils.geometry2d.Circle#radius
+		 * @type {number}
+		 */ this.radius &#x3D; radius;
+	}
+
+	/**
+	 * perimeter of the circle : &amp;lt;code&gt;2 \* &amp;amp;pi; \* {@link utils.geometry2d.Circle#radius|radius}&amp;lt;/code&gt;
+	 * @type {number}
+	 */
+	get perimeter() {
+		return Circle.PI2 * this.radius;
+	}
+
+	/**
+	 * area of the circle : &amp;lt;code&gt;&amp;amp;pi; \* {@link utils.geometry2d.Circle#radius|radius}&amp;lt;sup&gt;2&amp;lt;/sup&gt;&amp;lt;/code&gt;
+	 * @type {number}
+	 */
+	get area() {
+		return Math.pow(this.radius, 2) * Math.PI;
+	}
+
+	/**
+	 * @description multiplies the radius by the argument.
+	 * @param {number} factor
+	 * @returns {utils.geometry2d.Circle} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see [superclass method]{@link utils.geometry2d.Shape#scale}
+	 * @see {@link utils.geometry2d.Circle#growDistance}
+	 */
+	scale(factor) {
+		this.radius *&#x3D; factor;
+		return this;
+	}
+
+	/**
+	 * adds the argument to the radius.
+	 * @param {number} delta
+	 * @returns {utils.geometry2d.Circle} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see [superclass method]{@link utils.geometry2d.Shape#growDistance}
+	 * @see {@link utils.geometry2d.Circle#scale}
+	 */
+	growDistance(delta) {
+		this.radius +&#x3D; delta;
+		return this;
+	}
+
+	/**
+	 * returns the point of the circle, relative to its center, corresponding to the given radians.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Vec2}
+	 * @see {@link utils.geometry2d.Circle#pointForAngle}
+	 */
+	relativePointForAngle(radians) {
+		return Vec2.createFromAngle(radians, this.radius);
+	}
+
+	/**
+	 * returns the point of the circle, in absolute coordinates, corresponding to the given radians.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Vec2}
+	 * @see {@link utils.geometry2d.Circle#relativePointForAngle}
+	 */
+	pointForAngle(radians) {
+		return Vec2.createFromAngle(radians, this.radius).add(this.center);
+	}
+
+	/**@inheritDoc*/
+	pushPath(context) {
+		context.arc(this.center.x, this.center.y, this.radius, 0, Circle.PI2, false);
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		let n &#x3D; this.glTrianglesNumber, dA &#x3D; Circle.PI2 / n, a &#x3D; 0, i &#x3D; n, j, t;
+		indicesArray[iOs] &#x3D; pOs;
+		while (i--) {
+			j &#x3D; 3 * i;
+			indicesArray[iOs + j + 2] &#x3D; pOs + (i + 1) % n;
+			indicesArray[iOs + i] &#x3D; pOs + i;
+			indicesArray[iOs + i + 1] &#x3D; pOs;
+		}
+		pOs *&#x3D; 2;
+		pointsArray[pOs] &#x3D; this.center.x;
+		pointsArray[pOs + 1] &#x3D; this.center.y;
+		i &#x3D; 2;
+		n *&#x3D; 2;
+		while (i &amp;lt;&#x3D; n) {
+			pointsArray[pOs + (i++)] &#x3D; (t &#x3D; Vec2.createFromAngle(a +&#x3D; dA, this.radius)).x;
+			pointsArray[pOs + (i++)] &#x3D; t.y;
+		}
+	}
+
+	/**
+	 * returns whether or not this circle instance intersect the specified shape.
+	 * this function only does the job for {@link utils.geometry2d.Circle} instances. For the instances of other classes,
+	 * this function calls their method : &amp;lt;code&gt;shape.intersect(this)&amp;lt;/code&gt;
+	 * @param {utils.geometry2d.shapes} shape
+	 * @returns {boolean}
+	 */
+	intersect(shape) {
+		if (shape instanceof Circle) {
+			let d &#x3D; Vec2.distance(this.center, shape.center);
+			return d &amp;lt; this.radius + shape.radius &amp;amp;&amp;amp;
+				this.radius &amp;lt; d + shape.radius &amp;amp;&amp;amp; // the other circle is not inside this circle
+				shape.radius &amp;lt; d + this.radius; // this circle is not inside the other circle
+		}
+		else return shape.intersect(this);
+	}
+
+	/**@inheritDoc*/
+	contains(point) {
+		return Vec2.distance(this.center, point) &amp;lt;&#x3D; this.radius;
+	}
+
+	/**@inheritDoc*/
+	getRect() {
+		return Rect.createFromXY(this.center.x, this.center.y).addMargin(this.radius);
+	}
+
+	/**@inheritDoc*/
+	getPercentPoint(percent) {
+		return this.pointForAngle(percent * Circle.PI2);
+	}
+
+	/**@inheritDoc*/
+	closestPointTo(p) {
+		return Vec2.translation(this.center, p).setMagnitude(this.radius);
+	}
+
+	/**
+	 * @returns {number} the value of the {@link utils.geometry2d.Circle#radius{radius} attribute
+	 */
+	getRadius() {
+		return this.radius;
+	}
+
+	/**
+	 * creates a copy of the circle. Does the same as {@link utils.geometry2d.Circle#clone}
+	 * @returns {utils.geometry2d.Circle}
+	 * @see [superclass method]{@link utils.geometry2d.Shape#getCircle}
+	 */
+	getCircle() {
+		return new Circle(this.center, this.radius);
+	}
+
+	/**
+	 * creates a copy of the circle. Does the same as {@link utils.geometry2d.Circle#getCircle}
+	 * @returns {utils.geometry2d.Circle}
+	 * @see [superclass method]{@link utils.geometry2d.Shape#clone}
+	 */
+	clone() {
+		return new Circle(this.center, this.radius);
+	}
+
+	/**
+	 * creates and returns an equivalent polygon.
+	 * @param {number} edges
+	 * @param {number} startRadians
+	 * @returns {utils.geometry2d.Polygon} the equivalent polygon
+	 */
+	toPolygon(edges, startRadians &#x3D; 0) {
+		return Polygon.Regular(this.center, [this.radius], edges, startRadians);
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ * @name utils.geometry2d.Circle#glTrianglesNumber
+ */
+Circle.prototype.glTrianglesNumber &#x3D; 16;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ * @name utils.geometry2d.Circle#glPointsNumber
+ */
+Circle.prototype.glPointsNumber &#x3D; Circle.prototype.glTrianglesNumber + 1;
+/**
+ * 2 \* PI
+ * @static
+ * @constant
+ * @memberOf utils.geometry2d.Circle
+ * @type {number}
+ */
+Circle.PI2 &#x3D; 2 * Math.PI;
+/**
+ * PI / 2
+ * @static
+ * @constant
+ * @memberOf utils.geometry2d.Circle
+ * @type {number}
+ */
+Circle.PI_2 &#x3D; 2 * Math.PI;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -Ellipsoid - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @class
+ * @augments utils.geometry2d.Shape
+ * @memberOf utils.geometry2d
+ * @classdesc a shape representing an ellipsoid, optimized for drawing. make sure to always have &amp;lt;!--
+ *        --&gt;{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} &amp;amp;ge; &amp;lt;!--
+ *        --&gt;{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} for the methods to work properly.
+ *        You can reorder radiusX and radiusY by calling the {@utils.geometry2d.Ellipsoid#checkRadius|checkRadius} &amp;lt;!--
+ *        --&gt;method.&amp;lt;br/&gt;
+ *        &amp;lt;b&gt;&amp;amp;#x26A0;&amp;lt;/b&gt; ellipsoids cannot be used for collision detection, and most of their methods take time. &amp;lt;!--
+ *        --&gt;You can make an ellipsoid-like {@link utils.geometry2d.Polygon|Polygon} by calling the method &amp;lt;!--
+ *        --&gt;{@link utils.geometry2d.Ellipsoid#toPolygon|toPolygon}, or directly by calling the static method &amp;lt;!--
+ *        --&gt;[Polygon.createEllipsoid]{@link utils.geometry2d.Polygon#createEllipsoid}.
+ */
+class Ellipsoid extends Shape {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2}center
+	 * @param {number} radiusX
+	 * @param {number} radiusY
+	 * @param {number} radians
+	 */
+	constructor(center, radiusX, radiusY, radians &#x3D; 0) {
+		super(center);
+		/**
+		 * horizontal radius
+		 * @name utils.geometry2d.Ellipsoid#radiusX
+		 * @type {number}
+		 */
+		this.radiusX &#x3D; radiusX;
+		/**
+		 * vertical radius;
+		 * @name utils.geometry2d.Ellipsoid#radiusY
+		 * @type {number}
+		 */
+		this.radiusY &#x3D; radiusY;
+		/**
+		 * @name utils.geometry2d.Ellipsoid#angle
+		 * @type {number}
+		 */
+		this.angle &#x3D; radians;
+	}
+
+	/**
+	 * square of the focus distance : &amp;lt;code&gt;{@link utils.geometry2d.Ellipsoid#radiusX|radiusX}&amp;lt;sup&gt;2&amp;lt;/sup&gt; &amp;lt;!--
+	 * --&gt;- {@link utils.geometry2d.Ellipsoid#radiusY|radiusY}&amp;lt;sup&gt;2&amp;lt;/sup&gt;&amp;lt;/code&gt;
+	 * @type {number}
+	 * @readonly
+	 */
+	get squareFocusDistance() {
+		return this.radiusX * this.radiusX - this.radiusY * this.radiusY;
+	}
+
+	/**
+	 * focus distance : &amp;lt;code&gt;&amp;amp;radic;({@link utils.geometry2d.Ellipsoid#radiusX|radiusX}&amp;lt;sup&gt;2&amp;lt;/sup&gt; &amp;lt;!--
+	 * --&gt;- {@link utils.geometry2d.Ellipsoid#radiusY|radiusY}&amp;lt;sup&gt;2&amp;lt;/sup&gt;)&amp;lt;/code&gt;
+	 * @type {number}
+	 * @readonly
+	 */
+	get focusDistance() {
+		return Math.sqrt(this.squareFocusDistance);
+	}
+
+	/**
+	 * excentricity &#x3D; &amp;lt;code&gt;([focus distance]{@link utils.geometry2d.Ellipsoid#focusDistance|focusDistance}) &amp;lt;!--
+	 * --&gt;/ ([horizontal radius]{@link utils.geometry2d.Ellipsoid#radiusX})&amp;lt;/code&gt;
+	 * @type {number}
+	 */
+	get excentricity() {
+		return this.focusDistance / this.radiusX;
+	}
+
+	/**
+	 * approximation of the perimeter of the ellipsoid : &amp;lt;code&gt;&amp;amp;pi; \* &amp;amp;radic;(2 \* &amp;lt;!--
+	 * --&gt;({@link utils.geometry2d.Ellipsoid#radiusX|radiusX}&amp;lt;sup&gt;2&amp;lt;/sup&gt; &amp;lt;!--
+	 * --&gt;+ {@link utils.geometry2d.Ellipsoid#radiusY|radiusY}&amp;lt;sup&gt;2&amp;lt;/sup&gt;))&amp;lt;/code&gt;
+	 * @type {number}
+	 */
+	get perimeter() {
+		return Math.PI * Math.sqrt(2 * this.squareFocusDistance);
+	}
+
+	/**
+	 * area of the ellipsoid : &amp;lt;code&gt;{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} &amp;lt;!--
+	 * --&gt;\* {@link utils.geometry2d.Ellipsoid#radiusY|radiusY} \* &amp;amp;pi;&amp;lt;/code&gt;
+	 * @type {number}
+	 */
+	get area() {
+		return this.radiusX * this.radiusY * Math.PI;
+	}
+
+	/**
+	 * makes the ellipsoid the opposite of itself relative to the given vertical axis
+	 * if no value is set for axisX, the mirror will be made relative to the center&#x27;s x coordinate.
+	 * @param {number} [axisX&#x3D;center.x]
+	 *          abscissa of the vertical axis
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	mirrorHorizontally(axisX &#x3D; this.center.x) {
+		this.radians &#x3D; -this.radians;
+		return super.mirrorHorizontally(axisX);
+	}
+
+	/**
+	 * makes the ellipsoid the opposite of itself relative to the given horizontal axis
+	 * if no value is set for axisY, the mirror will be made relative to the center&#x27;s y coordinate.
+	 * @param {number} [axisY&#x3D;center.y]
+	 *          ordinate of the vertical axis
+	 * @returns {utils.geometry2d.Shape} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	mirrorVertically(axisY &#x3D; this.center.y) {
+		this.radians &#x3D; -this.radians;
+		return super.mirrorVertically(axisY);
+	}
+
+	/**
+	 * multiplies the vertical and horizontal radius by the given factor.
+	 * @param {number} factor
+	 * @returns {utils.geometry2d.Ellipsoid} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	scale(factor) {
+		this.radiusX *&#x3D; factor;
+		this.radiusY *&#x3D; factor;
+		return this;
+	}
+
+	/**
+	 * adds the argument to the vertical and horizontal radius.
+	 * @param {number} delta
+	 * @returns {utils.geometry2d.Ellipsoid} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	growDistance(delta) {
+		this.radiusX +&#x3D; delta;
+		this.radiusY +&#x3D; delta;
+		return this;
+	}
+
+	/**
+	 * rotate the ellipsoid by the specified angle, in radians
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Ellipsoid} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	rotate(radians) {
+		this.radians +&#x3D; radians;
+		return this;
+	}
+
+	/**
+	 * sets the {@link utils.geometry2d.Ellipsoid#radians|radians} attribute to the specified value.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Ellipsoid} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	setAngle(radians) {
+		this.radians &#x3D; radians;
+		return this;
+	}
+
+	/**
+	 * checks if the horizontal radius is the same as the vertical radius. if they&#x27;re not, they are inverted, &amp;lt;!--
+	 * --&gt;and the ellipsoid rotated anticlockwise for it to look the same.
+	 * @returns {utils.geometry2d.Ellipsoid} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	checkRadius() {
+		if (this.radiusX &amp;lt; this.radiusY) {
+			[this.radiusX, this.radiusY] &#x3D; [this.radiusY, this.radiusX];
+			this.setAngle(this.radians + Circle.PI_2);
+		}
+		return this;
+	}
+
+	/**
+	 * returns the point of the ellipsoid, relative to its center, corresponding to the given radians.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Vec2}
+	 * @see {@link utils.geometry2d.Ellipsoid#pointForAngle}
+	 */
+	relativePointForAngle(radians) {
+		let r &#x3D; radians - this.radians;
+		return new Vec2(this.radiusX * Math.cos(r), this.radiusY * Math.sin(r)).rotate(this.radians);
+	}
+
+	/**
+	 * returns the point of the ellipsoid, in absolute coordinates, corresponding to the given radians.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Vec2}
+	 * @see {@link utils.geometry2d.Ellipsoid#relativePointForAngle}
+	 */
+	pointForAngle(radians) {
+		return this.relativePointForAngle(radians).add(this.center);
+	}
+
+	/**
+	 * returns the square distance from the center to the ellipsoid for the specified angle in radians
+	 * @param {number} radians
+	 * @returns {number}
+	 * @see {@link utils.geometry2d.Ellipsoid#radiusForAngle}
+	 */
+	squareRadiusForAngle(radians) {
+		return this.relativePointForAngle(radians).squareMagnitude;
+	}
+
+	/**
+	 * returns the distance from the center to the ellipsoid for the specified angle in radians
+	 * @param {number} radians
+	 * @returns {number}
+	 * @see {@link utils.geometry2d.Ellipsoid#squareRadiusForAngle}
+	 */
+	radiusForAngle(radians) {
+		return Math.sqrt(this.squareRadiusForAngle(radians));
+	}
+
+	/**@inheritDoc*/
+	pushPath(context) {
+		context.ellipse(this.center.x, this.center.y, this.radiusX, this.radiusY, this.radians, 0, Circle.PI2);
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		let n &#x3D; this.glTrianglesNumber, dA &#x3D; Circle.PI2 / n, a &#x3D; 0, i &#x3D; n, j, t;
+		indicesArray[iOs] &#x3D; pOs;
+		while (i--) {
+			j &#x3D; 3 * i;
+			indicesArray[iOs + j + 2] &#x3D; pOs + (i + 1) % n;
+			indicesArray[iOs + i] &#x3D; pOs + i;
+			indicesArray[iOs + i + 1] &#x3D; pOs;
+		}
+		pOs *&#x3D; 2;
+		pointsArray[pOs] &#x3D; this.center.x;
+		pointsArray[pOs + 1] &#x3D; this.center.y;
+		i &#x3D; 2;
+		n *&#x3D; 2;
+		while (i &amp;lt;&#x3D; n) {
+			pointsArray[pOs + (i++)] &#x3D; (t &#x3D; this.pointForAngle(a +&#x3D; dA)).x;
+			pointsArray[pOs + (i++)] &#x3D; t.y;
+		}
+	}
+
+	/**@inheritDoc*/
+	contains(point) {
+		let p &#x3D; point.clone().remove(this.center);
+		return this.squareRadiusForAngle(p.angle) &gt; p.squareMagnitude;
+	}
+
+	/**@inheritDoc*/
+	getRect() {
+		let h, w; //half-height, half-width
+		if (this.radians) {
+			let a &#x3D; this.radiusX, b &#x3D; this.radiusY, alpha &#x3D; this.radians,
+				tanAlpha &#x3D; Math.tan(alpha), sinAlpha &#x3D; Math.sin(alpha), cosAlpha &#x3D; Math.cos(alpha),
+				b_a &#x3D; b / a, t_xMax &#x3D; Math.atan(-b_a * tanAlpha), t_yMax &#x3D; Math.atan(b_a / tanAlpha);
+			h &#x3D; Math.abs(a * Math.cos(t_yMax) * sinAlpha + b * Math.sin(t_yMax) * cosAlpha);
+			w &#x3D; Math.abs(a * Math.cos(t_xMax) * cosAlpha + b * Math.sin(t_xMax) * sinAlpha);
+		} else {
+			h &#x3D; this.radiusY;
+			w &#x3D; this.radiusX;
+		}
+		return new Rect(this.center.x - w, this.center.y - h, this.center.x + w, this.center.y + h);
+	}
+
+	/**@inheritDoc*/
+	getRadius() {
+		return this.radiusX;
+	}
+
+	/**@inheritDoc*/
+	getPercentPoint(percent) {
+		return this.pointForAngle(Circle.PI2 * percent + this.radians);
+	}
+
+	/**@inheritDoc*/
+	closestPointTo(p) {
+		return this.pointForAngle(Vec2.translation(this.center, p).angle);
+	}
+
+	/**@inheritDoc*/
+	clone() {
+		return new Ellipsoid(this.center, this.radiusX, this.radiusY, this.radians);
+	}
+
+	/**
+	 * creates and returns the polygon equivalent of the ellipsoid
+	 * @param {number} edges
+	 * @returns {@link utils.geometry2d.Polygon} polygon equivalent of this ellipsoid
+	 */
+	createPolygon(edges) {
+		return Polygon.createEllipsoid(this.center, this.radiusX, this.radiusY, edges, this.radians);
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ * @name utils.geometry2d.Ellipsoid#glTrianglesNumber
+ */
+Ellipsoid.prototype.glTrianglesNumber &#x3D; 16;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ * @name utils.geometry2d.Ellipsoid#glPointsNumber
+ */
+Ellipsoid.prototype.glPointsNumber &#x3D; Ellipsoid.prototype.glTrianglesNumber + 1;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - Line - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @class
+ * @augments utils.geometry2d.Shape
+ * @memberOf utils.geometry2d
+ * @classdesc a linear shape, represented by its center, length and rotation. the representation brings &amp;lt;!--
+ *        --&gt;optimizations for movements, rotations and dimensions changes, but also brings lack of optimization&amp;lt;!--
+ *        --&gt; for collisions and drawing.
+ */
+class Line extends Shape {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2} p1
+	 * @param {utils.geometry2d.Vec2} p2
+	 */
+	constructor(p1, p2) {
+		super(p1.clone().add(p2).mul(0.5));
+		let u &#x3D; Vec2.translation(p1, p2);
+		/**
+		 * the angle, in radians, of the line.
+		 * @name utils.geometry2d.Line#angle
+		 * @type {number}
+		 */
+		this.angle &#x3D; u.angle;
+		/**
+		 * the length of the line.
+		 * @name utils.geometry2d.Line#length
+		 * @type {number}
+		 */
+		this.length &#x3D; u.magnitude;
+	}
+
+	/**
+	 * start point of the line.
+	 * @type {utils.geometry2d.Vec2}
+	 */
+	get p0() {
+		return Vec2.createFromAngle(this.angle).mul(-0.5 * this.length).add(this.center);
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p
+	 */
+	set p0(p) {
+		let trans &#x3D; Vec2.translation(p, this.p1);
+		this.angle &#x3D; trans.angle;
+		this.length &#x3D; trans.magnitude;
+		this.center.set(trans.mul(0.5).add(p));
+		return p;
+	}
+
+	/**
+	 * end point of the line.
+	 * @type {utils.geometry2d.Vec2}
+	 */
+	get p1() {
+		return Vec2.createFromAngle(this.angle).mul(0.5 * this.length).add(this.center);
+	}
+
+	/**
+	 * @param {utils.geometry2d.Vec2} p
+	 */
+	set p1(p) {
+		let trans &#x3D; Vec2.translation(this.p0, p);
+		this.angle &#x3D; trans.angle;
+		this.length &#x3D; trans.magnitude;
+		this.center.set(trans.mul(-0.5).add(p));
+		return p;
+	}
+
+	/**
+	 * vector from start point to end point.
+	 * @type {utils.geometry2d.Vec2}
+	 * @readonly
+	 */
+	get vector() {
+		return Vec2.createFromAngle(this.angle, this.length);
+	}
+
+	/**
+	 * unit vector (magnitude&#x3D;1) from start point to end point.
+	 * @type {utils.geometry2d.Vec2}
+	 * @readonly
+	 */
+	get directorVect() {
+		return Vec2.createFromAngle(this.angle);
+	}
+
+	/**
+	 * perimeter of the line : &amp;lt;code&gt;2 \* {@link utils.geometry2d.Line#length|length} &amp;lt;/code&gt;
+	 * @type {number}
+	 * @readonly
+	 */
+	get perimeter() {
+		return this.length * 2;
+	}
+
+	/**
+	 * sets the {@link utils.geometry2d.Line#angle} attribute to the specified value.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	setAngle(radians) {
+		this.angle &#x3D; radians;
+		return this;
+	}
+
+	/**
+	 * sets the {@link utils.geometry2d.Line#length} attribute to the specified value.
+	 * @param {number} length
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	setLength(length) {
+		this.length &#x3D; length;
+		return this;
+	}
+
+	/**
+	 * sets the start point of the line to the specified point.
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	setP0(p) {
+		this.p0 &#x3D; p;
+		return this;
+	}
+
+	/**
+	 * sets the end point of the line to the specified point.
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	setP1(p) {
+		this.p1 &#x3D; p;
+		return this;
+	}
+
+	/**
+	 * sets both start and end points to the specified points
+	 * @param {utils.geometry2d.Vec2} p0
+	 * @param {utils.geometry2d.Vec2} p1
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	setPoints(p0, p1) {
+		let t &#x3D; Vec2.translation(p0, p1);
+		this.angle &#x3D; t.angle;
+		this.length &#x3D; t.magnitude;
+		this.center.set(t.mul(0.5).add(p0));
+		return this;
+	}
+
+	/**
+	 * multiplies the line&#x27;s length by the specified factor.
+	 * @param {number} factor
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	scale(factor) {
+		this.length *&#x3D; factor;
+		return this;
+	}
+
+	/**
+	 * add to the line&#x27;s length twice the parameter.
+	 * @param {number} delta
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	growDistance(delta) {
+		this.length +&#x3D; 2 * delta;
+	}
+
+	/**
+	 * rotates the line by the specified angle in radians
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Line}
+	 */
+	rotate(radians) {
+		this.angle +&#x3D; radians;
+		return this;
+	}
+
+	/**
+	 * makes the line the mirror of itself relative to the given horizontal axis
+	 * if no value is set for axisY, the mirror will be made relative to the center&#x27;s y coordinate.
+	 * @param {number} [axisY&#x3D;center.y]
+	 *          ordinate of the horizontal axis
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	mirrorVertically(axisY &#x3D; this.center.y) {
+		super.mirrorVertically(axisY);
+		this.angle &#x3D; -this.angle;
+		return this;
+	}
+
+	/**
+	 * makes the line the mirror of itself relative to the given vertical axis
+	 * if no value is set for axisX, the mirror will be made relative to the center&#x27;s x coordinate.
+	 * @param {number} [axisX&#x3D;center.x]
+	 *          abscissa of the vertical axis
+	 * @returns {utils.geometry2d.Line} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	mirrorHorizontally(axisX &#x3D; this.center.x) {
+		super.mirrorHorizontally(axisX);
+		this.angle &#x3D; Math.PI - this.angle;
+		return this;
+	}
+
+	/**
+	 * adds the drawing instructions to the context. Be aware that if you just &quot;fill&quot; the line, &amp;lt;!--
+	 * --&gt;it won&#x27;t be drawn on the canvas, you must &quot;stroke&quot; it to make it appear on the canvas.
+	 * @param {CanvasRenderingContext2D} context
+	 */
+	pushPath(context) {
+		let d &#x3D; Vec2.createFromAngle(this.angle, this.length / 2);
+		context.moveTo(this.center.x - d.x, this.center.y - d.y);
+		context.lineTo(this.center.x + d.x, this.center.y + d.y);
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		indicesArray[iOs] &#x3D; indicesArray[iOs + 1] &#x3D; pOs;
+		indicesArray[iOs + 2] &#x3D; pOs + 1;
+		pOs *&#x3D; 2;
+		let p &#x3D; this.p0;
+		pointsArray[pOs] &#x3D; p.x;
+		pointsArray[pOs + 1] &#x3D; p.y;
+		pointsArray[pOs + 2] &#x3D; (p &#x3D; this.p1).x;
+		pointsArray[pOs + 3] &#x3D; p.y;
+	}
+
+	/**
+	 * check if the line intersect with the shape.
+	 * The checking is only made for {@link utils.geometry2d.Circle} and {@link utils.geometry2d.Line} instances.
+	 * if the specified shape is not an instance of those classes, this function returns the result of &amp;lt;!--
+	 * --&gt;&amp;lt;code&gt;shape.intersect(this)&amp;lt;/code&gt;
+	 * @param {utils.geometry2d.shapes} shape
+	 * @returns {boolean}
+	 */
+	intersect(shape) {
+		if (shape instanceof Circle) {
+			let A &#x3D; this.p0, B &#x3D; this.p1;
+			if (shape.contains(A)) return !shape.contains(B);
+			if (shape.contains(B)) return !shape.contains(A);
+			let AB &#x3D; Vec2.translation(A, B), AC &#x3D; Vec2.translation(A, shape.center),
+				u &#x3D; AB.clone().normalize(), d &#x3D; Vec2.dotProd(u, AC);
+			return Vec2.distance((d &amp;lt; 0) ? A : (d &gt; this.length) ? B : u.mul(d).add(A), shape.center) &amp;lt;&#x3D; shape.radius;
+		} else if (shape instanceof Line) {
+			let A &#x3D; this.p0, B &#x3D; this.p1, C &#x3D; shape.p0, D &#x3D; shape.p1,
+				AC &#x3D; Vec2.translation(A, C), BC &#x3D; Vec2.translation(B, C),
+				AD &#x3D; Vec2.translation(A, D), BD &#x3D; Vec2.translation(B, D);
+			if (Vec2.ccw2(AC, AD) !&#x3D; Vec2.ccw2(BC, BD)) {
+				let AB &#x3D; Vec2.translation(A, B);
+				return Vec2.ccw2(AB, AC) !&#x3D; Vec2.ccw2(AB, AD);
+			}
+			else return false;
+		}
+		else return shape.intersect(this);
+	}
+
+	/**
+	 * returns whether or not the line contains the given point.
+	 * As the result is rarely realistic because a line has an infinitely thin width, you should use the &amp;lt;!--
+	 * --&gt;{@link utils.geometry2d.Line#distanceToPoint} instead.
+	 * @param {utils.geometry2d.Vec2} point
+	 * @returns {boolean}
+	 */
+	contains(point) {
+		let v &#x3D; Vec2.translation(this.center, point), u &#x3D; this.directorVect;
+		return v.equals(u.mul(Vec2.distance(this.center, point))) || v.equals(u.mul(-1));
+	}
+
+	/**
+	 * returns the closest point of the line to the specified point.
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	closestPointTo(p) {
+		let A &#x3D; this.p0, u &#x3D; this.directorVect, d &#x3D; Vec2.dotProd(u, Vec2.translation(A, p));
+		return (d &amp;lt; 0) ? A : (d &gt; this.length) ? this.p1 : u.mul(d).add(A);
+	}
+
+	/**
+	 * return the distance from the closest point of the line to the given point
+	 * @param {utils.geometry2d.Vec2} point
+	 * @returns {number}
+	 */
+	distanceToPoint(point) {
+		return Vec2.distance(this.closestPointTo(point), point);
+	}
+
+	/**
+	 * returns the normal vector of the line, the direction depends on the parameter
+	 * @param {boolean} [left&#x3D;true]
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	getNormalVect(left &#x3D; true) {
+		return this.directorVect.rotate(left ? -Circle.PI_2 : Circle.PI_2);
+	}
+
+	/**
+	 * creates a new {@link utils.geometry2d.Rect} instance fitted for the line.
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		let p1 &#x3D; this.p1, p0 &#x3D; this.p0, left, top, right, bottom;
+		if (p0.x &amp;lt; p1.x) {
+			left &#x3D; p0.x;
+			right &#x3D; p1.x;
+		} else {
+			left &#x3D; p1.x;
+			right &#x3D; p0.x;
+		}
+		if (p0.y &amp;lt; p1.y) {
+			top &#x3D; p0.y;
+			bottom &#x3D; p1.y;
+		} else {
+			top &#x3D; p1.y;
+			bottom &#x3D; p0.y;
+		}
+		return new Rect(left, top, right, bottom);
+	}
+
+	/**
+	 * returns the half length of the line
+	 * @returns {number}
+	 */
+	geRadius() {
+		return this.length * 0.5;
+	}
+
+	/**
+	 * creates a copy of the line.
+	 * @returns {utils.geometry2d.Line}
+	 */
+	clone() {
+		return new Line(this.p0, this.p1);
+	}
+
+	/**
+	 * returns an object with 3 properties :
+	 *    the first one, &#x27;point&#x27;,  is the point where the 2 lines intersect,
+	 *    the second one, &#x27;onLine1&#x27;, is true if the point is on the segment &#x27;line1&#x27;,
+	 *    the third one, &#x27;onLine2&#x27;, is true if the point is on the segment &#x27;line2&#x27;.
+	 * If the two lines are parallel, this method returns null.
+	 * @param {utils.geometry2d.Line} line1
+	 * @param {utils.geometry2d.Line} line2
+	 * @returns {?{point: utils.geometry2d.Vec2, onLine1: boolean, onLine2: boolean}}
+	 */
+	static intersectionPoint(line1, line2) {
+		let A &#x3D; line1.p0,
+			B &#x3D; line1.p1,
+			C &#x3D; line2.p0,
+			D &#x3D; line2.p1,
+			AB &#x3D; Vec2.translation(A, B),
+			CD &#x3D; Vec2.translation(C, D),
+			denom &#x3D; CD.y * AB.x - CD.x * AB.y;
+		if (!denom) return null;
+		let CA &#x3D; Vec2.translation(C, A),
+			num1 &#x3D; CD.x * CA.y - CD.y * CA.x,
+			num2 &#x3D; AB.x * CA.y - AB.y * CA.x,
+			pos1 &#x3D; num1 / denom,
+			pos2 &#x3D; num2 / denom;
+		return {
+			point: A.add(AB.mul(pos1)),
+			onLine1: pos1 &gt; 0 &amp;amp;&amp;amp; pos1 &amp;lt; 1,
+			onLine2: pos2 &gt; 0 &amp;amp;&amp;amp; pos2 &amp;lt; 1
+		};
+	}
+
+	/**
+	 * creates a line from a start point and a vector from start point to end point
+	 * @param {utils.geometry2d.Vec2} A
+	 * @param {utils.geometry2d.Vec2} AB
+	 * @returns {utils.geometry2d.Line}
+	 */
+	static createFromPointVector(A, AB) {
+		return new Line(A, A.clone().add(AB));
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ * @name utils.geometry2d.Line#glTrianglesNumber
+ */
+Line.prototype.glTrianglesNumber &#x3D; 1;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ * @name utils.geometry2d.Line#glPointsNumber
+ */
+Line.prototype.glPointsNumber &#x3D; 2;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -Point - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @class
+ * @augments utils.geometry2d.Shape
+ * @memberOf utils.geometry2d
+ * @classdesc a very simple shape containing only necessary overridden methods to make it usable
+ */
+class Point extends Shape {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2} p
+	 */
+	constructor(p) {
+		super(p);
+	}
+
+	/**
+	 * adds drawing instructions to draw a rectangle 2 units sided, centered on &amp;lt;!--
+	 * --&gt;[center]{@link utils.geometry2d.Shape#center} attribute.
+	 * @param context
+	 */
+	pushPath(context) {
+		context.rect(this.center.x - 0.5, this.center.y - 0.5, 1, 1);
+	}
+
+	/**
+	 * draws the shape on the canvas
+	 * @param {CanvasRenderingContext2D} context
+	 * @param {boolean} [fill&#x3D;true]
+	 * @param {boolean} [stroke&#x3D;!fill]
+	 * @see {@link utils.geometry2d.Shape#pushPath}
+	 */
+	draw(context, fill &#x3D; true, stroke &#x3D; !fill) {
+		context.fillRect(this.center.x - 1, this.center.y - 1, 2, 2);
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		indicesArray[iOs] &#x3D; indicesArray[iOs + 1] &#x3D; indicesArray[iOs + 2] &#x3D; pOs;
+		pOs *&#x3D; 2;
+		pointsArray[pOs] &#x3D; this.center.x;
+		pointsArray[pOs + 1] &#x3D; this.center.y;
+	}
+
+	/**
+	 * creates a copy of this point
+	 * @returns {Point}
+	 */
+	clone() {
+		return new Point(this.center);
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ * @name utils.geometry2d.Point#glTrianglesNumber
+ */
+Point.prototype.glTrianglesNumber &#x3D; 1;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ * @name utils.geometry2d.Point#glPointsNumber
+ */
+Point.prototype.glPointsNumber &#x3D; 1;
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -Polygon - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @class
+ * @augments utils.geometry2d.Shape
+ * @memberOf utils.geometry2d
+ * @classdesc a class using multiple points, where their coordinates are relative to the center of the shape.
+ * This representation is optimized for movements and transformations, but not optimized for drawing and &amp;lt;!--
+ * --&gt;memory,  because it has all the points in memory (2 numbers each}, plus the center &amp;lt;!--
+ * --&gt;coordinate (2 numbers).
+ */
+class Polygon extends Shape {
+	/**
+	 * constructor of the Polygon, taking the center and points relative to this center as arguments.
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2} center
+	 * @param {utils.geometry2d.Vec2[]} relativePoints
+	 */
+	constructor(center, relativePoints) {
+		super(center);
+		let len &#x3D; relativePoints.length, i &#x3D; len, points &#x3D; new Array(len);
+		if (len) while (i--) points[i] &#x3D; relativePoints[i].clone();
+		/**
+		 * @name utils.geometry2d.Polygon#points
+		 * @type {utils.geometry2d.Vec2[]}
+		 */
+		this.points &#x3D; points;
+	}
+
+	/**
+	 * perimeter of the instance
+	 * @type {number}
+	 * @readonly
+	 */
+	get perimeter() {
+		let i &#x3D; this.points.length - 1, res &#x3D; Vec2.distance(this.points[0], this.points[i]);
+		while (i) res +&#x3D; Vec2.distance(this.points[i--], this.points[i]);
+		return res;
+	}
+
+	/**
+	 * area of the instance
+	 * @type {number}
+	 * @readonly
+	 */
+	get area() {
+		let res &#x3D; 0, len &#x3D; this.points.length, i &#x3D; len, p0, p1 &#x3D; this.points[0];
+		while (i--) {
+			p0 &#x3D; this.points[i];
+			res +&#x3D; (p0.x + p1.x) * (p0.y - p1.y);
+			p1 &#x3D; p0;
+		}
+		return res / 2;
+	}
+
+	/**
+	 * multiplies the distance to the center of all points by the specified factor
+	 * @param {number} factor
+	 * @returns {utils.geometry2d.Polygon} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	scale(factor) {
+		let i &#x3D; this.points.length;
+		while (i--) this.points[i].mul(factor);
+		return this;
+	}
+
+	/**
+	 * increase the distance to the center of all points by the specified distance
+	 * @param {number} delta
+	 * @returns {utils.geometry2d.Polygon} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	growDistance(delta) {
+		let i &#x3D; this.points.length;
+		while (i--) this.points.magnitude +&#x3D; delta;
+		return this;
+	}
+
+	/**
+	 * rotate the instance by the specified angle in radians.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	rotate(radians) {
+		let i &#x3D; this.points.length;
+		while (i--) this.points[i].angle +&#x3D; radians;
+		return this;
+	}
+
+	/**
+	 * makes the line the mirror of itself relative to the given horizontal axis
+	 * if no value is set for axisY, the mirror will be made relative to the center&#x27;s y coordinate.
+	 * @param {number} [axisY&#x3D;center.y]
+	 *          ordinate of the horizontal axis
+	 * @returns {utils.geometry2d.Polygon} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	mirrorVertically(axisY &#x3D; this.center.y) {
+		super.mirrorVertically(axisY);
+		let i &#x3D; this.points.length;
+		while (i--) this.points[i].mirrorVertically();
+		return this;
+	}
+
+	/**
+	 * makes the line the mirror of itself relative to the given vertical axis
+	 * if no value is set for axisX, the mirror will be made relative to the center&#x27;s x coordinate.
+	 * @param {number} [axisX&#x3D;center.x]
+	 *          abscissa of the vertical axis
+	 * @returns {utils.geometry2d.Polygon} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	mirrorHorizontally(axisX) {
+		super.mirrorHorizontally(axisX);
+		let i &#x3D; this.points.length;
+		while (i--) this.points[i].mirrorHorizontally();
+		return this;
+	}
+
+	/**
+	 * adds to the context the drawing instructions to draw the polygon.
+	 * @param {CanvasRenderingContext2D} context
+	 */
+	pushPath(context) {
+		let len &#x3D; this.points.length;
+		if (len) {
+			context.translate(this.center.x, this.center.y);
+			context.moveTo(this.points[0].x, this.points[0].y);
+			for (let i &#x3D; 1; i &amp;lt; len; i++) context.lineTo(this.points[i].x, this.points[i].y);
+			context.translate(-this.center.x, -this.center.y);
+		}
+	}
+
+	/**
+	 * numbers of triangles used to draw this shape
+	 * @readonly
+	 * @type {number}
+	 */
+	get glTrianglesNumber() {
+		return this.points.length;
+	}
+
+	/**
+	 * number of points used to draw this shape.
+	 * @type {number}
+	 */
+	get glPointsNumber() {
+		return this.glTrianglesNumber + 1;
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		let n &#x3D; this.glTrianglesNumber, i &#x3D; n, j, t;
+		indicesArray[iOs] &#x3D; pOs;
+		while (i--) {
+			j &#x3D; 3 * i;
+			indicesArray[iOs + j + 2] &#x3D; pOs + (i + 1) % n;
+			indicesArray[iOs + i] &#x3D; pOs + i;
+			indicesArray[iOs + i + 1] &#x3D; pOs;
+		}
+		pOs *&#x3D; 2;
+		pointsArray[pOs] &#x3D; this.center.x;
+		pointsArray[pOs + 1] &#x3D; this.center.y;
+		i &#x3D; 0; //TODO remove i&#x3D;0 because it&#x27;s already its value
+		n *&#x3D; 2;
+		while (i + 2 &amp;lt;&#x3D; n) {
+			pointsArray[pOs + i] &#x3D; (t &#x3D; this.getPoint(i - 2)).x;
+			pointsArray[pOs + i + 1] &#x3D; t.y;
+		}
+	}
+
+	/**
+	 * returns a copy of the point, in absolute coordinates, of the index you specified.
+	 * @param {number} index
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	getPoint(index) {
+		return this.points[index].clone().add(this.center);
+	}
+
+	/**
+	 * returns copies of all the points of the polygon, in absolute coordinates.
+	 * @returns {utils.geometry2d.Vec2[]}
+	 */
+	getPoints() {
+		let i &#x3D; this.points.length, res &#x3D; new Array(i);
+		while (i--) res[i] &#x3D; this.points[i].clone().add(this.center);
+		return res;
+	}
+
+	/**
+	 * returns the line, in absolute coordinates, formed by the points of indices &amp;lt;!--
+	 * --&gt;&amp;lt;code&gt;index&amp;lt;/code&gt; and &amp;lt;code&gt;index+1&amp;lt;/code&gt;
+	 * @param {number} index the index of the start point
+	 * @returns {utils.geometry2d.Line}
+	 */
+	getLine(index) {
+		let len &#x3D; this.points.length;
+		return new Line(this.points[(index++) % len], this.points[index % len]).move(this.center);
+	}
+
+	/**
+	 * returns the line, in relative coordinates, formed by the points of indices &amp;lt;!--
+	 * --&gt;&amp;lt;code&gt;index&amp;lt;/code&gt; and &amp;lt;code&gt;index+1&amp;lt;/code&gt;
+	 * @param {number} index the index of the start point
+	 * @returns {utils.geometry2d.Line}
+	 */
+	getRelativeLine(index) {
+		let len &#x3D; this.points.length;
+		return new Line(this.points[(index++) % len], this.points[index % len]);
+	}
+
+	/**
+	 * returns the lines forming the polygon
+	 * @returns {utils.geometry2d.Line[]}
+	 */
+	getLines() {
+		let len &#x3D; this.points.length, i &#x3D; len, res &#x3D; new Array(i);
+		while (i--) res[i] &#x3D; new Line(this.points[i], this.points[(i + 1) % len]).move(this.center);
+		return res;
+	}
+
+	/**
+	 * get the normal vector of the line of the specified index
+	 * @param {number} index
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	getNormalVectForLine(index) {
+		return this.getLine(index).getNormalVect(false);
+	}
+
+	/**
+	 * rotate the order the points are registered in the polygon
+	 * @param {number} delta number of indices the points have to change
+	 */
+	rotatePointsOrder(delta) {
+		if (delta % 1) delta &#x3D; Math.round(delta);
+		let len &#x3D; this.points.length, i &#x3D; len, p &#x3D; new Array(len);
+		while (i--) p[i] &#x3D; this.points[(i + delta) % len];
+		i &#x3D; len;
+		while (i--) this.points[i] &#x3D; p[i];
+	}
+
+	/**
+	 * creates a polygon located inside the instance, where the lines are distant from their originals &amp;lt;!--
+	 * --&gt;by the specified distance.
+	 * @param {number} distance
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	getReducedPolygon(distance) {
+		let len &#x3D; this.points.length, points &#x3D; new Array(len), p, l1, l2, i;
+		for (i &#x3D; 0; i &amp;lt; len; i++) {
+			p &#x3D; this.points[i].clone();
+			l1 &#x3D; i ? this.getRelativeLine(i - 1)
+				: this.getRelativeLine(len - 1);
+			l2 &#x3D; this.getRelativeLine(i);
+			l1.move(l1.getNormalVect().mul(distance));
+			l2.move(l2.getNormalVect().mul(distance));
+			points[i] &#x3D; Line.intersectionPoint(l1, l2);
+		}
+		return new Polygon(this.center, points);
+	}
+
+	/**
+	 * checks if the intersect with the shape.
+	 * The checking is only made for {@link utils.geometry2d.Circle}, {@link utils.geometry2d.Line} and &amp;lt;!--
+	 * {@link utils.geometry2d.Polygon} instances.
+	 * if the specified shape is not an instance of those classes, this function returns the result of &amp;lt;!--
+	 * --&gt;&amp;lt;code&gt;shape.intersect(this)&amp;lt;/code&gt;
+	 * @param {utils.geometry2d.shapes} shape
+	 * @returns {boolean}
+	 */
+	intersect(shape) {
+		let lines &#x3D; this.getLines(), i &#x3D; lines.length;
+		if (!i) return false;
+		if (shape instanceof Polygon) {
+			let lines2 &#x3D; shape.getLines(), len &#x3D; lines2.length, l, j;
+			while (i--) {
+				l &#x3D; lines[i];
+				j &#x3D; len;
+				while (j--) {
+					if (lines2[j].intersect(l)) return true;
+				}
+			}
+		} else while (i--) {
+			if (lines[i].intersect(shape)) return true;
+		}
+		return false;
+	}
+
+	/**
+	 * returns the line of the instance intersecting with the given shape, or null if no line is found
+	 * If you only want to check lines after a known index, you can put this index as a second parameter &amp;lt;!--
+	 * --&gt;of the function.
+	 * @param {utils.geometry2d.Shape} shape
+	 * @param {number} [startIndex&#x3D;0]
+	 * @returns {?utils.geometry2d.Line}
+	 */
+	getIntersectionLine(shape, startIndex &#x3D; 0) {
+		let lines &#x3D; this.getLines(), i &#x3D; lines.length;
+		if (i &amp;lt;&#x3D; startIndex) return null;
+		if (shape instanceof Polygon) {
+			let lines2 &#x3D; shape.getLines(), len &#x3D; lines2.length, l, j;
+			while (i-- &gt; startIndex) {
+				l &#x3D; lines[i];
+				j &#x3D; len;
+				while (j--) {
+					if (lines2[j].intersect(l)) return l;
+				}
+			}
+		} else while (i-- &gt; startIndex) {
+			if (lines[i].intersect(shape)) return lines[i];
+		}
+		return null;
+	}
+
+	/**
+	 * returns the lines of the instance intersecting with the given shape, or null if no line is found.
+	 * If you only want to check lines after a known index, you can put this index as a second parameter &amp;lt;!--
+	 * --&gt;of the function.
+	 * @param {utils.geometry2d.Shape} shape
+	 * @param {number} [startIndex&#x3D;0]
+	 * @returns {utils.geometry2d.Line[]}
+	 */
+	getIntersectionLines(shape, startIndex &#x3D; 0) {
+		let lines &#x3D; this.getLines(), i &#x3D; lines.length;
+		let result &#x3D; [];
+		if (shape instanceof Polygon) {
+			let lines2 &#x3D; shape.getLines(), len &#x3D; lines2.length, l, j;
+			while (i-- &gt; startIndex) {
+				l &#x3D; lines[i];
+				j &#x3D; len;
+				while (j--) {
+					if (lines2[j].intersect(l)) result.push(l);
+				}
+			}
+		}
+		else while (i-- &gt; startIndex) {
+			if (lines[i].intersect(shape)) result.push(lines[i]);
+		}
+		return result;
+	}
+
+	/**
+	 * tells if a point is located inside the instance using the following method :
+	 * - get the width and height of the instance
+	 * - create 4 long enough lines, all starting from the point : one going left, one right, one up and one down
+	 * - check if all lines intersect the instance.
+	 * this method is not optimized, and work for most polygons, except too complex concave polygons.
+	 * @param {utils.geometry2d.Vec2} point
+	 * @returns {boolean}
+	 */
+	contains(point) {
+		let rect &#x3D; this.getRect(), w &#x3D; rect.width + 10, h &#x3D; rect.height + 10, endPoint &#x3D; point.clone(),
+			l &#x3D; new Line(point, endPoint.addXY(-w,0));
+		return this.intersect(l)
+			&amp;amp;&amp;amp; this.intersect(l.setP1(endPoint.addXY(w+w,0)))
+			&amp;amp;&amp;amp; this.intersect(l.setP1(endPoint.addXY(-w,-h)))
+			&amp;amp;&amp;amp; this.intersect(l.setP1(endPoint.addXY(0,h+h)));
+	}
+
+	/**
+	 * creates and returns a {@link utils.geometry2d.Rect} instance fitting the &amp;lt;!--
+	 * --&gt;{@link utils.geometry2d.Polygon} instance
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		let left &#x3D; 0, top &#x3D; 0, right &#x3D; 0, bottom &#x3D; 0, point, i &#x3D; this.points.length;
+		while (i--) {
+			point &#x3D; this.points[i];
+			if (point.x &amp;lt; left) left &#x3D; point.x; else if (point.x &gt; right) right &#x3D; point.x;
+			if (point.y &amp;lt; top) top &#x3D; point.y; else if (point.y &gt; bottom) bottom &#x3D; point.y;
+		}
+		return new Rect(left, top, right, bottom).move(this.center);
+	}
+
+	/**
+	 * returns the point of the polygon corresponding to the percentage of the perimeter &quot;walked&quot; on the polygon
+	 * @param {number} p
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	getPercentPoint(p) {
+		let dist &#x3D; this.perimeter * (p % 1), lines &#x3D; this.getLines(), len &#x3D; lines.length, l, i;
+		for (i &#x3D; 0; i &amp;lt; len; i++) {
+			l &#x3D; lines[i].length;
+			if (l &gt; dist) return lines[i].getPercentPoint(dist / l);
+			else dist -&#x3D; l;
+		}
+		return this.points[i].add(this.center);
+	}
+
+	/**
+	 * returns the closest point of the instance to the specified point.
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {?utils.geometry2d.Vec2}
+	 */
+	closestPointTo(p) {
+		let closest &#x3D; null, d, D &#x3D; Number.MAX_SAFE_INTEGER, l &#x3D; this.getLines(), i &#x3D; l.length, c;
+		while (i--) {
+			c &#x3D; l[i].closestPointTo(p);
+			d &#x3D; Vec2.squareDistance(c, p);
+			if (d &amp;lt; D) {
+				closest &#x3D; c;
+				D &#x3D; d;
+			}
+		}
+		return closest;
+	}
+
+	/**
+	 * returns the maximum distance of a point of the polygon to the center.
+	 * @returns {number}
+	 */
+	getRadius() {
+		let r &#x3D; 0, mag, i;
+		for (i &#x3D; this.points.length - 1; i &gt;&#x3D; 0; i--) {
+			mag &#x3D; this.points[i].squareMagnitude;
+			if (mag &gt; r) r &#x3D; mag;
+		}
+		return Math.sqrt(r);
+	}
+
+	/**
+	 * this method can take two behaviors, depending on the parameter :
+	 * - if the parameter is null (or not set), this method will move the points to make the center be at the &amp;lt;!--
+	 * --&gt;mean of the points of the instance.
+	 * - if the parameter is not null, this method will move all points by the opposite of the specified &amp;lt;!--
+	 * --&gt;value, to move the center in the polygon by the value.
+	 * &amp;lt;br/&gt;
+	 * At the end, the center will remain unchanged, but the points will be moved so the center will look, &amp;lt;!--
+	 * relatively to the other points, at the center (delta&#x3D;null) / moved by delta (delta!&#x3D;null).
+	 * @param {?utils.geometry2d.Vec2} [delta&#x3D;null]
+	 */
+	redefineCenter(delta &#x3D; null) {
+		let i &#x3D; this.points.length;
+		if (!i) return;
+		if (!delta) {
+			delta &#x3D; Vec2.zero;
+			let len &#x3D; i;
+			while (i--) delta.add(this.points[i]);
+			delta.mul(1 / len);
+			this.redefineCenter(delta);
+			i &#x3D; len;
+		}
+		while (i--) this.points[i].remove(delta);
+	}
+
+	/**
+	 * creates and returns a copy of this instance
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	clone() {
+		return new Polygon(this.center, this.points);
+	}
+
+	/**
+	 * creates a polygon from absolute points. the center is computed from &amp;lt;!--
+	 * --&gt;the average coordinates of the given points
+	 * @param {utils.geometry2d.Vec2[]}pointsArray
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	static Absolute(pointsArray) {
+		return new Polygon(Vec2.ZERO, pointsArray).redefineCenter();
+	}
+
+	/**
+	 * create a rectangular polygon from a center, a width and a height.
+	 * @param {utils.geometry2d.Vec2} center
+	 * @param {number} width
+	 * @param {number} height
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	static Rectangular(center, width, height) {
+		let left &#x3D; -width * 0.5, top &#x3D; -height * 0.5, right &#x3D; left + width, bottom &#x3D; top + height;
+		return new Polygon(center, Vec2.createVec2Array([left, top, right, top, right, bottom, left, bottom]));
+	}
+
+	/**
+	 * creates an ellipsoid-like polygon
+	 * @param {utils.geometry2d.Vec2} center
+	 * @param {number} radiusX
+	 * @param {number} radiusY
+	 * @param {number} edges
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	static Ellipsoidal(center, radiusX, radiusY, edges, radians &#x3D; 0) {
+		let dA &#x3D; Circle.PI2 / edges, a &#x3D; Circle.PI2, points &#x3D; new Array(edges), i &#x3D; edges;
+		while (i--) {
+			a -&#x3D; dA;
+			points[i] &#x3D; Vec2(radiusX * Math.cos(a), radiusY * Math.sin(a));
+		}
+		return new Polygon(center, points);
+	}
+
+	/**
+	 * creates a regular polygon. This function can have different behaviors
+	 * @param {utils.geometry2d.Vec2} center
+	 * @param {number|number[]} radiusArray
+	 * @param {number} pointsNumber
+	 * @param {number} startRadians
+	 * @returns {utils.geometry2d.Polygon}
+	 */
+	static Regular(center, radiusArray, pointsNumber, startRadians) {
+		let dR &#x3D; (Circle.PI2) / pointsNumber, angle &#x3D; startRadians, rLen &#x3D; radiusArray.length,
+			p &#x3D; new Polygon(center, []);
+		p.points &#x3D; new Array(pointsNumber);
+		if (rLen !&#x3D;&#x3D; undefined) {
+			let i &#x3D; -1;
+			while (i++ &amp;lt; pointsNumber) {
+				p.points[i] &#x3D; Vec2.createFromAngle(angle, radiusArray[i % rLen]);
+				angle +&#x3D; dR;
+			}
+		}
+		else {
+			let i &#x3D; pointsNumber;
+			while (i--) {
+				p.points[i] &#x3D; Vec2.createFromAngle(angle, radiusArray);
+				angle +&#x3D; dR;
+			}
+		}
+		return p;
+	}
+}
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -Ray - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
+/**
+ * @class
+ * @augments utils.geometry2d.Shape
+ * @memberOf utils.geometry2d
+ * @classdesc a class representing an infinite ray, defined by an origin point and the angle of the direction &amp;lt;!--
+ * --&gt;it is pointing toward. the origin of the ray is defined by the &amp;lt;!--
+ * --&gt;{@link utils.geometry2d.Shape#center|center} attribute.
+ */
+class Ray extends Shape {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Vec2} origin
+	 * @param {number} radians
+	 */
+	constructor(origin, radians) {
+		super(origin);
+		/**
+		 * @name utils.geometry2d.Ray#angle
+		 * @type {number}
+		 */
+		this.angle &#x3D; radians;
+	}
+
+	/**
+	 * &amp;lt;code&gt;&#x3D;Infinity&amp;lt;/code&gt;
+	 * @type {Number}
+	 */
+	get perimeter() {
+		return Infinity;
+	}
+
+	/**
+	 * rotates the ray around its origin.
+	 * @param {number} radians
+	 * @returns {utils.geometry2d.Ray} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 */
+	rotate(radians) {
+		this.angle +&#x3D; radians;
+		return this;
+	}
+
+	/**
+	 * makes the ray the opposite of itself relative to the given horizontal axis
+	 * if no value is set for axisY, the mirror will be made relative to the origin&#x27;s y coordinate.
+	 * @param {number} [axisY&#x3D;center.y] ordinate of the horizontal axis
+	 * @returns {utils.geometry2d.Ray} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Ray#mirrorHorizontally}
+	 */
+	mirrorVertically(axisY &#x3D; this.center.y) {
+		super.mirrorVertically(axisY);
+		this.angle &#x3D; -this.angle;
+		return this;
+	}
+
+	/**
+	 * makes the ray the opposite of itself relative to the given vertical axis
+	 * if no value is set for axisX, the mirror will be made relative to the origin&#x27;s x coordinate.
+	 * @param {number} [axisX&#x3D;center.x]
+	 *          abscissa of the vertical axis
+	 * @returns {utils.geometry2d.Ray} &amp;lt;code&gt;this&amp;lt;/code&gt;
+	 * @see {@link utils.geometry2d.Ray#mirrorVertically}
+	 */
+	mirrorHorizontally(axisX &#x3D; this.center.x) {
+		super.mirrorHorizontally(axisX);
+		this.angle &#x3D; Math.PI - this.angle;
+		return this;
+	}
+
+	/**
+	 * returns the calculated end point of the instance as if the ray was a line stating at the origin &amp;lt;!--
+	 * --&gt;and with the specified length.
+	 * @param {number} length
+	 * @returns {utils.geometry2d.Vec2|Vec2}
+	 */
+	endPoint(length) {
+		return this.center.clone().addXY(Math.cos(this.angle) * length, Math.sin(this.angle) * length);
+	}
+
+	/**
+	 * adds the drawing instructions to the context. Be aware that if you just &quot;fill&quot; the line, &amp;lt;!--
+	 * --&gt;it won&#x27;t be drawn on the canvas, you must &quot;stroke&quot; it to make it appear on the canvas.
+	 * @param {CanvasRenderingContext2D} context
+	 */
+	pushPath(context) {
+		let p &#x3D; this.endPoint(context.canvas.clientWidth + context.canvas.clientHeight);
+		context.moveTo(this.center.x, this.center.y);
+		context.moveTo(this.center.x, this.center.y);
+		context.lineTo(p.x, p.y);
+	}
+
+	/**
+	 * adds the points to draw this shape to the pointsArray and the points indices to draw &amp;lt;!--
+	 * --&gt;the triangles to the indicesArray.
+	 * @param {Float32Array} pointsArray
+	 * @param {Float32Array} indicesArray
+	 * @param {number} pOs - points offset
+	 * @param {number} iOs - indices offset
+	 */
+	glAddTriangles(pointsArray, indicesArray, pOs, iOs) {
+		let t &#x3D; this.endPoint(Number.MAX_SAFE_INTEGER);
+		indicesArray[iOs] &#x3D; indicesArray[iOs + 1] &#x3D; pOs;
+		indicesArray[iOs + 2] &#x3D; pOs + 1;
+		pOs *&#x3D; 2;
+		pointsArray[pOs] &#x3D; this.center.x;
+		pointsArray[pOs + 1] &#x3D; this.center.y;
+		pointsArray[pOs + 2] &#x3D; t.x;
+		pointsArray[pOs + 3] &#x3D; t.y;
+	}
+
+	/**
+	 * check if the ray intersect with the shape.
+	 * @param {utils.geometry2d.shapes} shape
+	 * @returns {boolean}
+	 */
+	intersect(shape) {
+		let rect &#x3D; shape.getRect();
+		return new Line(this.center,
+			this.endPoint(Vec2.distance(this.center, shape.center) + rect.width + rect.height)).intersect(shape);
+	}
+
+	/**
+	 * returns whether or not the line contains the given point.
+	 * The result is not really realistic because of number precision
+	 * @param {utils.geometry2d.Vec2} point
+	 * @returns {boolean}
+	 */
+	contains(point) {
+		return this.endPoint(Vec2.distance(this.center, point)).equals(point);
+	}
+
+	/**
+	 * creates and returns a {@link utils.geometry2d.Rect} instance fitting the ray, with pone corner &amp;lt;!--
+	 * --&gt;at an infinite position.
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		let endPoint &#x3D; this.endPoint(Infinity);
+		return new Rect(Math.min(endPoint.x, this.center.x), Math.min(endPoint.y, this.center.y),
+			Math.max(endPoint.x, this.center.x), Math.max(endPoint.y, this.center.y));
+	}
+
+	/**
+	 * returns the director vector of the instance.
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	get directorVect() {
+		return Vec2.createFromAngle(this.angle);
+	}
+
+	/**
+	 * returns the closest point of the instance to the specified point
+	 * @param {utils.geometry2d.Vec2} p
+	 * @returns {utils.geometry2d.Vec2}
+	 */
+	closestpointTo(p) {
+		let A &#x3D; this.center, AC &#x3D; Vec2.translation(A, p), u &#x3D; this.directorVect, d &#x3D; Vec2.dotProd(u, AC);
+		return d &amp;lt; 0 ? u.set(A) : u.mul(d).add(A);
+	}
+
+	/**
+	 * implemented for the needs of getCircle function, but not very useful as it only returns an infinite number
+	 * @returns {number}
+	 */
+	getRadius() {
+		return Infinity;
+	}
+
+	/**
+	 * returns a copy of the instance.
+	 * @returns {utils.geometry2d.Ray}
+	 */
+	clone() {
+		return new Ray(this.center, this.angle);
+	}
+}
+/**
+ * numbers of triangles used to draw this shape
+ * @readonly
+ * @type {number}
+ */
+Ray.prototype.glTrianglesNumber &#x3D; 1;
+/**
+ * number of points used to draw this shape.
+ * @type {number}
+ */
+Ray.prototype.glPointsNumber &#x3D; 2;
+
+/**
+ * @memberOf utils
+ * @namespace geometry2d
+ */
+window.utils.geometry2d &#x3D; {
+	Vec2,
+	Rect,
+	Shape,
+	Circle,
+	Ellipsoid,
+	Line,
+	Point,
+	Polygon,
+	Ray
+};
+
+}
+</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on December 18, 2016.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>
