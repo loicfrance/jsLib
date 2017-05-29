@@ -1,14 +1,15 @@
 /**
  * @typedef {Object} utils.tools.rgb
- * @property {number} r
- * @property {number} g
- * @property {number} b
+ * @property {number} r - integer in [0;255]
+ * @property {number} g - integer in [0;255]
+ * @property {number} b - integer in [0;255]
  */
 /**
  * @typedef {Object} utils.tools.hsv
- * @property {number} h
- * @property {number} s
- * @property {number} v
+ * @memberOf utils.tools
+ * @property {number} h - integer in [0;359]
+ * @property {number} s - integer in [0;255]
+ * @property {number} v - integer in [0;255]
  */
 /**
  * @namespace utils
@@ -24,7 +25,7 @@ utils.tools = {
 //######################################################################################################################
 
 	LayoutGravity: (function() {
-		let LayoutGravity = G = {
+		const LayoutGravity = G = {
 			LEFT: 1, TOP: 2, RIGHT: 4, BOTTOM: 8, CENTER: 16,
 			getRect: (gravity, availableRect, width, height, marginX=0, marginY=marginX)=> {
 				availableRect = availableRect.clone().addMarginsXY(-marginX, -marginY);
@@ -110,7 +111,7 @@ utils.tools = {
 	 * @returns {utils.tools.rgb}
 	 */
 	HSVtoRGB: (h, s, v)=> {
-		let i = Math.floor(h * 6),
+		const i = Math.floor(h * 6),
 			f = h * 6 - i,
 			p = Math.round((v * (1 - s))*255),
 			q = Math.round((v * (1 - f * s))*255),
@@ -129,13 +130,13 @@ utils.tools = {
 	/**
 	 * convert rgb color to hsv
 	 * @memberOf utils.tools
-	 * @param {number} r - integer in [0;359]
+	 * @param {number} r - integer in [0;255]
 	 * @param {number} g - integer in [0;255]
 	 * @param {number} b - integer in [0;255]
 	 * @returns {utils.tools.hsv}
 	 */
 	RBGtoHSV : (r, g, b)=> {
-		let max = Math.max(r, g, b), min = Math.min(r, g, b),
+		const max = Math.max(r, g, b), min = Math.min(r, g, b),
 			d = max - min,
 			s = (max === 0 ? 0 : d / max),
 			v = max / 255;
@@ -224,10 +225,10 @@ utils.tools = {
 		client.send();
 	},
 	/**
-	 * creates a worker containing the specified script
+	 * creates a worker running the specified script
 	 * @memberOf utils.tools
 	 * @param {string} script
-	 * @returns {Worker} newly created web worker containing the script
+	 * @returns {Worker} newly created web worker runnning the script
 	 */
 	createScriptWorker: (script) => {
 		let blob = new Blob([script],
