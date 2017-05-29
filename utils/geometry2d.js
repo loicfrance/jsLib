@@ -3100,7 +3100,7 @@ window.utils = window.utils || {};
 		 * @param {CanvasRenderingContext2D} context
 		 */
 		pushPath(context) {
-			let p = this.endPoint(context.canvas.clientWidth + context.canvas.clientHeight);
+			const p = this.endPoint(context.canvas.clientWidth + context.canvas.clientHeight);
 			context.moveTo(this.center.x, this.center.y);
 			context.moveTo(this.center.x, this.center.y);
 			context.lineTo(p.x, p.y);
@@ -3114,7 +3114,7 @@ window.utils = window.utils || {};
 		 * @returns {number} number of points added
 		 */
 		glSetVertices(vertices, offset=0) {
-			let t = this.endPoint(Number.MAX_SAFE_INTEGER);
+			const t = this.endPoint(Number.MAX_SAFE_INTEGER);
 			vertices[offset] = this.center.x;
 			vertices[offset+1] = this.center.y;
 			vertices[offset+2] = t.x;
@@ -3128,7 +3128,7 @@ window.utils = window.utils || {};
 		 * @returns {boolean}
 		 */
 		intersect(shape) {
-			let rect = shape.getRect();
+			const rect = shape.getRect();
 			return new Line(this.center,
 				this.endPoint(Vec2.distance(this.center, shape.center) + rect.width + rect.height)).intersect(shape);
 		}
@@ -3139,7 +3139,7 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Vec2[]}
 		 */
 		getIntersectionPoints(shape) {
-			let rect = shape.getRect();
+			const rect = shape.getRect();
 			return this.getLine(Vec2.distance(this.center, shape.center) + rect.width + rect.height)
 				.getIntersectionPoints(shape);
 		}
@@ -3160,7 +3160,7 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		getRect() {
-			let endPoint = this.endPoint(Infinity);
+			const endPoint = this.endPoint(Infinity);
 			return new Rect(Math.min(endPoint.x, this.center.x), Math.min(endPoint.y, this.center.y),
 				Math.max(endPoint.x, this.center.x), Math.max(endPoint.y, this.center.y));
 		}
