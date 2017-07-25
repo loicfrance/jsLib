@@ -51,7 +51,10 @@ window.game.ObjectRenderer = (function() {
 		getRect() {
 			return null;
 		}
-
+		/**
+		 * returns the maximum distance of the center to a point of the renderer.
+		 * @returns {number}
+		 */
 		getRadius() {
 			return 0;
 		}
@@ -238,7 +241,7 @@ window.game.ShapedObjectRenderer = (function() {
 	return ShapedObjectRenderer;
 })();
 //######################################################################################################################
-//#                                                ImageObjectRenderer                                                #
+//#                                                ImageObjectRenderer                                                 #
 //######################################################################################################################
 window.game.ImageObjectRenderer = (function() {
 	const Rect = utils.geometry2d.Rect;
@@ -314,7 +317,7 @@ window.game.ImageObjectRenderer = (function() {
 		}
 
 		/**
-		 * draws the shape on the canvas with the specified color.
+		 * draws on the canvas
 		 * @param {CanvasRenderingContext2D} context2d
 		 */
 		render(context2d) {
@@ -333,7 +336,7 @@ window.game.ImageObjectRenderer = (function() {
 					ws, hs);
 		}
 		/**
-		 * draws the shape on the canvas with the specified color.
+		 * draws on the canvas.
 		 * @param {webgl.GlHandler} handler
 		 * @param {WebGLRenderingContext} handler.gl - webgl context
 		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
@@ -350,7 +353,7 @@ window.game.ImageObjectRenderer = (function() {
 		}
 		/**
 		 * returns a {@link utils.geometry2d.Rect|Rect} instance fitting the <!--
-		 * -->{@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer.
+		 * -->{@link game.ImageObjectRenderer#image|image} attribute of the renderer.
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		getRect() {
@@ -370,8 +373,118 @@ window.game.ImageObjectRenderer = (function() {
 	utils.tools.merge(ImageObjectRenderer.prototype, {
 		angle: 0, scaleX: 1, scaleY: 1
 	});
-	ImageObjectRenderer.prototype
 	return ImageObjectRenderer;
+})();
+//######################################################################################################################
+//#                                            MultiRenderersObjectRenderer                                            #
+//######################################################################################################################
+window.game.MultiRenderersObjectRenderer = (function(){
+	"use strict";/**
+	 * @class game.MultiRenderersObjectRenderer
+	 * @augments game.ObjectRenderer
+	 * @memberOf game
+	 * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using several instances of <!--
+	 * -->{@link game.ObjectRenderer}.
+	 */
+	class MultiRenderersObjectRenderer extends game.ObjectRenderer {
+		/**
+		 * @constructor
+		 * @param {game.ObjectRenderer[]} renderers
+		 */
+		constructor(renderers) {
+			super();
+			this.renderers = renderers;
+			this.renderersNumber = renderers.length;
+		}
+		/**
+		 * sets the renderer's shape center to the specified position
+		 * @param {utils.geometry2d.Vec2} pos
+		 * @returns {game.ShapedObjectRenderer} <code>this</code>
+		 */
+		setPosition(pos) {
+			let i = this.renderersNumber;
+			while(i--) {
+				this.renderers[i].setPosition(pos);
+			}
+			return this;
+		}
+		/**
+		 * rotates the shape of the renderer by the specified angle in radians.
+		 * @param {number} radians
+		 */
+		rotate(radians) {
+			let i = this.renderersNumber;
+			while(i--) {
+				this.renderers[i].rotate(radians);
+			}
+		}
+		/**
+		 * multiplies the dimensions by the specified factor.
+		 * @param {number} factor
+		 */
+		scale(factor) {
+			let i = this.renderersNumber;
+			while(i--) {
+				this.renderers[i].scale(factor);
+			}
+		}
+		/**
+		 * draws on the canvas
+		 * @param {CanvasRenderingContext2D} context2d
+		 */
+		render(context2d) {
+			let i = -1, n = this.renderersNumber;
+			while(++i < n) {
+				this.renderers[i].render(context2d);
+			}
+		}
+		/**
+		 * draws on the canvas.
+		 * @param {webgl.GlHandler} handler
+		 * @param {WebGLRenderingContext} handler.gl - webgl context
+		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
+		 * -->to store vertices
+		 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
+		 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
+		 * -->the position of the vertex in the vertex shader
+		 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
+		 * -->the color in the vertex shader
+		 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
+		 * -->the depth in the vertex shader
+		 */
+		renderGL(handler) {
+			let i = -1, n = this.renderersNumber;
+			while(++i < n) {
+				this.renderers[i].renderGL(handler);
+			}
+		}
+		/**
+		 * creates and returns a {@link utils.geometry2d.Rect|Rect} that fits the renderer.
+		 * @returns {utils.geometry2d.Rect}
+		 */
+		getRect() {
+			if(this.renderersNumber == 0) return null;
+			let rects = new Array(this.renderersNumber), i = this.renderersNumber;
+			while(i--) {
+				rects[i] = this.renderers[i].getRect();
+			}
+			return utils.geometry2d.Rect.getUnion(rects);
+		}
+		/**
+		 * returns the maximum distance of the center to a point of the renderer.
+		 * @returns {number}
+		 */
+		getRadius() {
+			if(this.renderersNumber == 0) return 0;
+			let max = 0, i = this.renderersNumber, r;
+			while(i--) {
+				r = this.renderers[i].getRadius();
+				if(r > max) max = r;
+			}
+			return max;
+		}
+	}
+	return MultiRenderersObjectRenderer;
 })();
 //######################################################################################################################
 //#                                                   ObjectCollider                                                   #
