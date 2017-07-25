@@ -174,7 +174,7 @@ game.objectProperties = {
 	 *
 	 * You can also use some function such as <code>{@link game.objectProperties.tag_canHaveTag}</code> and <!--
 	 * --><code>{@link game.objectProperties.tag_hasTag}</code>, that you can use as a filter for objects,  and <!--
-	 * --><code>{@link game.objectProperties.tag_getAllObjectsWithTag}.
+	 * --><code>{@link game.objectProperties.tag_getAllObjectsWithTag}</code>.
 	 * @memberOf game.objectProperties
 	 * @property {Array|undefined} tags
 	 * @mixin game.objectProperties.tag
@@ -212,7 +212,7 @@ game.objectProperties = {
 			return this.tags !== undefined && this.tags.length > 0;
 		},
 		/**
-		 * removes all tags of from the object by setting the <code>tags> attribute to an empty array
+		 * removes all tags of from the object by setting the <code>tags</code> attribute to an empty array
 		 */
 		clearTags: function() {
 			this.tags = [];

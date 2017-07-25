@@ -33,9 +33,9 @@ window.game = {
 		GAME_START 		 : 2,
 		/** the game just stopped/paused */
 		GAME_STOP  		 : 3,
-		/** an object as been created (never called automatically) */
+		/** an object as been created. user-called event (never called automatically) */
 		OBJECT_CREATED   : 4,
-		/** an object as been destroyed (never called automatically) */
+		/** an object as been destroyed user-called event (never called automatically) */
 		OBJECT_DESTROYED : 5
 	},
 	/**
@@ -265,7 +265,7 @@ window.game = {
 					return callback;
 				};
 // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -onFrame  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-				let onFrame = function(timeStamp) {
+				let onFrame = (function(timeStamp) {
 					let obj, index = -1, i, dT, j, bodies, len, other;
 					if(running) {
 						// 1 : remove dead objects
@@ -326,8 +326,8 @@ window.game = {
 						}
 					}
 					// 14 : request next frame
-					requestAnimationFrame(onFrame.bind(this));
-				};
+					requestAnimationFrame(onFrame);
+				}).bind(this);
 			}
 			getMap() {
 				return this.gameMap;
@@ -377,7 +377,6 @@ window.game = {
 				let onWindowResize = null;
 				let resizeMargin=4;
 				let callback = null;
-				let worker = null;
 				/**
 				 * allows the canvas to resize automatically when the window size changes.
 				 * The callback function is called after the resize with the first parameter equal to <!--
@@ -443,28 +442,7 @@ window.game = {
 				 * @param {?game.renderEventCallback} cb
 				 */
 				this.setCallback = function( cb ) { callback = cb; };
-				/**
-				 * use this function if you want to activate the asynchronous rendering.
-				 * @method
-				 * @name game.GameMap#useAsynchronous
-				 * @param {boolean} use
-				 */
-				this.useAsynchronous = function( use ) {
-					if(use && !worker) {
-						worker = new Worker("async_render.js");
-					} else if(worker != null) {
-						worker.terminate();
-					}
-				};
-				/**
-				 * return true if the asynchronous mode is enabled.
-				 * @method
-				 * @name game.GameMap#isAsynchronousUsed
-				 * @returns {boolean}
-				 */
-				this.isAsynchronousUsed = function() {
-					return worker != null;
-				};
+				
 				/**
 				 * called by the game manager after a frame to draw objects on the canvas.
 				 * The callback function is called at the beginning and at the end of the function, and at the <!--
@@ -478,53 +456,40 @@ window.game = {
 				 * @param {game.Object[]} objects
 				 */
 				this.render = function( gameManager, objects) {
-					if(worker) {
-						worker.postMessage({
-							ctx: this.context,
-							rect: this.visibleRect,
-							objects: objects,
-							filter: game.renderLayerFilter,
-							layerMin: this.layer_min,
-							layerMax: this.layer_max,
-							callback: callback,
-							renderEvents: RenderEvent
-						});
-					} else {
-						let rect = this.visibleRect, objs, ctx = this.context, l, i;
-						ctx.clearRect(rect.left, rect.top, rect.right, rect.bottom);
+					
+					let rect = this.visibleRect, objs, ctx = this.context, l, i;
+					ctx.clearRect(rect.left, rect.top, rect.right, rect.bottom);
+					if(callback) {
+						ctx.save();
+						callback(RenderEvent.RENDER_BEGIN, ctx);
+					}
+					objs = objects.sort(game.renderLayerSort);
+					i = objs.length;
+					while(i && objs[--i].renderLayer < 0);
+					if(i) {
 						if(callback) {
-							ctx.save();
-							callback(RenderEvent.RENDER_BEGIN, ctx);
+							callback(game.RenderEvent.RENDER_LAYER_BEGIN, ctx);
 						}
-						objs = objects.sort(game.renderLayerSort);
-						i = objs.length;
-						while(i && objs[--i].renderLayer < 0);
-						if(i) {
-							if(callback) {
-								callback(game.RenderEvent.RENDER_LAYER_BEGIN, ctx);
-							}
-							l = objs[i].renderLayer;
-							while(i--) {
-								if(objs[i].renderLayer > l) {
-									if(callback) {
-										callback(game.RenderEvent.RENDER_LAYER_END, ctx);
-										callback(game.RenderEvent.RENDER_LAYER_BEGIN, ctx);
-									}
-									ctx.restore();
-									ctx.save();
-									l = Math.round(objs[i].renderLayer+0.5);
+						l = objs[i].renderLayer;
+						while(i--) {
+							if(objs[i].renderLayer > l) {
+								if(callback) {
+									callback(game.RenderEvent.RENDER_LAYER_END, ctx);
+									callback(game.RenderEvent.RENDER_LAYER_BEGIN, ctx);
 								}
-								if(!objs[i].isOutOfRect(rect)) objs[i].render(ctx);
+								ctx.restore();
+								ctx.save();
+								l = Math.round(objs[i].renderLayer+0.5);
 							}
-							if(callback) {
-								callback(game.RenderEvent.RENDER_LAYER_END, ctx);
-							}
+							if(!objs[i].isOutOfRect(rect)) objs[i].render(ctx);
 						}
 						if(callback) {
-							callback(game.RenderEvent.RENDER_END, ctx);
-							ctx.restore();
+							callback(game.RenderEvent.RENDER_LAYER_END, ctx);
 						}
-
+					}
+					if(callback) {
+						callback(game.RenderEvent.RENDER_END, ctx);
+						ctx.restore();
 					}
 				}
 			}

@@ -2195,9 +2195,16 @@ window.utils = window.utils || {};
 				if (shape.contains(A)) return !shape.contains(B);
 				if (shape.contains(B)) return !shape.contains(A);
 				AC.set(shape.center).remove(A);
-				u.set(A).remove(B).normalize();
+				u.set(B).remove(A).normalize();
 				d = Vec2.dotProd(u, AC);
+				/*
+				//checking d < 0 and d > length is useless because it would mean A or B is in the circle,
+				//which is already check at the beginning of the function
 				return Vec2.distance((d < 0) ? A : (d > this.length) ? B : u.mul(d).add(A), shape.center) <= shape.radius;
+				/*/
+				return  (d >= 0 && d <= this.length && Vec2.squareDistance(u.mul(d).add(A), shape.center))
+					<= shape.radius*shape.radius;
+				//*/
 			} else if (shape instanceof Line) {
 					//ccw(AC, AD) != ccw(BC, BD)
 				if (Vec2.ccw2(AC.set(C = shape.p0).remove(A = this.p0), AD.set(D = shape.p1).remove(A))

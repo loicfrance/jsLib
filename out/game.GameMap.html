@@ -80,35 +80,29 @@
                     <dt><a href="game.GameMap.html#gameToPixelCoordinatesTransform">gameToPixelCoordinatesTransform(gameCoords, out)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="game.GameMap.html#isAsynchronousUsed">isAsynchronousUsed()</a></dt>
+                    <dt><a href="game.GameMap.html#pixelToGameCoordinatesTransform">pixelToGameCoordinatesTransform(pixelCoords, out)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="game.GameMap.html#pixelToGameCoordinatesTransform">pixelToGameCoordinatesTransform(pixelCoords, out)</a></dt>
+                    <dt><a href="game.GameMap.html#render">render(gameManager, objects)</a></dt>
                     <dd>
                     </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="game.GameMap.html#render">render(gameManager, objects)</a></dt>
-                    <dd>
-                    </dd>
                     <dt><a href="game.GameMap.html#setCallback">setCallback(cb)</a></dt>
                     <dd>
                     </dd>
                     <dt><a href="game.GameMap.html#setCanvasSize">setCanvasSize(width, height, marginX, marginY)</a></dt>
                     <dd>
                     </dd>
+                    <dt><a href="game.GameMap.html#updateScale">updateScale()</a></dt>
+                    <dd>
+                    </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="game.GameMap.html#updateScale">updateScale()</a></dt>
-                    <dd>
-                    </dd>
-                    <dt><a href="game.GameMap.html#useAsynchronous">useAsynchronous(use)</a></dt>
-                    <dd>
-                    </dd>
                     <dt><a href="game.GameMap.html#useAutoResize">useAutoResize(use[, borderMargin])</a></dt>
                     <dd>
                     </dd>
@@ -126,9 +120,10 @@
           <section>
             <h2>Properties</h2>
             <section>
+              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
               <h3 id="background"><span class="symbol-name">background</span><small class="property-type">
-            &nbsp;any type</small></h3>
-              <p>background of the canvas</p>
+            &nbsp;number</small></h3>
+              <p>number of game units by pixel (=(visible game width)/(canvas width))</p>
               <dl class="dl-compact">
               </dl>
               <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
@@ -137,10 +132,9 @@
               <p>number of game units by pixel (=(visible game height)/(canvas height))</p>
               <dl class="dl-compact">
               </dl>
-              <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
               <h3 id="background"><span class="symbol-name">background</span><small class="property-type">
-            &nbsp;number</small></h3>
-              <p>number of game units by pixel (=(visible game width)/(canvas width))</p>
+            &nbsp;any type</small></h3>
+              <p>background of the canvas</p>
               <dl class="dl-compact">
               </dl>
               <h3 id="context"><span class="symbol-name">context</span><small class="property-type">
@@ -214,15 +208,6 @@
                 <dt>Returns</dt>
                 <dd>
                   <p><code><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></code>&nbsp;out</p>
-                </dd>
-              </dl>
-              <h3 id="isAsynchronousUsed"><span class="symbol-name">isAsynchronousUsed</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
-              </h3>
-              <p>return true if the asynchronous mode is enabled.</p>
-              <dl class="dl-compact">
-                <dt>Returns</dt>
-                <dd>
-                  <p><code>boolean</code>&nbsp;</p>
                 </dd>
               </dl>
               <h3 id="pixelToGameCoordinatesTransform"><span class="symbol-name">pixelToGameCoordinatesTransform</span><span class="signature"><span class="signature-params">(pixelCoords, out)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></span></span>
@@ -449,39 +434,6 @@
 -->as the rectangle's ratio</p>
               <dl class="dl-compact">
               </dl>
-              <h3 id="useAsynchronous"><span class="symbol-name">useAsynchronous</span><span class="signature"><span class="signature-params">(use)</span></span>
-              </h3>
-              <p>use this function if you want to activate the asynchronous rendering.</p>
-              <section>
-                <h4>Parameter</h4>
-                <table class="jsdoc-details-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Optional</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>use</p>
-                      </td>
-                      <td>
-                        <p>boolean</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-              <dl class="dl-compact">
-              </dl>
               <h3 id="useAutoResize"><span class="symbol-name">useAutoResize</span><span class="signature"><span class="signature-params">(use[, borderMargin])</span></span>
               </h3>
               <p>allows the canvas to resize automatically when the window size changes. The callback function is called after the resize with the first parameter equal to
@@ -541,7 +493,7 @@
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on May 9, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on July 25, 2017.
       </p>
     </div>
   </footer>
