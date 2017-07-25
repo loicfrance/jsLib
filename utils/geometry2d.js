@@ -2218,7 +2218,8 @@ window.utils = window.utils || {};
 		}
 
 		/**
-		 * returns the intersection points between this line and the given shape
+		 * returns the intersection points between this line and the given shape.
+		 * The array is empty if the line and the other
 		 * @param {utils.geometry2d.Shape} shape
 		 * @returns {utils.geometry2d.Vec2[]}
 		 */
