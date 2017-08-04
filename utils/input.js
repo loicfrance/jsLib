@@ -61,7 +61,7 @@ utils.input.Key = {
  */
 utils.input.MouseEvent = {
 	UP: 'onmouseup', DOWN: 'onmousedown', CLICK: 'onclick', DBCLICK: 'ondbclick',
-	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout'
+	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout', CTX_MENU: 'contextmenu'
 };
 /**
  * @memberOf utils.input
@@ -127,9 +127,7 @@ utils.input.InputManager = (function() {
 //____________________________________________________private methods___________________________________________________
 			const onKeyUp   = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.RELEASED);
 			const onKeyDown = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.PRESSED);
-			const getVec = evt => new utils.geometry2d.Vec2(
-				evt.pageX - this.element.offsetLeft,
-				evt.pageY - this.element.offsetTop);
+			const getVec = evt => new utils.geometry2d.Vec2(evt.layerX, evt.layerY);
 			const onMouseEvt = (callback, evtType, evt) => {
 				fixMouseWhich(evt);
 				return callback(evtType, evt.which, getVec(evt));

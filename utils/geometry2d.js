@@ -39,7 +39,7 @@ window.utils = window.utils || {};
 		}
 
 		/**
-		 * sets angle of this vector to the given one (in radians) :
+		 * sets the angle of this vector to the given one (in radians) :
 		 * <code>x= cos(a)\*magnitude, y= sin(a)\*magnitude</code>
 		 * @type {number}
 		 */
@@ -381,7 +381,7 @@ window.utils = window.utils || {};
 		 * @static
 		 * @param {utils.geometry2d.Vec2} A
 		 * @param {utils.geometry2d.Vec2} B
-		 * @return {number} the square distance between A and B
+		 * @return {number} the square euclidian distance between A and B
 		 */
 		static squareDistance(A, B) {
 			let dX = B.x - A.x, dY = B.y - A.y;
@@ -392,10 +392,30 @@ window.utils = window.utils || {};
 		 * @static
 		 * @param {utils.geometry2d.Vec2} A
 		 * @param {utils.geometry2d.Vec2} B
-		 * @return {number} the distance between A and B
+		 * @return {number} the euclidian distance between A and B
 		 */
 		static distance(A, B) {
 			return Math.sqrt(Vec2.squareDistance(A, B));
+		}
+
+		/**
+		 * @static
+		 * @param {utils.geometry2d.Vec2} A
+		 * @param {utils.geometry2d.Vec2} B
+		 * @return {number} the manhattan distance between A and B
+		 */
+		static manhattanDistance(A, B) {
+			return Math.abs(B.x - A.x) + Math.abs(B.y - A.y);
+		}
+
+		/**
+		 * @static
+		 * @param {utils.geometry2d.Vec2} A
+		 * @param {utils.geometry2d.Vec2} B
+		 * @return {number} the diagonal distance between A and B
+		 */
+		static diagonalDistance(A, B) {
+			return Math.max(Math.abs(B.x - A.x), Math.abs(B.y - A.y));
 		}
 
 		/**
@@ -1297,7 +1317,8 @@ window.utils = window.utils || {};
 		}
 
 		/**
-		 * returns the maximum distance to the <code>{@link utils.geometry2d.Shape#center|center}</code> a point of the shape could have.
+		 * returns the maximum distance to the <code>{@link utils.geometry2d.Shape#center|center}</code> <!--
+		 * -->a point of the shape could have.
 		 * @returns {number} max distance to <code>{@link utils.geometry2d.Shape#center|center}</code>
 		 */
 		getRadius() {
@@ -1305,7 +1326,8 @@ window.utils = window.utils || {};
 		}
 
 		/**
-		 * creates a <code>{@link utils.geometry2d.Circle|Circle}</code> with the same center as the shape, and the radius returned by <code>{@link utils.geometry2d.Shape#getRadius|getRadius}</code>.
+		 * creates a <code>{@link utils.geometry2d.Circle|Circle}</code> with the same center as the shape, <!--
+		 * -->and the radius returned by <code>{@link utils.geometry2d.Shape#getRadius|getRadius}</code>.
 		 * @returns {utils.geometry2d.Circle}
 		 */
 		getCircle() {
@@ -1517,7 +1539,8 @@ window.utils = window.utils || {};
 
 		/**
 		 * returns whether or not this circle instance intersect the specified shape.
-		 * this function only does the job for {@link utils.geometry2d.Circle} instances. For the instances of other classes,
+		 * This function only does the job for {@link utils.geometry2d.Circle} instances. <!--
+		 * -->For the instances of other classes,
 		 * this function calls their method : <code>shape.intersect(this)</code>
 		 * @param {utils.geometry2d.Shape} shape
 		 * @returns {boolean}
@@ -1632,14 +1655,14 @@ window.utils = window.utils || {};
 	 * @augments utils.geometry2d.Shape
 	 * @memberOf utils.geometry2d
 	 * @classdesc a shape representing an ellipsoid, optimized for drawing. make sure to always have <!--
-	 *        -->{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} &ge; <!--
-	 *        -->{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} for the methods to work properly.
-	 *        You can reorder radiusX and radiusY by calling the {@utils.geometry2d.Ellipsoid#checkRadius|checkRadius} <!--
-	 *        -->method.
-	 *        <b>&#x26A0;</b> ellipsoids cannot be used for collision detection, and most of their methods take time. <!--
-	 *        -->You can make an ellipsoid-like {@link utils.geometry2d.Polygon|Polygon} by calling the method <!--
-	 *        -->{@link utils.geometry2d.Ellipsoid#toPolygon|toPolygon}, or directly by calling the static method <!--
-	 *        -->[Polygon.createEllipsoid]{@link utils.geometry2d.Polygon#createEllipsoid}.
+	 * -->{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} &ge; <!--
+	 * -->{@link utils.geometry2d.Ellipsoid#radiusX|radiusX} for the methods to work properly.
+	 * You can reorder radiusX and radiusY by calling the {@utils.geometry2d.Ellipsoid#checkRadius|checkRadius} <!--
+	 * -->method.
+	 * <b>&#x26A0;</b> ellipsoids cannot be used for collision detection, and most of their methods take time. <!--
+	 * -->You can make an ellipsoid-like {@link utils.geometry2d.Polygon|Polygon} by calling the method <!--
+	 * -->{@link utils.geometry2d.Ellipsoid#toPolygon|toPolygon}, or directly by calling the static method <!--
+	 * -->[Polygon.createEllipsoid]{@link utils.geometry2d.Polygon#createEllipsoid}.
 	 */
 	class Ellipsoid extends Shape {
 		/**
@@ -2200,7 +2223,7 @@ window.utils = window.utils || {};
 				/*
 				//checking d < 0 and d > length is useless because it would mean A or B is in the circle,
 				//which is already check at the beginning of the function
-				return Vec2.distance((d < 0) ? A : (d > this.length) ? B : u.mul(d).add(A), shape.center) <= shape.radius;
+				return Vec2.distance((d < 0) ? A : (d > this.length)? B : u.mul(d).add(A), shape.center)<=shape.radius;
 				/*/
 				return  (d >= 0 && d <= this.length && Vec2.squareDistance(u.mul(d).add(A), shape.center))
 					<= shape.radius*shape.radius;
@@ -2448,7 +2471,8 @@ window.utils = window.utils || {};
 //######################################################################################################################
 //#                                                       Polygon                                                      #
 //######################################################################################################################
-	let len = 0, i = 0, res = 0, p0 = Vec2.zero, p1 = Vec2.zero; // used to make methods faster and avoid memory leaks creating variables every time
+	let len = 0, i = 0, res = 0, p0 = Vec2.zero, p1 = Vec2.zero;
+	// above variables are used to make methods faster and avoid memory leaks creating variables every time
 	/**
 	 * @class utils.geometry2d.Polygon
 	 * @augments utils.geometry2d.Shape

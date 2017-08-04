@@ -351,7 +351,7 @@ window.game.Object = (function() {
 		 * @returns {boolean}
 		 */
 		canCollide(object = null) {
-			return this.collider!==undefined;
+			return this.collider !== undefined && this.collider.activated;
 		}
 		/**
 		 * called at the beginning of the collision part of a frame, after the game manager has called <!--

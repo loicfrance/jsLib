@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/game2/async_render.js" libraries="{game, utils}" />
     <file url="file://$PROJECT_DIR$/game2/board.js" libraries="{game, utils}" />
     <file url="file://$PROJECT_DIR$/game2/bullets.js" libraries="{game, utils}" />
     <file url="file://$PROJECT_DIR$/game2/particles.js" libraries="{game, utils}" />

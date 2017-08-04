@@ -1,9 +1,64 @@
 /**
  * Created by rfrance on 12/25/2016.
  */
+window.game.UIElement = (function(){
+	"use strict";
+	class UIElement {
+		/**
+		 * @constructor
+		 *
+		 * @param {HTMLElement} elmt
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {boolean} staticPos
+		 */
+		constructor(elmt, position, staticPos = false) {
+			/**
+			 * @type {HTMLElement}
+			 * @name game.UIElement#elmt
+			 */
+			this.elmt = elmt;
+			this.elmt.className = 'game_ui';
+			/**
+			 * @type {utils.geometry2d.Vec2}
+			 * @name game.UIElement#position
+			 */
+			this.position = position.clone();
+			/**
+			 * @type {boolean}
+			 * @name game.UIElement#staticPos
+			 */
+			this.staticPos = !!staticPos;
+		}
+
+		/**
+		 * called by the {@link game.Viewer} instace attached to the {@link game.GameManager} when the window
+		 * gets resized or the visible rect is modified.
+		 * @param viewer
+		 */
+		update(viewer) {
+			let scaleX = 1/viewer.scaleX, scaleY = 1/viewer.scaleY;
+			if(this.position && !isNaN(this.position.x) && !isNaN(this.position.y)) {
+				let pos = this.position.clone();
+				if(!this.staticPos) {
+					pos.addXY(- viewer.visibleRect.left, - viewer.visibleRect.top);
+				}
+				pos.x *= scaleX;
+				pos.y *= scaleY;
+				pos.x += (parseFloat(viewer.context.canvas.style.left) || 0) - (this.elmt.clientWidth  * scaleX)/2;
+				pos.y += (parseFloat(viewer.context.canvas.style.top ) || 0) - (this.elmt.clientHeight * scaleY)/2;
+				this.elmt.style.transform = `scale(${scaleX}, ${scaleY})`;
+				this.elmt.style.transformOrigin = 'left top';
+				this.elmt.style.left = `${Math.round(pos.x)}px`;
+				this.elmt.style.top  = `${Math.round(pos.y)}px`;
+			}
+		}
+	}
+	return UIElement;
+})();
 window.game.Viewer = (function() {
 	let Rect = utils.geometry2d.Rect;
 	/**
+	 * The class used by the game manager for the rendering.
 	 * @class game.Viewer
 	 * @memberOf game
 	 */
@@ -12,8 +67,10 @@ window.game.Viewer = (function() {
 		    //private variables used for resize
 		    let autoResize = false;
 		    let onWindowResize = null;
-		    let resizeMargin = 2;
+		    let resizeMargin = 0;
 		    let callback = null;
+		    let uiDiv = null;
+		    let uiElmts = [];
 		    /**
 		     * @name game.Viewer#context
 		     * @type {CanvasRenderingContext2D|WebGLRenderingContext}
@@ -78,8 +135,13 @@ window.game.Viewer = (function() {
 			    let canvas = this.context.canvas;
 			    canvas.width = width;
 			    canvas.height = height;
-			    canvas.style.marginLeft = marginX.toString() + "px";
-			    canvas.style.marginTop = marginY.toString() + "px";
+			    if(getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
+				    canvas.style.left = marginX.toString() + "px";
+				    canvas.style.top = marginY.toString() + "px";
+			    } else {
+				    canvas.style.marginLeft = marginX.toString() + "px";
+				    canvas.style.marginTop = marginY.toString() + "px";
+			    }
 			    this.updateTransform();
 			    if (callback) callback(game.RenderEvent.CANVAS_RESIZE, this.context);
 		    };
@@ -102,18 +164,65 @@ window.game.Viewer = (function() {
 		     */
 		    this.getCallback = function() {
 		    	return callback;
+		    };
+		    /**
+		     * sets the {@link HTMLDivElement } used to place UI elements. <!--
+		     * -->this div will be maintained the same size as the canvas element
+		     * @method
+		     * @param {HTMLDivElement} divElement
+		     */
+		    this.setUIDiv = function(divElement) {
+			    uiDiv = divElement;
+		    };
+		    /**
+		     * @method
+		     * @returns {!HTMLDivElement} the div used to place ui elements
+		     */
+		    this.getUIDiv = function() {
+		    	return uiDiv;
+		    };
+		    /**
+		     * adds a {@link game.UIElement} to the user interface
+		     * @method
+		     * @param {game.UIElement} elmt - the element to add to the UI
+		     */
+		    this.addUIElement = function(elmt) {
+			    uiDiv.appendChild(elmt.elmt);
+			    uiElmts.push(elmt);
+		    };
+		    /**
+		     * remove the {@link game.UIElement} from the user interface
+		     * @param {game.UIElement} elmt
+		     */
+		    this.removeUIElement = function(elmt) {
+		    	let i = uiElmts.indexOf(elmt);
+		    	if(i >= 0) {
+				    uiElmts.splice(i, 1);
+		    		uiDiv.removeChild(elmt.elmt);
+			    }
+
+		    };
+		    /**
+		     * called after the window has been resized or the visible game rect modified.
+		     * calls the {@link game.UIElement#update update(viewer)} method of every element to transform it.
+		     */
+		    this.updateUI = function() {
+		    	let i = uiElmts.length;
+		    	while(i--) {
+		    		uiElmts[i].update(this);
+			    }
 		    }
 	    }
 		/**
 		 * number of game units by pixel (=(visible game width)/(canvas width))
-		 * @name game.Viewer#background
+		 * @name game.Viewer#scaleX
 		 * @type {number}
 		 * @readonly
 		 */
 	    get scaleX() { return this.visibleRect.width/this.context.canvas.width; }
 	    /**
 	     * number of game units by pixel (=(visible game height)/(canvas height))
-	     * @name game.Viewer#background
+	     * @name game.Viewer#scaleY
 	     * @type {number}
 	     * @readonly
 	     */
@@ -128,6 +237,7 @@ window.game.Viewer = (function() {
 		    this.context.setTransform(
 			    this.context.canvas.width/this.visibleRect.width, 0, 0,
 			    this.context.canvas.height/this.visibleRect.height, this.visibleRect.left, this.visibleRect.top);
+			this.updateUI();
 	    }
 		/**
 		 * gives you the game coordinates of a point given in pixel coordinates relative to the canvas.
@@ -164,6 +274,7 @@ window.game.Viewer = (function() {
 		 * @abstract
 		 */
 		render( gameManager, objects) { }
+
     }
     return Viewer;
 })();
@@ -219,6 +330,14 @@ window.game.StandardViewer = (function() {
 			    callback(game.RenderEvent.RENDER_END, ctx);
 			    ctx.restore();
 		    }
+	    }
+
+		/**
+		 * enables or disables image smoothing for the {@link CanvasRenderingContext2D context}
+		 * @param {boolean} enabled
+		 */
+		setImageSmoothingEnabled(enabled) {
+            this.context.imageSmoothingEnabled = enabled;
 	    }
     }
     return StandardViewer;

@@ -252,6 +252,15 @@ utils.tools = {
 			container[name] = container[vendors[i] + name] ||
 							  container[vendors[i] + name[0].toUpperCase() + name.substr(1)];
 		}
+	},
+	textFileUserDownload(text, fileName) {
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		element.setAttribute('download', fileName);
+		element.style.display = 'none';
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
 	}
 };
 console.stack = ( str ) =>{
@@ -259,4 +268,64 @@ console.stack = ( str ) =>{
 };
 console.deprecated = ( str ) =>{
 	console.stack('deprecated : ' + str);
+};
+CanvasRenderingContext2D.prototype.wrapText = function (text, rect, lineHeight, textGravity, fill = true, stroke = false) {
+	let paragraphs = text.split('\n');
+	let parLen = paragraphs.length;
+	let lines = [], line;
+	let linesX = [], lineX = 0;
+	let words, len;
+	let testLine;
+	let metrics;
+	let width = 0;
+	let rectWidth = rect.width;
+	let n;
+	for (let i = 0; i < parLen; i++) {
+		words = paragraphs[i].split(' ');
+		len = words.length;
+		if (!len) {
+			lines.push(paragraphs[i]);
+			linesX.push(0);
+			continue;
+		}
+		line = words[0];
+		for (n = 1; n < len; n++) {
+			testLine = line + ' ' + words[n];
+			metrics = this.measureText(testLine);
+			width = metrics.width;
+			if (width > rectWidth && n > 0) {
+				lineX = rect.left;
+				if (!(textGravity & Gravity.LEFT)) {
+					if (textGravity & Gravity.RIGHT) lineX += this.measureText(line).width - width;
+					else if (textGravity & Gravity.CENTER) lineX += (this.measureText(line).width - width) / 2;
+				}
+				lines.push(line);
+				line = words[n];
+				linesX.push(lineX);
+			}
+			else {
+				line = testLine;
+			}
+		}
+		lineX = rect.left;
+		if (!(textGravity & Gravity.LEFT)) {
+			metrics = this.measureText(line);
+			width = metrics.width;
+			if (textGravity & Gravity.RIGHT) lineX += rectWidth - width;
+			else if (textGravity & Gravity.CENTER) lineX += (rectWidth - width) / 2;
+		}
+		lines.push(line);
+		linesX.push(lineX);
+	}
+	len = lines.length;
+	var y = rect.top + lineHeight;
+	if (!(textGravity & Gravity.TOP)) {
+		if (textGravity & Gravity.BOTTOM) y = rect.bottom - lineHeight * (len - 1);
+		else if (textGravity & Gravity.CENTER) y += (rect.height - lineHeight * len) / 2;
+	}
+	for (n = 0; n < len; n++) {
+		if (fill)   this.fillText(lines[n], linesX[n], y);
+		if (stroke) this.strokeText(lines[n], linesX[n], y);
+		y += lineHeight;
+	}
 };

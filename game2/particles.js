@@ -68,7 +68,7 @@ window.game.ShapedParticle = (function() {
 		/**
 		 * @constructor
 		 * @param {number} lifeTime
-		 * @param {utils.geometry2d.Shape} shape
+		 * @param {typeof utils.geometry2d.Shape} shape
 		 * @param {string|number} color
 		 */
 		constructor(lifeTime, shape, color) {

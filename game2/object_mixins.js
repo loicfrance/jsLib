@@ -63,7 +63,7 @@ game.objectProperties = {
 		 * @param {number} damages
 		 */
 		receiveDamages : function( gameManager, damages ) {
-			if(damages > this.health) {
+			if(damages >= this.health) {
 				this.setHealth(0);
 				this.kill(gameManager);
 			}

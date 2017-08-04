@@ -163,7 +163,7 @@ window.game.GameManager = (function(){
 //-------------------------------------------------- public attributes -------------------------------------------------
 			/**
 			 * @name game.GameManager#viewer
-			 * @type {?game.Viewer}
+			 * @type {typeof game.Viewer}
 			 */
 			this.viewer = null;
 			/**
@@ -171,6 +171,13 @@ window.game.GameManager = (function(){
 			 * @type {utils.geometry2d.Rect}
 			 */
 			this.gameRect = new utils.geometry2d.Rect(0,0,1240,720);
+			/**
+			 * time difference between 2 frames. if < 0, the difference will be the real one, <!--
+			 * -->clamped in [0 ; 0.1] sec. default is 1/60 sec
+			 * @name game.GameManager#fixedDt
+			 * @type {number}
+			 */
+			this.fixedDt = 1/60;
 //______________________________________________________________________________________________________________________
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -methods - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //**********************************************************************************************************************
@@ -222,7 +229,7 @@ window.game.GameManager = (function(){
 			 * adds an object to the game. It will actually be added between the current frame and the next one.
 			 * @method
 			 * @name game.GameManager#addObject
-			 * @param {game.Object} obj
+			 * @param {typeof game.Object} obj
 			 * @param {boolean} [check=true] - if true or not set, the method will make sure the object is not <!--
 			 * -->already being added to the game
 			 */
@@ -358,10 +365,16 @@ window.game.GameManager = (function(){
 						objects_length++;
 					}
 					// 4 : get dT
-					dT = (timeStamp - lastStamp)/1000;
-					if(!dT) return;
+					if(this.fixedDt >= 0) {
+						dT = this.fixedDt;
+						if(timeStamp == lastStamp) return;
+					}
+					else {
+						dT = (timeStamp - lastStamp)/1000;
+						if(dT > 0.1) dT = 0.1;
+						if(!dT) return;
+					}
 					lastStamp = timeStamp;
-					if(dT > 0.1) dT = 0.1;
 					// 5 : call callback method
 					if(callback) callback(game.GameEvent.GAME_FRAME, dT);
 					// 6 : call onFrame of all objects

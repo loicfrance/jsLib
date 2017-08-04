@@ -321,13 +321,14 @@ window.game.ImageObjectRenderer = (function() {
 		 * @param {CanvasRenderingContext2D} context2d
 		 */
 		render(context2d) {
+			if(!this.image.complete) return;
 			const w = this.clipRect.width, h = this.clipRect.height, ws = w * this.scaleX, hs = h * this.scaleY;
 			if(this.angle) {
 				context2d.translate(this.position.x, this.position.y);
 				context2d.rotate(this.angle);
 				context2d.drawImage(this.image,
 					this.clipRect.left, this.clipRect.top, w, h,
-					-ws*0.5, -hs*0.5, w, h);
+					-ws*0.5, -hs*0.5, ws, hs);
 				context2d.rotate(-this.angle);
 				context2d.translate(-this.position.x, -this.position.y);
 			} else context2d.drawImage(this.image,
@@ -395,6 +396,7 @@ window.game.MultiRenderersObjectRenderer = (function(){
 			super();
 			this.renderers = renderers;
 			this.renderersNumber = renderers.length;
+			this.position = utils.geometry2d.Vec2.zero;
 		}
 		/**
 		 * sets the renderer's shape center to the specified position
@@ -402,11 +404,15 @@ window.game.MultiRenderersObjectRenderer = (function(){
 		 * @returns {game.ShapedObjectRenderer} <code>this</code>
 		 */
 		setPosition(pos) {
+			this.position.set(pos);
 			let i = this.renderersNumber;
 			while(i--) {
 				this.renderers[i].setPosition(pos);
 			}
 			return this;
+		}
+		updateRenderersNumber() {
+			this.renderersNumber = this.renderers.length;
 		}
 		/**
 		 * rotates the shape of the renderer by the specified angle in radians.
@@ -463,7 +469,8 @@ window.game.MultiRenderersObjectRenderer = (function(){
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		getRect() {
-			if(this.renderersNumber == 0) return null;
+			if(this.renderersNumber == 0)
+				return utils.geometry2d.Rect.createFromPoint(this.position);
 			let rects = new Array(this.renderersNumber), i = this.renderersNumber;
 			while(i--) {
 				rects[i] = this.renderers[i].getRect();
@@ -567,6 +574,16 @@ window.game.ObjectCollider = (function() {
 		 */
 		finishCollision() {
 		}
+
+		/**
+		 * handle the collision with all colliding objects
+		 * @param gameManager
+		 * @param objects
+		 */
+		handleCollision(gameManager, objects) {
+			let i = 0, n = objects.length;
+			while(i < n && !this.collides(objects[i++]));
+		}
 		/**
 		 * returns true if the two colliders are colliding.
 		 * @param {game.ObjectCollider} collider
@@ -583,7 +600,114 @@ window.game.ObjectCollider = (function() {
 			this.rect.draw(context2d);
 		}
 	}
+
+	/**
+	 * whether or not the object will collide. As this won't change during the life of most objects, it is defined <!--
+	 * -->in the prototype. But if you change it for some objects, it  is preferable to define it in the <!--
+	 * -->constructor of the object-specific collider.
+	 * @name game.ObjectCollider#activated
+	 * @type {boolean}
+	 */
+	ObjectCollider.prototype.activated = true;
 	return ObjectCollider;
+})();
+//######################################################################################################################
+//#                                                    AABBCollider                                                    #
+//######################################################################################################################
+window.game.AABBObjectCollider = (function() {
+	"use strict";
+	/**
+	 * @class game.AABBObjectCollider
+	 * @augments game.ObjectCollider
+	 * @memberOf game
+	 * @classdesc an implementation of the {@link game.ObjectCollider|ObjectCollider} using a <!--
+	 * -->an axis-aligned bounding box for collision detection.
+	 */
+	class AABBObjectCollider extends game.ObjectCollider {
+		/**
+		 * @constructor
+		 * @param {utils.geometry2d.Shape} shape
+		 */
+		constructor(shape) {
+			super(shape.getRect());
+			/**
+			 * @name game.ShapedObjectCollider#shape}
+			 * @type {utils.geometry2d.shapes}
+			 */
+			this.shape = shape.clone();
+		}
+
+		/**
+		 * sets the position of the collider.
+		 * @param {utils.geometry2d.Vec2} pos
+		 * @returns {game.ShapedObjectCollider} <code>this</code>
+		 */
+		setPosition(pos) {
+			this.shape.setCenter(pos); return super.setPosition(pos);
+		}
+
+		/**
+		 * rotates the {@link game.ShapedObjectCollider#shape}.
+		 * @param {number} radians
+		 */
+		rotate(radians) {
+			this.shape.rotate(radians);
+		}
+
+		/**
+		 * scales the {@link game.ShapedObjectCollider#shape}.
+		 * @param {number} factor
+		 */
+		scale(factor) {
+			this.shape.scale(factor);
+		}
+
+		/**
+		 * returns the {@link game.ShapedObjectCollider#shape}.
+		 * @returns {utils.geometry2d.Shape}
+		 */
+		getShape() {
+			return this.shape;
+		}
+
+		/**
+		 * sets the {@link game.ShapedObjectCollider#shape} to a copy of the argument.
+		 * @param {utils.geometry2d.Shape} shape
+		 */
+		setShape(shape) {
+			this.shape = shape.clone();
+		}
+
+		/**
+		 * returns true if the two colliders are colliding.
+		 * @param {game.ObjectCollider} collider
+		 * @returns {boolean}
+		 */
+		collides(collider) {
+			if(collider instanceof AABBObjectCollider)
+				return collider.rect.overlap(this.rect) &&
+					(this.collidesInside(collider) || !collider.rect.containsRect(this.rect)) &&
+					(collider.collidesInside(this) || !this.rect.containsRect(collider.rect));
+			else return collider.collides(this);
+		}
+
+		/**
+		 * returns the {@link game.ObjectCollider#rect|rect} attribute of the collider.
+		 * @returns {utils.geometry2d.Rect}
+		 */
+		getRect() {
+			return this.rect;
+		}
+
+		/**
+		 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
+		 * @returns {number}
+		 */
+		getRadius() {
+			return Math.sqrt(this.rect.width*this.rect.width + this.rect.height*this.rect.height)*0.5;
+		}
+	}
+	return AABBObjectCollider;
 })();
 //######################################################################################################################
 //#                                                ShapedObjectCollider                                                #
@@ -657,10 +781,19 @@ window.game.ShapedObjectCollider = (function() {
 		 * @returns {boolean}
 		 */
 		collides(collider) {
-			return collider.shape && collider.rect.overlap(this.rect) &&
-				(this.collidesInside(collider) && collider.shape.contains(this.shape.center)) ||
-				(collider.collidesInside(this) && this.shape.contains(collider.shape.center)) ||
-				this.shape.intersect(collider.shape);
+			if(collider instanceof game.AABBObjectCollider) {
+				if(collider.rect.overlap(this.rect)) {
+					let shape = collider.rect.getShape();
+					return (this.collidesInside(collider) && shape.contains(this.shape.center)) ||
+						(collides.collidesInside(this) && this.shape.contains(shape.center)) ||
+						this.shape.intersect(shape);
+				}
+			} else if(collider instanceof ShapedObjectCollider) {
+				return collider.shape && collider.rect.overlap(this.rect) &&
+					(this.collidesInside(collider) && collider.shape.contains(this.shape.center)) ||
+					(collider.collidesInside(this) && this.shape.contains(collider.shape.center)) ||
+					this.shape.intersect(collider.shape);
+			} else return collider.collides(this);
 		}
 
 		/**
