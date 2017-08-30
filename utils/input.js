@@ -13,7 +13,8 @@ window.utils = window.utils || {};
  */
 /**
  * @callback utils.input.mouseCallback
- * @param {utils.input.MouseEvent} event
+ * @param {MouseEvent} event
+ * @param {utils.input.MouseEvent} eventType
  * @param {utils.input.MouseButton} button
  * @param {utils.geometry2d.Vec2} position
  * @returns {void|boolean} prevent default behavior.
@@ -45,13 +46,16 @@ utils.input.KeyState = { RELEASED: 0, PRESSED:1 };
  * @readonly
  */
 utils.input.Key = {
-	BACKSPACE: 8, TAB: 9, ENTER: 13, SHIFT: 16, CTRL: 17,  ALT: 18,  CAPS_LOCK: 20,  ESCAPE: 27, SPACE: 32,
-	PAGE_UP: 33, PAGE_DOWN: 34, END: 35, BEGINNING: 36, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, PRINT_SCR: 44,
-	INSERT: 45, DELETE: 46, ZERO: 48, ONE: 49, TWO: 50, THREE: 51, FOUR: 52, FIVE: 53, SIX: 54, SEVEN: 55, EIGHT: 56,
-	NINE: 57, A: 65, B: 66, C: 67, D: 68, E: 69, F: 70, G: 71, H: 72, I: 73, J: 74, K: 75, L: 76, M: 77, N: 78, O: 79,
-	P: 80, Q: 81, R: 82, S: 83, T: 84, U: 85, V: 86, W: 87, X: 88, Y: 89, Z: 90, NUM_0: 96, NUM_1: 97, NUM_2: 98,
-	NUM_3: 99, NUM_4: 100, NUM_5: 101, NUM_6: 102, NUM_7: 103, NUM_8: 104, NUM_9: 105, F1: 112, F2: 113, F3: 114,
-	F4: 115, F5: 116, F6: 117, F7: 118, F8: 119, F9: 120, F10: 121, F11: 122, F12: 123, NUM_LOCK: 144, FN: 255,
+	BACKSPACE: 8, TAB: 9, ENTER: 13, SHIFT: 16, CTRL: 17,  ALT: 18,  CAPS_LOCK: 20,  ESCAPE: 27, SPACE: 32,	PAGE_UP: 33,
+	PAGE_DOWN: 34, END: 35, HOME: 36, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, PRINT_SCR: 44,	INSERT: 45, DELETE: 46,
+	ZERO: 48, ONE: 49, TWO: 50, THREE: 51, FOUR: 52, FIVE: 53, SIX: 54, SEVEN: 55, EIGHT: 56, NINE: 57, A: 65, B: 66,
+	C: 67, D: 68, E: 69, F: 70, G: 71, H: 72, I: 73, J: 74, K: 75, L: 76, M: 77, N: 78, O: 79, P: 80, Q: 81, R: 82,
+	S: 83, T: 84, U: 85, V: 86, W: 87, X: 88, Y: 89, Z: 90, LEFT_WIN: 91, RIGH_WIN: 92, SELECT: 93,	NUM_0: 96,
+	NUM_1: 97, NUM_2: 98, NUM_3: 99, NUM_4: 100, NUM_5: 101, NUM_6: 102, NUM_7: 103, NUM_8: 104, NUM_9: 105,
+	MULTIPLY: 106, ADD: 107, SUBTRACT: 109, DECIMAL_POINT: 110, DIVIDE: 111, F1: 112, F2: 113, F3: 114, F4: 115,
+	F5: 116, F6: 117, F7: 118, F8: 119, F9: 120, F10: 121, F11: 122, F12: 123, NUM_LOCK: 144, SCROLL_LOCK: 145,
+	SEMI_COLON: 186, EQUAL: 187, COMMA: 188, DASH: 189, PERIOD: 190, FORWARD_SLASH: 191, GRAVE_ACCENT: 192,
+	OPEN_BRACKET: 219, BACK_SLASH: 220, CLOSE_BRACKET: 221, SINGLE_QUOTE: 222, FN: 255,
 	number: 256
 };
 /**
@@ -127,10 +131,15 @@ utils.input.InputManager = (function() {
 //____________________________________________________private methods___________________________________________________
 			const onKeyUp   = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.RELEASED);
 			const onKeyDown = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.PRESSED);
-			const getVec = evt => new utils.geometry2d.Vec2(evt.layerX, evt.layerY);
+			const getVec = evt => {
+				let elmtRect = this.element.getBoundingClientRect();
+				return new utils.geometry2d.Vec2(
+					evt.pageX - elmtRect.left,
+					evt.pageY - elmtRect.top);
+			}
 			const onMouseEvt = (callback, evtType, evt) => {
 				fixMouseWhich(evt);
-				return callback(evtType, evt.which, getVec(evt));
+				return callback(evt, evtType, evt.which, getVec(evt));
 			}
 //____________________________________________________public methods____________________________________________________
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *

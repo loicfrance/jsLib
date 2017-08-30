@@ -59,7 +59,11 @@ window.utils = window.utils || {};
 		 * @type {number}
 		 */
 		get squareMagnitude() {
+			/*
+			return asm.squareMagnitude(this.x, this.y);
+			/*/
 			return this.x * this.x + this.y * this.y;
+			//*/
 		}
 
 		/**
@@ -69,7 +73,11 @@ window.utils = window.utils || {};
 		 * @type {number}
 		 */
 		get magnitude() {
+			/*
+			return asm.magnitude(this.x, this.y);
+			/*/
 			return Math.sqrt(this.x * this.x + this.y * this.y);
+			//*
 		}
 
 		/**
@@ -354,7 +362,11 @@ window.utils = window.utils || {};
 		 * @return {number} the result of the dot product of u and v.
 		 */
 		static dotProd(u, v) {
+			/*
+			return asm.dotProduct(u.x, u.y, v.x, v.y);
+			/*/
 			return u.x * v.x + u.y * v.y;
+			//*/
 		}
 
 		/**
@@ -364,7 +376,11 @@ window.utils = window.utils || {};
 		 * @return {number} the result of the vectorial product of u and v.
 		 */
 		static vectProd(u, v) {
+			/*
+			return asm.vectorProduct(u.x, u.y, v.x, v.y);
+			/*/
 			return u.x * v.y - u.y * v.x;
+			//*/
 		}
 
 		/**
@@ -384,8 +400,12 @@ window.utils = window.utils || {};
 		 * @return {number} the square euclidian distance between A and B
 		 */
 		static squareDistance(A, B) {
+			/*
+			return asm.squareEuclideanDistance(A.x, A.y, B.x, B.y);
+			/*/
 			let dX = B.x - A.x, dY = B.y - A.y;
 			return dX * dX + dY * dY;
+			//*/
 		}
 
 		/**
@@ -395,7 +415,11 @@ window.utils = window.utils || {};
 		 * @return {number} the euclidian distance between A and B
 		 */
 		static distance(A, B) {
+			/*
+			return asm.euclideanDistance(A.x, A.y, B.x, B.y);
+			/*/
 			return Math.sqrt(Vec2.squareDistance(A, B));
+			//*/
 		}
 
 		/**
@@ -405,7 +429,11 @@ window.utils = window.utils || {};
 		 * @return {number} the manhattan distance between A and B
 		 */
 		static manhattanDistance(A, B) {
+			/*
+			return asm.manhattanDistance(A.x, A.y, B.x, B.y);
+			/*/
 			return Math.abs(B.x - A.x) + Math.abs(B.y - A.y);
+			//*/
 		}
 
 		/**
@@ -415,7 +443,11 @@ window.utils = window.utils || {};
 		 * @return {number} the diagonal distance between A and B
 		 */
 		static diagonalDistance(A, B) {
+			/*
+			return asm.diagonalDistance(A.x, A.y, B.x, B.y);
+			/*/
 			return Math.max(Math.abs(B.x - A.x), Math.abs(B.y - A.y));
+			//*/
 		}
 
 		/**
@@ -427,7 +459,11 @@ window.utils = window.utils || {};
 		 *         false otherwise
 		 */
 		static ccw(A, B, C) {
+			/*
+			return asm.ccw(A.x, A.y, B.x, B.y, C.x, C.y);
+			/*/
 			return (C.y - A.y) * (B.x - A.x) > (B.y - A.y) * (C.x - A.x);
+			//*/
 		}
 
 		/**
@@ -438,7 +474,11 @@ window.utils = window.utils || {};
 		 *         false otherwise
 		 */
 		static ccw2(AB, AC) {
+			/*
+			return asm.ccw2(AB.x, AB.y, AC.x, AC.y);
+			/*/
 			return AC.y * AB.x > AB.y * AC.x;
+			//*/
 		}
 
 		/**
@@ -1161,14 +1201,16 @@ window.utils = window.utils || {};
 		/**
 		 * @constructor
 		 * @param {utils.geometry2d.Vec2} center the new center of the shape.
-		 * the member of the new instance is not the same, the attributes of the parameter are copied to the member.
+		 * The member of the new instance is not the same, the attributes of the parameter are copied to the member.
+		 * If undefined, the member won't be set, but the superclass has to provide a getter and a setter<!--
+		 * --> to modify the shape's center
 		 */
 		constructor(center) {
 			/**
 			 * @name utils.geometry2d.Shape#center
 			 * @type {utils.geometry2d.Vec2}
 			 */
-			this.center = center.clone();
+			if(center) this.center = center.clone();
 		}
 
 		/**
@@ -1547,10 +1589,15 @@ window.utils = window.utils || {};
 		 */
 		intersect(shape) {
 			if (shape instanceof Circle) {
+				/*
+				return !!(asm.circlesIntersect(this.center.x, this.center.y, this.radius,
+									shape.center.x, shape.center.y, shape.radius));
+				/*/
 				let d = Vec2.distance(this.center, shape.center);
 				return d < this.radius + shape.radius &&
 					this.radius < d + shape.radius && // the other circle is not inside this circle
 					shape.radius < d + this.radius; // this circle is not inside the other circle
+				//*/
 			}
 			else return shape.intersect(this);
 		}
@@ -1972,13 +2019,19 @@ window.utils = window.utils || {};
 		 * @param {utils.geometry2d.Vec2} p1
 		 */
 		constructor(p0, p1) {
-			super(p0.clone().add(p1).mul(0.5));
-			AB.set(p1).remove(p0);
+			super(undefined);
 			/**
-			 * the angle, in radians, of the line.
-			 * @name utils.geometry2d.Line#angle
-			 * @type {number}
+			 * start point of the line.
+			 * @type {utils.geometry2d.Vec2}
 			 */
+			this.p0 = p0.clone();
+			/**
+			 * end point of the line.
+			 * @type {utils.geometry2d.Vec2}
+			 */
+			this.p1 = p1.clone();
+
+			AB.set(p1).remove(p0);
 			this.angle = AB.angle;
 			/**
 			 * the length of the line.
@@ -1987,43 +2040,48 @@ window.utils = window.utils || {};
 			 */
 			this.length = AB.magnitude;
 		}
-
+		get center() {
+			return A.set(this.p0).add(this.p1).mul(0.5);
+		}
+		set center(center) {
+			const d = Vec2.translation(this.center, center);
+			this.p0.add(d);
+			this.p1.add(d);
+		}
 		/**
-		 * start point of the line.
-		 * @type {utils.geometry2d.Vec2}
+		 * the length of the line
+		 * @name utils.geometry2d.Line#length
+		 * @type {number}
 		 */
-		get p0() {
-			return Vec2.createFromAngle(this.angle).mul(-0.5 * this.length).add(this.center);
+		get length() {
+			return Vec2.distance(this.p0, this.p1);
 		}
 
 		/**
-		 * @param {utils.geometry2d.Vec2} p
+		 * @param {number} l
 		 */
-		set p0(p) {
-			AB.set(this.p1).remove(p);
-			this.angle = AB.angle;
-			this.length = AB.magnitude;
-			this.center.set(AB.mul(0.5).add(p));
-			return p;
+		set length(l) {
+			const d = this.vector.setMagnitude((l-this.length)/2);
+			this.p1.add(d);
+			this.p0.remove(d);
+		}
+		/**
+		 * the angle, in radians, of the line.
+		 * @name utils.geometry2d.Line#angle
+		 * @type {number}
+		 */
+		get angle() {
+			return Math.atan2(this.p1.y-this.p0.y, this.p1.x, this.p0.x);
 		}
 
 		/**
-		 * end point of the line.
-		 * @type {utils.geometry2d.Vec2}
+		 * @param {number} radians
 		 */
-		get p1() {
-			return Vec2.createFromAngle(this.angle).mul(0.5 * this.length).add(this.center);
-		}
-
-		/**
-		 * @param {utils.geometry2d.Vec2} p
-		 */
-		set p1(p) {
-			AB.set(p).remove(this.p0);
-			this.angle = AB.angle;
-			this.length = AB.magnitude;
-			this.center.set(AB.mul(-0.5).add(p));
-			return p;
+		set angle(radians) {
+			const u = this.vector.mul(0.5).setAngle(radians);
+			const c = this.center;
+			this.p0.set(c).remove(u);
+			this.p1.set(c).add(u);
 		}
 
 		/**
@@ -2032,7 +2090,7 @@ window.utils = window.utils || {};
 		 * @readonly
 		 */
 		get vector() {
-			return Vec2.createFromAngle(this.angle, this.length);
+			return Vec2.translation(this.p0, this.p1);
 		}
 
 		/**
@@ -2041,7 +2099,7 @@ window.utils = window.utils || {};
 		 * @readonly
 		 */
 		get directorVect() {
-			return Vec2.createFromAngle(this.angle);
+			return Vec2.translation(this.p0, this.p1).normalize();
 		}
 
 		/**
@@ -2050,7 +2108,7 @@ window.utils = window.utils || {};
 		 * @readonly
 		 */
 		get perimeter() {
-			return this.length * 2;
+			return 2*Vec2.distance(this.p0, this.p1);
 		}
 
 		/**
@@ -2079,7 +2137,7 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
 		setP0(p) {
-			this.p0 = p;
+			this.p0.set(p);
 			return this;
 		}
 
@@ -2089,7 +2147,7 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
 		setP1(p) {
-			this.p1 = p;
+			this.p1.set(p);
 			return this;
 		}
 
@@ -2100,10 +2158,58 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
 		setPoints(p0, p1) {
-			AB.set(p1).remove(p0);
-			this.angle = t.angle;
-			this.length = t.magnitude;
-			this.center.set(t.mul(0.5).add(p0));
+			this.p0.set(p0);
+			this.p1.set(p1);
+			return this;
+		}
+		/**
+		 * sets the center's attributes to the same as the parameter's
+		 * @param {utils.geometry2d.Vec2}center
+		 * @returns {utils.geometry2d.Line} <code>this</code>
+		 * @see {@link utils.geometry2d.Line#setCenterXY}
+		 */
+		setCenter(center) {
+			this.center = center;
+			return this;
+		}
+
+		/**
+		 * sets the center's attributes to the parameters
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {utils.geometry2d.Line} <code>this</code>
+		 * @see {@link utils.geometry2d.Line#setCenter}
+		 */
+		setCenterXY(x, y) {
+			const c = this.center;
+			const dX = x - c.x, dY = y - c.y;
+			this.p0.addXY(dX, dY);
+			this.p1.addXY(dX, dY);
+			return this;
+		}
+		/**
+		 * moves the shape according to the parameters
+		 * @param {number} dX
+		 * @param {number} dY
+		 * @returns {utils.geometry2d.Shape} <code>this</code>
+		 * @see {@link utils.geometry2d.Shape#move}
+		 */
+		moveXY(dX, dY) {
+			this.p0.addXY(dX, dY);
+			this.p1.addXY(dX, dY);
+			return this;
+		}
+
+		/**
+		 * moves the shape according to the parameter
+		 * @param {utils.geometry2d.Vec2} delta
+		 * @returns {utils.geometry2d.Shape}
+		 * @returns {utils.geometry2d.Shape} <code>this</code>
+		 * @see {@link utils.geometry2d.Shape#moveXY}
+		 */
+		move(delta) {
+			this.p0.add(delta);
+			this.p1.add(delta);
 			return this;
 		}
 
@@ -2113,7 +2219,9 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
 		scale(factor) {
-			this.length *= factor;
+			const u = this.p1.clone().remove(this.p0).mul(0.5*factor);
+			this.p1.add(u);
+			this.p0.remove(u);
 			return this;
 		}
 
@@ -2123,7 +2231,8 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
 		growDistance(delta) {
-			this.length += 2 * delta;
+			const l = this.length;
+			return this.scale((l+delta)/l);
 		}
 
 		/**
@@ -2143,9 +2252,9 @@ window.utils = window.utils || {};
 		 *          ordinate of the horizontal axis
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
-		mirrorVertically(axisY = this.center.y) {
-			super.mirrorVertically(axisY);
-			this.angle = -this.angle;
+		mirrorVertically(axisY = (this.p0.y+this.p1.y)/2) {
+			this.p0.mirrorVertically(axisY);
+			this.p1.mirrorVertically(axisY);
 			return this;
 		}
 
@@ -2156,9 +2265,9 @@ window.utils = window.utils || {};
 		 *          abscissa of the vertical axis
 		 * @returns {utils.geometry2d.Line} <code>this</code>
 		 */
-		mirrorHorizontally(axisX = this.center.x) {
-			super.mirrorHorizontally(axisX);
-			this.angle = Math.PI - this.angle;
+		mirrorHorizontally(axisX = (this.p0.x+this.p1.x)/2) {
+			this.p0.mirrorHorizontally(axisX);
+			this.p1.mirrorHorizontally(axisX);
 			return this;
 		}
 
@@ -2168,9 +2277,8 @@ window.utils = window.utils || {};
 		 * @param {CanvasRenderingContext2D} context
 		 */
 		pushPath(context) {
-			AB.setXY(Math.cos(this.angle), Math.sin(this.angle)).mul(this.length*0.5);
-			context.moveTo(this.center.x - AB.x, this.center.y - AB.y);
-			context.lineTo(this.center.x + AB.x, this.center.y + AB.y);
+			context.moveTo(this.p0.x, this.p0.y);
+			context.lineTo(this.p1.x, this.p1.y);
 		}
 		/**
 		 * draws the shape on the canvas
@@ -2181,9 +2289,8 @@ window.utils = window.utils || {};
 		 */
 		draw(context, fill = false, stroke = !fill) {
 			context.beginPath();
-			AB.setXY(Math.cos(this.angle), Math.sin(this.angle)).mul(this.length*0.5);
-			context.moveTo(this.center.x - AB.x, this.center.y - AB.y);
-			context.lineTo(this.center.x + AB.x, this.center.y + AB.y);
+			context.moveTo(this.p0.x, this.p0.y);
+			context.lineTo(this.p1.x, this.p1.y);
 			fill && context.fill();
 			stroke && context.stroke();
 		}
@@ -2196,10 +2303,10 @@ window.utils = window.utils || {};
 		 * @returns {number} number of points added
 		 */
 		glSetVertices(vertices, offset=0) {
-			vertices[offset] = (A = this.p0).x;
-			vertices[offset+1] = A.y;
-			vertices[offset+2] = (B=this.p1).x;
-			vertices[offset+3] = B.y;
+			vertices[offset] = this.p0.x;
+			vertices[offset+1] = this.p0.y;
+			vertices[offset+2] = this.p1.x;
+			vertices[offset+3] = this.p1.y;
 			return 2;
 		}
 
@@ -2213,29 +2320,35 @@ window.utils = window.utils || {};
 		 */
 		intersect(shape) {
 			if (shape instanceof Circle) {
-				A = this.p0;
-				B = this.p1;
-				if (shape.contains(A)) return !shape.contains(B);
-				if (shape.contains(B)) return !shape.contains(A);
-				AC.set(shape.center).remove(A);
-				u.set(B).remove(A).normalize();
-				d = Vec2.dotProd(u, AC);
 				/*
+				return asm.circleLineIntersect(shape.center.x, shape.center.y, shape.radius, this.p0.x, this.p0.y,
+												this.p1.x, this.p1.y);
+				/*/
+				if (shape.contains(this.p0) != shape.contains(this.p1)) return true;
+				const l = this.length;
+				AC.set(shape.center).remove(this.p0);
+				u.set(this.p1).remove(this.p0).mul(1/length);
+				d = Vec2.dotProd(u, AC);
+
 				//checking d < 0 and d > length is useless because it would mean A or B is in the circle,
 				//which is already check at the beginning of the function
-				return Vec2.distance((d < 0) ? A : (d > this.length)? B : u.mul(d).add(A), shape.center)<=shape.radius;
-				/*/
-				return  (d >= 0 && d <= this.length && Vec2.squareDistance(u.mul(d).add(A), shape.center))
-					<= shape.radius*shape.radius;
+				//return Vec2.distance((d < 0) ? A : (d > this.length)? B : u.mul(d).add(A), shape.center)<=shape.radius;
+
+				return  (d >= 0 && d <= l && Vec2.squareDistance(u.mul(d).add(this.p0), shape.center)
+					<= shape.radius*shape.radius);
 				//*/
 			} else if (shape instanceof Line) {
+				/*
+				return asm.linesIntersect(this.p0.x, this.p0.y, this.p1.x, this.p1.y, C.x, C.y, D.x, D.y);
+				/*/
 					//ccw(AC, AD) != ccw(BC, BD)
-				if (Vec2.ccw2(AC.set(C = shape.p0).remove(A = this.p0), AD.set(D = shape.p1).remove(A))
-					!== Vec2.ccw2(C.remove(B = this.p1), D.remove(B))) {
-					AB.set(B).remove(A);
+				if (Vec2.ccw2(AC.set(shape.p0).remove(this.p0), AD.set(shape.p1).remove(this.p0))
+					!== Vec2.ccw(this.p1, shape.p0, shape.p1)) {
+					AB.set(this.p1).remove(this.p0);
 					return Vec2.ccw2(AB, AC) !== Vec2.ccw2(AB, AD);
 				}
 				else return false;
+				//*/
 			}
 			else return shape.intersect(this);
 		}
@@ -2248,9 +2361,9 @@ window.utils = window.utils || {};
 		 */
 		getIntersectionPoints(shape) {
 			if(shape instanceof Circle) {
-				A = this.p0;
+				A = this.p0.clone();
 				C = shape.center;
-				u.set(this.p1.remove(A).normalize());
+				u.set(this.p1).remove(A).normalize();
 				let a = u.x*u.x + u.y*u.y, b = 2*(u.x*(A.x-C.x)+u.y*(A.y-C.y)),
 					c = A.x*(A.x-2*C.x) + C.x*C.x + A.y*(A.y-2*C.y) + C.y*C.y - radius*radius;
 				d = b*b - 4*a*c;
@@ -2284,8 +2397,9 @@ window.utils = window.utils || {};
 		 * @returns {boolean}
 		 */
 		contains(point) {
-			let v = Vec2.translation(this.center, point), u = this.directorVect;
-			return v.equals(u.mul(Vec2.distance(this.center, point))) || v.equals(u.mul(-1));
+			return point.equals(this.p0) || point.equals(this.p1) ||
+				(Vec2.distance(this.p0, point) + Vec2.distance(this.p1, point)) == Vec2.distance(this.p0, this.p1);
+
 		}
 
 		/**
@@ -2298,7 +2412,7 @@ window.utils = window.utils || {};
 			u = this.directorVect;
 			AC.set(p).remove(A);
 			d = Vec2.dotProd(u, AC);
-			return (d < 0) ? A : (d > this.length) ? u.mul(this.length).add(A) : u.mul(d).add(A);
+			return (d < 0) ? u.set(A) : (d > this.length) ? u.mul(this.length).add(A) : u.set(this.p1);
 		}
 
 		/**
@@ -2349,7 +2463,7 @@ window.utils = window.utils || {};
 		 * @returns {number}
 		 */
 		geRadius() {
-			return this.length * 0.5;
+			return Vec2.distance(this.p0, this.p1) * 0.5;
 		}
 
 		/**
@@ -2381,7 +2495,7 @@ window.utils = window.utils || {};
 				pos1 = (CD.x * CA.y - CD.y * CA.x) / d,
 				pos2 = (AB.x * CA.y - AB.y * CA.x) / d;
 			return {
-				point: A.add(AB.mul(pos1)),
+				point: AB.mul(pos1).add(A),
 				onLine1: pos1 > 0 && pos1 < 1,
 				onLine2: pos2 > 0 && pos2 < 1
 			};
@@ -3237,6 +3351,42 @@ window.utils = window.utils || {};
 	 * @name utils.geometry2d.Ray#glPointsNumber
 	 */
 	Ray.prototype.glPointsNumber = 2;
+
+	let asm = {};
+	let wasmCode = new Uint8Array([
+		0,97,115,109,1,0,0,0,1,189,128,128,128,0,7,96,1,125,1,125,96,6,125,125,125,125,125,125,1,127,96,4,125,125,125,
+		125,1,127,96,2,125,125,1,125,96,4,125,125,125,125,1,125,96,7,125,125,125,125,125,125,125,1,127,96,8,125,125,125,
+		125,125,125,125,125,1,125,3,142,128,128,128,0,13,1,2,3,3,4,4,4,4,4,4,1,5,6,4,132,128,128,128,0,1,112,0,0,5,131,
+		128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,225,129,128,128,0,14,6,109,101,109,111,114,121,2,0,3,99,99,119,0,0,
+		4,99,99,119,50,0,1,15,115,113,117,97,114,101,77,97,103,110,105,116,117,100,101,0,2,9,109,97,103,110,105,116,117,
+		100,101,0,3,10,100,111,116,80,114,111,100,117,99,116,0,4,13,118,101,99,116,111,114,80,114,111,100,117,99,116,0,
+		5,23,115,113,117,97,114,101,69,117,99,108,105,100,101,97,110,68,105,115,116,97,110,99,101,0,6,17,101,117,99,108,
+		105,100,101,97,110,68,105,115,116,97,110,99,101,0,7,17,109,97,110,104,97,116,116,97,110,68,105,115,116,97,110,
+		99,101,0,8,16,100,105,97,103,111,110,97,108,68,105,115,116,97,110,99,101,0,9,16,99,105,114,99,108,101,115,73,
+		110,116,101,114,115,101,99,116,0,10,19,99,105,114,99,108,101,76,105,110,101,73,110,116,101,114,115,101,99,116,0,
+		11,14,108,105,110,101,115,73,110,116,101,114,115,101,99,116,0,12,10,236,132,128,128,0,13,153,128,128,128,0,0,32,
+		2,32,0,147,32,5,32,1,147,148,32,3,32,1,147,32,4,32,0,147,148,94,11,141,128,128,128,0,0,32,0,32,3,148,32,1,32,2,
+		148,94,11,141,128,128,128,0,0,32,0,32,0,148,32,1,32,1,148,146,11,142,128,128,128,0,0,32,0,32,0,148,32,1,32,1,
+		148,146,145,11,141,128,128,128,0,0,32,0,32,2,148,32,1,32,3,148,146,11,141,128,128,128,0,0,32,0,32,3,148,32,1,32,
+		2,148,147,11,151,128,128,128,0,0,32,2,32,0,147,34,2,32,2,148,32,3,32,1,147,34,2,32,2,148,146,11,152,128,128,128,
+		0,0,32,2,32,0,147,34,2,32,2,148,32,3,32,1,147,34,2,32,2,148,146,145,11,158,128,128,128,0,1,1,127,32,2,32,0,147,
+		32,3,32,1,147,146,168,34,4,32,4,65,31,117,34,4,106,32,4,115,178,11,182,128,128,128,0,1,1,127,32,2,32,0,147,168,
+		34,4,32,4,65,31,117,34,4,106,32,4,115,178,34,2,32,3,32,1,147,168,34,4,32,4,65,31,117,34,4,106,32,4,115,178,34,0,
+		32,2,32,0,94,27,11,178,128,128,128,0,0,32,3,32,0,147,34,3,32,3,148,32,4,32,1,147,34,3,32,3,148,146,145,34,3,32,
+		2,146,32,5,94,32,3,32,2,32,5,146,93,32,3,32,5,146,32,2,94,113,113,11,173,129,128,128,0,2,3,125,1,127,65,1,33,10,
+		2,64,32,0,32,3,147,34,7,32,7,148,32,1,32,4,147,34,8,32,8,148,146,145,32,2,93,32,0,32,5,147,34,9,32,9,148,32,1,
+		32,6,147,34,9,32,9,148,146,145,32,2,93,115,13,0,65,0,33,10,32,7,32,5,32,3,147,34,5,32,5,32,5,148,32,6,32,4,147,
+		34,5,32,5,148,146,145,34,6,149,34,9,148,32,8,32,5,32,6,149,34,7,148,146,34,5,67,0,0,0,0,93,13,0,32,5,32,6,94,13,
+		0,32,0,32,9,32,5,148,32,3,146,147,34,0,32,0,148,32,1,32,7,32,5,148,32,4,146,147,34,0,32,0,148,146,32,2,32,2,148,
+		95,33,10,11,32,10,11,237,128,128,128,0,1,4,125,67,0,0,0,0,33,11,2,64,32,4,32,0,147,34,4,32,7,32,1,147,34,10,148,
+		32,5,32,1,147,34,8,32,6,32,0,147,34,9,148,94,32,5,32,2,147,32,7,32,3,147,148,32,5,32,3,147,32,6,32,2,147,148,94,
+		70,13,0,32,2,32,0,147,34,5,32,8,148,32,3,32,1,147,34,1,32,4,148,94,32,5,32,10,148,32,1,32,9,148,94,115,179,33,
+		11,11,32,11,11
+	]);
+	WebAssembly.instantiate(wasmCode, {/* impor&ts */}).then(wasm=>{
+		asm = wasm.instance.exports;
+	});
+
 
 	/**
 	 * @memberOf utils

@@ -1,8 +1,8 @@
 /**
- * Created by rfrance on 12/25/2016.
+ * Created by Loic France on 12/25/2016.
  */
+"use strict";
 window.game.UIElement = (function(){
-	"use strict";
 	class UIElement {
 		/**
 		 * @constructor
@@ -105,11 +105,11 @@ window.game.Viewer = (function() {
 							    parentW = parent.offsetWidth,
 							    parentH = parent.offsetHeight,
 							    ratio = this.visibleRect.ratio,
-							    w = parentW - (borderMargin+4),
-							    h = Math.min(parentH - (borderMargin+4), w / ratio);
+							    w = parentW - (borderMargin * 2),
+							    h = Math.min(parentH - (borderMargin * 2), w / ratio);
 						    w = h * ratio;
-						    let left = (parentW - w-4) * 0.5,
-							    top = (parentH - h-4) * 0.5;
+						    let left = (parentW - w) * 0.5,
+							    top = (parentH - h) * 0.5;
 						    this.setCanvasSize(w, h, left, top);
 					    }.bind(this);
 				    }
@@ -133,8 +133,8 @@ window.game.Viewer = (function() {
 		     */
 		    this.setCanvasSize = function (width, height, marginX, marginY) {
 			    let canvas = this.context.canvas;
-			    canvas.width = width;
-			    canvas.height = height;
+			    canvas.width = canvas.style.width = width;
+			    canvas.height = canvas.style.height = height;
 			    if(getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
 				    canvas.style.left = marginX.toString() + "px";
 				    canvas.style.top = marginY.toString() + "px";

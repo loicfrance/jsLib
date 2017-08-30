@@ -12,6 +12,7 @@ window.game = {
 	 * @callback game.gameEventCallback
 	 * @param {game.GameEvent} event
 	 * @param {number} dT - time since last frame (0 if not necessary).
+	 * @param {game.Object} object - object related to the event (null if not necessary)
 	 */
 	/**
 	 * @callback game.renderEventCallback
@@ -32,9 +33,15 @@ window.game = {
 		GAME_START 		 : 2,
 		/** the game just stopped/paused */
 		GAME_STOP  		 : 3,
-		/** an object as been created (never called automatically) */
+		/**
+		 * an object as been created (never called automatically).
+		 * @see game.GameManager#fireObjectCreatedEvent
+		 */
 		OBJECT_CREATED   : 4,
-		/** an object as been destroyed (never called automatically) */
+		/**
+		 * an object as been destroyed (never called automatically)
+		 * @see game.GameManager#fireObjectDestroyedEvent
+		 */
 		OBJECT_DESTROYED : 5
 	},
 	/**
@@ -300,7 +307,7 @@ window.game.GameManager = (function(){
 			this.start = function() {
 				running = true;
 				lastStamp = 0;
-				if(callback) callback(game.GameEvent.GAME_START, 0);
+				if(callback) callback(game.GameEvent.GAME_START, 0, null);
 				requestAnimationFrame(onFrame.bind(this));
 			};
 			/**
@@ -311,7 +318,7 @@ window.game.GameManager = (function(){
 			 */
 			this.stop = function() {
 				running = false;
-				if(callback) callback(game.GameEvent.GAME_STOP, 0);
+				if(callback) callback(game.GameEvent.GAME_STOP, 0, null);
 			};
 			/**
 			 * tells if the game is currently running.
@@ -339,6 +346,22 @@ window.game.GameManager = (function(){
 			 */
 			this.getEventsCallback = function() {
 				return callback;
+			};
+			/**
+			 * calls the callback (if present) for the event {@link game.GameEvent.OBJECT_CREATED} with <!--
+			 * -->the specified object as the third parameter. (Second parameter = 0)
+			 * @param {game.Object} object -  the newly created object.
+			 */
+			this.fireObjectCreatedEvent = function(object) {
+				if(callback) callback(game.GameEvent.OBJECT_CREATED, 0, object);
+			};
+			/**
+			 * calls the callback (if present) for the event {@link game.GameEvent.OBJECT_DESTROYED} with <!--
+			 * -->the specified object as the third parameter. (Second parameter = 0)
+			 * @param {game.Object} object -  the destroyed object.
+			 */
+			this.fireObjectDestroyedEvent = function(object) {
+				if(callback) callback(game.GameEvent.OBJECT_DESTROYED, 0, object);
 			};
 // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -onFrame  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 			let onFrame = function(timeStamp) {
@@ -376,7 +399,7 @@ window.game.GameManager = (function(){
 					}
 					lastStamp = timeStamp;
 					// 5 : call callback method
-					if(callback) callback(game.GameEvent.GAME_FRAME, dT);
+					if(callback) callback(game.GameEvent.GAME_FRAME, dT, null);
 					// 6 : call onFrame of all objects
 					i = objects_length;
 					while(i--) objects[i].onFrame(this, dT);

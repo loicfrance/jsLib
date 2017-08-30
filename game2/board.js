@@ -103,7 +103,8 @@ window.game.Board = (function(){
 		 * @returns {utils.geometry2d.Vec2}
 		 */
 		getCellCenter(column, line) {
-			let dX = (this.columns*0.5 - 0.5 - column)*this.cellWidth, dY = (this.lines*0.5 - 0.5 - line)*this.cellHeight;
+			let dX = (this.columns*0.5 - 0.5 - column)*this.cellWidth,
+				dY = (this.lines*0.5 - 0.5 - line)*this.cellHeight;
 			return this.position.clone().addXY(-dX, -dY);
 		}
 		/**
@@ -383,21 +384,22 @@ window.game.Board = (function(){
 				}
 				q = openList.splice(minI, 1)[0];
 				q_fg = openListFG.splice(minI, 1)[0];
+				successors = [];
+				i = 0;
+				if(q.y > 0 && this.occupationMap[q.y-1][q.x] == 0) { i += 1; successors.push(new Vec2(q.x, q.y-1)); }
+				if(q.x > 0 && this.occupationMap[q.y][q.x-1] == 0) { i += 2; successors.push(new Vec2(q.x-1, q.y)); }
+				if(q.y < this.lines-1 && this.occupationMap[q.y+1][q.x] == 0)
+					{ i += 4; successors.push(new Vec2(q.x, q.y+1)); }
+				if(q.x < this.columns-1 && this.occupationMap[q.y][q.x+1] == 0)
+					{ i += 8; successors.push(new Vec2(q.x+1, q.y)); }
 				if(allowDiagonals) {
-					successors = [
-						new Vec2(q.x-1, q.y-1), new Vec2(q.x, q.y-1), new Vec2(q.x+1, q.y-1),
-						new Vec2(q.x-1, q.y  ),  /* current node */   new Vec2(q.x+1, q.y  ),
-						new Vec2(q.x-1, q.y+1), new Vec2(q.x, q.y+1), new Vec2(q.x+1, q.y+1)
-					];
-					i = 8;
-				} else {
-					successors = [
-						new Vec2(q.x, q.y-1),
-						new Vec2(q.x-1, q.y),new Vec2(q.x+1, q.y  ),
-						new Vec2(q.x, q.y+1)
-					];
-					i = 4;
+					if(i%4 == 3 && this.occupationMap[q.y-1][q.x-1] == 0) successors.push(new Vec2(q.x-1, q.y-1));
+					if(i%2 == 1 && i > 8 && this.occupationMap[q.y-1][q.x+1] == 0)
+						successors.push(new Vec2(q.x+1, q.y-1));
+					if((i>>1)%4 == 3 && this.occupationMap[q.y+1][q.x-1] == 0) successors.push(new Vec2(q.x-1, q.y+1));
+					if((i>>2) == 3 && this.occupationMap[q.y+1][q.x+1] == 0) successors.push(new Vec2(q.x+1, q.y+1));
 				}
+				i = successors.length;
 				while(i--) {
 					if( successors[i].x < 0 || successors[i].x >= this.columns ||
 						successors[i].y < 0 || successors[i].y >= this.rows)

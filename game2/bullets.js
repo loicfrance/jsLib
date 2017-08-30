@@ -101,15 +101,20 @@ window.game.Bullet = (function() {
 		onCollision( gameManager, object ) {
 			if(this.damages && object.receiveDamages) {
 				object.receiveDamages(gameManager, this.damages);
-				this.damages = 0;
+				if(this.killOnCollision) {
+					this.damages = 0;
+					this.kill(gameManager);
+				}
+			} else if(this.killOnCollision && this.damages) {
+				this.kill(gameManager);
 			}
-			this.kill(gameManager);
 		}
 	}
 	Bullet.defaultShape = utils.geometry2d.Polygon.Absolute(utils.geometry2d.Vec2.createVec2Array([
 		-10,2,   5,2,   7,1,   8,0,   7,1,   5,-2,   -10,-2
 	]));
 	Bullet.prototype.renderLayer = game.RenderLayer.OBJ3;
+	Bullet.prototype.killOnCollision = true;
     return Bullet;
 })();
 //######################################################################################################################

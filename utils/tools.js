@@ -98,7 +98,7 @@ utils.tools = {
 	/**
 	 * generates a random hex color
 	 * @memberOf utils.tools
-	 * @param {number} [octets=3] - number of bits this color will be on (32 or 24)
+	 * @param {number} [octets=3] - number of bytes this color will be on (4 3 or 1.5) (not checked)
 	 * @returns {string}
 	 */
 	randomColor: (octets=3) => '#'+Math.random().toString(16).substr(2,2*octets),
@@ -261,6 +261,58 @@ utils.tools = {
 		document.body.appendChild(element);
 		element.click();
 		document.body.removeChild(element);
+	},
+	/**
+	 * convert text with BBcode to html text with equivalent balises
+	 * @param {string} bbcode
+	 * @returns {*}
+	 * @constructor
+	 */
+	BBCodeToHTML(bbcode) {
+		let str = bbcode;
+		str = str.replace(/\[b](.+?)\[\/b]/g, "<b>$1</b>");
+
+		str = str.replace(/\[br\/]/g, "");
+		str = str.replace(/\[br]/g, "");
+
+		str = str.replace(/\[i](.+?)\[\/i]/g, "<i>$1</i>");
+
+		str = str.replace(/\[u](.+?)\[\/u]/g, "<u>$1</u>");
+
+		str = str.replace(/\[s](.+?)\[\/s]/g, "<s>$1</s>");
+
+		str = str.replace(/\[code](.+?)\[\/code]/g, "<code>$1</code>");
+		str = str.replace(/\[pre](.+?)\[\/pre]/g, "<code>$1</code>");
+
+		str = str.replace(/\[style (.+?)](.+?)\[\/style]/g, '<font $1>$2</font>');
+
+		//str.replace(/#\[u](.+?)\[\/u]#si/g,'<span style="text-decoration:underline;">$1</span>',$chaine );
+		str = str.replace(/\[size=(.+?)](.+?)\[\/size]/g, '<span style="font-size:$1px;">$2</span>');
+		str = str.replace(/\[color=(.+?)](.+?)\[\/color]/g, '<span style="color:$1;">$2</span>');
+
+
+		str = str.replace(/\[url=([^]+)](.+?)\[\/url]/g,'<a href="$1">$2</a>');
+		str = str.replace(/\[url](.+?)\[\/url]/g, '<a href="$1" target="_blank">$1</a>');
+		str = str.replace(/\[img](.+?)\[\/img]/g, '<img src="$1" border="0">');
+
+
+		return str;
+	},
+	/**
+	 *
+	 * @param {string} wasmUrl - url to WebAssembly file.
+	 * @param {object} importObject - objects to import in wasm
+	 * @param {function({module, instance})} callback - called once the wasm module is loaded
+	 */
+	loadWASM(wasmUrl, imports) {
+		return fetch(wasmUrl).then(response =>
+			response.arrayBuffer()
+		).then(bytes =>
+			WebAssembly.instantiate(bytes, imports)
+		);
+	},
+	instanciateWASM(wasmUrl, imports) {
+		return utils.tools.loadWASM(wasmUrl, imports).then(results => results.instance);
 	}
 };
 console.stack = ( str ) =>{
@@ -269,6 +321,20 @@ console.stack = ( str ) =>{
 console.deprecated = ( str ) =>{
 	console.stack('deprecated : ' + str);
 };
+/**
+ *
+ * @param {number} min
+ * @param {number} max
+ * @return {number} random number between min and max
+ */
+Math.rangedRandom = ( min, max ) => Math.random()*(max-min)+min;
+/**
+ * generate a pseudo-gaussian random number in ]-1;1[
+ * @return {number}
+ */
+Math.gaussianRandom = () => (Math.random()+Math.random()+Math.random()
+							+Math.random()+Math.random()+Math.random()-3)/3;
+
 CanvasRenderingContext2D.prototype.wrapText = function (text, rect, lineHeight, textGravity, fill = true, stroke = false) {
 	let paragraphs = text.split('\n');
 	let parLen = paragraphs.length;
@@ -329,3 +395,19 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, rect, lineHeight, 
 		y += lineHeight;
 	}
 };
+let asm = {};
+var wasmImports = {
+	env: {
+		rand: Math.random
+	}
+};
+let wasmCode = new Uint8Array([
+	0,97,115,109,1,0,0,0,1,139,128,128,128,0,2,96,0,1,125,96,2,125,125,1,125,2,140,128,128,128,0,1,3,101,110,118,4,114,
+	97,110,100,0,0,3,130,128,128,128,0,1,1,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,
+	0,7,151,128,128,128,0,2,6,109,101,109,111,114,121,2,0,10,114,97,110,103,101,100,82,97,110,100,0,1,10,147,128,128,
+	128,0,1,141,128,128,128,0,0,32,1,32,0,147,16,0,148,32,0,146,11
+]);
+WebAssembly.instantiate(wasmCode, wasmImports).then(wasm=>{
+	asm = wasm.instance.exports;
+	//Math.rangedRandom = asm.rangedRand;
+});
