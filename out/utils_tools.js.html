@@ -129,7 +129,7 @@ utils.tools &#x3D; {
 	/**
 	 * generates a random hex color
 	 * @memberOf utils.tools
-	 * @param {number} [octets&#x3D;3] - number of bits this color will be on (32 or 24)
+	 * @param {number} [octets&#x3D;3] - number of bytes this color will be on (4 3 or 1.5) (not checked)
 	 * @returns {string}
 	 */
 	randomColor: (octets&#x3D;3) &#x3D;&gt; &#x27;#&#x27;+Math.random().toString(16).substr(2,2*octets),
@@ -283,6 +283,67 @@ utils.tools &#x3D; {
 			container[name] &#x3D; container[vendors[i] + name] ||
 							  container[vendors[i] + name[0].toUpperCase() + name.substr(1)];
 		}
+	},
+	textFileUserDownload(text, fileName) {
+		var element &#x3D; document.createElement(&#x27;a&#x27;);
+		element.setAttribute(&#x27;href&#x27;, &#x27;data:text/plain;charset&#x3D;utf-8,&#x27; + encodeURIComponent(text));
+		element.setAttribute(&#x27;download&#x27;, fileName);
+		element.style.display &#x3D; &#x27;none&#x27;;
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
+	},
+	/**
+	 * convert text with BBcode to html text with equivalent balises
+	 * @param {string} bbcode
+	 * @returns {*}
+	 * @constructor
+	 */
+	BBCodeToHTML(bbcode) {
+		let str &#x3D; bbcode;
+		str &#x3D; str.replace(/\[b](.+?)\[\/b]/g, &quot;&amp;lt;b&gt;$1&amp;lt;/b&gt;&quot;);
+
+		str &#x3D; str.replace(/\[br\/]/g, &quot;&quot;);
+		str &#x3D; str.replace(/\[br]/g, &quot;&quot;);
+
+		str &#x3D; str.replace(/\[i](.+?)\[\/i]/g, &quot;&amp;lt;i&gt;$1&amp;lt;/i&gt;&quot;);
+
+		str &#x3D; str.replace(/\[u](.+?)\[\/u]/g, &quot;&amp;lt;u&gt;$1&amp;lt;/u&gt;&quot;);
+
+		str &#x3D; str.replace(/\[s](.+?)\[\/s]/g, &quot;&amp;lt;s&gt;$1&amp;lt;/s&gt;&quot;);
+
+		str &#x3D; str.replace(/\[code](.+?)\[\/code]/g, &quot;&amp;lt;code&gt;$1&amp;lt;/code&gt;&quot;);
+		str &#x3D; str.replace(/\[pre](.+?)\[\/pre]/g, &quot;&amp;lt;code&gt;$1&amp;lt;/code&gt;&quot;);
+
+		str &#x3D; str.replace(/\[style (.+?)](.+?)\[\/style]/g, &#x27;&amp;lt;font $1&gt;$2&amp;lt;/font&gt;&#x27;);
+
+		//str.replace(/#\[u](.+?)\[\/u]#si/g,&#x27;&amp;lt;span style&#x3D;&quot;text-decoration:underline;&quot;&gt;$1&amp;lt;/span&gt;&#x27;,$chaine );
+		str &#x3D; str.replace(/\[size&#x3D;(.+?)](.+?)\[\/size]/g, &#x27;&amp;lt;span style&#x3D;&quot;font-size:$1px;&quot;&gt;$2&amp;lt;/span&gt;&#x27;);
+		str &#x3D; str.replace(/\[color&#x3D;(.+?)](.+?)\[\/color]/g, &#x27;&amp;lt;span style&#x3D;&quot;color:$1;&quot;&gt;$2&amp;lt;/span&gt;&#x27;);
+
+
+		str &#x3D; str.replace(/\[url&#x3D;([^]+)](.+?)\[\/url]/g,&#x27;&amp;lt;a href&#x3D;&quot;$1&quot;&gt;$2&amp;lt;/a&gt;&#x27;);
+		str &#x3D; str.replace(/\[url](.+?)\[\/url]/g, &#x27;&amp;lt;a href&#x3D;&quot;$1&quot; target&#x3D;&quot;_blank&quot;&gt;$1&amp;lt;/a&gt;&#x27;);
+		str &#x3D; str.replace(/\[img](.+?)\[\/img]/g, &#x27;&amp;lt;img src&#x3D;&quot;$1&quot; border&#x3D;&quot;0&quot;&gt;&#x27;);
+
+
+		return str;
+	},
+	/**
+	 *
+	 * @param {string} wasmUrl - url to WebAssembly file.
+	 * @param {object} importObject - objects to import in wasm
+	 * @param {function({module, instance})} callback - called once the wasm module is loaded
+	 */
+	loadWASM(wasmUrl, imports) {
+		return fetch(wasmUrl).then(response &#x3D;&gt;
+			response.arrayBuffer()
+		).then(bytes &#x3D;&gt;
+			WebAssembly.instantiate(bytes, imports)
+		);
+	},
+	instanciateWASM(wasmUrl, imports) {
+		return utils.tools.loadWASM(wasmUrl, imports).then(results &#x3D;&gt; results.instance);
 	}
 };
 console.stack &#x3D; ( str ) &#x3D;&gt;{
@@ -290,7 +351,98 @@ console.stack &#x3D; ( str ) &#x3D;&gt;{
 };
 console.deprecated &#x3D; ( str ) &#x3D;&gt;{
 	console.stack(&#x27;deprecated : &#x27; + str);
-};</code></pre>
+};
+/**
+ *
+ * @param {number} min
+ * @param {number} max
+ * @return {number} random number between min and max
+ */
+Math.rangedRandom &#x3D; ( min, max ) &#x3D;&gt; Math.random()*(max-min)+min;
+/**
+ * generate a pseudo-gaussian random number in ]-1;1[
+ * @return {number}
+ */
+Math.gaussianRandom &#x3D; () &#x3D;&gt; (Math.random()+Math.random()+Math.random()
+							+Math.random()+Math.random()+Math.random()-3)/3;
+
+CanvasRenderingContext2D.prototype.wrapText &#x3D; function (text, rect, lineHeight, textGravity, fill &#x3D; true, stroke &#x3D; false) {
+	let paragraphs &#x3D; text.split(&#x27;\n&#x27;);
+	let parLen &#x3D; paragraphs.length;
+	let lines &#x3D; [], line;
+	let linesX &#x3D; [], lineX &#x3D; 0;
+	let words, len;
+	let testLine;
+	let metrics;
+	let width &#x3D; 0;
+	let rectWidth &#x3D; rect.width;
+	let n;
+	for (let i &#x3D; 0; i &amp;lt; parLen; i++) {
+		words &#x3D; paragraphs[i].split(&#x27; &#x27;);
+		len &#x3D; words.length;
+		if (!len) {
+			lines.push(paragraphs[i]);
+			linesX.push(0);
+			continue;
+		}
+		line &#x3D; words[0];
+		for (n &#x3D; 1; n &amp;lt; len; n++) {
+			testLine &#x3D; line + &#x27; &#x27; + words[n];
+			metrics &#x3D; this.measureText(testLine);
+			width &#x3D; metrics.width;
+			if (width &gt; rectWidth &amp;amp;&amp;amp; n &gt; 0) {
+				lineX &#x3D; rect.left;
+				if (!(textGravity &amp;amp; Gravity.LEFT)) {
+					if (textGravity &amp;amp; Gravity.RIGHT) lineX +&#x3D; this.measureText(line).width - width;
+					else if (textGravity &amp;amp; Gravity.CENTER) lineX +&#x3D; (this.measureText(line).width - width) / 2;
+				}
+				lines.push(line);
+				line &#x3D; words[n];
+				linesX.push(lineX);
+			}
+			else {
+				line &#x3D; testLine;
+			}
+		}
+		lineX &#x3D; rect.left;
+		if (!(textGravity &amp;amp; Gravity.LEFT)) {
+			metrics &#x3D; this.measureText(line);
+			width &#x3D; metrics.width;
+			if (textGravity &amp;amp; Gravity.RIGHT) lineX +&#x3D; rectWidth - width;
+			else if (textGravity &amp;amp; Gravity.CENTER) lineX +&#x3D; (rectWidth - width) / 2;
+		}
+		lines.push(line);
+		linesX.push(lineX);
+	}
+	len &#x3D; lines.length;
+	var y &#x3D; rect.top + lineHeight;
+	if (!(textGravity &amp;amp; Gravity.TOP)) {
+		if (textGravity &amp;amp; Gravity.BOTTOM) y &#x3D; rect.bottom - lineHeight * (len - 1);
+		else if (textGravity &amp;amp; Gravity.CENTER) y +&#x3D; (rect.height - lineHeight * len) / 2;
+	}
+	for (n &#x3D; 0; n &amp;lt; len; n++) {
+		if (fill)   this.fillText(lines[n], linesX[n], y);
+		if (stroke) this.strokeText(lines[n], linesX[n], y);
+		y +&#x3D; lineHeight;
+	}
+};
+let asm &#x3D; {};
+var wasmImports &#x3D; {
+	env: {
+		rand: Math.random
+	}
+};
+let wasmCode &#x3D; new Uint8Array([
+	0,97,115,109,1,0,0,0,1,139,128,128,128,0,2,96,0,1,125,96,2,125,125,1,125,2,140,128,128,128,0,1,3,101,110,118,4,114,
+	97,110,100,0,0,3,130,128,128,128,0,1,1,4,132,128,128,128,0,1,112,0,0,5,131,128,128,128,0,1,0,1,6,129,128,128,128,0,
+	0,7,151,128,128,128,0,2,6,109,101,109,111,114,121,2,0,10,114,97,110,103,101,100,82,97,110,100,0,1,10,147,128,128,
+	128,0,1,141,128,128,128,0,0,32,1,32,0,147,16,0,148,32,0,146,11
+]);
+WebAssembly.instantiate(wasmCode, wasmImports).then(wasm&#x3D;&gt;{
+	asm &#x3D; wasm.instance.exports;
+	//Math.rangedRandom &#x3D; asm.rangedRand;
+});
+</code></pre>
           </article>
         </div>
       </div>
@@ -300,7 +452,7 @@ console.deprecated &#x3D; ( str ) &#x3D;&gt;{
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on July 25, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
       </p>
     </div>
   </footer>

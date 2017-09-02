@@ -34,6 +34,22 @@
           </header>
           <section id="summary">
             <div class="summary-callout">
+              <h2 class="summary-callout-heading">Child class</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="utils.tools.BBCodeToHTML.html">BBCodeToHTML(bbcode)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+            <div class="summary-callout">
               <h2 class="summary-callout-heading">Methods</h2>
               <div class="summary-content">
                 <div class="summary-column">
@@ -50,14 +66,17 @@
                     <dt><a href="utils.tools.html#.HSVtoRGB">HSVtoRGB(h, s, v)</a></dt>
                     <dd>
                     </dd>
+                    <dt><a href="utils.tools.html#.instanceFilter">instanceFilter(_class, x)</a></dt>
+                    <dd>
+                    </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="utils.tools.html#.instanceFilter">instanceFilter(_class, x)</a></dt>
+                    <dt><a href="utils.tools.html#.intersectionFilter">intersectionFilter(array, x)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="utils.tools.html#.intersectionFilter">intersectionFilter(array, x)</a></dt>
+                    <dt><a href="utils.tools.html#.loadWASM">loadWASM(wasmUrl, importObject, callback)</a></dt>
                     <dd>
                     </dd>
                     <dt><a href="utils.tools.html#.merge">merge(out, src[, override])</a></dt>
@@ -66,13 +85,13 @@
                     <dt><a href="utils.tools.html#.mix">mix(superclass, mixins)</a></dt>
                     <dd>
                     </dd>
+                    <dt><a href="utils.tools.html#.polyfill">polyfill(container, name, vendors)</a></dt>
+                    <dd>
+                    </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="utils.tools.html#.polyfill">polyfill(container, name, vendors)</a></dt>
-                    <dd>
-                    </dd>
                     <dt><a href="utils.tools.html#.randomColor">randomColor([octets])</a></dt>
                     <dd>
                     </dd>
@@ -109,6 +128,10 @@
             </div>
           </section>
           <section>
+            <h2>Class</h2>
+            <section id='members-links'>
+              <h3><a href="utils.tools.BBCodeToHTML.html">BBCodeToHTML</a></h3>
+            </section>
             <h2>Methods</h2>
             <section>
               <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
@@ -429,6 +452,68 @@
               <dl class="dl-compact">
               </dl>
               <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".loadWASM"><span class="symbol-name">loadWASM</span><span class="signature"><span class="signature-params">(wasmUrl, importObject, callback)</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>wasmUrl</p>
+                      </td>
+                      <td>
+                        <p>string</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>url to WebAssembly file.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>importObject</p>
+                      </td>
+                      <td>
+                        <p>object</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>objects to import in wasm</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>callback</p>
+                      </td>
+                      <td>
+                        <p>function({module, instance})</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>called once the wasm module is loaded</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
               <h3 id=".merge"><span class="symbol-name">merge</span><span class="signature"><span class="signature-params">(out, src[, override])</span></span>
               </h3>
               <p>puts all properties of src in out. if override is false or not set, if a property,
@@ -670,7 +755,7 @@ window.reaquestAnimationFrame(frameFunction);</code></pre>
                         <p>Yes</p>
                       </td>
                       <td>
-                        <p>number of bits this color will be on (32 or 24)</p>
+                        <p>number of bytes this color will be on (4 3 or 1.5) (not checked)</p>
                         <p>Defaults to <code>3</code>.</p>
                       </td>
                     </tr>
@@ -951,7 +1036,7 @@ window.reaquestAnimationFrame(frameFunction);</code></pre>
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on July 25, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
       </p>
     </div>
   </footer>

@@ -34,6 +34,8 @@
  */
 window.game.Board &#x3D; (function(){
 	&quot;use strict&quot;;
+	const Vec2 &#x3D; utils.geometry2d.Vec2,
+		  Rect &#x3D; utils.geometry2d.Rect;
 	/**
 	 * @memberOf game
 	 * @class game.Board
@@ -93,7 +95,7 @@ window.game.Board &#x3D; (function(){
 		 * @readonly
 		 */
 		get boardRect() {
-			return utils.geometry2d.Rect.createFromCenterWidthHeight(this.position, this.boardWidth, this.boardHeight);
+			return Rect.createFromCenterWidthHeight(this.position, this.boardWidth, this.boardHeight);
 		}
 		/**
 		 * @name game.Board#boardWidth
@@ -123,7 +125,7 @@ window.game.Board &#x3D; (function(){
 		getCellRect(column, line) {
 			let left &#x3D; this.position.x + (column - this.columns*0.5)*this.cellWidth,
 				top  &#x3D; this.position.y + (line - this.lines*0.5)*this.cellHeight;
-			return new utils.geometry2d.Rect(left, top, left+this.cellWidth, top+this.cellHeight);
+			return new Rect(left, top, left+this.cellWidth, top+this.cellHeight);
 		}
 		/**
 		 * returns the center of the selected cell
@@ -132,7 +134,8 @@ window.game.Board &#x3D; (function(){
 		 * @returns {utils.geometry2d.Vec2}
 		 */
 		getCellCenter(column, line) {
-			let dX &#x3D; (this.columns*0.5 - 0.5 - column)*this.cellWidth, dY &#x3D; (this.lines*0.5 - 0.5 - line)*this.cellHeight;
+			let dX &#x3D; (this.columns*0.5 - 0.5 - column)*this.cellWidth,
+				dY &#x3D; (this.lines*0.5 - 0.5 - line)*this.cellHeight;
 			return this.position.clone().addXY(-dX, -dY);
 		}
 		/**
@@ -153,8 +156,13 @@ window.game.Board &#x3D; (function(){
 			return Math.floor(this.lines*0.5 + (gameY - this.position.y)/this.cellHeight);
 		}
 
+		/**
+		 * convert a game position to a board indices position
+		 * @param {utils.geometry2d.Vec2} gamePos - the position you want to convert
+		 * @returns {utils.geometry2d.Vec2} - the converted position : x &#x3D; column index, y &#x3D; row index
+		 */
 		getCellIndices( gamePos ) {
-			return new utils.geometry2d.Vec2(this.getColumn(gamePos.x), this.getLine(gamePos.y));
+			return new Vec2(this.getColumn(gamePos.x), this.getLine(gamePos.y));
 		}
 
 //______________________________________________________________________________________________________________________
@@ -183,6 +191,11 @@ window.game.Board &#x3D; (function(){
 			}
 			context.stroke();
 		}
+
+		/**
+		 * multiply the dimension of the cells, and keep the center of the board at the same position
+		 * @param {number} factor
+		 */
 		scale(factor) {
 			super.scale(factor);
 			this.cellWidth *&#x3D; factor;
@@ -191,21 +204,49 @@ window.game.Board &#x3D; (function(){
 //______________________________________________________________________________________________________________________
 // - - - - - - - - - - - - - - - - - - - - - - - - -occupation methods- - - - - - - - - - - - - - - - - - - - - - - - -
 //**********************************************************************************************************************
+		/**
+		 * test if the selected cell is occupied, according to the occupation map
+		 * @param {number} column - column index of the cell to test
+		 * @param {number} line - row index of the cell to test
+		 * @returns {boolean} true if the cell is occupied
+		 */
 		isOccupated(column, line) {
 			return column &amp;lt; this.columns &amp;amp;&amp;amp; line &amp;lt; this.lines &amp;amp;&amp;amp; this.occupationMap[line][column] &#x3D;&#x3D; 1;
 		}
+
+		/**
+		 * sets the occupation of the selected cell
+		 * @param {number} column
+		 * @param {number} line
+		 * @param {boolean} occupated
+		 * @returns {boolean} true if the given coordinates are valid
+		 */
 		setOccupated(column, line, occupated) {
-			return (column &amp;lt; this.columns &amp;amp;&amp;amp; line &amp;amp;&amp;amp; this.lines) ?
-				!!(this.occupationMap[line][column] &#x3D; occupated ? 1 : 0) &amp;amp;&amp;amp; true : false;
+			if(column &amp;lt; 0 &amp;amp;&amp;amp; column &gt;&#x3D; this.columns &amp;amp;&amp;amp; line &amp;lt; 0 &amp;amp;&amp;amp; line &gt;&#x3D; this.lines)
+				return false
+			this.occupationMap[line][column] &#x3D; occupated ? 1 : 0;
+			return true;
+
 		}
+
+		/**
+		 * sets the occupation of a portion of the board. If the given map has an odd number of rows/columns, &amp;lt;!--
+		 * --&gt;the given line/column index will be the line/column index of the center cell of the modified portion &amp;lt;!--
+		 * --&gt;of the map. If the given map has an even number of rows/columns, the given line/column index will be &amp;lt;!--
+		 * --&gt;the index of of the cell just before (above/on the left of) the center cell of the modified portion
+		 * @param {number} column - column index of the center of the submap
+		 * @param {number} line - row index of the center of the submap
+		 * @param {Array&amp;lt;Array&amp;lt;boolean&gt;&gt;} occupationSubMap - the map to place on the global occupation map
+		 */
 		addOccupation(column, line, occupationSubMap) {
 			let subH &#x3D; occupationSubMap.length, subW;
-			let top &#x3D; line - Math.floor(subH/2), left;
+			let top &#x3D; line - Math.floor((subH-1)/2), left;
 			let i, j;
 			for(i &#x3D; 0; i &amp;lt; subH; i++) {
 				subW &#x3D; occupationSubMap[i].length;
-				left &#x3D; column - Math.floor(subW/2);
+				left &#x3D; column - Math.floor((subW-1)/2);
 				for(j &#x3D; 0; j &amp;lt; subW; j++) {
+					if(top+i &amp;lt; 0 || top+1 &gt;&#x3D; this.rows || left+j &amp;lt; 0 || left+j &gt;&#x3D; this.columns) continue;
 					this.occupationMap[top+i][left+j] &#x3D; occupationSubMap[i][j] ? 1 : 0;
 				}
 			}
@@ -266,13 +307,14 @@ window.game.Board &#x3D; (function(){
 			}
 		}
 		/**
-		 * returns an optimized path from the start point (given in index coordinates) and the end point &amp;lt;!--
-		 * --&gt;(given in index coordinates). The result is an array of {@link utils.geometry2d.Vec2|Vec2} &amp;lt;!--
-		 * --&gt;in index coordinates describing the path from the start point to the end point, including &amp;lt;!--
-		 * --&gt;the end point but excluding the start point.
-		 * @param {utils.geometry2d.Vec2} start - x &#x3D; column index, y &#x3D; line index
-		 * @param {utils.geometry2d.Vec2} end   - x &#x3D; column index, y &#x3D; line index
-		 * @returns {utils.geometry2d.Vec2[]} [(i,j), (i,j), (i,j)]
+		 * returns an optimized path from the start point (given in index coordinates) to the end point &amp;lt;!--
+		 * --&gt;(given in index coordinates) using the Lee algorithm. The result is an array of &amp;lt;!--
+		 * --&gt;{@link utils.geometry2d.Vec2|Vec2} in index coordinates describing the path from the start point &amp;lt;!--
+		 * --&gt;to the end point, including the end point but excluding the start point.
+		 * @param {utils.geometry2d.Vec2} start - x &#x3D; column index, y &#x3D; row index
+		 * @param {utils.geometry2d.Vec2} end   - x &#x3D; column index, y &#x3D; row index
+		 * @returns {utils.geometry2d.Vec2[]} the path of {@link utils.geometry2d.Vec2 Vec2} &amp;lt;!--
+		 * --&gt;in index coordinates[(i,j), (i,j), (i,j)]
 		 */
 		leePath(start, end) {
 
@@ -346,6 +388,91 @@ window.game.Board &#x3D; (function(){
 			}
 			else return [];
 		}
+		/**
+		 * returns an optimized path from the start point (given in index coordinates) to the end point &amp;lt;!--
+		 * --&gt;(given in index coordinates) using the A* algorithm. The result is an array of &amp;lt;!--
+		 * --&gt;{@link utils.geometry2d.Vec2|Vec2} in index coordinates describing the path from the start point &amp;lt;!--
+		 * --&gt;to the end point, including the end point but excluding the start point.
+		 * @param {utils.geometry2d.Vec2} start - x &#x3D; column index, y &#x3D; row index
+		 * @param {utils.geometry2d.Vec2} end   - x &#x3D; column index, y &#x3D; row index
+		 * @parame {boolean} [allowDiagonals&#x3D;true] - whether or not you allow diagonals to be used
+		 * @returns {utils.geometry2d.Vec2[]} the path of {@link utils.geometry2d.Vec2 Vec2} &amp;lt;!--
+		 * --&gt;in index coordinates[(i,j), (i,j), (i,j)]
+		 */
+		aStarPath(start, end, allowDiagonals &#x3D; true) {
+			let openList &#x3D; [], openListFG &#x3D; [], closeList &#x3D; [], closeListF &#x3D; [],
+				n, i, j, minF, minI, q, successors, f, g, q_fg, skip, finish &#x3D; false,
+				distance &#x3D; Vec2.squareDistance;
+			openList.push(start);
+			openListFG.push(new Vec2(0, 0));
+			while((n &#x3D; openList.length) &gt; 0 &amp;amp;&amp;amp; !finish) {
+				minF &#x3D; openListFG[0].x, minI &#x3D; 0, i &#x3D; n;
+				while(--i) {
+					if(openListFG[i].x &amp;lt; minF) {
+						minI &#x3D; i;
+						minF &#x3D; openListFG[i].x;
+					}
+				}
+				q &#x3D; openList.splice(minI, 1)[0];
+				q_fg &#x3D; openListFG.splice(minI, 1)[0];
+				successors &#x3D; [];
+				i &#x3D; 0;
+				if(q.y &gt; 0 &amp;amp;&amp;amp; this.occupationMap[q.y-1][q.x] &#x3D;&#x3D; 0) { i +&#x3D; 1; successors.push(new Vec2(q.x, q.y-1)); }
+				if(q.x &gt; 0 &amp;amp;&amp;amp; this.occupationMap[q.y][q.x-1] &#x3D;&#x3D; 0) { i +&#x3D; 2; successors.push(new Vec2(q.x-1, q.y)); }
+				if(q.y &amp;lt; this.lines-1 &amp;amp;&amp;amp; this.occupationMap[q.y+1][q.x] &#x3D;&#x3D; 0)
+					{ i +&#x3D; 4; successors.push(new Vec2(q.x, q.y+1)); }
+				if(q.x &amp;lt; this.columns-1 &amp;amp;&amp;amp; this.occupationMap[q.y][q.x+1] &#x3D;&#x3D; 0)
+					{ i +&#x3D; 8; successors.push(new Vec2(q.x+1, q.y)); }
+				if(allowDiagonals) {
+					if(i%4 &#x3D;&#x3D; 3 &amp;amp;&amp;amp; this.occupationMap[q.y-1][q.x-1] &#x3D;&#x3D; 0) successors.push(new Vec2(q.x-1, q.y-1));
+					if(i%2 &#x3D;&#x3D; 1 &amp;amp;&amp;amp; i &gt; 8 &amp;amp;&amp;amp; this.occupationMap[q.y-1][q.x+1] &#x3D;&#x3D; 0)
+						successors.push(new Vec2(q.x+1, q.y-1));
+					if((i&gt;&gt;1)%4 &#x3D;&#x3D; 3 &amp;amp;&amp;amp; this.occupationMap[q.y+1][q.x-1] &#x3D;&#x3D; 0) successors.push(new Vec2(q.x-1, q.y+1));
+					if((i&gt;&gt;2) &#x3D;&#x3D; 3 &amp;amp;&amp;amp; this.occupationMap[q.y+1][q.x+1] &#x3D;&#x3D; 0) successors.push(new Vec2(q.x+1, q.y+1));
+				}
+				i &#x3D; successors.length;
+				while(i--) {
+					if( successors[i].x &amp;lt; 0 || successors[i].x &gt;&#x3D; this.columns ||
+						successors[i].y &amp;lt; 0 || successors[i].y &gt;&#x3D; this.rows)
+						continue;
+					if(this.occupationMap[successors[i].y][successors[i].x] !&#x3D; 0)
+						continue;
+					if(successors[i].equals(end)) {
+						closeList.push(q);
+						closeList.push(end);
+						finish &#x3D; true;
+						break;
+					}
+					j &#x3D; n - 1;
+					g &#x3D; q_fg.y + distance(q, successors[i]);
+					f &#x3D; g + distance(successors[i], end);
+					while(j--) {
+						if(openList[j].equals(successors[i])) {
+							if(f &gt; openListFG[j].x) {
+								skip &#x3D; true;
+							}
+						}
+					}
+					if(skip) { skip &#x3D; false; continue; }
+					j &#x3D; closeList.length;
+					while(j--) {
+						if(closeList[j].equals(successors[i])) {
+							if(f &gt; closeListF[i]) {
+								skip &#x3D; true;
+							}
+						}
+					}
+					if(skip) { skip &#x3D; false; continue; }
+					openList.push(successors[i]);
+					openListFG.push(new Vec2(f, g));
+				}
+				if(!finish) {
+					closeList.push(q);
+					closeListF.push(q_fg.x);
+				}
+			}
+			return closeList;
+		}
 	}
 	return Board;
 })();</code></pre>
@@ -358,7 +485,7 @@ window.game.Board &#x3D; (function(){
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on July 25, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
       </p>
     </div>
   </footer>

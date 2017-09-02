@@ -4,7 +4,7 @@
 <head>
   <meta name="generator" content="JSDoc 3.4.3">
   <meta charset="utf-8">
-  <title>Class: BulletCollider</title>
+  <title>Class: UIElement</title>
   <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
   <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
   <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
@@ -25,8 +25,8 @@
         <div id="jsdoc-main" role="main">
           <header class="page-header">
             <div class="symbol-detail-labels"><span class="label label-kind">class</span></div>
-            <h1><small></small><span class="symbol-name">BulletCollider</span></h1>
-            <p class="source-link">Source: <a href="game2_bullets.js.html#source-line-138">game2/<wbr>bullets.<wbr>js:138</a></p>
+            <h1><small></small><span class="symbol-name">UIElement</span></h1>
+            <p class="source-link">Source: <a href="game2_viewers.js.html#source-line-14">game2/<wbr>viewers.<wbr>js:14</a></p>
             <dl class="dl-compact">
             </dl>
           </header>
@@ -36,7 +36,7 @@
               <div class="summary-content">
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="BulletCollider.html#collidesInside">collidesInside(collider)</a></dt>
+                    <dt><a href="UIElement.html#update">update(viewer)</a></dt>
                     <dd>
                     </dd>
                   </dl>
@@ -49,10 +49,10 @@
             </div>
           </section>
           <section>
-            <h2 id="BulletCollider">new&nbsp;<span class="symbol-name">BulletCollider</span><span class="signature"><span class="signature-params">(shape)</span></span>
+            <h2 id="UIElement">new&nbsp;<span class="symbol-name">UIElement</span><span class="signature"><span class="signature-params">(elmt, position, staticPos)</span></span>
             </h2>
             <section>
-              <h3>Parameter</h3>
+              <h3>Parameters</h3>
               <table class="jsdoc-details-table">
                 <thead>
                   <tr>
@@ -65,15 +65,42 @@
                 <tbody>
                   <tr>
                     <td>
-                      <p>shape</p>
+                      <p>elmt</p>
                     </td>
                     <td>
-                      <p><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></p>
+                      <p>HTMLElement</p>
                     </td>
                     <td>
                       <p>&nbsp;</p>
                     </td>
                     <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>position</p>
+                    </td>
+                    <td>
+                      <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>staticPos</p>
+                    </td>
+                    <td>
+                      <p>boolean</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Defaults to <code>false</code>.</p>
                     </td>
                   </tr>
                 </tbody>
@@ -85,9 +112,9 @@
           <section>
             <h2>Method</h2>
             <section>
-              <h3 id="collidesInside"><span class="symbol-name">collidesInside</span><span class="signature"><span class="signature-params">(collider)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
+              <h3 id="update"><span class="symbol-name">update</span><span class="signature"><span class="signature-params">(viewer)</span></span>
               </h3>
-              <p>returns true because bullets collide when they are inside other objects.</p>
+              <p>called by the <a href="game.Viewer.html">game.Viewer</a> instace attached to the <a href="game.GameManager.html">game.GameManager</a> when the window gets resized or the visible rect is modified.</p>
               <section>
                 <h4>Parameter</h4>
                 <table class="jsdoc-details-table">
@@ -102,10 +129,10 @@
                   <tbody>
                     <tr>
                       <td>
-                        <p>collider</p>
+                        <p>viewer</p>
                       </td>
                       <td>
-                        <p><a href="game.ObjectCollider.html">game.ObjectCollider</a></p>
+                        <p>&nbsp;</p>
                       </td>
                       <td>
                         <p>&nbsp;</p>
@@ -117,10 +144,6 @@
                 </table>
               </section>
               <dl class="dl-compact">
-                <dt>Returns</dt>
-                <dd>
-                  <p><code>boolean</code>&nbsp;</p>
-                </dd>
               </dl>
             </section>
           </section>

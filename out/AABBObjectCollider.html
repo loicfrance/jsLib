@@ -4,7 +4,7 @@
 <head>
   <meta name="generator" content="JSDoc 3.4.3">
   <meta charset="utf-8">
-  <title>Class: ObjectCollider</title>
+  <title>Class: AABBObjectCollider</title>
   <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
   <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
   <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
@@ -25,8 +25,8 @@
         <div id="jsdoc-main" role="main">
           <header class="page-header">
             <div class="symbol-detail-labels"><span class="label label-kind">class</span></div>
-            <h1><small></small><span class="symbol-name">ObjectCollider</span></h1>
-            <p class="source-link">Source: <a href="game2_renderer_collider.js.html#source-line-511">game2/<wbr>renderer_collider.<wbr>js:511</a></p>
+            <h1><small></small><span class="symbol-name">AABBObjectCollider</span></h1>
+            <p class="source-link">Source: <a href="game2_renderer_collider.js.html#source-line-631">game2/<wbr>renderer_collider.<wbr>js:631</a></p>
             <dl class="dl-compact">
             </dl>
           </header>
@@ -36,45 +36,36 @@
               <div class="summary-content">
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="ObjectCollider.html#collides">collides(collider)</a></dt>
+                    <dt><a href="AABBObjectCollider.html#collides">collides(collider)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="ObjectCollider.html#collidesInside">collidesInside(collider)</a></dt>
+                    <dt><a href="AABBObjectCollider.html#getRadius">getRadius()</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="ObjectCollider.html#finishCollision">finishCollision()</a></dt>
-                    <dd>
-                    </dd>
-                    <dt><a href="ObjectCollider.html#getRadius">getRadius()</a></dt>
+                    <dt><a href="AABBObjectCollider.html#getRect">getRect()</a></dt>
                     <dd>
                     </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="ObjectCollider.html#getRect">getRect()</a></dt>
+                    <dt><a href="AABBObjectCollider.html#getShape">getShape()</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="ObjectCollider.html#handleCollision">handleCollision(gameManager, objects)</a></dt>
+                    <dt><a href="AABBObjectCollider.html#rotate">rotate(radians)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="ObjectCollider.html#prepareCollision">prepareCollision(position)</a></dt>
-                    <dd>
-                    </dd>
-                    <dt><a href="ObjectCollider.html#render">render(context2d)</a></dt>
+                    <dt><a href="AABBObjectCollider.html#scale">scale(factor)</a></dt>
                     <dd>
                     </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="ObjectCollider.html#rotate">rotate(radians)</a></dt>
+                    <dt><a href="AABBObjectCollider.html#setPosition">setPosition(pos)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="ObjectCollider.html#scale">scale(factor)</a></dt>
-                    <dd>
-                    </dd>
-                    <dt><a href="ObjectCollider.html#setPosition">setPosition(pos)</a></dt>
+                    <dt><a href="AABBObjectCollider.html#setShape">setShape(shape)</a></dt>
                     <dd>
                     </dd>
                   </dl>
@@ -83,7 +74,7 @@
             </div>
           </section>
           <section>
-            <h2 id="ObjectCollider">new&nbsp;<span class="symbol-name">ObjectCollider</span><span class="signature"><span class="signature-params">(rect)</span></span>
+            <h2 id="AABBObjectCollider">new&nbsp;<span class="symbol-name">AABBObjectCollider</span><span class="signature"><span class="signature-params">(shape)</span></span>
             </h2>
             <section>
               <h3>Parameter</h3>
@@ -99,10 +90,10 @@
                 <tbody>
                   <tr>
                     <td>
-                      <p>rect</p>
+                      <p>shape</p>
                     </td>
                     <td>
-                      <p><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></p>
+                      <p><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></p>
                     </td>
                     <td>
                       <p>&nbsp;</p>
@@ -156,50 +147,6 @@
                   <p><code>boolean</code>&nbsp;</p>
                 </dd>
               </dl>
-              <h3 id="collidesInside"><span class="symbol-name">collidesInside</span><span class="signature"><span class="signature-params">(collider)</span>&nbsp;&rarr; <span class="signature-returns"> boolean</span></span>
-              </h3>
-              <p>returns whether or not this collider can be considered as colliding with the specified collider is it is inside. Otherwise, the colliders will need to intersect for the
-                <!--
--->collides method to return true.</p>
-              <section>
-                <h4>Parameter</h4>
-                <table class="jsdoc-details-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Optional</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>collider</p>
-                      </td>
-                      <td>
-                        <p><a href="game.ObjectCollider.html">game.ObjectCollider</a></p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-              <dl class="dl-compact">
-                <dt>Returns</dt>
-                <dd>
-                  <p><code>boolean</code>&nbsp;</p>
-                </dd>
-              </dl>
-              <h3 id="finishCollision"><span class="symbol-name">finishCollision</span><span class="signature"><span class="signature-params">()</span></span>
-              </h3>
-              <p>tells the collider that the collision detection is over for this object on this frame.</p>
-              <dl class="dl-compact">
-              </dl>
               <h3 id="getRadius"><span class="symbol-name">getRadius</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
               </h3>
               <p>returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.</p>
@@ -211,130 +158,25 @@
               </dl>
               <h3 id="getRect"><span class="symbol-name">getRect</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></span></span>
               </h3>
-              <p>returns the <a href="game.ObjectCollider.html#rect">game.ObjectCollider#rect</a> attribute of the collider</p>
+              <p>returns the <a href="game.ObjectCollider.html#rect">rect</a> attribute of the collider.</p>
               <dl class="dl-compact">
                 <dt>Returns</dt>
                 <dd>
                   <p><code><a href="utils.geometry2d.Rect.html">utils.geometry2d.Rect</a></code>&nbsp;</p>
                 </dd>
               </dl>
-              <h3 id="handleCollision"><span class="symbol-name">handleCollision</span><span class="signature"><span class="signature-params">(gameManager, objects)</span></span>
+              <h3 id="getShape"><span class="symbol-name">getShape</span><span class="signature"><span class="signature-params">()</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></span></span>
               </h3>
-              <p>handle the collision with all colliding objects</p>
-              <section>
-                <h4>Parameters</h4>
-                <table class="jsdoc-details-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Optional</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>gameManager</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <p>objects</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
+              <p>returns the game.ShapedObjectCollider#shape.</p>
               <dl class="dl-compact">
-              </dl>
-              <h3 id="prepareCollision"><span class="symbol-name">prepareCollision</span><span class="signature"><span class="signature-params">(position)</span></span>
-              </h3>
-              <p>prepare the collision detection by acquiring necessary variables, such as the the
-                <!--
---><a href="game.ObjectCollider.html#rect">rect</a> attribute.</p>
-              <section>
-                <h4>Parameter</h4>
-                <table class="jsdoc-details-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Optional</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>position</p>
-                      </td>
-                      <td>
-                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-              <dl class="dl-compact">
-              </dl>
-              <h3 id="render"><span class="symbol-name">render</span><span class="signature"><span class="signature-params">(context2d)</span></span>
-              </h3>
-              <p>draw the collider on the canvas for debug purpose.</p>
-              <section>
-                <h4>Parameter</h4>
-                <table class="jsdoc-details-table">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Optional</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <p>context2d</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                        <p>&nbsp;</p>
-                      </td>
-                      <td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></code>&nbsp;</p>
+                </dd>
               </dl>
               <h3 id="rotate"><span class="symbol-name">rotate</span><span class="signature"><span class="signature-params">(radians)</span></span>
               </h3>
-              <p>rotates the collider with the specified angle in radians. Automatically called when the rotate method of the associated object is called.</p>
+              <p>rotates the game.ShapedObjectCollider#shape.</p>
               <section>
                 <h4>Parameter</h4>
                 <table class="jsdoc-details-table">
@@ -367,7 +209,7 @@
               </dl>
               <h3 id="scale"><span class="symbol-name">scale</span><span class="signature"><span class="signature-params">(factor)</span></span>
               </h3>
-              <p>scales the collider with the specified factor. Automatically called when the scale method of the associated object is called.</p>
+              <p>scales the game.ShapedObjectCollider#shape.</p>
               <section>
                 <h4>Parameter</h4>
                 <table class="jsdoc-details-table">
@@ -398,9 +240,9 @@
               </section>
               <dl class="dl-compact">
               </dl>
-              <h3 id="setPosition"><span class="symbol-name">setPosition</span><span class="signature"><span class="signature-params">(pos)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.ObjectCollider.html">game.ObjectCollider</a></span></span>
+              <h3 id="setPosition"><span class="symbol-name">setPosition</span><span class="signature"><span class="signature-params">(pos)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="game.ShapedObjectCollider.html">game.ShapedObjectCollider</a></span></span>
               </h3>
-              <p>sets the collider position to the specified one</p>
+              <p>sets the position of the collider.</p>
               <section>
                 <h4>Parameter</h4>
                 <table class="jsdoc-details-table">
@@ -432,8 +274,41 @@
               <dl class="dl-compact">
                 <dt>Returns</dt>
                 <dd>
-                  <p><code><a href="game.ObjectCollider.html">game.ObjectCollider</a></code>&nbsp;<code>this</code></p>
+                  <p><code><a href="game.ShapedObjectCollider.html">game.ShapedObjectCollider</a></code>&nbsp;<code>this</code></p>
                 </dd>
+              </dl>
+              <h3 id="setShape"><span class="symbol-name">setShape</span><span class="signature"><span class="signature-params">(shape)</span></span>
+              </h3>
+              <p>sets the game.ShapedObjectCollider#shape to a copy of the argument.</p>
+              <section>
+                <h4>Parameter</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>shape</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Shape.html">utils.geometry2d.Shape</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
               </dl>
             </section>
           </section>

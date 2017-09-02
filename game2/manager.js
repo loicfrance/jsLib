@@ -170,7 +170,7 @@ window.game.GameManager = (function(){
 //-------------------------------------------------- public attributes -------------------------------------------------
 			/**
 			 * @name game.GameManager#viewer
-			 * @type {typeof game.Viewer}
+			 * @type {?game.Viewer}
 			 */
 			this.viewer = null;
 			/**
@@ -236,7 +236,7 @@ window.game.GameManager = (function(){
 			 * adds an object to the game. It will actually be added between the current frame and the next one.
 			 * @method
 			 * @name game.GameManager#addObject
-			 * @param {typeof game.Object} obj
+			 * @param {?game.Object} obj
 			 * @param {boolean} [check=true] - if true or not set, the method will make sure the object is not <!--
 			 * -->already being added to the game
 			 */

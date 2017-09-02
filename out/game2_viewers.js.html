@@ -30,11 +30,66 @@
           </header>
           <article>
             <pre class="prettyprint linenums"><code>/**
- * Created by rfrance on 12/25/2016.
+ * Created by Loic France on 12/25/2016.
  */
+&quot;use strict&quot;;
+window.game.UIElement &#x3D; (function(){
+	class UIElement {
+		/**
+		 * @constructor
+		 *
+		 * @param {HTMLElement} elmt
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {boolean} staticPos
+		 */
+		constructor(elmt, position, staticPos &#x3D; false) {
+			/**
+			 * @type {HTMLElement}
+			 * @name game.UIElement#elmt
+			 */
+			this.elmt &#x3D; elmt;
+			this.elmt.className &#x3D; &#x27;game_ui&#x27;;
+			/**
+			 * @type {utils.geometry2d.Vec2}
+			 * @name game.UIElement#position
+			 */
+			this.position &#x3D; position.clone();
+			/**
+			 * @type {boolean}
+			 * @name game.UIElement#staticPos
+			 */
+			this.staticPos &#x3D; !!staticPos;
+		}
+
+		/**
+		 * called by the {@link game.Viewer} instace attached to the {@link game.GameManager} when the window
+		 * gets resized or the visible rect is modified.
+		 * @param viewer
+		 */
+		update(viewer) {
+			let scaleX &#x3D; 1/viewer.scaleX, scaleY &#x3D; 1/viewer.scaleY;
+			if(this.position &amp;amp;&amp;amp; !isNaN(this.position.x) &amp;amp;&amp;amp; !isNaN(this.position.y)) {
+				let pos &#x3D; this.position.clone();
+				if(!this.staticPos) {
+					pos.addXY(- viewer.visibleRect.left, - viewer.visibleRect.top);
+				}
+				pos.x *&#x3D; scaleX;
+				pos.y *&#x3D; scaleY;
+				pos.x +&#x3D; (parseFloat(viewer.context.canvas.style.left) || 0) - (this.elmt.clientWidth  * scaleX)/2;
+				pos.y +&#x3D; (parseFloat(viewer.context.canvas.style.top ) || 0) - (this.elmt.clientHeight * scaleY)/2;
+				this.elmt.style.transform &#x3D; &#x60;scale(${scaleX}, ${scaleY})&#x60;;
+				this.elmt.style.transformOrigin &#x3D; &#x27;left top&#x27;;
+				this.elmt.style.left &#x3D; &#x60;${Math.round(pos.x)}px&#x60;;
+				this.elmt.style.top  &#x3D; &#x60;${Math.round(pos.y)}px&#x60;;
+			}
+		}
+	}
+	return UIElement;
+})();
 window.game.Viewer &#x3D; (function() {
 	let Rect &#x3D; utils.geometry2d.Rect;
 	/**
+	 * The class used by the game manager for the rendering.
 	 * @class game.Viewer
 	 * @memberOf game
 	 */
@@ -43,8 +98,10 @@ window.game.Viewer &#x3D; (function() {
 		    //private variables used for resize
 		    let autoResize &#x3D; false;
 		    let onWindowResize &#x3D; null;
-		    let resizeMargin &#x3D; 2;
+		    let resizeMargin &#x3D; 0;
 		    let callback &#x3D; null;
+		    let uiDiv &#x3D; null;
+		    let uiElmts &#x3D; [];
 		    /**
 		     * @name game.Viewer#context
 		     * @type {CanvasRenderingContext2D|WebGLRenderingContext}
@@ -79,11 +136,11 @@ window.game.Viewer &#x3D; (function() {
 							    parentW &#x3D; parent.offsetWidth,
 							    parentH &#x3D; parent.offsetHeight,
 							    ratio &#x3D; this.visibleRect.ratio,
-							    w &#x3D; parentW - (borderMargin+4),
-							    h &#x3D; Math.min(parentH - (borderMargin+4), w / ratio);
+							    w &#x3D; parentW - (borderMargin * 2),
+							    h &#x3D; Math.min(parentH - (borderMargin * 2), w / ratio);
 						    w &#x3D; h * ratio;
-						    let left &#x3D; (parentW - w-4) * 0.5,
-							    top &#x3D; (parentH - h-4) * 0.5;
+						    let left &#x3D; (parentW - w) * 0.5,
+							    top &#x3D; (parentH - h) * 0.5;
 						    this.setCanvasSize(w, h, left, top);
 					    }.bind(this);
 				    }
@@ -107,10 +164,15 @@ window.game.Viewer &#x3D; (function() {
 		     */
 		    this.setCanvasSize &#x3D; function (width, height, marginX, marginY) {
 			    let canvas &#x3D; this.context.canvas;
-			    canvas.width &#x3D; width;
-			    canvas.height &#x3D; height;
-			    canvas.style.marginLeft &#x3D; marginX.toString() + &quot;px&quot;;
-			    canvas.style.marginTop &#x3D; marginY.toString() + &quot;px&quot;;
+			    canvas.width &#x3D; canvas.style.width &#x3D; width;
+			    canvas.height &#x3D; canvas.style.height &#x3D; height;
+			    if(getComputedStyle(canvas).getPropertyValue(&#x27;position&#x27;) &#x3D;&#x3D;&#x3D; &#x27;absolute&#x27;) {
+				    canvas.style.left &#x3D; marginX.toString() + &quot;px&quot;;
+				    canvas.style.top &#x3D; marginY.toString() + &quot;px&quot;;
+			    } else {
+				    canvas.style.marginLeft &#x3D; marginX.toString() + &quot;px&quot;;
+				    canvas.style.marginTop &#x3D; marginY.toString() + &quot;px&quot;;
+			    }
 			    this.updateTransform();
 			    if (callback) callback(game.RenderEvent.CANVAS_RESIZE, this.context);
 		    };
@@ -133,18 +195,65 @@ window.game.Viewer &#x3D; (function() {
 		     */
 		    this.getCallback &#x3D; function() {
 		    	return callback;
+		    };
+		    /**
+		     * sets the {@link HTMLDivElement } used to place UI elements. &amp;lt;!--
+		     * --&gt;this div will be maintained the same size as the canvas element
+		     * @method
+		     * @param {HTMLDivElement} divElement
+		     */
+		    this.setUIDiv &#x3D; function(divElement) {
+			    uiDiv &#x3D; divElement;
+		    };
+		    /**
+		     * @method
+		     * @returns {!HTMLDivElement} the div used to place ui elements
+		     */
+		    this.getUIDiv &#x3D; function() {
+		    	return uiDiv;
+		    };
+		    /**
+		     * adds a {@link game.UIElement} to the user interface
+		     * @method
+		     * @param {game.UIElement} elmt - the element to add to the UI
+		     */
+		    this.addUIElement &#x3D; function(elmt) {
+			    uiDiv.appendChild(elmt.elmt);
+			    uiElmts.push(elmt);
+		    };
+		    /**
+		     * remove the {@link game.UIElement} from the user interface
+		     * @param {game.UIElement} elmt
+		     */
+		    this.removeUIElement &#x3D; function(elmt) {
+		    	let i &#x3D; uiElmts.indexOf(elmt);
+		    	if(i &gt;&#x3D; 0) {
+				    uiElmts.splice(i, 1);
+		    		uiDiv.removeChild(elmt.elmt);
+			    }
+
+		    };
+		    /**
+		     * called after the window has been resized or the visible game rect modified.
+		     * calls the {@link game.UIElement#update update(viewer)} method of every element to transform it.
+		     */
+		    this.updateUI &#x3D; function() {
+		    	let i &#x3D; uiElmts.length;
+		    	while(i--) {
+		    		uiElmts[i].update(this);
+			    }
 		    }
 	    }
 		/**
 		 * number of game units by pixel (&#x3D;(visible game width)/(canvas width))
-		 * @name game.Viewer#background
+		 * @name game.Viewer#scaleX
 		 * @type {number}
 		 * @readonly
 		 */
 	    get scaleX() { return this.visibleRect.width/this.context.canvas.width; }
 	    /**
 	     * number of game units by pixel (&#x3D;(visible game height)/(canvas height))
-	     * @name game.Viewer#background
+	     * @name game.Viewer#scaleY
 	     * @type {number}
 	     * @readonly
 	     */
@@ -159,6 +268,7 @@ window.game.Viewer &#x3D; (function() {
 		    this.context.setTransform(
 			    this.context.canvas.width/this.visibleRect.width, 0, 0,
 			    this.context.canvas.height/this.visibleRect.height, this.visibleRect.left, this.visibleRect.top);
+			this.updateUI();
 	    }
 		/**
 		 * gives you the game coordinates of a point given in pixel coordinates relative to the canvas.
@@ -195,6 +305,7 @@ window.game.Viewer &#x3D; (function() {
 		 * @abstract
 		 */
 		render( gameManager, objects) { }
+
     }
     return Viewer;
 })();
@@ -250,6 +361,14 @@ window.game.StandardViewer &#x3D; (function() {
 			    callback(game.RenderEvent.RENDER_END, ctx);
 			    ctx.restore();
 		    }
+	    }
+
+		/**
+		 * enables or disables image smoothing for the {@link CanvasRenderingContext2D context}
+		 * @param {boolean} enabled
+		 */
+		setImageSmoothingEnabled(enabled) {
+            this.context.imageSmoothingEnabled &#x3D; enabled;
 	    }
     }
     return StandardViewer;
@@ -322,7 +441,7 @@ window.game.WebGLViewer &#x3D; (function() {
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on July 25, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
       </p>
     </div>
   </footer>

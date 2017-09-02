@@ -107,13 +107,13 @@
                     <dt><a href="Vec2.html#getVerticalMirror">getVerticalMirror([axisY])</a></dt>
                     <dd>
                     </dd>
+                    <dt><a href="Vec2.html#isZero">isZero()</a></dt>
+                    <dd>
+                    </dd>
                   </dl>
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
-                    <dt><a href="Vec2.html#isZero">isZero()</a></dt>
-                    <dd>
-                    </dd>
                     <dt><a href="Vec2.html#mirrorHorizontally">mirrorHorizontally([axisX])</a></dt>
                     <dd>
                     </dd>
@@ -147,16 +147,16 @@
                     <dt><a href="Vec2.html#setAngle">setAngle(a)</a></dt>
                     <dd>
                     </dd>
-                  </dl>
-                </div>
-                <div class="summary-column">
-                  <dl class="dl-summary-callout">
                     <dt><a href="Vec2.html#setMagnitude">setMagnitude(mag)</a></dt>
                     <dd>
                     </dd>
                     <dt><a href="Vec2.html#setXY">setXY(x, y)</a></dt>
                     <dd>
                     </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
                     <dt><a href="Vec2.html#toString">toString()</a></dt>
                     <dd>
                     </dd>
@@ -172,10 +172,16 @@
                     <dt><a href="Vec2.html#.createVec2Array">createVec2Array(xyxyArray)</a></dt>
                     <dd>
                     </dd>
+                    <dt><a href="Vec2.html#.diagonalDistance">diagonalDistance(A, B)</a></dt>
+                    <dd>
+                    </dd>
                     <dt><a href="Vec2.html#.distance">distance(A, B)</a></dt>
                     <dd>
                     </dd>
                     <dt><a href="Vec2.html#.dotProd">dotProd(u, v)</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="Vec2.html#.manhattanDistance">manhattanDistance(A, B)</a></dt>
                     <dd>
                     </dd>
                     <dt><a href="Vec2.html#.squareDistance">squareDistance(A, B)</a></dt>
@@ -246,7 +252,7 @@
             <section>
               <h3 id="angle"><span class="symbol-name">angle</span><small class="property-type">
             &nbsp;number</small></h3>
-              <p>sets angle of this vector to the given one (in radians) :
+              <p>sets the angle of this vector to the given one (in radians) :
                 <code>x= cos(a)*magnitude, y= sin(a)*magnitude</code></p>
               <dl class="dl-compact">
               </dl>
@@ -1322,6 +1328,56 @@
                 </dd>
               </dl>
               <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".diagonalDistance"><span class="symbol-name">diagonalDistance</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>A</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>B</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;the diagonal distance between A and B</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
               <h3 id=".distance"><span class="symbol-name">distance</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
               </h3>
               <section>
@@ -1368,7 +1424,7 @@
               <dl class="dl-compact">
                 <dt>Returns</dt>
                 <dd>
-                  <p><code>number</code>&nbsp;the distance between A and B</p>
+                  <p><code>number</code>&nbsp;the euclidian distance between A and B</p>
                 </dd>
               </dl>
               <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
@@ -1422,6 +1478,56 @@
                 </dd>
               </dl>
               <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
+              <h3 id=".manhattanDistance"><span class="symbol-name">manhattanDistance</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              </h3>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>A</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>B</p>
+                      </td>
+                      <td>
+                        <p><a href="utils.geometry2d.Vec2.html">utils.geometry2d.Vec2</a></p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>number</code>&nbsp;the manhattan distance between A and B</p>
+                </dd>
+              </dl>
+              <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
               <h3 id=".squareDistance"><span class="symbol-name">squareDistance</span><span class="signature"><span class="signature-params">(A, B)</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
               </h3>
               <section>
@@ -1468,7 +1574,7 @@
               <dl class="dl-compact">
                 <dt>Returns</dt>
                 <dd>
-                  <p><code>number</code>&nbsp;the square distance between A and B</p>
+                  <p><code>number</code>&nbsp;the square euclidian distance between A and B</p>
                 </dd>
               </dl>
               <div class="symbol-detail-labels"><span class="label label-static">static</span></div>
@@ -1583,7 +1689,7 @@
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on July 25, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
       </p>
     </div>
   </footer>
