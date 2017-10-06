@@ -362,7 +362,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Circle.html#glSetVertices" class="!symbol-index-name">Circle#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Circle.html#getVertices" class="!symbol-index-name">Circle#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -494,7 +494,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Ellipsoid.html#glSetVertices" class="!symbol-index-name">Ellipsoid#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Ellipsoid.html#getVertices" class="!symbol-index-name">Ellipsoid#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -581,6 +581,16 @@
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
             <dt class="symbol-index-name">
+                <a href="GameManager.html" class="!symbol-index-name">GameManager([parameters])</a>
+            </dt>
+            <dd>
+            </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
                 <a href="GameManager.html#fireObjectCreatedEvent" class="!symbol-index-name">GameManager#<wbr>fireObjectCreatedEvent(object)</a>
             </dt>
             <dd>
@@ -595,11 +605,6 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
     </dl>
 </div>
 
@@ -687,16 +692,16 @@
             </dt>
             <dd>
             </dd>
-            <dt class="symbol-index-name">
-                <a href="GameObject.html#getRenderRadius" class="!symbol-index-name">GameObject#<wbr>getRenderRadius()</a>
-            </dt>
-            <dd>
-            </dd>
     </dl>
 </div>
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
+                <a href="GameObject.html#getRenderRadius" class="!symbol-index-name">GameObject#<wbr>getRenderRadius()</a>
+            </dt>
+            <dd>
+            </dd>
             <dt class="symbol-index-name">
                 <a href="GameObject.html#getRenderRect" class="!symbol-index-name">GameObject#<wbr>getRenderRect()</a>
             </dt>
@@ -767,28 +772,23 @@
             </dt>
             <dd>
             </dd>
-            <dt class="symbol-index-name">
-                <a href="GameObject.html#prepareCollision" class="!symbol-index-name">GameObject#<wbr>prepareCollision()</a>
-            </dt>
-            <dd>
-            </dd>
-            <dt class="symbol-index-name">
-                <a href="GameObject.html#render" class="!symbol-index-name">GameObject#<wbr>render(context2d)</a>
-            </dt>
-            <dd>
-            </dd>
     </dl>
 </div>
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
             <dt class="symbol-index-name">
-                <a href="GameObject.html#renderDebug" class="!symbol-index-name">GameObject#<wbr>renderDebug(context2d)</a>
+                <a href="GameObject.html#prepareCollision" class="!symbol-index-name">GameObject#<wbr>prepareCollision()</a>
             </dt>
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="GameObject.html#renderGL" class="!symbol-index-name">GameObject#<wbr>renderGL(handler)</a>
+                <a href="GameObject.html#render" class="!symbol-index-name">GameObject#<wbr>render(context)</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="GameObject.html#renderDebug" class="!symbol-index-name">GameObject#<wbr>renderDebug(context2d)</a>
             </dt>
             <dd>
             </dd>
@@ -1140,7 +1140,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Line.html#glSetVertices" class="!symbol-index-name">Line#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Line.html#getVertices" class="!symbol-index-name">Line#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -1396,12 +1396,12 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="ObjectCollider.html#handleCollision" class="!symbol-index-name">ObjectCollider#<wbr>handleCollision(gameManager, objects)</a>
+                <a href="ObjectCollider.html#prepareCollision" class="!symbol-index-name">ObjectCollider#<wbr>prepareCollision(position)</a>
             </dt>
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="ObjectCollider.html#prepareCollision" class="!symbol-index-name">ObjectCollider#<wbr>prepareCollision(position)</a>
+                <a href="ObjectCollider.html#render" class="!symbol-index-name">ObjectCollider#<wbr>render(context2d)</a>
             </dt>
             <dd>
             </dd>
@@ -1410,11 +1410,6 @@
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
-            <dt class="symbol-index-name">
-                <a href="ObjectCollider.html#render" class="!symbol-index-name">ObjectCollider#<wbr>render(context2d)</a>
-            </dt>
-            <dd>
-            </dd>
             <dt class="symbol-index-name">
                 <a href="ObjectCollider.html#rotate" class="!symbol-index-name">ObjectCollider#<wbr>rotate(radians)</a>
             </dt>
@@ -1783,7 +1778,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Point.html#glSetVertices" class="!symbol-index-name">Point#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Point.html#getVertices" class="!symbol-index-name">Point#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -1930,7 +1925,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Polygon.html#glPointsNumber" class="!symbol-index-name">Polygon#<wbr>glPointsNumber</a>
+                <a href="Polygon.html#getVertices" class="!symbol-index-name">Polygon#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -1940,7 +1935,12 @@
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
             <dt class="symbol-index-name">
-                <a href="Polygon.html#glSetVertices" class="!symbol-index-name">Polygon#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Polygon.html#glPointsNumber" class="!symbol-index-name">Polygon#<wbr>glPointsNumber</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="Polygon.html#glTriangles" class="!symbol-index-name">Polygon#<wbr>glTriangles</a>
             </dt>
             <dd>
             </dd>
@@ -2062,7 +2062,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Ray.html#glSetVertices" class="!symbol-index-name">Ray#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Ray.html#getVertices" class="!symbol-index-name">Ray#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -2239,7 +2239,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Rect.html#glSetVertices" class="!symbol-index-name">Rect#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Rect.html#getVertices" class="!symbol-index-name">Rect#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -2426,7 +2426,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="Shape.html#glSetVertices" class="!symbol-index-name">Shape#<wbr>glSetVertices(verticesBuffer[, offset])</a>
+                <a href="Shape.html#getVertices" class="!symbol-index-name">Shape#<wbr>getVertices(verticesArray, vOffset, indicesArray, iOffset)</a>
             </dt>
             <dd>
             </dd>
@@ -3042,6 +3042,11 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
+                <a href="Viewer.html#getCanvasStyle" class="!symbol-index-name">Viewer#<wbr>getCanvasStyle()</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
                 <a href="Viewer.html#getUIDiv" class="!symbol-index-name">Viewer#<wbr>getUIDiv()</a>
             </dt>
             <dd>
@@ -3058,6 +3063,11 @@
             </dd>
             <dt class="symbol-index-name">
                 <a href="Viewer.html#removeUIElement" class="!symbol-index-name">Viewer#<wbr>removeUIElement(elmt)</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="Viewer.html#setCanvasResolution" class="!symbol-index-name">Viewer#<wbr>setCanvasResolution(width, height)</a>
             </dt>
             <dd>
             </dd>
@@ -3459,7 +3469,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="game.GameManager.html#fixedDt" class="!symbol-index-name">game.<wbr>GameManager#<wbr>fixedDt</a>
+                <a href="game.GameManager.html#gameDt" class="!symbol-index-name">game.<wbr>GameManager#<wbr>gameDt</a>
             </dt>
             <dd>
             </dd>
@@ -3468,16 +3478,16 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="game.GameManager.html#getEventsCallback" class="!symbol-index-name">game.<wbr>GameManager#<wbr>getEventsCallback()</a>
             </dt>
             <dd>
             </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="game.GameManager.html#getInstancesOf" class="!symbol-index-name">game.<wbr>GameManager#<wbr>getInstancesOf(objClass)</a>
             </dt>
@@ -3503,16 +3513,21 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
+                <a href="game.GameManager.html#realDt" class="!symbol-index-name">game.<wbr>GameManager#<wbr>realDt</a>
+            </dt>
+            <dd>
+            </dd>
             <dt class="symbol-index-name">
                 <a href="game.GameManager.html#removeObject" class="!symbol-index-name">game.<wbr>GameManager#<wbr>removeObject(obj[, check])</a>
             </dt>
             <dd>
             </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="game.GameManager.html#removeObjects" class="!symbol-index-name">game.<wbr>GameManager#<wbr>removeObjects(objects[, check])</a>
             </dt>
@@ -4898,6 +4913,11 @@
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
+                <a href="utils.audio.html#.getNoteFreq" class="!symbol-index-name">utils.<wbr>audio.<wbr>getNoteFreq(midi)</a>
+            </dt>
+            <dd>
+            </dd>
     </dl>
 </div>
 
@@ -4952,18 +4972,28 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Circle.Circle.html#.PI_2" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Circle.<wbr>Circle.<wbr>PI_2</a>
             </dt>
             <dd>
             </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Circle.html#center" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Circle#<wbr>center</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Circle.html#glPointsNumber" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Circle#<wbr>glPointsNumber</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Circle.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Circle#<wbr>glTriangles</a>
             </dt>
             <dd>
             </dd>
@@ -4972,11 +5002,6 @@
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
-            <dt class="symbol-index-name">
-                <a href="utils.geometry2d.Circle.html#glPointsNumber" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Circle#<wbr>glPointsNumber</a>
-            </dt>
-            <dd>
-            </dd>
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Circle.html#radius" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Circle#<wbr>radius</a>
             </dt>
@@ -5004,18 +5029,28 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Ellipsoid.html#center" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ellipsoid#<wbr>center</a>
             </dt>
             <dd>
             </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Ellipsoid.html#glPointsNumber" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ellipsoid#<wbr>glPointsNumber</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Ellipsoid.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ellipsoid#<wbr>glTriangles</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Ellipsoid.html#radiusX" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ellipsoid#<wbr>radiusX</a>
             </dt>
             <dd>
             </dd>
@@ -5024,11 +5059,6 @@
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
-            <dt class="symbol-index-name">
-                <a href="utils.geometry2d.Ellipsoid.html#radiusX" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ellipsoid#<wbr>radiusX</a>
-            </dt>
-            <dd>
-            </dd>
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Ellipsoid.html#radiusY" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ellipsoid#<wbr>radiusY</a>
             </dt>
@@ -5077,6 +5107,11 @@
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
             <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Line.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Line#<wbr>glTriangles</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Line.html#length" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Line#<wbr>length</a>
             </dt>
             <dd>
@@ -5098,11 +5133,6 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Point.html#center" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Point#<wbr>center</a>
             </dt>
@@ -5118,6 +5148,16 @@
             </dt>
             <dd>
             </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Point.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Point#<wbr>glTriangles</a>
+            </dt>
+            <dd>
+            </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
     </dl>
 </div>
 
@@ -5151,7 +5191,7 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="utils.geometry2d.Polygon.html#points" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Polygon#<wbr>points</a>
+                <a href="utils.geometry2d.Polygon.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Polygon#<wbr>glTriangles</a>
             </dt>
             <dd>
             </dd>
@@ -5160,6 +5200,11 @@
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Polygon.html#points" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Polygon#<wbr>points</a>
+            </dt>
+            <dd>
+            </dd>
     </dl>
 </div>
 
@@ -5203,6 +5248,11 @@
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
             <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Ray.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ray#<wbr>glTriangles</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Ray.html#perimeter" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Ray#<wbr>perimeter</a>
             </dt>
             <dd>
@@ -5229,13 +5279,18 @@
             </dt>
             <dd>
             </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Rect.html#glPointsNumber" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Rect#<wbr>glPointsNumber</a>
+            </dt>
+            <dd>
+            </dd>
     </dl>
 </div>
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
             <dt class="symbol-index-name">
-                <a href="utils.geometry2d.Rect.html#glPointsNumber" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Rect#<wbr>glPointsNumber</a>
+                <a href="utils.geometry2d.Rect.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Rect#<wbr>glTriangles</a>
             </dt>
             <dd>
             </dd>
@@ -5244,16 +5299,16 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Rect.html#right" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Rect#<wbr>right</a>
             </dt>
             <dd>
             </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Rect.html#top" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Rect#<wbr>top</a>
             </dt>
@@ -5276,11 +5331,6 @@
             </dt>
             <dd>
             </dd>
-    </dl>
-</div>
-
-                            <div class="symbol-index-column">
-    <dl class="symbol-index-list">
             <dt class="symbol-index-name">
                 <a href="utils.geometry2d.Shape.html#center" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Shape#<wbr>center</a>
             </dt>
@@ -5296,6 +5346,16 @@
             </dt>
             <dd>
             </dd>
+            <dt class="symbol-index-name">
+                <a href="utils.geometry2d.Shape.html#glTriangles" class="!symbol-index-name">utils.<wbr>geometry2d.<wbr>Shape#<wbr>glTriangles</a>
+            </dt>
+            <dd>
+            </dd>
+    </dl>
+</div>
+
+                            <div class="symbol-index-column">
+    <dl class="symbol-index-list">
     </dl>
 </div>
 
@@ -5686,7 +5746,12 @@
             <dd>
             </dd>
             <dt class="symbol-index-name">
-                <a href="window.html#.'webgl'#.initGLContext" class="!symbol-index-name">window.<wbr>'webgl'.<wbr>initGLContext(gl)</a>
+                <a href="window.html#.'webgl'#.createAttribBuffer" class="!symbol-index-name">window.<wbr>'webgl'.<wbr>createAttribBuffer(gl, target, srcData, usage, srcOffset, length)</a>
+            </dt>
+            <dd>
+            </dd>
+            <dt class="symbol-index-name">
+                <a href="window.html#.'webgl'#.initContext" class="!symbol-index-name">window.<wbr>'webgl'.<wbr>initContext(gl)</a>
             </dt>
             <dd>
             </dd>
@@ -5700,16 +5765,16 @@
             </dt>
             <dd>
             </dd>
-            <dt class="symbol-index-name">
-                <a href="window.game.html#.Bullet" class="!symbol-index-name">window.<wbr>game.<wbr>Bullet</a>
-            </dt>
-            <dd>
-            </dd>
     </dl>
 </div>
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
+                <a href="window.game.html#.Bullet" class="!symbol-index-name">window.<wbr>game.<wbr>Bullet</a>
+            </dt>
+            <dd>
+            </dd>
             <dt class="symbol-index-name">
                 <a href="window.game.html#.canCollideFilter" class="!symbol-index-name">window.<wbr>game.<wbr>canCollideFilter(obj)</a>
             </dt>
@@ -5730,16 +5795,16 @@
             </dt>
             <dd>
             </dd>
-            <dt class="symbol-index-name">
-                <a href="window.game.html#.ObjectRenderer" class="!symbol-index-name">window.<wbr>game.<wbr>ObjectRenderer</a>
-            </dt>
-            <dd>
-            </dd>
     </dl>
 </div>
 
                             <div class="symbol-index-column">
     <dl class="symbol-index-list">
+            <dt class="symbol-index-name">
+                <a href="window.game.html#.ObjectRenderer" class="!symbol-index-name">window.<wbr>game.<wbr>ObjectRenderer</a>
+            </dt>
+            <dd>
+            </dd>
             <dt class="symbol-index-name">
                 <a href="window.game.html#.renderableFilter" class="!symbol-index-name">window.<wbr>game.<wbr>renderableFilter(obj)</a>
             </dt>
@@ -5776,7 +5841,7 @@
                     <footer id="jsdoc-footer" class="jsdoc-footer">
                             <div id="jsdoc-footer-container">
                                     <p>
-                                      Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
+                                      Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on October 7, 2017.
                                     </p>
                             </div>
                     </footer>

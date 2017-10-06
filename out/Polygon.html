@@ -26,7 +26,7 @@
           <header class="page-header">
             <div class="symbol-detail-labels"><span class="label label-kind">class</span></div>
             <h1><small></small><span class="symbol-name">Polygon</span></h1>
-            <p class="source-link">Source: <a href="utils_geometry2d.js.html#source-line-2606">utils/<wbr>geometry2d.<wbr>js:2606</a></p>
+            <p class="source-link">Source: <a href="utils_geometry2d.js.html#source-line-2701">utils/<wbr>geometry2d.<wbr>js:2701</a></p>
             <dl class="dl-compact">
             </dl>
           </header>
@@ -39,10 +39,6 @@
                     <dt><a href="Polygon.html#area">area</a></dt>
                     <dd>
                     </dd>
-                  </dl>
-                </div>
-                <div class="summary-column">
-                  <dl class="dl-summary-callout">
                     <dt><a href="Polygon.html#glPointsNumber">glPointsNumber</a></dt>
                     <dd>
                     </dd>
@@ -50,10 +46,15 @@
                 </div>
                 <div class="summary-column">
                   <dl class="dl-summary-callout">
+                    <dt><a href="Polygon.html#glTriangles">glTriangles</a></dt>
+                    <dd>
+                    </dd>
                     <dt><a href="Polygon.html#perimeter">perimeter</a></dt>
                     <dd>
                     </dd>
                   </dl>
+                </div>
+                <div class="summary-column">
                 </div>
               </div>
             </div>
@@ -129,7 +130,7 @@
                     <dt><a href="Polygon.html#getRelativeLine">getRelativeLine(index)</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="Polygon.html#glSetVertices">glSetVertices(verticesBuffer[, offset])</a></dt>
+                    <dt><a href="Polygon.html#getVertices">getVertices(verticesArray, vOffset, indicesArray, iOffset)</a></dt>
                     <dd>
                     </dd>
                   </dl>
@@ -228,6 +229,11 @@
               <h3 id="glPointsNumber"><span class="symbol-name">glPointsNumber</span><small class="property-type">
             &nbsp;number</small></h3>
               <p>number of points used to draw this shape.</p>
+              <dl class="dl-compact">
+              </dl>
+              <h3 id="glTriangles"><span class="symbol-name">glTriangles</span><small class="property-type">
+            &nbsp;number</small></h3>
+              <p>number of triangles used to draw this shape.</p>
               <dl class="dl-compact">
               </dl>
               <div class="symbol-detail-labels"><span class="label label-readonly">read-only</span></div>
@@ -1073,9 +1079,13 @@
                   <p><code><a href="utils.geometry2d.Line.html">utils.geometry2d.Line</a></code>&nbsp;</p>
                 </dd>
               </dl>
-              <h3 id="glSetVertices"><span class="symbol-name">glSetVertices</span><span class="signature"><span class="signature-params">(verticesBuffer[, offset])</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              <h3 id="getVertices"><span class="symbol-name">getVertices</span><span class="signature"><span class="signature-params">(verticesArray, vOffset, indicesArray, iOffset)</span></span>
               </h3>
-              <p>draw the shape on the canvas using its webgl context. To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.</p>
+              <p>draw the shape on the canvas using its webgl context. To fill the shape, the draw mode must de TRIANGLES. you can acquire how many points will be added to the array or how many triangles will be drawned
+                <!--
+-->by using the attributes <a href="utils.geometry2d.Polygon.html#glPointsNumber">utils.geometry2d.Polygon#glPointsNumber</a> and
+                <!--
+--><a href="utils.geometry2d.Polygon.html#glTriangles">utils.geometry2d.Polygon#glTriangles</a></p>
               <section>
                 <h4>Parameters</h4>
                 <table class="jsdoc-details-table">
@@ -1090,39 +1100,66 @@
                   <tbody>
                     <tr>
                       <td>
-                        <p>verticesBuffer</p>
+                        <p>verticesArray</p>
                       </td>
                       <td>
-                        <p>Float32Array</p>
+                        <p>Array</p>
                       </td>
                       <td>
                         <p>&nbsp;</p>
                       </td>
                       <td>
+                        <p>array where the points x and y coordinates will be placed</p>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <p>offset</p>
+                        <p>vOffset</p>
                       </td>
                       <td>
-                        <p>nmuber</p>
+                        <p>number</p>
                       </td>
                       <td>
-                        <p>Yes</p>
+                        <p>&nbsp;</p>
                       </td>
                       <td>
-                        <p>Defaults to <code>0</code>.</p>
+                        <p>indice of the first free place in the array (must be even)</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>indicesArray</p>
+                      </td>
+                      <td>
+                        <p>Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>array where the indices of the points
+                          <!--
+-->for the triangles to be drawned will be placed</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>iOffset</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>indice of the first free place in indicesArray (should be a multiple of 3)</p>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </section>
               <dl class="dl-compact">
-                <dt>Returns</dt>
-                <dd>
-                  <p><code>number</code>&nbsp;number of points added</p>
-                </dd>
               </dl>
               <h3 id="growDistance"><span class="symbol-name">growDistance</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Polygon.html">utils.geometry2d.Polygon</a></span></span>
               </h3>
@@ -1478,7 +1515,7 @@ if the specified shape is not an instance of those classes, this function return
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on October 7, 2017.
       </p>
     </div>
   </footer>

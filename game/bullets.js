@@ -222,7 +222,7 @@ window.game.HomingBullet = (function() {
 				maxAngle = this.maxAngle,
 				pos = this.getPosition(),
 				//dist = 0,
-				targets = gameManager.getObjects(game.Object.collisionLayersFilter.bind(undefined, this.bodyLayer)),
+				targets = gameManager.getObjects(game.collisionLayersFilter.bind(undefined, this.bodyLayer)),
 				i = targets.length;
 			while(i--) {
 				if(targets[i] !== this.launcher) {
@@ -257,7 +257,9 @@ window.game.HomingBullet = (function() {
 				this.setAccelerationXY(0,0);
 				super.onFrame(gameManager, dT);
 			}
-			this.setRadians(this.getSpeed().angle);
+			const a = this.getSpeed().angle;
+			this.rotate(a-this.angle);
+			this.angle = a;
 		}
     }
     return HomingBullet;

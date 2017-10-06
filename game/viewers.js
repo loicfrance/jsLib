@@ -27,7 +27,7 @@ window.game.UIElement = (function(){
 			 * @type {boolean}
 			 * @name game.UIElement#staticPos
 			 */
-			this.staticPos = !!staticPos;
+			this.staticPos = !!staticPos; //convert to bool
 		}
 
 		/**
@@ -63,11 +63,11 @@ window.game.Viewer = (function() {
 	 * @memberOf game
 	 */
     class Viewer {
-    	constructor(drawingContext) {
+    	constructor({context, visibleRect}) {
 		    //private variables used for resize
 		    let autoResize = false;
 		    let onWindowResize = null;
-		    let resizeMargin = 0;
+		    let resizeMargin = 1;
 		    let callback = null;
 		    let uiDiv = null;
 		    let uiElmts = [];
@@ -75,12 +75,17 @@ window.game.Viewer = (function() {
 		     * @name game.Viewer#context
 		     * @type {CanvasRenderingContext2D|WebGLRenderingContext}
 		     */
-		    this.context = drawingContext;
+		    this.context = context || null;
 		    /**
 		     * @name game.Viewer#visibleRect
 		     * @type {utils.geometry2d.Rect}
 		     */
-		    this.visibleRect = new Rect(0, 0, this.context.canvas.width, this.context.canvas.height);
+		    this.visibleRect =
+			    visibleRect ?
+				    visibleRect.clone()
+			    : (this.context && this.context.canvas) ?
+				    new Rect(0, 0, this.context.canvas.width, this.context.canvas.height)
+			    : new Rect(0,0,0,0);
 
 		    /**
 		     * allows the canvas to resize automatically when the window size changes.
@@ -101,49 +106,27 @@ window.game.Viewer = (function() {
 				    autoResize = true;
 				    if (!onWindowResize) {
 					    onWindowResize = function (event) {
-						    let parent = this.context.canvas.parentNode,
-							    parentW = parent.offsetWidth,
-							    parentH = parent.offsetHeight,
-							    ratio = this.visibleRect.ratio,
-							    w = parentW - (borderMargin * 2),
+					    	const canvas = this.context.canvas,
+							      parent = canvas.parentNode,
+							      parentW = parent.clientWidth,
+							      parentH = parent.clientHeight,
+							      ratio = this.visibleRect.ratio;
+							let w = parentW - (borderMargin * 2),
 							    h = Math.min(parentH - (borderMargin * 2), w / ratio);
 						    w = h * ratio;
 						    let left = (parentW - w) * 0.5,
 							    top = (parentH - h) * 0.5;
+						    w -= canvas.offsetWidth - canvas.clientWidth;
+						    h -= canvas.offsetHeight - canvas.clientHeight;
 						    this.setCanvasSize(w, h, left, top);
 					    }.bind(this);
 				    }
 				    window.addEventListener('resize', onWindowResize, false);
 				    window.addEventListener('fullscreenchange', onWindowResize, false);
 				    onWindowResize(null);
+			    } else if(use) {
+			    	onWindowResize(null);
 			    }
-		    };
-		    /**
-		     * manually changes the size of the canvas, and modifies the scale for the visible rectangle <!--
-		     * -->to fit the canvas without the visible rectangle to change. you can change the visible rect and <!--
-		     * -->the {@link game.Viewer#updateScale} method to change the scale.
-		     * The callback function is then with the first parameter equal to <!--
-		     * -->{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
-		     * @method
-		     * @name game.Viewer#setCanvasSize
-		     * @param {number} width
-		     * @param {number} height
-		     * @param {number} marginX
-		     * @param {number} marginY
-		     */
-		    this.setCanvasSize = function (width, height, marginX, marginY) {
-			    let canvas = this.context.canvas;
-			    canvas.width = canvas.style.width = width;
-			    canvas.height = canvas.style.height = height;
-			    if(getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
-				    canvas.style.left = marginX.toString() + "px";
-				    canvas.style.top = marginY.toString() + "px";
-			    } else {
-				    canvas.style.marginLeft = marginX.toString() + "px";
-				    canvas.style.marginTop = marginY.toString() + "px";
-			    }
-			    this.updateTransform();
-			    if (callback) callback(game.RenderEvent.CANVAS_RESIZE, this.context);
 		    };
 		    /**
 		     * sets the callback function called for rendering events. See {@link game.RenderEvent} <!--
@@ -211,22 +194,68 @@ window.game.Viewer = (function() {
 		    	while(i--) {
 		    		uiElmts[i].update(this);
 			    }
-		    }
-	    }
+		    };
+		}
 		/**
-		 * number of game units by pixel (=(visible game width)/(canvas width))
+		 * manually changes the size of the canvas, and modifies the scale for the visible rectangle <!--
+		 * -->to fit the canvas without the visible rectangle to change. you can change the visible rect and <!--
+		 * -->the {@link game.Viewer#updateScale} method to change the scale.
+		 * The callback function is then with the first parameter equal to <!--
+		 * -->{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
+		 * @method
+		 * @name game.Viewer#setCanvasSize
+		 * @param {number} width
+		 * @param {number} height
+		 * @param {number} marginX
+		 * @param {number} marginY
+		 */
+		setCanvasSize(width, height, marginX, marginY) {
+			let canvas = this.context.canvas;
+			canvas.style.width = width;
+			canvas.style.height = height;
+			if(getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
+				canvas.style.left = marginX.toString() + "px";
+				canvas.style.top = marginY.toString() + "px";
+			} else {
+				canvas.style.marginLeft = marginX.toString() + "px";
+				canvas.style.marginTop = marginY.toString() + "px";
+			}
+			this.updateTransform();
+			if (this.getCallback()) this.getCallback()(game.RenderEvent.CANVAS_RESIZE, this.context);
+		};
+
+		/**
+		 * sets the canvas resolution
+		 * @param {number} width - number of pixels on the horizontal axis
+		 * @param {number} height - number of pixels on the vertical axis
+		 */
+		setCanvasResolution(width, height) {
+			this.context.canvas.setAttribute('width' , String(width ));
+			this.context.canvas.setAttribute('height', String(height));
+			this.updateTransform();
+		}
+
+		/**
+		 * @return {CSSStyleDeclaration} the computed style of the canvas, acquired with <!--
+		 * --><code>getComputedStyle(viewer.context.canvas)</code>
+		 */
+		getCanvasStyle() {
+			return getComputedStyle(this.context.canvas);
+		}
+		/**
+		 * number of game units by screen pixel (=(visible game width)/(canvas width))
 		 * @name game.Viewer#scaleX
 		 * @type {number}
 		 * @readonly
 		 */
-	    get scaleX() { return this.visibleRect.width/this.context.canvas.width; }
+	    get scaleX() { return this.visibleRect.width/parseInt(this.getCanvasStyle().width); }
 	    /**
-	     * number of game units by pixel (=(visible game height)/(canvas height))
+	     * number of game units by screen pixel (=(visible game height)/(canvas height))
 	     * @name game.Viewer#scaleY
 	     * @type {number}
 	     * @readonly
 	     */
-	    get scaleY() { return this.visibleRect.height/this.context.canvas.height; }
+	    get scaleY() { return this.visibleRect.height/parseInt(this.getCanvasStyle().height); }
 	    /**
 	     * changes the scale for the visible rect size to fit the canvas. Don't forget to call this method after <!--
 	     * --> you made manual modifications on the visible rect to avoid errors.
@@ -235,8 +264,9 @@ window.game.Viewer = (function() {
 	     */
 	    updateTransform() {
 		    this.context.setTransform(
-			    this.context.canvas.width/this.visibleRect.width, 0, 0,
-			    this.context.canvas.height/this.visibleRect.height, this.visibleRect.left, this.visibleRect.top);
+			    this.context.canvas.width/this.visibleRect.width, 0,
+			    0, this.context.canvas.height/this.visibleRect.height,
+			    this.visibleRect.left, this.visibleRect.top);
 			this.updateUI();
 	    }
 		/**
@@ -283,10 +313,13 @@ window.game.StandardViewer = (function() {
 	 * @class game.StandardViewer
 	 * @memberOf game
 	 * @augments game.Viewer
+	 * @extends game.Viewer
 	 */
     class StandardViewer extends window.game.Viewer {
-    	constructor(canvas) {
-    		super(canvas.getContext('2d'));
+    	constructor(parameters) {
+    		if((!parameters.context) && parameters.canvas)
+    			parameters.context = parameters.canvas.getContext('2d');
+    		super(parameters);
 	    }
 	    render(gameManager, objects) {
 		    let rect = this.visibleRect, objs, ctx = this.context, l, i, callback = this.getCallback();
@@ -310,6 +343,7 @@ window.game.StandardViewer = (function() {
 					    if(objs[i].renderLayer < 0) {
 						    if(callback) callback(game.RenderEvent.RENDER_LAYER_END, ctx);
 						    ctx.restore();
+						    break;
 					    }
 					    if(callback) {
 						    callback(game.RenderEvent.RENDER_LAYER_END, ctx);
@@ -342,60 +376,115 @@ window.game.StandardViewer = (function() {
     }
     return StandardViewer;
 })();
+window.game.StandardDifferedViewer = (function(){
+	class StandardDifferedViewer extends game.StandardViewer {
+		constructor(parameters) {
+			super(parameters);
+			this.hidden_canvas = this.context.canvas.cloneNode(false);
+			this.hidden_context = this.hidden_canvas.getContext('2d');
+
+		}
+		//*
+		setCanvasSize(width, height, marginX, marginY) {
+			const canvas = this.context.canvas, mX = `${marginX}px`, mY = `${marginY}px`;
+			canvas.width = canvas.style.width = width;
+			canvas.height = canvas.style.height = height;
+
+			if (getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
+				canvas.style.left = mX; canvas.style.top = mY;
+			} else {
+				canvas.style.marginLeft = mX; canvas.style.marginTop = mY;
+			}
+
+			this.hidden_canvas.width = this.hidden_canvas.style.width = width;
+			this.hidden_canvas.height = this.hidden_canvas.style.height = height;
+
+			const temp = this.context;
+			this.context = this.hidden_context;
+			this.updateTransform();
+			this.context = temp;
+			console.log(width, height, canvas, this.hidden_canvas);
+			if (this.getCallback()) this.getCallback()(game.RenderEvent.CANVAS_RESIZE, this.context);
+		}
+		/*/
+		setCanvasSize(width, height, marginX, marginY)
+		{
+			super.setCanvasSize(width, height, marginX, marginY);
+			const temp = this.context;
+			this.context = this.hidden_context;
+			super.setCanvasSize(width, height, marginX, marginY);
+			this.context = temp;
+
+			if (callback) callback(game.RenderEvent.CANVAS_RESIZE, this.context);
+
+		}
+		//*/
+		render(gameManager, objects) {
+			const temp = this.context, w = this.context.canvas.clientWidth, h = this.context.canvas.clientHeight;
+			this.context = this.hidden_context;
+			super.render(gameManager, objects);
+			this.context = temp;
+			let rect = this.visibleRect;
+			this.context.clearRect(rect.left, rect.top, rect.right, rect.bottom);
+			//console.log(this.hidden_canvas.width, this.hidden_canvas.height);
+			this.context.drawImage(this.hidden_canvas, 0, 0, w, h, 0, 0, w, h);
+		}
+	}
+	return StandardDifferedViewer;
+})();
 window.game.WebGLViewer = (function() {
-	let vertexShader =`
-		uniform int u_color;
-		uniform int u_useTexture;
-		uniform mat3 uMVMatrix;
-		uniform float u_depth;
-		
-		attribute vec2 a_position;
-		
-		varying vec4 f_color;
-		void main(void) {
-            int r = a_color / 256 / 256;
-            int g = a_color / 256 - 256*r;
-            int b = a_color - 256*(256*r+g);
-            f_color = vec4(float(r)/255.0, float(g)/255.0, float(b)/255.0, 1.0);
-			gl_Position = vec4(uMVMatrix * vec3(a_position, -1.0), depth);
-		}`;
+	let vertexShader =`#version 300 es
+
+in vec4 a_position;
+
+void main() {
+	gl_Position = a_position;
+}
+`,
+	fragmentShader = `#version 300 es
+
+precision mediump float;
+
+out vec4 outColor;
+
+void main() {
+	outColor = vec4(1, 0, 0.5, 1);
+}
+`;
 	/**
 	 * @class game.WebGLViewer
 	 * @memberOf game
 	 * @augments game.Viewer
+	 * @extends game.Viewer
 	 */
 	class WebGLViewer extends window.game.Viewer {
-		constructor(canvas, maxObjectPoints=100) {
-			super(window.webgl.getGLContext(canvas));
-			window.webgl.initGLContext(this.context);
-			let vs = webgl.createGLShader(this.context, webgl.standard2dVertexShader, 'vertex');
-			let fs = webgl.createGLShader(this.context, webgl.standardFragmentShader, 'fragment');
-			this.shaderProgram = webgl.addGLShaderProgram(this.context, vs, fs);
-			this.vertices = new Float32Array(maxObjectPoints*2);
-			this.colors = new Uint32Array(maxObjectPoints);
-			this.positionAttrib = this.context.getAttribLocation(this.shaderProgram, 'a_position');
-			this.colorAttrib = this.context.getAttribLocation(this.shaderProgram, 'a_color');
+		constructor(parameters) {
+			if((!parameters.context) && parameters.canvas)
+				parameters.context = window.webgl.getContext(canvas);
+			super(parameters);
+			const gl = this.gl;
+			window.webgl.initContext(gl);
+		}
+
+		get gl() {
+			return this.context;
 		}
 		get scaleX() {
-			return this.context.getParameter(this.context.VIEWPORT);
+			return this.context.getParameter(this.context.VIEWPORT)[2]/this.context.canvas.width;
+		}
+		get scaleY() {
+			return this.context.getParameter(this.context.VIEWPORT)[3]/this.context.canvas.height;
 		}
 		updateScale() {
 			this.context.viewport(this.visibleRect.left , this.visibleRect.top,
 								  this.visibleRect.width, this.visibleRect.height);
 		}
 		render(gameManager, objects) {
-			let obj = objects.splice().filter(game.renderableFilter), n = obj.length,
-				drawHandler = new webgl.GlBufferHandler(this.context);
-			utils.tools.merge(drawHandler, {
-				vertices: this.vertices,
-				colors: this.colors,
-				glBuffer: this.context.createBuffer(),
-				positionAttrib: this.positionAttrib,
-				colorAttrib: this.colorAttrib
-			});
-			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+			let obj = objects.filter(game.renderableFilter), n = obj.length;
+			this.context.clearColor(0,0,0,1);
+			this.context.clear(this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT);
 			while(n--) {
-				obj[n].renderGL(drawHandler);
+				obj[n].render(this.context);
 			}
 		}
 	}

@@ -26,7 +26,7 @@
           <header class="page-header">
             <div class="symbol-detail-labels"><span class="label label-kind">class</span></div>
             <h1><small></small><span class="symbol-name">Ellipsoid</span></h1>
-            <p class="source-link">Source: <a href="utils_geometry2d.js.html#source-line-1722">utils/<wbr>geometry2d.<wbr>js:1722</a></p>
+            <p class="source-link">Source: <a href="utils_geometry2d.js.html#source-line-1772">utils/<wbr>geometry2d.<wbr>js:1772</a></p>
             <dl class="dl-compact">
             </dl>
           </header>
@@ -99,7 +99,7 @@
                     <dt><a href="Ellipsoid.html#getRect">getRect()</a></dt>
                     <dd>
                     </dd>
-                    <dt><a href="Ellipsoid.html#glSetVertices">glSetVertices(verticesBuffer[, offset])</a></dt>
+                    <dt><a href="Ellipsoid.html#getVertices">getVertices(verticesArray, vOffset, indicesArray, iOffset)</a></dt>
                     <dd>
                     </dd>
                     <dt><a href="Ellipsoid.html#growDistance">growDistance(delta)</a></dt>
@@ -392,9 +392,13 @@
               </h3>
               <dl class="dl-compact">
               </dl>
-              <h3 id="glSetVertices"><span class="symbol-name">glSetVertices</span><span class="signature"><span class="signature-params">(verticesBuffer[, offset])</span>&nbsp;&rarr; <span class="signature-returns"> number</span></span>
+              <h3 id="getVertices"><span class="symbol-name">getVertices</span><span class="signature"><span class="signature-params">(verticesArray, vOffset, indicesArray, iOffset)</span></span>
               </h3>
-              <p>draw the shape on the canvas using its webgl context. To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.</p>
+              <p>draw the shape on the canvas using its webgl context. To fill the shape, the draw mode must de TRIANGLES. you can acquire how many points will be added to the array or how many triangles will be drawned
+                <!--
+-->by using the attributes <a href="utils.geometry2d.Ellipsoid.html#glPointsNumber">utils.geometry2d.Ellipsoid#glPointsNumber</a> and
+                <!--
+--><a href="utils.geometry2d.Ellipsoid.html#glTriangles">utils.geometry2d.Ellipsoid#glTriangles</a></p>
               <section>
                 <h4>Parameters</h4>
                 <table class="jsdoc-details-table">
@@ -409,39 +413,66 @@
                   <tbody>
                     <tr>
                       <td>
-                        <p>verticesBuffer</p>
+                        <p>verticesArray</p>
                       </td>
                       <td>
-                        <p>Float32Array</p>
+                        <p>Array</p>
                       </td>
                       <td>
                         <p>&nbsp;</p>
                       </td>
                       <td>
+                        <p>array where the points x and y coordinates will be placed</p>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <p>offset</p>
+                        <p>vOffset</p>
                       </td>
                       <td>
-                        <p>nmuber</p>
+                        <p>number</p>
                       </td>
                       <td>
-                        <p>Yes</p>
+                        <p>&nbsp;</p>
                       </td>
                       <td>
-                        <p>Defaults to <code>0</code>.</p>
+                        <p>indice of the first free place in the array (must be even)</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>indicesArray</p>
+                      </td>
+                      <td>
+                        <p>Array</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>array where the indices of the points
+                          <!--
+-->for the triangles to be drawned will be placed</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>iOffset</p>
+                      </td>
+                      <td>
+                        <p>number</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>indice of the first free place in indicesArray (should be a multiple of 3)</p>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </section>
               <dl class="dl-compact">
-                <dt>Returns</dt>
-                <dd>
-                  <p><code>number</code>&nbsp;number of points added</p>
-                </dd>
               </dl>
               <h3 id="growDistance"><span class="symbol-name">growDistance</span><span class="signature"><span class="signature-params">(delta)</span>&nbsp;&rarr; <span class="signature-returns"> <a href="utils.geometry2d.Ellipsoid.html">utils.geometry2d.Ellipsoid</a></span></span>
               </h3>
@@ -839,7 +870,7 @@
   <footer id="jsdoc-footer" class="jsdoc-footer">
     <div id="jsdoc-footer-container">
       <p>
-        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on September 2, 2017.
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on October 7, 2017.
       </p>
     </div>
   </footer>

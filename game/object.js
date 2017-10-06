@@ -418,36 +418,17 @@ window.game.Object = (function() {
 		}
 		/**
 		 * called by the game map to draw the object on the canvas
-		 * @param {CanvasRenderingContext2D}context2d
+		 * @param {CanvasRenderingContext2D|WebGLRenderingContext} context
 		 */
-		render(context2d) {
-			this.renderer && this.renderer.setPosition(this.getPosition()).render(context2d);
-		}
-		/**
-		 * draws the object on the canvas with the specified color.
-		 * @param {webgl.GlHandler} handler
-		 * @param {WebGLRenderingContext} handler.gl - webgl context
-		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
-		 * -->to store vertices
-		 * @param {Uint32Array} handler.colors - a large-enough array to use to store colors
-		 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
-		 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
-		 * -->the position of the vertex in the vertex shader
-		 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
-		 * -->the color in the vertex shader
-		 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
-		 * -->the depth in the vertex shader
-		 */
-		renderGL(handler) {
-			handler.gl.uniform1f(handler.depthUniform, 10-this.renderLayer);
-			this.renderer && this.renderer.setPosition(this.getPosition()).renderGL(contextGL);
+		render(context) {
+			this.renderer && this.renderer.setPosition(this.getPosition()).render(context);
 		}
 		/**
 		 * call this function if you want to draw debug informations on the canvas. draws the collider.
 		 * @param {CanvasRenderingContext2D}context2d
 		 */
-		renderDebug(context2d) {
-			this.collider && this.collider.render(context2d);
+		renderDebug(context) {
+			this.collider && this.collider.render(context);
 		}
 
 //______________________________________________________________________________________________________________________

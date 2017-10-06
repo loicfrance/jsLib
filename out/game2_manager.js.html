@@ -212,10 +212,10 @@ window.game.GameManager &#x3D; (function(){
 			/**
 			 * time difference between 2 frames. if &amp;lt; 0, the difference will be the real one, &amp;lt;!--
 			 * --&gt;clamped in [0 ; 0.1] sec. default is 1/60 sec
-			 * @name game.GameManager#fixedDt
+			 * @name game.GameManager#gameDt
 			 * @type {number}
 			 */
-			this.fixedDt &#x3D; 1/60;
+			this.gameDt &#x3D; 1/60;
 //______________________________________________________________________________________________________________________
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -methods - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //**********************************************************************************************************************
@@ -419,8 +419,8 @@ window.game.GameManager &#x3D; (function(){
 						objects_length++;
 					}
 					// 4 : get dT
-					if(this.fixedDt &gt;&#x3D; 0) {
-						dT &#x3D; this.fixedDt;
+					if(this.gameDt &gt;&#x3D; 0) {
+						dT &#x3D; this.gameDt;
 						if(timeStamp &#x3D;&#x3D; lastStamp) return;
 					}
 					else {

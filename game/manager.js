@@ -154,7 +154,14 @@ window.game.GameManager = (function(){
 	 * -->is started or resumed, when it is stopped or paused, and when a frame begins.
 	 */
 	class GameManager {
-		constructor() {
+		/**
+		 * @constructor
+		 * @param {object} [parameters] - object containing properties to set to the game manager
+		 * @param {utils.geometry2d.Rect} [parameters.gameRect] - the rectangle where the game happens
+		 * @param {game.gameEventCallback} [parameters.onGameEvent] - callback function called on various game events
+		 * @param {?game.Viewer} [parameters.viewer] - the object that will be used to render the game
+		 */
+		constructor(parameters) {
 //______________________________________________________________________________________________________________________
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -attributes- - - - - - - - - - - - - - - - - - - - - - - - - - -
 //**********************************************************************************************************************
@@ -167,6 +174,8 @@ window.game.GameManager = (function(){
 			let lastStamp = 0;
 			let callback = null;
 			let running = false;
+			let interval = null;
+			let rafHandler = null;
 //-------------------------------------------------- public attributes -------------------------------------------------
 			/**
 			 * @name game.GameManager#viewer
@@ -179,12 +188,17 @@ window.game.GameManager = (function(){
 			 */
 			this.gameRect = new utils.geometry2d.Rect(0,0,1240,720);
 			/**
-			 * time difference between 2 frames. if < 0, the difference will be the real one, <!--
-			 * -->clamped in [0 ; 0.1] sec. default is 1/60 sec
-			 * @name game.GameManager#fixedDt
+			 * in-game time difference between 2 frames. Default is 1/60 sec
+			 * @name game.GameManager#gameDt
 			 * @type {number}
 			 */
-			this.fixedDt = 1/60;
+			this.gameDt = 1/60;
+			/**
+			 * real time difference between 2 frames. Default is 1/60 sec
+			 * @name game.GameManager#realDt
+			 * @type {number}
+			 */
+			this.realDt = 1/60;
 //______________________________________________________________________________________________________________________
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -methods - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //**********************************************************************************************************************
@@ -305,10 +319,11 @@ window.game.GameManager = (function(){
 			 * @name game.GameManager#start
 			 */
 			this.start = function() {
-				running = true;
-				lastStamp = 0;
-				if(callback) callback(game.GameEvent.GAME_START, 0, null);
-				requestAnimationFrame(onFrame.bind(this));
+				if(!this.isRunning()) {
+					lastStamp = 0;
+					if (callback) callback(game.GameEvent.GAME_START, 0, null);
+					interval = setInterval(gameLoop, this.realDt * 1000);
+				}
 			};
 			/**
 			 * stops or pauses the game, and call the callback method with first parameter <!--
@@ -317,8 +332,11 @@ window.game.GameManager = (function(){
 			 * @name game.GameManager#stop
 			 */
 			this.stop = function() {
-				running = false;
-				if(callback) callback(game.GameEvent.GAME_STOP, 0, null);
+				if(this.isRunning()) {
+					clearInterval(interval);
+					interval = null;
+					if (callback) callback(game.GameEvent.GAME_STOP, 0, null);
+				}
 			};
 			/**
 			 * tells if the game is currently running.
@@ -327,8 +345,18 @@ window.game.GameManager = (function(){
 			 * @name game.GameManager#isRunning
 			 */
 			this.isRunning = function () {
-				return running;
+				return interval != null;
 			};
+			this.startRendering = function() {
+				if(!rafHandler) rafHandler = requestAnimationFrame(draw);
+			};
+			this.stopRendering = function() {
+				cancelAnimationFrame(rafHandler);
+				rafHandler = null;
+			};
+			this.isRendering = function() {
+				return rafHandler != null;
+			}
 			/**
 			 * sets the callback method called for events.
 			 * @method
@@ -364,77 +392,109 @@ window.game.GameManager = (function(){
 				if(callback) callback(game.GameEvent.OBJECT_DESTROYED, 0, object);
 			};
 // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -onFrame  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-			let onFrame = function(timeStamp) {
-				let obj, index = -1, i, dT, j, bodies, len, other, collidingObjs;
-				if(running) {
-					// 1 : remove dead objects
-					while (obj = objectsToRemove.pop()) {
-						index = objects.indexOf(obj);
-						if (index > -1) {
-							obj.onDeath(this);
-							objects.splice(index, 1);
-							objects_length--;
-						}
-					}
-				}
-				// 2 : render all objects on the screen
-				if(this.viewer) {
+
+
+			const draw = function(timeStamp) {
+				// 3 : render all objects on the screen
+				if(rafHandler) rafHandler = requestAnimationFrame(draw);
+				if(this.viewer)
 					this.viewer.render(this, objects);
-				}
-				if(running) {
-					// 3 : add new objects
-					while(obj=objectsToAdd.pop()) {
-						objects.push(obj);
-						objects_length++;
-					}
-					// 4 : get dT
-					if(this.fixedDt >= 0) {
-						dT = this.fixedDt;
-						if(timeStamp == lastStamp) return;
-					}
-					else {
-						dT = (timeStamp - lastStamp)/1000;
-						if(dT > 0.1) dT = 0.1;
-						if(!dT) return;
-					}
-					lastStamp = timeStamp;
-					// 5 : call callback method
-					if(callback) callback(game.GameEvent.GAME_FRAME, dT, null);
-					// 6 : call onFrame of all objects
-					i = objects_length;
-					while(i--) objects[i].onFrame(this, dT);
-					// 7 : get all objects with a collider
-					bodies = objects.filter(game.canCollideFilter).sort(game.collisionPrioritySort);
-					len = bodies.length;
-					if(len) {
-						i = len;
-						collidingObjs = [];
-						// 8 : for each object, prepare the collision
-						while(i--) bodies[i].prepareCollision();
-						while(obj = bodies.pop()) {
-							if(obj.collisionPriority < 0) break;
-							// 9 : get all other objects able to collide with the object
-							other = bodies.filter(game.collisionLayersFilter.bind(undefined, obj.bodyLayer));
-							j = other.length;
-							while(j--) {
-								// 10 : check collision
-								if(obj.canCollide(other[j]) && other[j].canCollide(obj) && obj.collides(other[j])) {
-									// 11 : add the object to the list of colliding objects
-									collidingObjs.push(other[j]);
-								}
-							}
-							if(collidingObjs.length) {
-								//12 : handle collision
-								obj.handleCollision(this, collidingObjs);
-								//13 : empty the collisiding objects array
-								collidingObjs = [];
+			}.bind(this);
+
+			const frame = function() {
+
+			}.bind(this);
+
+			const detectCollisions = function() {
+				let obj, i, j, bodies, len, other, collidingObjs;
+				// 1 : get all objects with a collider
+				bodies = objects.filter(game.canCollideFilter).sort(game.collisionPrioritySort);
+				len = bodies.length;
+				if(len) {
+					i = len;
+					collidingObjs = [];
+					// 2 : for each object, prepare the collision
+					while(i--) bodies[i].prepareCollision();
+					while(obj = bodies.pop()) {
+						if(obj.collisionPriority < 0) break;
+						// 3 : get all other objects able to collide with the object
+						other = bodies.filter(game.collisionLayersFilter.bind(undefined, obj.bodyLayer));
+						j = other.length;
+						while(j--) {
+							// 4 : check collision
+							if(obj.canCollide(other[j]) && other[j].canCollide(obj) && obj.collides(other[j])) {
+								// 5 : add the object to the list of colliding objects
+								collidingObjs.push(other[j]);
 							}
 						}
+						if(collidingObjs.length) {
+							//6 : handle collision
+							obj.handleCollision(this, collidingObjs);
+							//7 : empty the collisiding objects array
+							collidingObjs = [];
+						}
 					}
+				}
+			}.bind(this);
+
+			//*
+			const gameLoop = (function() {
+				let obj, i;
+				//add new objects
+				while(obj=objectsToAdd.pop()) {
+					objects.push(obj);
+					objects_length++;
+				}
+
+				if(callback) callback(game.GameEvent.GAME_FRAME, this.gameDt, null);
+
+				//execute every object frame
+				i = objects_length;
+				while(i--) objects[i].onFrame(this, this.gameDt);
+
+				//handle collisions
+				detectCollisions();
+
+				//remove dead objects
+				while (obj = objectsToRemove.pop()) {
+					i = objects.indexOf(obj);
+					if (i > -1) {
+						obj.onDeath(this);
+						objects.splice(i, 1);
+						objects_length--;
+					}
+				}
+			}).bind(this);
+			/*/
+			function gameLoop(timeStamp) {
+				if(running) {
+					updateObjects();
+				}
+				draw.bind(timeStamp);
+				if(running) {
+					frame.bind(timeStamp);
+					detectCollisions.bind();
 				}
 				// 14 : request next frame
-				requestAnimationFrame(onFrame.bind(this));
+				requestAnimationFrame(gameLoop.bind(this));
 			};
+			//*/
+
+			if(parameters) {
+				if(parameters.viewer instanceof game.Viewer)
+					this.setViewer(parameters.viewer);
+				if(parameters.onGameEvent instanceof Function)
+					this.setEventsCallback(parameters.onGameEvent);
+				if(parameters.gameRect instanceof utils.geometry2d.Rect)
+					this.setGameRect(parameters.gameRect);
+				if(!isNaN(+parameters.gameDt))
+					this.gameDt = +parameters.gameDt;
+				if(!isNaN(+parameters.realDt))
+					this.realDt = +parameters.realDt;
+			}
+		}
+		setViewer(viewer) {
+			this.viewer = viewer;
 		}
 		getViewer() {
 			return this.viewer;
