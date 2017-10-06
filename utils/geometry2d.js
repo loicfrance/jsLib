@@ -958,17 +958,32 @@ window.utils = window.utils || {};
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Rect#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Rect#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices( vertices, offset=0) {
-			vertices[offset] = vertices[offset+4] = this.left;
-			vertices[offset+1] = vertices[offset+3] = this.top;
-			vertices[offset+2] = vertices[offset+6] = this.right;
-			vertices[offset+5] = vertices[offset+7] = this.botttom;
-			return 4;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const n = offset/2;
+			float32Array[offset++] = this.left; //top-left corner
+			float32Array[offset++] = this.top;
+			float32Array[offset++] = this.left; //bot-left corner
+			float32Array[offset++] = this.bottom;
+			float32Array[offset++] = this.right; //top-right corner
+			float32Array[offset++] = this.top;
+			float32Array[offset++] = this.right; //bot-right corner
+			float32Array[offset++] = this.bottom;
+			indicesArray[iOffset++] = n;
+			indicesArray[iOffset++] = n+1;
+			indicesArray[iOffset++] = n+2;
+			indicesArray[iOffset++] = n+2;
+			indicesArray[iOffset++] = n+1;
+			indicesArray[iOffset++] = n+3;
 		}
 
 		/**
@@ -1186,6 +1201,12 @@ window.utils = window.utils || {};
 	 * @name utils.geometry2d.Rect#glPointsNumber
 	 */
 	Rect.prototype.glPointsNumber = 4;
+	/**
+	 * number of triangles used to draw this shape.
+	 * @type {number}
+	 * @name utils.geometry2d.Rect#glTriangles
+	 */
+	Rect.prototype.glTriangles = 2;
 //######################################################################################################################
 //#                                                        Shape                                                       #
 //######################################################################################################################
@@ -1301,13 +1322,18 @@ window.utils = window.utils || {};
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Circle#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Circle#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			return 0;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+
 		}
 
 		/**
@@ -1459,6 +1485,12 @@ window.utils = window.utils || {};
 	 * @name utils.geometry2d.Shape#glPointsNumber
 	 */
 	Shape.prototype.glPointsNumber = 0;
+	/**
+	 * number of triangles used to draw this shape.
+	 * @type {number}
+	 * @name utils.geometry2d.Shape#glTriangles
+	 */
+	Shape.prototype.glTriangles = 0;
 //######################################################################################################################
 //#                                                       Circle                                                       #
 //######################################################################################################################
@@ -1565,18 +1597,36 @@ window.utils = window.utils || {};
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Circle#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Circle#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			let n = this.glPointsNumber*2, dA = Circle.PI2/n, a = 0, i = 0;
-			while(i < n) {
-				vertices[offset+i++] = (t = Vec2.createFromAngle(a += dA, this.radius)).x;
-				vertices[offset+i++] = t.y;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const o = offset/2;
+			let n = this.glPointsNumber-1, dA = Circle.PI2/n, a = 0, i = -1;
+			while(++i < n) {
+				float32Array[vOffset++] = (t = Vec2.createFromAngle(a += dA, this.radius)).x;
+				float32Array[vOffset++] = t.y;
+				if(i > 1) {
+					indicesArray[iOffset++] = o; //first point
+					indicesArray[iOffset++] = o+i; //current point
+					indicesArray[iOffset++] = o+i-1; //previous point
+				}
 			}
-			return n/2;
+		}
+		/**
+		 * number of points used to draw this shape.
+		 * @type {number}
+		 * @name utils.geometry2d.Circle#glPointsNumber
+		 */
+		get glTriangles() {
+			return this.glPointsNumber-1;
 		}
 
 		/**
@@ -1925,21 +1975,38 @@ window.utils = window.utils || {};
 			fill && context.fill();
 			stroke && context.stroke();
 		}
-
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Ellipsoid#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Ellipsoid#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			let n = this.glPointsNumber*2, dA = Circle.PI2/n, a = 0, i = 0,t;
-			while(i < n) {
-				vertices[offset+i++] = (t = this.pointForAngle(a += dA)).x;
-				vertices[offset+i++] = t.y;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const o = offset/2;
+			let n = this.glPointsNumber-1, dA = Circle.PI2/n, a = 0, i = -1;
+			while(++i < n) {
+				float32Array[vOffset++] = (t = this.pointForAngle(a += dA)).x;
+				float32Array[vOffset++] = t.y;
+				if(i > 1) {
+					indicesArray[iOffset++] = o; //first point
+					indicesArray[iOffset++] = o+i; //current point
+					indicesArray[iOffset++] = o+i-1; //previous point
+				}
 			}
-			return n/2;
+		}
+		/**
+		 * number of points used to draw this shape.
+		 * @type {number}
+		 * @name utils.geometry2d.Ellipsoid#glPointsNumber
+		 */
+		get glTriangles() {
+			return this.glPointsNumber-1;
 		}
 
 		/**@inheritDoc*/
@@ -2297,17 +2364,25 @@ window.utils = window.utils || {};
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Line#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Line#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			vertices[offset] = this.p0.x;
-			vertices[offset+1] = this.p0.y;
-			vertices[offset+2] = this.p1.x;
-			vertices[offset+3] = this.p1.y;
-			return 2;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const o = offset/2, A = this.p0, B= this.p1;
+			verticesArray[vOffset++] = A.x;
+			verticesArray[vOffset++] = A.y;
+			verticesArray[vOffset++] = B.x;
+			verticesArray[vOffset++] = B.y;
+			indicesArray[iOffset++] = o;
+			indicesArray[iOffset++] = o+1;
+			indicesArray[iOffset++] = o;
 		}
 
 		/**
@@ -2517,6 +2592,12 @@ window.utils = window.utils || {};
 	 * @name utils.geometry2d.Line#glPointsNumber
 	 */
 	Line.prototype.glPointsNumber = 2;
+	/**
+	 * number of triangles used to draw this shape.
+	 * @type {number}
+	 * @name utils.geometry2d.Line#glTriangles
+	 */
+	Line.prototype.glPointsNumber = 1;
 //######################################################################################################################
 //#                                                        Point                                                       #
 //######################################################################################################################
@@ -2557,15 +2638,23 @@ window.utils = window.utils || {};
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Point#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Point#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			vertices[offset] = this.center.x;
-			vertices[offset+1] = this.center.y;
-			return 1;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const o = offset/2;
+			verticesArray[vOffset++] = this.center.x;
+			verticesArray[vOffset++] = this.center.y;
+			indicesArray[iOffset++] = o;
+			indicesArray[iOffset++] = o;
+			indicesArray[iOffset++] = o;
 		}
 
 		/**
@@ -2582,6 +2671,12 @@ window.utils = window.utils || {};
 	 * @name utils.geometry2d.Point#glPointsNumber
 	 */
 	Point.prototype.glPointsNumber = 1;
+	/**
+	 * number of triangles used to draw this shape.
+	 * @type {number}
+	 * @name utils.geometry2d.Point#glTriangles
+	 */
+	Point.prototype.glPointsNumber = 1;
 //######################################################################################################################
 //#                                                       Polygon                                                      #
 //######################################################################################################################
@@ -2593,7 +2688,7 @@ window.utils = window.utils || {};
 	 * @memberOf utils.geometry2d
 	 * @classdesc a class using multiple points, where their coordinates are relative to the center of the shape.
 	 * This representation is optimized for movements and transformations, but not optimized for drawing and <!--
-	 * -->memory,  because it has all the points in memory (2 numbers each}, plus the center <!--
+	 * -->memory,  because it has all the points in memory (2 numbers each), plus the center <!--
 	 * -->coordinate (2 numbers).
 	 */
 	class Polygon extends Shape {
@@ -2747,21 +2842,38 @@ window.utils = window.utils || {};
 		get glPointsNumber() {
 			return this.points.length;
 		}
+		/**
+		 * number of triangles used to draw this shape.
+		 * @type {number}
+		 */
+		get glTriangles() {
+			return this.points.length-1;
+		}
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Polygon#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Polygon#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			let n = this.points.length, dA = Circle.PI2/n, a = 0, i = 0, j=offset, t;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const o = offset/2, n = this.points.length;
+			let a = 0, i = 0, j=offset, t;
 			while(i < n) {
-				vertices[j++] = (t = Vec2.getPoint(i++)).x;
-				vertices[j++] = t.y;
+				if(i>1) {
+					indicesArray[iOffset++] = o
+					indicesArray[iOffset++] = o+i;
+					indicesArray[iOffset++] = o+i-1;
+				}
+				verticesArray[vOffset++] = this.points[i  ].x+this.center.x;
+				verticesArray[vOffset++] = this.points[i++].y+this.center.y;
 			}
-			return n;
 		}
 
 		/**
@@ -3254,18 +3366,25 @@ window.utils = window.utils || {};
 
 		/**
 		 * draw the shape on the canvas using its webgl context.
-		 * To fill the shape, the draw mode must de TRIANGLE_FAN. To only draw the outline, the mode must be LINE_LOOP.
-		 * @param {Float32Array} verticesBuffer
-		 * @param {nmuber} [offset=0]
-		 * @returns {number} number of points added
+		 * To fill the shape, the draw mode must de TRIANGLES.
+		 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+		 * -->by using the attributes {@link utils.geometry2d.Line#glPointsNumber} and <!--
+		 * -->{@link utils.geometry2d.Line#glTriangles}
+		 * @param {Array} verticesArray array where the points x and y coordinates will be placed
+		 * @param {number} vOffset indice of the first free place in the array (must be even)
+		 * @param {Array} indicesArray array where the indices of the points <!--
+		 * -->for the triangles to be drawned will be placed
+		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
-		glSetVertices(vertices, offset=0) {
-			const t = this.endPoint(Number.MAX_SAFE_INTEGER);
-			vertices[offset] = this.center.x;
-			vertices[offset+1] = this.center.y;
-			vertices[offset+2] = t.x;
-			vertices[offset+3] = t.y;
-			return 2;
+		getVertices(verticesArray, vOffset, indicesArray, iOffset){
+			const o = offset/2, t = this.endPoint(Number.MAX_SAFE_INTEGER);
+			verticesArray[vOffset++] = this.center.x;
+			verticesArray[vOffset++] = this.center.y;
+			verticesArray[vOffset++] = t.x;
+			verticesArray[vOffset++] = t.y;
+			indicesArray[iOffset++] = o;
+			indicesArray[iOffset++] = o+1;
+			indicesArray[iOffset++] = o;
 		}
 
 		/**
@@ -3351,6 +3470,13 @@ window.utils = window.utils || {};
 	 * @name utils.geometry2d.Ray#glPointsNumber
 	 */
 	Ray.prototype.glPointsNumber = 2;
+	/**
+	 * number of triangles used to draw this shape.
+	 * @type {number}
+	 * @name utils.geometry2d.Ray#glTriangles
+	 */
+	Ray.prototype.glTrinagles = 1;
+
 
 	let asm = {};
 	let wasmCode = new Uint8Array([
@@ -3383,7 +3509,7 @@ window.utils = window.utils || {};
 		70,13,0,32,2,32,0,147,34,5,32,8,148,32,3,32,1,147,34,1,32,4,148,94,32,5,32,10,148,32,1,32,9,148,94,115,179,33,
 		11,11,32,11,11
 	]);
-	WebAssembly.instantiate(wasmCode, {/* impor&ts */}).then(wasm=>{
+	if(WebAssembly) WebAssembly.instantiate(wasmCode, {/* imports */}).then(wasm=>{
 		asm = wasm.instance.exports;
 	});
 

@@ -377,10 +377,85 @@ window.game.ImageObjectRenderer = (function() {
 	return ImageObjectRenderer;
 })();
 //######################################################################################################################
+//#                                                 WebGLObjectRenderer                                                #
+//######################################################################################################################
+window.game.WebGLObjectRenderer = (function() {
+	"use strict";
+	class WebGLObjectRenderer extends game.ObjectRenderer {
+		constructor(shaderProgram) {
+			super();
+			this.shaderProgram = shaderProgram;
+		}
+		setPosition(pos) {
+			return this;
+		}
+		rotate(radians) {
+		}
+		scale(factor) {
+		}
+		render(glContext) {
+			glContext.useProgram(this.shaderProgram);
+		}
+	}
+	return WebGLObjectRenderer;
+})();
+//######################################################################################################################
+//#                                         WebGL2dTransformableObjectRenderer                                         #
+//######################################################################################################################
+window.game.WebGL2dTransformableObjectRenderer = (function() {
+	"use strict";
+	class WebGL2dTransformableObjectRenderer extends game.WebGLObjectRenderer {
+		constructor(shaderProgram) {
+			super();
+			this.shaderProgram = shaderProgram;
+			this.transformMatrices =[
+				[1,0,0,
+				 0,1,0,
+				 0,0,1],
+				[1,0,0,
+				 0,1,0,
+				 0,0,1],
+				[1,0,0,
+				 0,1,0,
+				 0,0,1]
+			];
+		}
+		get translationMatrix() {
+			return this.transformMatrices[0];
+		}
+		get rotationMatrix() {
+			return this.transformMatrices[1];
+		}
+		get scaleMatrix() {
+			return this.transformMatrices[2];
+		}
+		setPosition(pos) {
+			this.transformMatrices[0][6] = pos.x;
+			this.transformMatrices[0][7] = pos.y;
+			return this;
+		}
+		rotate(radians) {
+			const c = Math.cos(radians), s = Math.sin(radians);
+			const a = this.transformMatrices[1][0], b = this.transformMatrices[1][3];
+			this.transformMatrices[1][0] =   this.transformMatrices[1][4] = a*c-b*s;
+			this.transformMatrices[1][1] = -(this.transformMatrices[1][3] = a*s+b*c);
+		}
+		scale(factor) {
+			this.transformMatrices[2][0] *= factor;
+			this.transformMatrices[2][4] *= factor;
+		}
+		render(glContext) {
+			glContext.useProgram(this.shaderProgram);
+		}
+	}
+	return WebGL2dTransformableObjectRenderer;
+})();
+//######################################################################################################################
 //#                                            MultiRenderersObjectRenderer                                            #
 //######################################################################################################################
 window.game.MultiRenderersObjectRenderer = (function(){
-	"use strict";/**
+	"use strict";
+	/**
 	 * @class game.MultiRenderersObjectRenderer
 	 * @augments game.ObjectRenderer
 	 * @memberOf game
@@ -573,16 +648,6 @@ window.game.ObjectCollider = (function() {
 		 * tells the collider that the collision detection is over for this object on this frame.
 		 */
 		finishCollision() {
-		}
-
-		/**
-		 * handle the collision with all colliding objects
-		 * @param gameManager
-		 * @param objects
-		 */
-		handleCollision(gameManager, objects) {
-			let i = 0, n = objects.length;
-			while(i < n && !this.collides(objects[i++]));
 		}
 		/**
 		 * returns true if the two colliders are colliding.
