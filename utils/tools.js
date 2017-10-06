@@ -221,7 +221,10 @@ utils.tools = {
 	getStringFromUrl: (url, callback) => {
 		let client = new XMLHttpRequest();
 		client.open('GET', url);
-		client.onreadystatechange = _ => callback(client.responseText);
+		client.onreadystatechange = _ => {
+			if(client.readyState == 4 && client.status == 200 || client.status == 0)
+				callback(client.responseText);
+		}
 		client.send();
 	},
 	/**
