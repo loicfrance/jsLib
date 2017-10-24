@@ -498,10 +498,28 @@ window.utils = window.utils || {};
 		 * @return {utils.geometry2d.Vec2[]} a Vec2 array : [(x1,y1), (x2,y2), (x3,y3), ...].
 		 */
 		static createVec2Array(xyxyArray) {
-			let len = Math.floor(xyxyArray.length / 2), result = new Array(len), i = len, i2;
+			const len = Math.floor(xyxyArray.length / 2), result = new Array(len);
+			let i = len, i2;
 			while (i--) {
 				i2 = 2 * i;
 				result[i] = new Vec2(xyxyArray[i2], xyxyArray[i2 + 1]);
+			}
+			return result;
+		}
+
+		/**
+		 * @static
+		 * @param {utils.geometry2d.Vec2[]} vec2Array - the array of points to convert to the float array
+		 * @returns {Float32Array} the array containing all x and y coordinates of the given points, in the form <!--
+		 * -->[x1, y1, x2, y2, ... xn, yn]
+		 */
+		static createFloatArray(vec2Array) {
+			const len = vec2Array.length, result = new Float32Array(len*2);
+			let i = len, i2;
+			while(i--) {
+				i2 = i*2;
+				result[i2  ] = vec2Array[i].x;
+				result[i2+1] = vec2Array[i].y;
 			}
 			return result;
 		}
@@ -537,32 +555,32 @@ window.utils = window.utils || {};
 	 */
 	class Rect {
 		/** @constructor
-		 * @param {number} left
-		 * @param {number} top
-		 * @param {number} right
-		 * @param {number} bottom
+		 * @param {number} xMin
+		 * @param {number} yMin
+		 * @param {number} xMax
+		 * @param {number} yMax
 		 */
-		constructor(left, top, right, bottom) {
+		constructor(xMin, yMin, xMax, yMax) {
 			/**
 			 * @name utils.geometry2d.Rect#left
 			 * @type {number}
 			 */
-			this.left = left;
+			this.xMin = xMin;
 			/**
 			 * @name utils.geometry2d.Rect#top
 			 * @type {number}
 			 */
-			this.top = top;
+			this.yMin = yMin;
 			/**
 			 * @name utils.geometry2d.Rect#right
 			 * @type {number}
 			 */
-			this.right = right;
+			this.xMax = xMax;
 			/**
 			 * @name utils.geometry2d.Rect#bottom
 			 * @type {number}
 			 */
-			this.bottom = bottom;
+			this.yMax = yMax;
 		}
 
 		/**
@@ -571,7 +589,7 @@ window.utils = window.utils || {};
 		 * @readonly
 		 */
 		get width() {
-			return this.right - this.left;
+			return this.xMax - this.xMin;
 		}
 
 		/**
@@ -580,7 +598,7 @@ window.utils = window.utils || {};
 		 * @readonly
 		 */
 		get height() {
-			return this.bottom - this.top
+			return this.yMax - this.yMin
 		}
 
 		/**
@@ -618,7 +636,7 @@ window.utils = window.utils || {};
 		 * @type {utils.geometry2d.Vec2}
 		 */
 		get center() {
-			return new Vec2(this.left + this.right, this.top + this.bottom).mul(0.5);
+			return new Vec2(this.xMin + this.xMax, this.yMin + this.yMax).mul(0.5);
 		}
 
 		/** @param {utils.geometry2d.Vec2} center */
@@ -632,7 +650,7 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		clone() {
-			return new Rect(this.left, this.top, this.right, this.bottom);
+			return new Rect(this.xMin, this.yMin, this.xMax, this.yMax);
 		}
 
 		/**
@@ -656,10 +674,10 @@ window.utils = window.utils || {};
 		 */
 		setCenterXY(x, y) {
 			let w = this.width / 2, h = this.height / 2;
-			this.left = x - w;
-			this.right = x + w;
-			this.top = y - h;
-			this.bottom = y + h;
+			this.xMin = x - w;
+			this.xMax = x + w;
+			this.yMin = y - h;
+			this.yMax = y + h;
 			return this;
 		}
 
@@ -671,10 +689,10 @@ window.utils = window.utils || {};
 		 */
 		scale(scaleX, scaleY = scaleX) {
 			let dw = this.width * (scaleX - 1) * 0.5, dh = this.height * (scaleY - 1) * 0.5;
-			this.left -= dw;
-			this.right += dw;
-			this.top -= dh;
-			this.bottom += dh;
+			this.xMin -= dw;
+			this.xMax += dw;
+			this.yMin -= dh;
+			this.yMax += dh;
 			return this;
 		}
 
@@ -683,8 +701,8 @@ window.utils = window.utils || {};
 		 * @returns {boolean} true if the instance the object is called from and the parameter have a common point
 		 */
 		overlap(rect) {
-			return rect.left <= this.right && rect.top <= this.bottom
-				&& rect.right >= this.left && rect.bottom >= this.top;
+			return rect.xMin <= this.xMax && rect.yMin <= this.yMax
+				&& rect.xMax >= this.xMin && rect.yMax >= this.yMin;
 		}
 
 		/**
@@ -695,7 +713,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#contains}
 		 */
 		containsXY(x, y) {
-			return x >= this.left && x <= this.right && y >= this.top && y <= this.bottom;
+			return x >= this.xMin && x <= this.xMax && y >= this.yMin && y <= this.yMax;
 		}
 
 		/**
@@ -705,8 +723,8 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#contains}
 		 */
 		containsRect(rect) {
-			return rect.left >= this.left && rect.right <= this.right
-				&& rect.top >= this.top && rect.bottom <= this.bottom;
+			return rect.xMin >= this.xMin && rect.xMax <= this.xMax
+				&& rect.yMin >= this.yMin && rect.yMax <= this.yMax;
 		}
 
 		/**
@@ -716,7 +734,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#containsRect}
 		 */
 		contains(p) {
-			return p.x >= this.left && p.x <= this.right && p.y >= this.top && p.y <= this.bottom;
+			return p.x >= this.xMin && p.x <= this.xMax && p.y >= this.yMin && p.y <= this.yMax;
 		}
 
 		/**
@@ -729,12 +747,12 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#belowY}
 		 */
 		onLeftOfX(x) {
-			return this.right < x;
+			return this.xMax < x;
 		}
 
 		/**
 		 * @param {utils.geometry2d.Rect} r
-		 * @returns {boolean} <code>right &lt; r.left</code>
+		 * @returns {boolean} <code>right &lt; r.xMin</code>
 		 * @see {@link utils.geometry2d.Rect#onLeftOfX}
 		 * @see {@link utils.geometry2d.Rect#onLeftOf}
 		 * @see {@link utils.geometry2d.Rect#onRightOfRect}
@@ -742,7 +760,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#belowRect}
 		 */
 		onLeftOfRect(r) {
-			return this.right < r.left;
+			return this.xMax < r.xMin;
 		}
 
 		/**
@@ -755,7 +773,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#below}
 		 */
 		onLeftOf(p) {
-			return this.right < p.x;
+			return this.xMax < p.x;
 		}
 
 		/**
@@ -768,12 +786,12 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#belowY}
 		 */
 		onRightOfX(x) {
-			return this.left > x;
+			return this.xMin > x;
 		}
 
 		/**
 		 * @param {utils.geometry2d.Rect} r
-		 * @returns {boolean} <code>left &gt; r.right</code>
+		 * @returns {boolean} <code>left &gt; r.xMax</code>
 		 * @see {@link utils.geometry2d.Rect#onRightOfX}
 		 * @see {@link utils.geometry2d.Rect#onRightOf}
 		 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
@@ -781,7 +799,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#belowRect}
 		 */
 		onRightOfRect(r) {
-			return this.left > r.right;
+			return this.xMin > r.xMax;
 		}
 
 		/**
@@ -794,7 +812,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#below}
 		 */
 		onRightOf(p) {
-			return this.left > p.x;
+			return this.xMin > p.x;
 		}
 
 		/**
@@ -807,12 +825,12 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#belowY}
 		 */
 		aboveY(y) {
-			return this.bottom < y;
+			return this.yMax < y;
 		}
 
 		/**
 		 * @param {utils.geometry2d.Rect} r
-		 * @returns {boolean} <code>bottom &lt; r.top</code>
+		 * @returns {boolean} <code>bottom &lt; r.yMin</code>
 		 * @see {@link utils.geometry2d.Rect#aboveY}
 		 * @see {@link utils.geometry2d.Rect#above}
 		 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
@@ -820,7 +838,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#belowRect}
 		 */
 		aboveRect(r) {
-			return this.bottom < r.top;
+			return this.yMax < r.yMin;
 		}
 
 		/**
@@ -833,7 +851,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#below}
 		 */
 		above(p) {
-			return this.bottom < p.y;
+			return this.yMax < p.y;
 		}
 
 		/**
@@ -846,12 +864,12 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#aboveY}
 		 */
 		belowY(y) {
-			return this.top > y;
+			return this.yMin > y;
 		}
 
 		/**
 		 * @param {utils.geometry2d.Rect} r
-		 * @returns {boolean} <code>top &gt; r.bottom</code>
+		 * @returns {boolean} <code>top &gt; r.yMax</code>
 		 * @see {@link utils.geometry2d.Rect#belowY}
 		 * @see {@link utils.geometry2d.Rect#below}
 		 * @see {@link utils.geometry2d.Rect#onLeftOfRect}
@@ -859,7 +877,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#aboveRect}
 		 */
 		belowRect(r) {
-			return this.top > r.bottom;
+			return this.yMin > r.yMax;
 		}
 
 		/**
@@ -872,7 +890,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#above}
 		 */
 		below(p) {
-			return this.top > p.y;
+			return this.yMin > p.y;
 		}
 
 		/**
@@ -886,10 +904,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#addMargins}
 		 */
 		addMargin(margin) {
-			this.left -= margin;
-			this.right += margin;
-			this.top -= margin;
-			this.bottom += margin;
+			this.xMin -= margin;
+			this.xMax += margin;
+			this.yMin -= margin;
+			this.yMax += margin;
 			return this;
 		}
 
@@ -905,10 +923,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#addMargins}
 		 */
 		addMarginsXY(marginX, marginY) {
-			this.left -= marginX;
-			this.right += marginX;
-			this.top -= marginY;
-			this.bottom += marginY;
+			this.xMin -= marginX;
+			this.xMax += marginX;
+			this.yMin -= marginY;
+			this.yMax += marginY;
 			return this;
 		}
 
@@ -926,10 +944,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#addMarginsXY}
 		 */
 		addMargins(marginLeft, marginTop, marginRight, marginBottom) {
-			this.left -= marginLeft;
-			this.right += marginRight;
-			this.top -= marginTop;
-			this.bottom += marginBottom;
+			this.xMin -= marginLeft;
+			this.xMax += marginRight;
+			this.yMin -= marginTop;
+			this.yMax += marginBottom;
 			return this;
 		}
 
@@ -939,7 +957,7 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#draw}
 		 */
 		pushPath(context) {
-			context.rect(this.left, this.top, this.width, this.height);
+			context.rect(this.xMin, this.yMin, this.width, this.height);
 		}
 
 		/**
@@ -951,7 +969,7 @@ window.utils = window.utils || {};
 		 */
 		draw(context, fill = false, stroke = !fill) {
 			context.beginPath();
-			context.rect(this.left, this.top, this.width, this.height);
+			context.rect(this.xMin, this.yMin, this.width, this.height);
 			fill && context.fill();
 			stroke && context.stroke();
 		}
@@ -970,14 +988,14 @@ window.utils = window.utils || {};
 		 */
 		getVertices(verticesArray, vOffset, indicesArray, iOffset){
 			const n = offset/2;
-			float32Array[offset++] = this.left; //top-left corner
-			float32Array[offset++] = this.top;
-			float32Array[offset++] = this.left; //bot-left corner
-			float32Array[offset++] = this.bottom;
-			float32Array[offset++] = this.right; //top-right corner
-			float32Array[offset++] = this.top;
-			float32Array[offset++] = this.right; //bot-right corner
-			float32Array[offset++] = this.bottom;
+			float32Array[offset++] = this.xMin; //top-left corner
+			float32Array[offset++] = this.yMin;
+			float32Array[offset++] = this.xMin; //bot-left corner
+			float32Array[offset++] = this.yMax;
+			float32Array[offset++] = this.xMax; //top-right corner
+			float32Array[offset++] = this.yMin;
+			float32Array[offset++] = this.xMax; //bot-right corner
+			float32Array[offset++] = this.yMax;
 			indicesArray[iOffset++] = n;
 			indicesArray[iOffset++] = n+1;
 			indicesArray[iOffset++] = n+2;
@@ -993,10 +1011,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#set}
 		 */
 		setRect(rect) {
-			this.left = rect.left;
-			this.right = rect.right;
-			this.top = rect.top;
-			this.bottom = rect.bottom;
+			this.xMin = rect.xMin;
+			this.xMax = rect.xMax;
+			this.yMin = rect.yMin;
+			this.yMax = rect.yMax;
 			return this;
 		}
 
@@ -1010,10 +1028,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#setRect}
 		 */
 		set(left, top, right, bottom) {
-			this.top = top;
-			this.left = left;
-			this.right = right;
-			this.bottom = bottom;
+			this.yMin = top;
+			this.xMin = left;
+			this.xMax = right;
+			this.yMax = bottom;
 			return this;
 		}
 
@@ -1027,10 +1045,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#move}
 		 */
 		moveXY(x, y) {
-			this.left += x;
-			this.right += x;
-			this.top += y;
-			this.bottom += y;
+			this.xMin += x;
+			this.xMax += x;
+			this.yMin += y;
+			this.yMax += y;
 			return this;
 		}
 
@@ -1043,10 +1061,10 @@ window.utils = window.utils || {};
 		 * @see {@link utils.geometry2d.Rect#moveXY}
 		 */
 		move(delta) {
-			this.left += delta.x;
-			this.right += delta.x;
-			this.top += delta.y;
-			this.bottom += delta.y;
+			this.xMin += delta.x;
+			this.xMax += delta.x;
+			this.yMin += delta.y;
+			this.yMax += delta.y;
 			return this;
 		}
 
@@ -1058,10 +1076,10 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Vec2} the corresponding point.
 		 */
 		getPercentPoint(percent) {
-			if ((percent %= 1) < 0.25) return new Vec2(this.left + percent * 4 * this.width, this.top);
-			if (percent < 0.5) return new Vec2(this.right, this.top + (percent * 4 - 1) * this.height);
-			if (percent < 0.75) return new Vec2(this.right - (percent * 4 - 2) * this.width, this.bottom);
-			return new Vec2(this.left, this.bottom - (percent * 4 - 3) * this.height);
+			if ((percent %= 1) < 0.25) return new Vec2(this.xMin + percent * 4 * this.width, this.yMin);
+			if (percent < 0.5) return new Vec2(this.xMax, this.yMin + (percent * 4 - 1) * this.height);
+			if (percent < 0.75) return new Vec2(this.xMax - (percent * 4 - 2) * this.width, this.yMax);
+			return new Vec2(this.xMin, this.yMax - (percent * 4 - 3) * this.height);
 		}
 
 		/**
@@ -1069,8 +1087,8 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Polygon}
 		 */
 		getShape() {
-			return Polygon.Absolute(Vec2.createVec2Array([this.left, this.top, this.right, this.top,
-				this.right, this.bottom, this.left, this.bottom]));
+			return Polygon.Absolute(Vec2.createVec2Array([this.xMin, this.yMin, this.xMax, this.yMin,
+				this.xMax, this.yMax, this.xMin, this.yMax]));
 		}
 
 		/**
@@ -1078,7 +1096,7 @@ window.utils = window.utils || {};
 		 * @returns {string} [left, top, right, bottom]
 		 */
 		toString() {
-			return ['[', this.left, ', ', this.top, ', ', this.right, ', ', this.bottom, ']'].join('');
+			return ['[', this.xMin, ', ', this.yMin, ', ', this.xMax, ', ', this.yMax, ']'].join('');
 		}
 
 		/**
@@ -1095,10 +1113,10 @@ window.utils = window.utils || {};
 			if (i) {
 				let res = rects[--i].clone();
 				while (i--) {
-					res.left = Math.min(res.left, rects[i].left);
-					res.right = Math.max(res.right, rects[i].right);
-					res.top = Math.min(res.top, rects[i].top);
-					res.bottom = Math.max(res.bottom, rects[i].bottom);
+					res.xMin = Math.min(res.xMin, rects[i].xMin);
+					res.xMax = Math.max(res.xMax, rects[i].xMax);
+					res.yMin = Math.min(res.yMin, rects[i].yMin);
+					res.yMax = Math.max(res.yMax, rects[i].yMax);
 				}
 				return res;
 			}
@@ -1117,13 +1135,13 @@ window.utils = window.utils || {};
 		static getIntersection(rects) {
 			let i = rects.length;
 			if (i) {
-				let r = rects[0], maxLeft = r.left, maxTop = r.top, minRight = r.right, minBottom = r.bottom;
+				let r = rects[0], maxLeft = r.xMin, maxTop = r.yMin, minRight = r.xMax, minBottom = r.yMax;
 				while (--i) {
 					r = rects[i];
-					if (r.top > maxTop) maxTop = r.top;
-					if (r.left > maxLeft) maxLeft = r.left;
-					if (r.right < minRight) minRight = r.right;
-					if (r.bottom < minBottom) minBottom = r.bottom;
+					if (r.yMin > maxTop) maxTop = r.yMin;
+					if (r.xMin > maxLeft) maxLeft = r.xMin;
+					if (r.xMax < minRight) minRight = r.xMax;
+					if (r.yMax < minBottom) minBottom = r.yMax;
 				}
 				if (maxLeft <= minRight && maxTop <= minBottom) return new Rect(maxLeft, maxTop, minRight, minBottom);
 			}
@@ -1608,15 +1626,15 @@ window.utils = window.utils || {};
 		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
 		getVertices(verticesArray, vOffset, indicesArray, iOffset){
-			const o = offset/2;
-			let n = this.glPointsNumber-1, dA = Circle.PI2/n, a = 0, i = -1;
+			const o = vOffset/2;
+			let n = this.glPointsNumber, dA = Circle.PI2/n, a = -dA, i = -1, t;
 			while(++i < n) {
-				float32Array[vOffset++] = (t = Vec2.createFromAngle(a += dA, this.radius)).x;
-				float32Array[vOffset++] = t.y;
+				verticesArray[vOffset++] = (t = Vec2.createFromAngle(a += dA, this.radius)).x;
+				verticesArray[vOffset++] = t.y;
 				if(i > 1) {
 					indicesArray[iOffset++] = o; //first point
-					indicesArray[iOffset++] = o+i; //current point
 					indicesArray[iOffset++] = o+i-1; //previous point
+					indicesArray[iOffset++] = o+i; //current point
 				}
 			}
 		}
@@ -1626,7 +1644,7 @@ window.utils = window.utils || {};
 		 * @name utils.geometry2d.Circle#glPointsNumber
 		 */
 		get glTriangles() {
-			return this.glPointsNumber-1;
+			return this.glPointsNumber-2;
 		}
 
 		/**
@@ -2487,7 +2505,7 @@ window.utils = window.utils || {};
 			u = this.directorVect;
 			AC.set(p).remove(A);
 			d = Vec2.dotProd(u, AC);
-			return (d < 0) ? u.set(A) : (d > this.length) ? u.mul(this.length).add(A) : u.set(this.p1);
+			return (d < 0) ? u.set(A) : (d < this.length) ? u.mul(d).add(A) : u.set(this.p1);
 		}
 
 		/**
@@ -2847,7 +2865,61 @@ window.utils = window.utils || {};
 		 * @type {number}
 		 */
 		get glTriangles() {
-			return this.points.length-1;
+			return this.points.length-2;
+		}
+
+		/**
+		 * @returns {boolean} true if the points of the polygon are in the counter-clockwise order
+		 */
+		ccw() {
+			const n = this.points.length;
+			let z = 0, i, j;
+			for(i = 0, j = 1; i < n; i++, j++) {
+				if(j == n) j = 0;
+				z += (this.points[i].y + this.points[j].y)*(this.points[j].x - this.points[i].x);
+			}
+			return z <= 0;
+		}
+		/**
+		 * divide the polygon into several new convex polygons, without creating intermediate points
+		 * @return {[utils.geometry2d.Polygon]} convex polygons
+		 */
+		divideConvex() {
+			let polygons = [];
+			let points = this.points.slice(0);
+			let n = points.length;
+			if(n < 4) return [new Polygon(this.center, points)];
+			const ccw = this.ccw();
+			let i=0;
+			while(n > 3) {
+				let prv = points[(i - 1 + n) % n], cur = points[i], nxt = points[(i + 1) % n];
+				while(i < n && Vec2.ccw(prv, cur, nxt) == ccw) {
+					i++;
+					prv = cur;
+					cur = nxt;
+					nxt = points[(i + 1) % n];
+				}
+				if(i == n) break;
+				let j = (i - 3 + n) % n;
+				while( (Vec2.ccw(prv, cur, points[j]) == ccw) &&
+						(Vec2.ccw(points[j], points[(j+1)%n], points[(j+2)%n]) == ccw))
+					j = (j - 1 + n) % n;
+				j++;
+
+				let array = [points[j % n]];
+				j = (j + 1) % n;
+				while(j != i) {
+					array.push(points.splice(j, 1)[0]);
+					if(j < i) i--;
+					n--;
+					j = j % n;
+				}
+				array.push(points[i]);
+				polygons.push(new Polygon(this.center, array));
+				if(n < 4) break;
+			}
+			polygons.push(new Polygon(this.center, points));
+			return polygons;
 		}
 
 		/**
@@ -2863,13 +2935,13 @@ window.utils = window.utils || {};
 		 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
 		 */
 		getVertices(verticesArray, vOffset, indicesArray, iOffset){
-			const o = offset/2, n = this.points.length;
-			let a = 0, i = 0, j=offset, t;
+			const o = vOffset/2, n = this.points.length;
+			let i = 0;
 			while(i < n) {
 				if(i>1) {
 					indicesArray[iOffset++] = o
-					indicesArray[iOffset++] = o+i;
 					indicesArray[iOffset++] = o+i-1;
+					indicesArray[iOffset++] = o+i;
 				}
 				verticesArray[vOffset++] = this.points[i  ].x+this.center.x;
 				verticesArray[vOffset++] = this.points[i++].y+this.center.y;
@@ -3078,20 +3150,19 @@ window.utils = window.utils || {};
 
 		/**
 		 * tells if a point is located inside the instance using the following method :
-		 * - get the width and height of the instance
-		 * - create 4 long enough lines, all starting from the point : one going left, one right, one up and one down
-		 * - check if all lines intersect the instance.
-		 * this method is not optimized, and work for most polygons, except too complex concave polygons.
+		 * - get the width of the polygone
+		 * - create a long enough line starting from the point and going right
+		 * - check if the line intersect the instance an odd number of times.
+		 * TODO remove singularities
 		 * @param {utils.geometry2d.Vec2} point
 		 * @returns {boolean}
 		 */
 		contains(point) {
-			let rect = this.getRect(), w = rect.width + 10, h = rect.height + 10, endPoint = point.clone(),
-				l = new Line(point, endPoint.addXY(-w,0));
-			return this.intersect(l)
-				&& this.intersect(l.setP1(endPoint.addXY(w+w,0)))
-				&& this.intersect(l.setP1(endPoint.addXY(-w,-h)))
-				&& this.intersect(l.setP1(endPoint.addXY(0,h+h)));
+			return (
+				this.getIntersectionLines(
+					new Line(point, point.clone().addXY(
+							this.getRect().width*2, 1))
+				).length % 2) == 1;
 		}
 
 		/**
@@ -3100,13 +3171,14 @@ window.utils = window.utils || {};
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		getRect() {
-			let left = 0, top = 0, right = 0, bottom = 0, point, i = this.points.length;
+			let point, i = this.points.length-1;
+			let xmin = this.points[i].x, ymin = this.points[i].y, xmax = xmin, ymax = ymin;
 			while (i--) {
 				point = this.points[i];
-				if (point.x < left) left = point.x; else if (point.x > right) right = point.x;
-				if (point.y < top) top = point.y; else if (point.y > bottom) bottom = point.y;
+				if (point.x < xmin) xmin = point.x; else if (point.x > xmax) xmax = point.x;
+				if (point.y < ymin) ymin = point.y; else if (point.y > ymax) ymax = point.y;
 			}
-			return new Rect(left, top, right, bottom).move(this.center);
+			return new Rect(xmin, ymin, xmax, ymax).move(this.center);
 		}
 
 		/**
@@ -3158,12 +3230,12 @@ window.utils = window.utils || {};
 		/**
 		 * this method can take two behaviors, depending on the parameter :
 		 * - if the parameter is null (or not set), this method will move the points to make the center be at the <!--
-		 * -->mean of the points of the instance.
+		 * -->mean of the points of the polygon.
 		 * - if the parameter is not null, this method will move all points by the opposite of the specified <!--
 		 * -->value, to move the center in the polygon by the value.
 		 * <br/>
 		 * At the end, the center will remain unchanged, but the points will be moved so the center will look, <!--
-		 * relatively to the other points, at the center (delta=null) / moved by delta (delta!==null).
+		 * relatively to the other points, [at the center (delta==null) / moved by delta (delta!==null)].
 		 * @param {?utils.geometry2d.Vec2} [delta=null]
 		 * @returns {utils.geometry2d.Polygon} this
 		 */
@@ -3244,7 +3316,7 @@ window.utils = window.utils || {};
 			p.points = new Array(pointsNumber);
 			if (rLen !== undefined) {
 				let i = -1;
-				while (i++ < pointsNumber) {
+				while (++i < pointsNumber) {
 					p.points[i] = Vec2.createFromAngle(angle, radiusArray[i % rLen]);
 					angle += dR;
 				}
@@ -3253,7 +3325,7 @@ window.utils = window.utils || {};
 				let i = pointsNumber;
 				while (i--) {
 					p.points[i] = Vec2.createFromAngle(angle, radiusArray);
-					angle += dR;
+					angle -= dR;
 				}
 			}
 			return p;

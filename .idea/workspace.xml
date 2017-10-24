@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="7" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="529" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="1211" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="1495" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="1748" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2070" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2589" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2668" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="3256" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="14" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="576" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="1257" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="1544" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="1800" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2118" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2648" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2732" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="3320" />
     <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="6" />
     <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="78" />
     <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="284" />
@@ -17,107 +17,70 @@
     <bookmark url="file://$PROJECT_DIR$/game/manager.js" line="139" />
     <bookmark url="file://$PROJECT_DIR$/game/manager.js" line="74" />
     <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="26" />
-    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="260" />
-    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="335" />
+    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="262" />
+    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="337" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f0fe948-9def-4a4f-96c9-0eb6e9603f42" name="Default" comment="implemented asynchronous frame management,&#10;modified jsdoc, minor changes and bug corrections">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/import.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/board.js" afterPath="$PROJECT_DIR$/game/board.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/bullets.js" afterPath="$PROJECT_DIR$/game/bullets.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/imports.html" afterPath="$PROJECT_DIR$/game/imports.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/manager.js" afterPath="$PROJECT_DIR$/game/manager.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/object.js" afterPath="$PROJECT_DIR$/game/object.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/object_mixins.js" afterPath="$PROJECT_DIR$/game/object_mixins.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/particles.js" afterPath="$PROJECT_DIR$/game/particles.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/renderer_collider.js" afterPath="$PROJECT_DIR$/game/renderer_collider.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/stylesheet.css" afterPath="$PROJECT_DIR$/game/stylesheet.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/game2/viewers.js" afterPath="$PROJECT_DIR$/game/viewers.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/webgl.js" afterPath="$PROJECT_DIR$/utils/webgl.js" />
+    <list default="true" id="7f0fe948-9def-4a4f-96c9-0eb6e9603f42" name="Default" comment="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;minor changes">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/turn.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game.BulletCollider.html" afterPath="$PROJECT_DIR$/doc/game.BulletCollider.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game.Object.html" afterPath="$PROJECT_DIR$/doc/game.Object.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game.ObjectCollider.html" afterPath="$PROJECT_DIR$/doc/game.ObjectCollider.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game.ShapedObjectCollider.html" afterPath="$PROJECT_DIR$/doc/game.ShapedObjectCollider.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game.html" afterPath="$PROJECT_DIR$/doc/game.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game2_async_render.js.html" afterPath="$PROJECT_DIR$/doc/game2_async_render.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game2_game_1.js.html" afterPath="$PROJECT_DIR$/doc/game2_game_1.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game2_game_2.js.html" afterPath="$PROJECT_DIR$/doc/game2_game_2.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/index.html" afterPath="$PROJECT_DIR$/doc/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/scripts/jquery.min.js" afterPath="$PROJECT_DIR$/doc/scripts/jquery.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/scripts/jsdoc-toc.js" afterPath="$PROJECT_DIR$/doc/scripts/jsdoc-toc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/scripts/scrollanchor.js" afterPath="$PROJECT_DIR$/doc/scripts/scrollanchor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/scripts/tree.jquery.js" afterPath="$PROJECT_DIR$/doc/scripts/tree.jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/utils.geometry2d.Rect.html" afterPath="$PROJECT_DIR$/doc/utils.geometry2d.Rect.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/utils_utils_1.js.html" afterPath="$PROJECT_DIR$/doc/utils_utils_1.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/utils_utils_2.js.html" afterPath="$PROJECT_DIR$/doc/utils_utils_2.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/board.js" afterPath="$PROJECT_DIR$/game/board.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/bullets.js" afterPath="$PROJECT_DIR$/game/bullets.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/imports.html" afterPath="$PROJECT_DIR$/game/imports.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/object.js" afterPath="$PROJECT_DIR$/game/object.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/particles.js" afterPath="$PROJECT_DIR$/game/particles.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/renderer_collider.js" afterPath="$PROJECT_DIR$/game/renderer_collider.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/viewers.js" afterPath="$PROJECT_DIR$/game/viewers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/AABBObjectCollider.html" afterPath="$PROJECT_DIR$/out/AABBObjectCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Board.html" afterPath="$PROJECT_DIR$/out/Board.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Bullet.html" afterPath="$PROJECT_DIR$/out/Bullet.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BulletCollider.html" afterPath="$PROJECT_DIR$/out/BulletCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Circle.html" afterPath="$PROJECT_DIR$/out/Circle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Ellipsoid.html" afterPath="$PROJECT_DIR$/out/Ellipsoid.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/GameObject.html" afterPath="$PROJECT_DIR$/out/GameObject.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/HomingBullet.html" afterPath="$PROJECT_DIR$/out/HomingBullet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ImageObjectRenderer.html" afterPath="$PROJECT_DIR$/out/ImageObjectRenderer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ImageParticle.html" afterPath="$PROJECT_DIR$/out/ImageParticle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/InputManager.html" afterPath="$PROJECT_DIR$/out/InputManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/KeyMap.html" afterPath="$PROJECT_DIR$/out/KeyMap.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Line.html" afterPath="$PROJECT_DIR$/out/Line.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/MultiRenderersObjectRenderer.html" afterPath="$PROJECT_DIR$/out/MultiRenderersObjectRenderer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ObjectCollider.html" afterPath="$PROJECT_DIR$/out/ObjectCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Particle.html" afterPath="$PROJECT_DIR$/out/Particle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ParticleCreator.html" afterPath="$PROJECT_DIR$/out/ParticleCreator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ParticleEmitter.html" afterPath="$PROJECT_DIR$/out/ParticleEmitter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ParticleExplosion.html" afterPath="$PROJECT_DIR$/out/ParticleExplosion.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Point.html" afterPath="$PROJECT_DIR$/out/Point.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Polygon.html" afterPath="$PROJECT_DIR$/out/Polygon.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Ray.html" afterPath="$PROJECT_DIR$/out/Ray.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Rect.html" afterPath="$PROJECT_DIR$/out/Rect.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Shape.html" afterPath="$PROJECT_DIR$/out/Shape.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ShapedObjectCollider.html" afterPath="$PROJECT_DIR$/out/ShapedObjectCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ShapedObjectRenderer.html" afterPath="$PROJECT_DIR$/out/ShapedObjectRenderer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/ShapedParticle.html" afterPath="$PROJECT_DIR$/out/ShapedParticle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/TraceDrawer.html" afterPath="$PROJECT_DIR$/out/TraceDrawer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/UIElement.html" afterPath="$PROJECT_DIR$/out/UIElement.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/Vec2.html" afterPath="$PROJECT_DIR$/out/Vec2.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.AABBObjectCollider.html" afterPath="$PROJECT_DIR$/out/game.AABBObjectCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.Board.html" afterPath="$PROJECT_DIR$/out/game.Board.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.Bullet.html" afterPath="$PROJECT_DIR$/out/game.Bullet.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.BulletCollider.html" afterPath="$PROJECT_DIR$/out/game.BulletCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.GameManager.html" afterPath="$PROJECT_DIR$/out/game.GameManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.HomingBullet.html" afterPath="$PROJECT_DIR$/out/game.HomingBullet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ImageObjectRenderer.html" afterPath="$PROJECT_DIR$/out/game.ImageObjectRenderer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ImageParticle.html" afterPath="$PROJECT_DIR$/out/game.ImageParticle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.MultiRenderersObjectRenderer.html" afterPath="$PROJECT_DIR$/out/game.MultiRenderersObjectRenderer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.Object.html" afterPath="$PROJECT_DIR$/out/game.Object.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ObjectCollider.html" afterPath="$PROJECT_DIR$/out/game.ObjectCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ObjectRenderer.html" afterPath="$PROJECT_DIR$/out/game.ObjectRenderer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.Particle.html" afterPath="$PROJECT_DIR$/out/game.Particle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ParticleCreator.html" afterPath="$PROJECT_DIR$/out/game.ParticleCreator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ParticleEmitter.html" afterPath="$PROJECT_DIR$/out/game.ParticleEmitter.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ParticleExplosion.html" afterPath="$PROJECT_DIR$/out/game.ParticleExplosion.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ShapedObjectCollider.html" afterPath="$PROJECT_DIR$/out/game.ShapedObjectCollider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ShapedObjectRenderer.html" afterPath="$PROJECT_DIR$/out/game.ShapedObjectRenderer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.ShapedParticle.html" afterPath="$PROJECT_DIR$/out/game.ShapedParticle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.StandardViewer.html" afterPath="$PROJECT_DIR$/out/game.StandardViewer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.TraceDrawer.html" afterPath="$PROJECT_DIR$/out/game.TraceDrawer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.Viewer.html" afterPath="$PROJECT_DIR$/out/game.Viewer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.WebGLViewer.html" afterPath="$PROJECT_DIR$/out/game.WebGLViewer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.html" afterPath="$PROJECT_DIR$/out/game.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.objectProperties.energy.html" afterPath="$PROJECT_DIR$/out/game.objectProperties.energy.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.objectProperties.health.html" afterPath="$PROJECT_DIR$/out/game.objectProperties.health.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.objectProperties.html" afterPath="$PROJECT_DIR$/out/game.objectProperties.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game.objectProperties.tag.html" afterPath="$PROJECT_DIR$/out/game.objectProperties.tag.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_manager.js.html" afterPath="$PROJECT_DIR$/out/game2_manager.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_async_render.js.html" afterPath="$PROJECT_DIR$/out/game2_async_render.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_board.js.html" afterPath="$PROJECT_DIR$/out/game2_board.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_bullets.js.html" afterPath="$PROJECT_DIR$/out/game2_bullets.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_globals.js.html" afterPath="$PROJECT_DIR$/out/game2_globals.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_min_game_1.js.html" afterPath="$PROJECT_DIR$/out/game2_min_game_1.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_min_game_2.js.html" afterPath="$PROJECT_DIR$/out/game2_min_game_2.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_object.js.html" afterPath="$PROJECT_DIR$/out/game2_object.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_particles.js.html" afterPath="$PROJECT_DIR$/out/game2_particles.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_renderer_collider.js.html" afterPath="$PROJECT_DIR$/out/game2_renderer_collider.js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/game2_viewers.js.html" afterPath="$PROJECT_DIR$/out/game2_viewers.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/index.html" afterPath="$PROJECT_DIR$/out/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/scripts/jquery.min.js" afterPath="$PROJECT_DIR$/out/scripts/jquery.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/scripts/jsdoc-toc.js" afterPath="$PROJECT_DIR$/out/scripts/jsdoc-toc.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Circle.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Circle.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Ellipsoid.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Ellipsoid.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Line.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Line.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Point.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Point.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Polygon.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Polygon.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Ray.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Ray.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Rect.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Rect.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Shape.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Shape.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.Vec2.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.Vec2.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.geometry2d.html" afterPath="$PROJECT_DIR$/out/utils.geometry2d.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.html" afterPath="$PROJECT_DIR$/out/utils.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.input.InputManager.html" afterPath="$PROJECT_DIR$/out/utils.input.InputManager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.input.KeyMap.html" afterPath="$PROJECT_DIR$/out/utils.input.KeyMap.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.input.html" afterPath="$PROJECT_DIR$/out/utils.input.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.tools.BBCodeToHTML.html" afterPath="$PROJECT_DIR$/out/utils.tools.BBCodeToHTML.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils.tools.html" afterPath="$PROJECT_DIR$/out/utils.tools.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/scripts/scrollanchor.js" afterPath="$PROJECT_DIR$/out/scripts/scrollanchor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/scripts/tree.jquery.js" afterPath="$PROJECT_DIR$/out/scripts/tree.jquery.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils_geometry2d.js.html" afterPath="$PROJECT_DIR$/out/utils_geometry2d.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils_input.js.html" afterPath="$PROJECT_DIR$/out/utils_input.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils_tools.js.html" afterPath="$PROJECT_DIR$/out/utils_tools.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/geometry2d.js" afterPath="$PROJECT_DIR$/utils/geometry2d.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/tools.js" afterPath="$PROJECT_DIR$/utils/tools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/webgl.js" afterPath="$PROJECT_DIR$/utils/webgl.js" />
     </list>
     <ignored path="utils.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -138,173 +101,18 @@
     <favorites_list name="utils" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6411083">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="board.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/board.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="6800">
-                  <caret line="400" column="17" lean-forward="false" selection-start-line="400" selection-start-column="17" selection-end-line="400" selection-end-column="17" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="stylesheet.css" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/stylesheet.css">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="340">
-                  <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="manager.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/manager.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="6766">
-                  <caret line="400" column="35" lean-forward="false" selection-start-line="400" selection-start-column="35" selection-end-line="400" selection-end-column="35" />
-                  <folding>
-                    <marker date="1505513766977" expanded="true" signature="1343:1465" ph="/**...*/" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="imports.html" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/game/imports.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="viewers.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/viewers.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="374">
-                  <caret line="24" column="45" lean-forward="false" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
-                  <folding>
-                    <element signature="e#0#48#0" expanded="false" />
-                    <marker date="1507327950174" expanded="true" signature="14386:14673" ph="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="webgl.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/webgl.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2023">
-                  <caret line="119" column="39" lean-forward="false" selection-start-line="119" selection-start-column="39" selection-end-line="119" selection-end-column="39" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="particles.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/particles.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="629">
-                  <caret line="39" column="19" lean-forward="false" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="object.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/object.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="7191">
-                  <caret line="423" column="50" lean-forward="false" selection-start-line="423" selection-start-column="50" selection-end-line="423" selection-end-column="50" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="object_mixins.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/game/object_mixins.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3655">
-                  <caret line="217" column="27" lean-forward="false" selection-start-line="217" selection-start-column="27" selection-end-line="217" selection-end-column="27" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/tools.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="5712">
-                  <caret line="341" column="31" lean-forward="false" selection-start-line="341" selection-start-column="31" selection-end-line="341" selection-end-column="31" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="input.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/input.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1564">
-                  <caret line="92" column="9" lean-forward="false" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="import.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/import.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="audio.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/audio.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="782">
-                  <caret line="46" column="17" lean-forward="false" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="geometry2d.c" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/asm/geometry2d.c">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="527">
-                  <caret line="31" column="17" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="renderer_collider.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/game/renderer_collider.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="871">
-                  <caret line="450" column="45" lean-forward="false" selection-start-line="450" selection-start-column="45" selection-end-line="450" selection-end-column="45" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="geometry2d.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils/geometry2d.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="3155" column="11" lean-forward="false" selection-start-line="3155" selection-start-column="11" selection-end-line="3155" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -321,13 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>gameMap</find>
-      <find>RenderEvent</find>
-      <find>_keyState</find>
-      <find>coor</find>
-      <find>onKeyUp</find>
-      <find>isOutOfMap</find>
-      <find>kill()</find>
       <find>gamemanager</find>
       <find>trans</find>
       <find>.tools.</find>
@@ -351,11 +152,15 @@
       <find>index</find>
       <find>fixedDt</find>
       <find>getComputedStyle</find>
+      <find>ObjectCollider</find>
+      <find>.left</find>
+      <find>.right</find>
+      <find>.top</find>
+      <find>.bottom</find>
+      <find>utils.geometry2d.</find>
+      <find>utils.</find>
     </findStrings>
     <replaceStrings>
-      <replace>shapes</replace>
-      <replace>utils.geometry2d.shapes</replace>
-      <replace>Polygon</replace>
       <replace>let</replace>
       <replace>Absolute</replace>
       <replace>_keyboardCallbacks</replace>
@@ -380,6 +185,12 @@
       <replace>euclidean</replace>
       <replace>squareMag</replace>
       <replace>?</replace>
+      <replace>Object2dCollider</replace>
+      <replace>.xMin</replace>
+      <replace>.xMax</replace>
+      <replace>.yMin</replace>
+      <replace>.yMax</replace>
+      <replace>module:</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -401,16 +212,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="C:/Program Files/nodejs/node_modules/jsdoc/templates/jsdoc3Template/publish.js" />
-        <option value="C:/Program Files/nodejs/node_modules/jsdoc/templates/jsdoc-baseline/static/css/baseline.css" />
-        <option value="$PROJECT_DIR$/utils/4_geometry.js" />
-        <option value="$PROJECT_DIR$/utils/game_1.js" />
-        <option value="$PROJECT_DIR$/game/3_objects/7_bullet.js" />
-        <option value="$PROJECT_DIR$/utils/utils_min.js" />
-        <option value="$PROJECT_DIR$/utils_min.js" />
-        <option value="$USER_HOME$/Google_Drive/ChromeDevEditor/gameTest/index.html" />
-        <option value="$PROJECT_DIR$/game_1.js" />
-        <option value="$PROJECT_DIR$/game_2.js" />
         <option value="$PROJECT_DIR$/async_render.js" />
         <option value="$PROJECT_DIR$/utils.min.js" />
         <option value="$PROJECT_DIR$/old_libs/utils/index.html" />
@@ -434,24 +235,34 @@
         <option value="$PROJECT_DIR$/game2/object_mixins.js" />
         <option value="$PROJECT_DIR$/game2/globals.js" />
         <option value="$PROJECT_DIR$/game2/stylesheet.css" />
-        <option value="$PROJECT_DIR$/utils/input.js" />
         <option value="$PROJECT_DIR$/game2/board.js" />
         <option value="$PROJECT_DIR$/utils/natives/geometry2d.c" />
         <option value="$PROJECT_DIR$/utils/asm/geometry2d.c" />
-        <option value="$PROJECT_DIR$/utils/tools.js" />
         <option value="$PROJECT_DIR$/utils/asm/test.c" />
         <option value="$PROJECT_DIR$/game2/imports.html" />
         <option value="$PROJECT_DIR$/game2/particles.js" />
         <option value="$PROJECT_DIR$/utils/import.js" />
         <option value="$PROJECT_DIR$/game2/manager.js" />
         <option value="$PROJECT_DIR$/webgl.js" />
-        <option value="$PROJECT_DIR$/utils/imports.html" />
         <option value="$PROJECT_DIR$/utils/audio.js" />
         <option value="$PROJECT_DIR$/game2/object.js" />
         <option value="$PROJECT_DIR$/utils/webgl.js" />
-        <option value="$PROJECT_DIR$/utils/geometry2d.js" />
         <option value="$PROJECT_DIR$/game2/renderer_collider.js" />
         <option value="$PROJECT_DIR$/game2/viewers.js" />
+        <option value="$PROJECT_DIR$/utils/tools.js" />
+        <option value="$PROJECT_DIR$/doc/game2_async_render.js.html" />
+        <option value="$PROJECT_DIR$/game/turn.js" />
+        <option value="$PROJECT_DIR$/utils/input.js" />
+        <option value="$PROJECT_DIR$/utils/imports.html" />
+        <option value="$PROJECT_DIR$/game/imports.html" />
+        <option value="$PROJECT_DIR$/game/manager.js" />
+        <option value="$PROJECT_DIR$/game/bullets.js" />
+        <option value="$PROJECT_DIR$/game/board.js" />
+        <option value="$PROJECT_DIR$/game/viewers.js" />
+        <option value="$PROJECT_DIR$/game/particles.js" />
+        <option value="$PROJECT_DIR$/game/object.js" />
+        <option value="$PROJECT_DIR$/game/renderer_collider.js" />
+        <option value="$PROJECT_DIR$/utils/geometry2d.js" />
       </list>
     </option>
   </component>
@@ -473,10 +284,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="241" />
-    <option name="y" value="-36" />
-    <option name="width" value="1686" />
-    <option name="height" value="1087" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -544,6 +355,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -565,14 +377,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="last_opened_file_path" value="C:/Program Files/LLVM/bin/clang.exe" />
-    <property name="settings.editor.selected.configurable" value="vcs.CVS" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="settings.editor.splitter.proportion" value="0.2640884" />
     <property name="SearchEverywhereHistoryKey" value="Babel&#9;null&#9;null" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
@@ -850,7 +661,11 @@
       <workItem from="1506459133825" duration="4496000" />
       <workItem from="1507064134397" duration="436000" />
       <workItem from="1507064591424" duration="598000" />
-      <workItem from="1507217747355" duration="2073000" />
+      <workItem from="1507217747355" duration="8222000" />
+      <workItem from="1507584081809" duration="599000" />
+      <workItem from="1508001573921" duration="6289000" />
+      <workItem from="1508276552907" duration="5178000" />
+      <workItem from="1508601750787" duration="6109000" />
     </task>
     <task id="LOCAL-00001" summary="- changed let to const&#10;- RGBtoHSV() and createScriptWorker() docs corrected&#10;- utils.tools.rgb and utils.tools.hsv docs improved">
       <created>1496085985377</created>
@@ -915,13 +730,34 @@
       <option name="project" value="LOCAL" />
       <updated>1506505384882</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="implemented asynchronous frame management,&#10;modified jsdoc, minor changes and bug corrections">
+      <created>1507328646379</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1507328646379</updated>
+    </task>
+    <task id="LOCAL-00011" summary="webGL support">
+      <created>1507331924658</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1507331924658</updated>
+    </task>
+    <task id="LOCAL-00012" summary="minor change">
+      <created>1507332012250</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1507332012250</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="736460000" />
+    <option name="totallyTimeSpent" value="760784000" />
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -932,11 +768,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18229716" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.49516907" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18177028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.328125" sideWeight="0.49516907" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13985279" sideWeight="0.5063358" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2541841" sideWeight="0.4915701" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14435147" sideWeight="0.4936642" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23020834" sideWeight="0.4915701" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -944,6 +781,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44132918" sideWeight="0.6533066" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.094791666" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run Dashboard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -951,7 +789,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25520834" sideWeight="0.4915701" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1030,7 +867,10 @@
     <MESSAGE value="added audio.js file, modified imports.html" />
     <MESSAGE value="modified jsdoc, minor changes and bug corrections" />
     <MESSAGE value="implemented asynchronous frame management,&#10;modified jsdoc, minor changes and bug corrections" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented asynchronous frame management,&#10;modified jsdoc, minor changes and bug corrections" />
+    <MESSAGE value="webGL support" />
+    <MESSAGE value="minor change" />
+    <MESSAGE value="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1039,8 +879,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/old_libs/game/7_TurnManager.js" />
-    <entry file="file://$PROJECT_DIR$/old_libs/game/3_objects/7_bullet.js" />
     <entry file="file://$PROJECT_DIR$/old_libs/game/3_objects/5_properties.js" />
     <entry file="file://$PROJECT_DIR$/game2/min/game_2.js" />
     <entry file="file://$PROJECT_DIR$/game2/out/index.html" />
@@ -1084,13 +922,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game2/min/game_1.js" />
-    <entry file="file://$PROJECT_DIR$/game/bullets.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/doc/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -1168,14 +999,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game2/async_render.js" />
-    <entry file="file://$PROJECT_DIR$/game/object_mixins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3655">
-          <caret line="217" column="27" lean-forward="false" selection-start-line="217" selection-start-column="27" selection-end-line="217" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/geometry.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1187,7 +1010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1199,29 +1021,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/particles.js">
+    <entry file="file://$PROJECT_DIR$/utils/import.js" />
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/WebGL.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="39" column="19" lean-forward="false" selection-start-line="39" selection-start-column="19" selection-end-line="39" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="251">
+          <caret line="2710" column="22" lean-forward="true" selection-start-line="2710" selection-start-column="22" selection-end-line="2710" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/import.js">
+    <entry file="file://$PROJECT_DIR$/doc/game2_async_render.js.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/tools.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5712">
-          <caret line="341" column="31" lean-forward="false" selection-start-line="341" selection-start-column="31" selection-end-line="341" selection-end-column="31" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="213">
+          <caret line="51" column="55" lean-forward="false" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -1229,6 +1040,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="31" column="17" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/webgl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="73" column="22" lean-forward="true" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1241,99 +1060,131 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/object.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7191">
-          <caret line="423" column="50" lean-forward="false" selection-start-line="423" selection-start-column="50" selection-end-line="423" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/webgl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2023">
-          <caret line="119" column="39" lean-forward="false" selection-start-line="119" selection-start-column="39" selection-end-line="119" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/WebGL.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="2710" column="22" lean-forward="true" selection-start-line="2710" selection-start-column="22" selection-end-line="2710" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6766">
-          <caret line="400" column="35" lean-forward="false" selection-start-line="400" selection-start-column="35" selection-end-line="400" selection-end-column="35" />
-          <folding>
-            <marker date="1505513766977" expanded="true" signature="1343:1465" ph="/**...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/board.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6800">
-          <caret line="400" column="17" lean-forward="false" selection-start-line="400" selection-start-column="17" selection-end-line="400" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/imports.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/geometry2d.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="3515" column="0" lean-forward="false" selection-start-line="3515" selection-start-column="0" selection-end-line="3515" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-            <marker date="1506264264580" expanded="true" signature="38432:38549" ph="/** draw the shape on the canvas using its webgl context. ...*/" />
-            <marker date="1506264264580" expanded="true" signature="39282:39286" ph="{...}" />
-            <marker date="1506264264580" expanded="true" signature="47067:47184" ph="/** draw the shape on the canvas using its webgl context. ...*/" />
-            <marker date="1506264264580" expanded="true" signature="87043:87160" ph="/** draw the shape on the canvas using its webgl context. ...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/input.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" column="9" lean-forward="false" selection-start-line="92" selection-start-column="9" selection-end-line="92" selection-end-column="9" />
+        <state relative-caret-position="68">
+          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/renderer_collider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="871">
-          <caret line="450" column="45" lean-forward="false" selection-start-line="450" selection-start-column="45" selection-end-line="450" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/viewers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="24" column="45" lean-forward="false" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#48#0" expanded="false" />
-            <marker date="1507327950174" expanded="true" signature="14386:14673" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/imports.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
-          <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <caret line="3" column="7" lean-forward="false" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+          <caret line="4" column="7" lean-forward="false" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
+          <caret line="5" column="7" lean-forward="false" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+          <caret line="6" column="7" lean-forward="false" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+          <caret line="7" column="7" lean-forward="false" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+          <caret line="8" column="7" lean-forward="false" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <caret line="9" column="7" lean-forward="false" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+          <caret line="10" column="7" lean-forward="false" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+          <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <marker date="1508705388821" expanded="true" signature="1343:1465" ph="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/bullets.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/board.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/viewers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="10" column="25" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#48#0" expanded="false" />
+            <marker date="1508705454921" expanded="true" signature="14517:14804" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/turn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="9" lean-forward="true" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/particles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/object_mixins.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/object.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/renderer_collider.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2142">
+          <caret line="267" column="31" lean-forward="true" selection-start-line="267" selection-start-column="31" selection-end-line="267" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/input.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/tools.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="40" lean-forward="false" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1508004589680" expanded="true" signature="10669:10684" ph="..." />
+            <marker date="1508004589680" expanded="true" signature="10767:10776" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/geometry2d.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="3155" column="11" lean-forward="false" selection-start-line="3155" selection-start-column="11" selection-end-line="3155" selection-end-column="11" />
           <folding />
         </state>
       </provider>
