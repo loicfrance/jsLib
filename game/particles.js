@@ -301,7 +301,7 @@ window.game.ParticleCreator = (function() {
     		let r = gameManager.viewer.visibleRect;
 			return new game.ShapedParticle(
 				Math.random()*(this.maxLifeTime - this.minLifeTime)+this.minLifeTime,
-				new Point(new Vec2(r.left+ Math.random()*r.width, r.top + Math.random()*r.height)),
+				new Point(new Vec2(r.xMin+ Math.random()*r.width, r.yMin + Math.random()*r.height)),
 				utils.tools.randomColor(24));
 	    }
 	    /**

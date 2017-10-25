@@ -1,5 +1,5 @@
 /**
- * Created by rfrance on 1/21/2017.
+ * Created by Loic France on 1/21/2017.
  */
 window.game.Board = (function(){
 	"use strict";
@@ -145,17 +145,17 @@ window.game.Board = (function(){
 		renderGrid(context, color) {
 			context.strokeStyle = color;
 			let r = this.boardRect;
-			let t = r.left;
+			let t = r.xMin;
 			context.beginPath();
-			while(t <= r.right) {
-				context.moveTo(t, r.top);
-				context.lineTo(t, r.bottom);
+			while(t <= r.xMax) {
+				context.moveTo(t, r.yMin);
+				context.lineTo(t, r.yMax);
 				t += this.cellWidth;
 			}
-			t = r.top;
-			while(t <= r.bottom) {
-				context.moveTo(r.left, t);
-				context.lineTo(r.right, t);
+			t = r.yMin;
+			while(t <= r.yMax) {
+				context.moveTo(r.xMin, t);
+				context.lineTo(r.xMax, t);
 				t += this.cellHeight;
 			}
 			context.stroke();
@@ -179,7 +179,7 @@ window.game.Board = (function(){
 		 * @param {number} line - row index of the cell to test
 		 * @returns {boolean} true if the cell is occupied
 		 */
-		isOccupated(column, line) {
+		isOccupied(column, line) {
 			return column < this.columns && line < this.lines && this.occupationMap[line][column] == 1;
 		}
 
@@ -192,7 +192,7 @@ window.game.Board = (function(){
 		 */
 		setOccupated(column, line, occupated) {
 			if(column < 0 && column >= this.columns && line < 0 && line >= this.lines)
-				return false
+				return false;
 			this.occupationMap[line][column] = occupated ? 1 : 0;
 			return true;
 
@@ -275,6 +275,9 @@ window.game.Board = (function(){
 				}
 			}
 		}
+//______________________________________________________________________________________________________________________
+// - - - - - - - - - - - - - - - - - - - - - - - - -pathFinding methods- - - - - - - - - - - - - - - - - - - - - - - - -
+//**********************************************************************************************************************
 		/**
 		 * returns an optimized path from the start point (given in index coordinates) to the end point <!--
 		 * -->(given in index coordinates) using the Lee algorithm. The result is an array of <!--

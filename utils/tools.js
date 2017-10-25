@@ -38,13 +38,13 @@ utils.tools = {
 				var left = NaN, top = NaN, right = NaN, bottom = NaN;
 				if (gravity & G.CENTER) {
 					let w = (availableRect.width - width)/2, h = (availableRect.h.height-height)/2;
-					left = availableRect.left + w; right = availableRect.right - w;
-					top = availableRect.top + h; bottom = availableRect.bottom - h;
+					left = availableRect.xMin + w; right = availableRect.xMax - w;
+					top = availableRect.yMin + h; bottom = availableRect.yMax - h;
 				}
-				if (gravity & G.LEFT !== 0) left = availableRect.left;
-				if (gravity & G.TOP !== 0) top = availableRect.top;
-				if (gravity & G.RIGHT !== 0) right = availableRect.right;
-				if (gravity & G.BOTTOM !== 0) bottom = availableRect.bottom;
+				if (gravity & G.LEFT !== 0) left = availableRect.xMin;
+				if (gravity & G.TOP !== 0) top = availableRect.yMin;
+				if (gravity & G.RIGHT !== 0) right = availableRect.xMax;
+				if (gravity & G.BOTTOM !== 0) bottom = availableRect.yMax;
 				if (isNaN(left)) left = right - width;
 				else if (isNaN(right)) right = left + width;
 				if (isNaN(top)) top = bottom - height;
@@ -363,7 +363,7 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, rect, lineHeight, 
 			metrics = this.measureText(testLine);
 			width = metrics.width;
 			if (width > rectWidth && n > 0) {
-				lineX = rect.left;
+				lineX = rect.xMin;
 				if (!(textGravity & Gravity.LEFT)) {
 					if (textGravity & Gravity.RIGHT) lineX += this.measureText(line).width - width;
 					else if (textGravity & Gravity.CENTER) lineX += (this.measureText(line).width - width) / 2;
@@ -376,7 +376,7 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, rect, lineHeight, 
 				line = testLine;
 			}
 		}
-		lineX = rect.left;
+		lineX = rect.xMin;
 		if (!(textGravity & Gravity.LEFT)) {
 			metrics = this.measureText(line);
 			width = metrics.width;
@@ -387,9 +387,9 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, rect, lineHeight, 
 		linesX.push(lineX);
 	}
 	len = lines.length;
-	var y = rect.top + lineHeight;
+	var y = rect.yMin + lineHeight;
 	if (!(textGravity & Gravity.TOP)) {
-		if (textGravity & Gravity.BOTTOM) y = rect.bottom - lineHeight * (len - 1);
+		if (textGravity & Gravity.BOTTOM) y = rect.yMax - lineHeight * (len - 1);
 		else if (textGravity & Gravity.CENTER) y += (rect.height - lineHeight * len) / 2;
 	}
 	for (n = 0; n < len; n++) {
@@ -414,3 +414,4 @@ WebAssembly.instantiate(wasmCode, wasmImports).then(wasm=>{
 	asm = wasm.instance.exports;
 	//Math.rangedRandom = asm.rangedRand;
 });
+

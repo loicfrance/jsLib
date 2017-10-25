@@ -3,9 +3,7 @@
  */
 window.game.Object = (function() {
 	const Vec2 = utils.geometry2d.Vec2,
-		Rect = utils.geometry2d.Rect,
-		Circle = utils.geometry2d.Circle,
-		randomColor = utils.tools.randomColor;
+		Rect = utils.geometry2d.Rect;
 	/**
 	 * @memberOf game
 	 * @class game.Object
@@ -256,16 +254,16 @@ window.game.Object = (function() {
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		getRenderRect() {
-			return this.renderer ? this.renderer.setPosition(this.getPosition()).getRect()
-				: Rect.createFromPoint(this.getPosition());
+			return (this.renderer && this.renderer.setPosition(this.getPosition()).getRect())
+				|| Rect.createFromPoint(this.getPosition());
 		}
 		/**
 		 * returns the Rect containing the object's collider, or at least the position.
 		 * @returns {utils.geometry2d.Rect}
 		 */
 		getColliderRect() {
-			return this.collider ? this.collider.setPosition(this.getPosition()).getRect()
-				: Rect.createFromPoint(this.getPosition());
+			return (this.collider && this.collider.setPosition(this.getPosition()).getRect())
+				|| Rect.createFromPoint(this.getPosition());
 		}
 		/**
 		 * returns the radius of the object, ie the maximum between the radius of the collider and the one of the <!--
@@ -462,7 +460,7 @@ window.game.Object = (function() {
 		 */
 		isOutOfRect(rect, marginX = 0, marginY = marginX) {
 			let r = this.getRect().addMarginsXY(marginX, marginY);
-			return (rect.left > r.right || rect.right < r.left || rect.top > r.bottom || rect.bottom < r.top );
+			return (rect.xMin > r.xMax || rect.xMax < r.xMin || rect.yMin > r.yMax || rect.yMax < r.yMin );
 		}
 
 		//noinspection JSSuspiciousNameCombination (for marginX = marginY)
@@ -480,11 +478,11 @@ window.game.Object = (function() {
 			rect = rect.clone().addMarginsXY(-marginX, -marginY);
 			let objRect = this.getRect(),
 				delta = new Vec2(
-					rect.left > objRect.left ? rect.left - objRect.left :
-						rect.right < objRect.right ? rect.right - objRect.right :
+					rect.xMin > objRect.xMin ? rect.xMin - objRect.xMin :
+						rect.xMax < objRect.xMax ? rect.xMax - objRect.xMax :
 							0,
-					rect.top > objRect.top ? rect.top - objRect.top :
-						rect.bottom < objRect.bottom ? rect.bottom - objRect.bottom :
+					rect.yMin > objRect.yMin ? rect.yMin - objRect.yMin :
+						rect.yMax < objRect.yMax ? rect.yMax - objRect.yMax :
 							0);
 			if (!delta.isZero()) {
 				this.moveXY(delta.x, delta.y);
