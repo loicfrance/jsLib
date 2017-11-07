@@ -65,7 +65,7 @@ utils.input.Key = {
  */
 utils.input.MouseEvent = {
 	UP: 'onmouseup', DOWN: 'onmousedown', CLICK: 'onclick', DBCLICK: 'ondbclick',
-	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout', CTX_MENU: 'contextmenu'
+	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout', CTX_MENU: 'oncontextmenu'
 };
 /**
  * @memberOf utils.input
@@ -97,8 +97,7 @@ utils.input.InputManager = (function() {
 			keyStates[evt.keyCode] = state;
 			let len = callbacks.length;
 			for (let i = 0; i < len; i++)
-				if (callbacks[i](evt.keyCode, state))
-					evt.preventDefault();
+				if (callbacks[i](evt.keyCode, state)) evt.preventDefault();
 		}
 	}
 	/**
@@ -139,7 +138,7 @@ utils.input.InputManager = (function() {
 			}
 			const onMouseEvt = (callback, evtType, evt) => {
 				fixMouseWhich(evt);
-				return callback(evt, evtType, evt.which, getVec(evt));
+				if(callback(evt, evtType, evt.which, getVec(evt))) evt.preventDefault();
 			}
 //____________________________________________________public methods____________________________________________________
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *

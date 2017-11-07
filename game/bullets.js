@@ -124,13 +124,13 @@ window.game.BulletCollider = (function() {
 	/**
 	 * @class game.BulletCollider
 	 * @memberOf game
-	 * @augments game.ShapedObjectCollider
+	 * @augments game.ShapedObject2dCollider
 	 * @classdesc the collider to use with bullets. the difference with a standard shaped collider is that <!--
 	 * -->it can collide when it is inside an object but not touching the outline. it allows bullets to go faster <!--
 	 * -->than normal objects even if they are small, because the collision will happen event if the the object moves <!--
 	 * -->too fast to intersect with the outline of the opposite object's collider.
 	 */
-    class BulletCollider extends game.ShapedObjectCollider {
+    class BulletCollider extends game.ShapedObject2dCollider {
 		/**
 		 * @constructor
 		 * @param {utils.geometry2d.Shape} shape
@@ -140,7 +140,7 @@ window.game.BulletCollider = (function() {
 		}
 		/**
 		 * returns true because bullets collide when they are inside other objects.
-		 * @param {game.ObjectCollider} collider
+		 * @param {game.Object2dCollider} collider
 		 * @returns {boolean}
 		 */
 		collidesInside( collider ) { return true; }

@@ -530,5 +530,6 @@ window.game.Object = (function() {
 	 * @type {number[]}
 	 */
 	GameObject.prototype.collisionLayers = [0];
+
     return GameObject;
 })();

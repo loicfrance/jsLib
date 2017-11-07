@@ -8,8 +8,6 @@ html, body {
     position : relative;
     margin : 0;
     padding : 0;
-    width : 100%;
-    height: 100%;
     background: transparent;
 }
 .game_canvas, .game_ui {
@@ -18,4 +16,10 @@ html, body {
     top  : 0;
     left : 0;
     background: transparent;
+}
+.game_ui {
+    left: 50%;
+    top: 50%;
+    display: inline-block;
+    transform : translate(-50%, -50%);
 }

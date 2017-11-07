@@ -17,12 +17,12 @@ window.game.UIElement = (function(){
 			 * @name game.UIElement#elmt
 			 */
 			this.elmt = elmt;
-			this.elmt.className = 'game_ui';
+			this.elmt.className = this.elmt.className + ' game_ui';
 			/**
 			 * @type {utils.geometry2d.Vec2}
 			 * @name game.UIElement#position
 			 */
-			this.position = position.clone();
+			this.position = position ? position.clone() : null;
 			/**
 			 * @type {boolean}
 			 * @name game.UIElement#staticPos
@@ -44,19 +44,20 @@ window.game.UIElement = (function(){
 				}
 				pos.x *= scaleX;
 				pos.y *= scaleY;
-				pos.x += (parseFloat(viewer.context.canvas.style.xMin) || 0) - (this.elmt.clientWidth  * scaleX)/2;
-				pos.y += (parseFloat(viewer.context.canvas.style.yMin ) || 0) - (this.elmt.clientHeight * scaleY)/2;
-				this.elmt.style.transform = `scale(${scaleX}, ${scaleY})`;
+				const canvasStyle = viewer.getCanvasStyle();
+				pos.x += (parseFloat(canvasStyle.left) || 0);
+				pos.y += (parseFloat(canvasStyle.top ) || 0);
+				this.elmt.style.transform = `scale(${scaleX}, ${scaleY}) translate(-50%, -50%)`;
 				this.elmt.style.transformOrigin = 'left top';
-				this.elmt.style.xMin = `${Math.round(pos.x)}px`;
-				this.elmt.style.yMin  = `${Math.round(pos.y)}px`;
+				this.elmt.style.left = `${Math.round(pos.x)}px`;
+				this.elmt.style.top  = `${Math.round(pos.y)}px`;
 			}
 		}
 	}
 	return UIElement;
 })();
 window.game.Viewer = (function() {
-	let Rect = utils.geometry2d.Rect;
+	const Rect = utils.geometry2d.Rect;
 	/**
 	 * The class used by the game manager for the rendering.
 	 * @class game.Viewer
@@ -108,14 +109,15 @@ window.game.Viewer = (function() {
 					    onWindowResize = function (event) {
 					    	const canvas = this.context.canvas,
 							      parent = canvas.parentNode,
-							      parentW = parent.clientWidth,
-							      parentH = parent.clientHeight,
-							      ratio = this.visibleRect.ratio;
-							let w = parentW - (borderMargin * 2),
-							    h = Math.floor(Math.min(parentH - (borderMargin * 2), w / ratio));
+							      container = parent.parentNode || parent,
+							    containerW = container.clientWidth,
+							    containerH = container.clientHeight,
+							    ratio = this.visibleRect.ratio;
+							let w = containerW - (borderMargin * 2),
+							    h = Math.floor(Math.min(containerH - (borderMargin * 2), w / ratio));
 						    w = Math.floor(h * ratio);
-						    let left = Math.floor((parentW - w) * 0.5),
-							    top = Math.floor((parentH - h) * 0.5);
+						    let left = Math.floor((containerW - w) * 0.5),
+							    top = Math.floor((containerH - h) * 0.5);
 						    w -= Math.ceil(canvas.offsetWidth - canvas.clientWidth);
 						    h -= Math.ceil(canvas.offsetHeight - canvas.clientHeight);
 						    this.setCanvasSize(w, h, left, top);
@@ -195,6 +197,7 @@ window.game.Viewer = (function() {
 		    		uiElmts[i].update(this);
 			    }
 		    };
+		    if(context)this.setUIDiv(context.canvas.parentNode);
 		}
 		/**
 		 * manually changes the size of the canvas, and modifies the scale for the visible rectangle <!--
@@ -210,15 +213,17 @@ window.game.Viewer = (function() {
 		 * @param {number} marginY
 		 */
 		setCanvasSize(width, height, marginX, marginY) {
-			let canvas = this.context.canvas;
+			const canvas = this.context.canvas, parent = canvas.parentNode;
 			canvas.style.width = `${width}px`;
 			canvas.style.height = `${height}px`;
-			if(getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
-				canvas.style.left = `${marginX}px`;
-				canvas.style.top  = `${marginY}px`;
+			parent.style.width = `${canvas.offsetWidth}px`;
+			parent.style.height = `${canvas.offsetHeight}px`;
+			if(getComputedStyle(parent).getPropertyValue('position') === 'absolute') {
+				parent.style.left = `${marginX}px`;
+				parent.style.top  = `${marginY}px`;
 			} else {
-				canvas.style.marginLeft = `${marginX}px`;
-				canvas.style.marginTop = `${marginY}px`;
+				parent.style.marginLeft = `${marginX}px`;
+				parent.style.marginTop = `${marginY}px`;
 			}
 			this.updateTransform();
 			if (this.getCallback()) this.getCallback()(game.RenderEvent.CANVAS_RESIZE, this.context);
@@ -393,7 +398,7 @@ window.game.StandardDifferedViewer = (function(){
 			canvas.height = canvas.style.height = height;
 
 			if (getComputedStyle(canvas).getPropertyValue('position') === 'absolute') {
-				canvas.style.xMin = mX; canvas.style.yMin = mY;
+				canvas.style.left = mX; canvas.style.top = mY;
 			} else {
 				canvas.style.marginLeft = mX; canvas.style.marginTop = mY;
 			}
@@ -435,24 +440,7 @@ window.game.StandardDifferedViewer = (function(){
 	return StandardDifferedViewer;
 })();
 window.game.WebGLViewer = (function() {
-	let vertexShader =`#version 300 es
 
-in vec4 a_position;
-
-void main() {
-	gl_Position = a_position;
-}
-`,
-	fragmentShader = `#version 300 es
-
-precision mediump float;
-
-out vec4 outColor;
-
-void main() {
-	outColor = vec4(1, 0, 0.5, 1);
-}
-`;
 	/**
 	 * @class game.WebGLViewer
 	 * @memberOf game
@@ -466,13 +454,21 @@ void main() {
 			super(parameters);
 			const gl = this.gl;
 			window.webgl.initContext(gl);
+			this.bgColor = [0, 0, 0, 1];
 		}
 
 		updateTransform() {
 			this.context.viewport(0, 0, this.context.canvas.width, this.context.canvas.height);
+			this.updateUI();
 		}
 		get gl() {
 			return this.context;
+		}
+		setBgColor(red, green, blue, alpha) {
+			this.bgColor[0] = red;
+			this.bgColor[1] = green;
+			this.bgColor[2] = blue;
+			this.bgColor[3] = alpha;
 		}
 		/*
 		get scaleX() {
@@ -483,7 +479,7 @@ void main() {
 		}*/
 		render(gameManager, objects) {
 			let obj = objects.filter(game.renderableFilter), n = obj.length;
-			this.context.clearColor(0,0,0,1);
+			this.context.clearColor(this.bgColor[0], this.bgColor[1], this.bgColor[2], this.bgColor[3]);
 			this.context.clear(this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT);
 			while(n--) {
 				obj[n].render(this.context);

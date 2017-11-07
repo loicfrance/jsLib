@@ -212,20 +212,35 @@ utils.tools = {
 		for (let p in src) if (src.hasOwnProperty(p) && (override || !out.hasOwnProperty(p))) out[p] = src[p];
 	},
 	/**
-	 * gets a string returned by a specified url by calling the callback function with the returned <!--
-	 * -->text as argument.
 	 * @memberOf utils.tools
 	 * @param {string} url
-	 * @param {function(string)} callback
+	 * @returns {Promise} promise resolved with {@link String} object when string is loaded
 	 */
-	getStringFromUrl: (url, callback) => {
-		let client = new XMLHttpRequest();
-		client.open('GET', url);
-		client.onreadystatechange = _ => {
-			if(client.readyState == 4 && client.status == 200 || client.status == 0)
-				callback(client.responseText);
-		}
-		client.send();
+	loadString: (url) => {
+		return new Promise(resolve => {
+			const client = new XMLHttpRequest();
+			client.open('GET', url);
+			client.onreadystatechange = _ => {
+				if(client.readyState == 4 && client.status == 200 || client.status == 0)
+					resolve(client.responseText);
+			}
+			client.send();
+
+		});
+	},
+	/**
+	 * @memberOf utils.tools
+	 * @param {string} url
+	 * @returns {Promise} promise resolved with {@link Image} object when image is loaded
+	 */
+	loadImage: (url) => {
+		return new Promise(resolve => {
+			const img = new Image();
+			img.onload = _ => {
+				resolve(img);
+			}
+			img.src = url;
+		});
 	},
 	/**
 	 * creates a worker running the specified script

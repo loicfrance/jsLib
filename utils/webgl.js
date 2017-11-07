@@ -12,10 +12,15 @@ window['webgl'] = {
 	 */
 	initContext(gl) {
 		gl.clearColor(0.0, 0.0, 0.0, 1.0); // set clear color to opaque black
-		gl.enable(gl.CULL_FACE);
-		gl.enable(gl.DEPTH_TEST);
-		gl.depthFunc(gl.LEQUAL); // near objects hide far objects
+		//gl.enable(gl.CULL_FACE);
+		//gl.enable(gl.DEPTH_TEST);
+		//gl.depthFunc(gl.LEQUAL); // near objects hide far objects
 		gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT); //clear depth and color buffer
+	},
+	setAlphaEnabled(gl, enable) {
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+		if(enable) gl.enable(gl.BLEND);
+		else gl.disable(gl.BLEND);
 	},
 	createShader(gl, shaderScript, type) {
 		let shader;
@@ -42,10 +47,22 @@ window['webgl'] = {
 		}
 		return shader;
 	},
+	/**
+	 *
+	 * @param {WebGLRenderingContext|WebGL2RenderingContext} gl
+	 * @param {WebGLShader|string} vertexShader
+	 * @param {WebGLShader|string} fragmentShader
+	 * @returns {WebGLProgram}
+	 */
 	createProgram(gl, vertexShader, fragmentShader) {
 		const prog = gl.createProgram();
-		gl.attachShader(prog, vertexShader);
-		gl.attachShader(prog, fragmentShader);
+		if(  vertexShader.substr)
+			gl.attachShader(prog, webgl.createShader(gl,   vertexShader, 'vertex'  ));
+		else gl.attachShader(prog, vertexShader);
+		if(fragmentShader.substr)
+			gl.attachShader(prog, webgl.createShader(gl, fragmentShader, 'fragment'));
+		else gl.attachShader(prog, fragmentShader);
+
 		gl.linkProgram(prog);
 		if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
 			console.error(new Error(gl.getProgramInfoLog(prog)).stack);
@@ -53,6 +70,20 @@ window['webgl'] = {
 			return;
 		}
 		return prog;
+	},
+	getAttribLocations(gl, program, names) {
+		let result = new Array(names.length);
+		for(let i=0; i<names.length; i++) {
+			result[i] = gl.getAttribLocation(program, names[i]);
+		}
+		return result;
+	},
+	getUniformLocations(gl, program, names) {
+		let result = new Array(names.length);
+		for(let i=0; i<names.length; i++) {
+			result[i] = gl.getUniformLocation(program, names[i]);
+		}
+		return result;
 	},
 	/**
 	 * creates a {@link WebGLBuffer} buffer, binds it and copy the datas in it, using the methods <!--
@@ -76,40 +107,11 @@ window['webgl'] = {
 		gl.bufferData(target, srcData, usage, srcOffset, length);
 		return buffer;
 	},
-	standardVertexShader : `
-		attribute vec3 a_position;
-		attribute vec4 a_color;
-		
-		uniform mat4 uMVMatrix;
-		uniform mat4 uPMatrix;
-		
-		void main(void) {
-			f_color = a_color;
-			gl_Position = uPMatrix * uMVMatrix * vec4(a_position, 1.0);
-		}
-	`,
-	standard2dVertexShader : `
-		attribute vec2 a_position;
-		
-		uniform int a_color;
-		uniform mat3 uMVMatrix;
-		
-		varying vec4 f_color;
-		void main(void) {
-            int r = a_color / 256 / 256;
-            int g = a_color / 256 - 256*r;
-            int b = a_color - 256*(256*r+g);
-            f_color = vec4(float(r)/255.0, float(g)/255.0, float(b)/255.0, 1.0);
-			gl_Position = vec4(uMVMatrix * vec3(a_position, -1.0), 1.0);
-		}
-	`,
-	standardFragmentShader : `
-		precision mediump float;
-		varying vec4 f_color;
-		
-		void main(void) {
-			gl_FragColor = color;
-		}
+	standardFragmentShader : `#version 300 es
+precision mediump float;
+in vec4 v_color;
+out vec4 outColor;
+void main() { outColor = v_color; }
 	`,
 	createMVMat3: function(tx, ty, rad, scaleX, scaleY) {
 		let cos = Math.cos(rad), sin = Math.sin(rad);
@@ -126,4 +128,34 @@ window['webgl'] = {
 	scaleMat3: function(scaleX, scaleY) {
 		return [scaleX,0,0,  0,scaleY,0,  0,0,1];
 	},
+	perspectiveMat4: function(fov, aspect, zNear, zFar) {
+		const f = Math.tan(Math.PI*0.5 - 0.5 * fov),
+			  rangeInv = 1.0 / (zNear-zFar);
+		/*
+		return [
+			1/16, 0, 0, 0,
+			0, 1/9, 0, 0,
+			0, 0, 1, -1,
+			0, 0, 0, 1
+		];
+		/*/
+		return [
+			f/aspect, 0, 0                          , 0 ,
+			0       , f, 0                          , 0 ,
+			0       , 0, (zNear + zFar) * rangeInv  , -1,
+			0       , 0, zNear * zFar * rangeInv * 2, 1
+		];//*/
+	},
+	projectionMat4: function(xmin, xmax, ymin, ymax, zNear, zFar) {
+		const w = xmax - xmin, h = ymax - ymin, d = zFar - zNear;
+		return [
+			2/w, 0 , 0 , -(xmax+xmin)/w,
+			0 , 2/h, 0 , -(ymax+ymin)/h,
+			0 , 0 , -2/d, -(zFar+zNear)/d,
+			0 , 0 , 0 , 1
+		];
+	},
+	identityMat4: function() {
+		return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
+	}
 };

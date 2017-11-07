@@ -1,6 +1,8 @@
 /**
  * Created by rfrance on 12/20/2016.
  */
+"use strict";
+
 /**
  * contains mixins to create objects with useful properties such as {@link game.objectProperties.health|health}<!--
  * -->, {@link game.objectProperties.energy|energy}, {@link game.objectProperties.tag|tag}, ...
@@ -50,7 +52,7 @@ game.objectProperties = {
 		 * @param {number} value
 		 */
 		heal : function( value ) {
-			if(this.maxHealth != undefined && this.health+value > this.maxHealth) {
+			if(this.maxHealth !== undefined && this.health+value > this.maxHealth) {
 				value = this.maxHealth;
 			}
 			else value += this.health;
@@ -120,7 +122,7 @@ game.objectProperties = {
 		 * @param {number} value
 		 */
 		recoverEnergy : function( value ) {
-			if(this.maxEnergy != undefined && this.energy+value > this.maxEnergy) {
+			if(this.maxEnergy !== undefined && this.energy+value > this.maxEnergy) {
 				value = this.maxEnergy
 			}
 			else value += this.energy;
@@ -152,6 +154,18 @@ game.objectProperties = {
 		 */
 		getMaxEnergy : function() {
 			return this.maxEnergy;
+		}
+	},
+//######################################################################################################################
+//#                                                         tag                                                        #
+//######################################################################################################################
+	tiledMap: {
+		tilesOccupation: [[1]],
+		setTile(tiledMap,x,y) {
+			this.position.set(tiledMap.getTileCenter(x,y));
+		},
+		getTile(tiledMap) {
+			return tiledMap.getTileIndices(this.position);
 		}
 	},
 //######################################################################################################################
@@ -241,8 +255,8 @@ game.objectProperties = {
 	 * @returns {game.Object[]}
 	 */
 	tag_getAllObjectsWithTag: (gameManager, tag=null)=> {
-		if(tag) return gameManager.getObjects(game.objectProperties.tag.hasTag.bind(undefined, tag));
-		else return gameManager.getObjects(game.objectProperties.canHaveTag);
+		if(tag) return gameManager.getObjects(game.objectProperties.tag_hasTag.bind(undefined, tag));
+		else return gameManager.getObjects(game.objectProperties.tag_canHaveTag);
 	},
 //######################################################################################################################
 //#                                                       control                                                      #

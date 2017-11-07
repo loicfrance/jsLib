@@ -548,10 +548,10 @@ window.utils = window.utils || {};
 //######################################################################################################################
 	/** @class utils.geometry2d.Rect
 	 * @memberOf utils.geometry2d
-	 * @classdesc a class with four attributes : <code>{@link utils.geometry2d.Rect#left|left}</code>, <!--
-	 * --><code>{@link utils.geometry2d.Rect#top|top}</code>, <!--
-	 * --><code>{@link utils.geometry2d.Rect#right|right}</code> and <!--
-	 * --><code>{@link utils.geometry2d.Rect#bottom|bottom}</code>, used to represent a non-rotated rectangle.
+	 * @classdesc a class with four attributes : <code>{@link utils.geometry2d.Rect#left|xMin}</code>, <!--
+	 * --><code>{@link utils.geometry2d.Rect#top|yMin}</code>, <!--
+	 * --><code>{@link utils.geometry2d.Rect#right|xMax}</code> and <!--
+	 * --><code>{@link utils.geometry2d.Rect#bottom|yMax}</code>, used to represent a non-rotated rectangle.
 	 */
 	class Rect {
 		/** @constructor
@@ -562,22 +562,22 @@ window.utils = window.utils || {};
 		 */
 		constructor(xMin, yMin, xMax, yMax) {
 			/**
-			 * @name utils.geometry2d.Rect#left
+			 * @name utils.geometry2d.Rect#xMin
 			 * @type {number}
 			 */
 			this.xMin = xMin;
 			/**
-			 * @name utils.geometry2d.Rect#top
+			 * @name utils.geometry2d.Rect#yMin
 			 * @type {number}
 			 */
 			this.yMin = yMin;
 			/**
-			 * @name utils.geometry2d.Rect#right
+			 * @name utils.geometry2d.Rect#xMax
 			 * @type {number}
 			 */
 			this.xMax = xMax;
 			/**
-			 * @name utils.geometry2d.Rect#bottom
+			 * @name utils.geometry2d.Rect#yMax
 			 * @type {number}
 			 */
 			this.yMax = yMax;
@@ -3149,20 +3149,37 @@ window.utils = window.utils || {};
 		}
 
 		/**
-		 * tells if a point is located inside the instance using the following method :
-		 * - get the width of the polygone
-		 * - create a long enough line starting from the point and going right
-		 * - check if the line intersect the instance an odd number of times.
-		 * TODO remove singularities
+		 * tells if the spcified point is located inside the polygon
 		 * @param {utils.geometry2d.Vec2} point
 		 * @returns {boolean}
 		 */
 		contains(point) {
-			return (
-				this.getIntersectionLines(
-					new Line(point, point.clone().addXY(
-							this.getRect().width*2, 1))
-				).length % 2) == 1;
+			const n = this.points.length;
+			const A = Vec2.zero, B = this.points[0].clone();
+			point = point.clone().remove(this.center);
+			let i, j;
+			let nb = 0;
+			for(i=0; i< n; i++) {
+				A.set(B);
+				B.set(this.points[(i+1) % n]);
+				// skip lines completely above or below the point, ...
+				if( ((A.y > point.y) && (B.y > point.y)) ||
+					((A.y < point.y) && (B.y < point.y)) ||
+					// ... lines completely on the left of the point, ...
+					((A.x < point.x) && (B.x < point.x)) ||
+					((A.y == point.y) && (B.y < point.y)) ||
+					((A.y < point.y) && (B.y == point.y)) ||
+					// ... horizontal lines,
+					(A.y == B.y) ||
+					// and lines that cross the horizontal line on the left of the point
+					(((A.x > point.x) && (B.x < point.x)) && Vec2.ccw(point, B, A)) ||
+					(((A.x < point.x) && (B.x > point.x)) && Vec2.ccw(point, A, B))
+					)
+					continue;
+
+				nb++;
+			}
+			return (nb % 2) === 1;
 		}
 
 		/**

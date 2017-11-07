@@ -544,9 +544,10 @@ window.game.MultiRenderersObjectRenderer = (function(){
 		getRect() {
 			if(this.renderersNumber == 0)
 				return utils.geometry2d.Rect.createFromPoint(this.position);
-			let rects = new Array(this.renderersNumber), i = this.renderersNumber;
+			let rects = [], i = this.renderersNumber, r;
 			while(i--) {
-				rects[i] = this.renderers[i].getRect();
+				r = this.renderers[i].getRect();
+				if(r)rects.push(r);
 			}
 			return utils.geometry2d.Rect.getUnion(rects);
 		}
@@ -562,6 +563,18 @@ window.game.MultiRenderersObjectRenderer = (function(){
 				if(r > max) max = r;
 			}
 			return max;
+		}
+
+		addRenderer(renderer) {
+			this.renderers.push(renderer);
+			this.updateRenderersNumber();
+		}
+		removeRenderer(renderer) {
+			const i = this.renderers.indexOf(renderer);
+			if(i >= 0) {
+				this.renderers.splice(i, i+1);
+				this.updateRenderersNumber();
+			}
 		}
 	}
 	return MultiRenderersObjectRenderer;
@@ -718,7 +731,7 @@ window.game.AABBObject2dCollider = (function() {
 	 * @augments game.Object2dCollider
 	 * @memberOf game
 	 * @classdesc an implementation of the {@link game.Object2dCollider|Object2dCollider} using a <!--
-	 * -->an axis-aligned bounding box for collision detection.
+	 * -->an Axis-Aligned Bounding Box (AABB) for collision detection.
 	 */
 	class AABBObject2dCollider extends game.Object2dCollider {
 		/**
