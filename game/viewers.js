@@ -58,6 +58,13 @@ window.game.UIElement = (function(){
 })();
 window.game.Viewer = (function() {
 	const Rect = utils.geometry2d.Rect;
+	const Vec2 = utils.geometry2d.Vec2;
+	const defaultResizeFunction = (viewer, maxW, maxH)=> {
+		const ratio = viewer.visibleRect.ratio;
+		if(maxH * ratio > maxW) maxH = Math.floor(maxW / ratio);
+		else if(maxH * ratio < maxW) maxW = Math.floor(maxH * ratio);
+		return new Vec2(maxW, maxH);
+	};
 	/**
 	 * The class used by the game manager for the rendering.
 	 * @class game.Viewer
@@ -72,6 +79,7 @@ window.game.Viewer = (function() {
 		    let callback = null;
 		    let uiDiv = null;
 		    let uiElmts = [];
+		    let resizeFunction = defaultResizeFunction;
 		    /**
 		     * @name game.Viewer#context
 		     * @type {CanvasRenderingContext2D|WebGLRenderingContext}
@@ -95,13 +103,15 @@ window.game.Viewer = (function() {
 		     * @method
 		     * @name game.Viewer#useAutoResize
 		     * @param {boolean} use
-		     * @param {number} [borderMargin]. first use : default to 4. next uses : default to previous values.
+		     * @param {number} [borderMargin]. first use : default to 1. next uses : default to previous values.
+		     *
 		     */
 		    this.useAutoResize = function (use = true, borderMargin = resizeMargin) {
 			    resizeMargin = borderMargin;
 			    if (autoResize && !use) {
 				    window.removeEventListener('resize', onWindowResize, false);
 				    window.removeEventListener('fullscreenchange', onWindowResize, false);
+				    autoResize = false;
 			    }
 			    else if (!autoResize && use) {
 				    autoResize = true;
@@ -109,18 +119,28 @@ window.game.Viewer = (function() {
 					    onWindowResize = function (event) {
 					    	const canvas = this.context.canvas,
 							      parent = canvas.parentNode,
-							      container = parent.parentNode || parent,
+							      display = getComputedStyle(parent).display;
+					        parent.style.display = 'none';
+							const  container = parent.parentNode || parent,
+							/*
+							    containerMarginW = container.offsetWidth - container.clientWidth,
+							    containerMarginH = container.offsetHeight - container.clientHeight,
+							    containerStyle = getComputedStyle(container),
+							    containerW = parseFloat(containerStyle.maxWidth) - containerMarginW,
+							    containerH = parseFloat(containerStyle.maxHeight) - containerMarginH;
+							/*/
 							    containerW = container.clientWidth,
-							    containerH = container.clientHeight,
-							    ratio = this.visibleRect.ratio;
+							    containerH = container.clientHeight;
+							//*/
+
 							let w = containerW - (borderMargin * 2),
-							    h = Math.floor(Math.min(containerH - (borderMargin * 2), w / ratio));
-						    w = Math.floor(h * ratio);
-						    let left = Math.floor((containerW - w) * 0.5),
-							    top = Math.floor((containerH - h) * 0.5);
+							    h = containerH - (borderMargin * 2);
+							const wh = resizeFunction(this, w,h);
+							w = wh.x; h = wh.y;
+						    parent.style.display = display;
 						    w -= Math.ceil(canvas.offsetWidth - canvas.clientWidth);
 						    h -= Math.ceil(canvas.offsetHeight - canvas.clientHeight);
-						    this.setCanvasSize(w, h, left, top);
+						    this.setCanvasSize(w, h);
 					    }.bind(this);
 				    }
 				    window.addEventListener('resize', onWindowResize, false);
@@ -149,6 +169,15 @@ window.game.Viewer = (function() {
 		     */
 		    this.getCallback = function() {
 		    	return callback;
+		    };
+		    /**
+		     * @param {function(viewer: game.Viewer, maxW: number, maxH: number) : Vec2 } func - takes the maximum <!--
+		     * -->width and height in parameters and return the actual width and height of the canvas as <!--
+		     * -->{@link utils.geometry2d.Vec2#x|x} and {@link utils.geometry2d.Vec2#y|y} attributes of a <!--
+		     * {@link utils.geometry2d.Vec2} instance
+		     */
+		    this.setResizeFunction = function(func) {
+		    	resizeFunction = func || defaultResizeFunction;
 		    };
 		    /**
 		     * sets the {@link HTMLDivElement } used to place UI elements. <!--
@@ -209,22 +238,14 @@ window.game.Viewer = (function() {
 		 * @name game.Viewer#setCanvasSize
 		 * @param {number} width
 		 * @param {number} height
-		 * @param {number} marginX
-		 * @param {number} marginY
 		 */
-		setCanvasSize(width, height, marginX, marginY) {
+		setCanvasSize(width, height) {
 			const canvas = this.context.canvas, parent = canvas.parentNode;
 			canvas.style.width = `${width}px`;
 			canvas.style.height = `${height}px`;
 			parent.style.width = `${canvas.offsetWidth}px`;
 			parent.style.height = `${canvas.offsetHeight}px`;
-			if(getComputedStyle(parent).getPropertyValue('position') === 'absolute') {
-				parent.style.left = `${marginX}px`;
-				parent.style.top  = `${marginY}px`;
-			} else {
-				parent.style.marginLeft = `${marginX}px`;
-				parent.style.marginTop = `${marginY}px`;
-			}
+
 			this.updateTransform();
 			if (this.getCallback()) this.getCallback()(game.RenderEvent.CANVAS_RESIZE, this.context);
 		};

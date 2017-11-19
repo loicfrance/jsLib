@@ -1,0 +1,546 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: game/viewers.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: game/viewers.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * Created by Loic France on 12/25/2016.
+ */
+&quot;use strict&quot;;
+window.game.UIElement &#x3D; (function(){
+	class UIElement {
+		/**
+		 * @constructor
+		 *
+		 * @param {HTMLElement} elmt
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {boolean} staticPos
+		 */
+		constructor(elmt, position, staticPos &#x3D; false) {
+			/**
+			 * @type {HTMLElement}
+			 * @name game.UIElement#elmt
+			 */
+			this.elmt &#x3D; elmt;
+			this.elmt.className &#x3D; &#x27;game_ui&#x27;;
+			/**
+			 * @type {utils.geometry2d.Vec2}
+			 * @name game.UIElement#position
+			 */
+			this.position &#x3D; position.clone();
+			/**
+			 * @type {boolean}
+			 * @name game.UIElement#staticPos
+			 */
+			this.staticPos &#x3D; !!staticPos; //convert to bool
+		}
+
+		/**
+		 * called by the {@link game.Viewer} instace attached to the {@link game.GameManager} when the window
+		 * gets resized or the visible rect is modified.
+		 * @param viewer
+		 */
+		update(viewer) {
+			let scaleX &#x3D; 1/viewer.scaleX, scaleY &#x3D; 1/viewer.scaleY;
+			if(this.position &amp;amp;&amp;amp; !isNaN(this.position.x) &amp;amp;&amp;amp; !isNaN(this.position.y)) {
+				let pos &#x3D; this.position.clone();
+				if(!this.staticPos) {
+					pos.addXY(- viewer.visibleRect.xMin, - viewer.visibleRect.yMin);
+				}
+				pos.x *&#x3D; scaleX;
+				pos.y *&#x3D; scaleY;
+				pos.x +&#x3D; (parseFloat(viewer.context.canvas.style.xMin) || 0) - (this.elmt.clientWidth  * scaleX)/2;
+				pos.y +&#x3D; (parseFloat(viewer.context.canvas.style.yMin ) || 0) - (this.elmt.clientHeight * scaleY)/2;
+				this.elmt.style.transform &#x3D; &#x60;scale(${scaleX}, ${scaleY})&#x60;;
+				this.elmt.style.transformOrigin &#x3D; &#x27;left top&#x27;;
+				this.elmt.style.xMin &#x3D; &#x60;${Math.round(pos.x)}px&#x60;;
+				this.elmt.style.yMin  &#x3D; &#x60;${Math.round(pos.y)}px&#x60;;
+			}
+		}
+	}
+	return UIElement;
+})();
+window.game.Viewer &#x3D; (function() {
+	let Rect &#x3D; utils.geometry2d.Rect;
+	/**
+	 * The class used by the game manager for the rendering.
+	 * @class game.Viewer
+	 * @memberOf game
+	 */
+    class Viewer {
+    	constructor({context, visibleRect}) {
+		    //private variables used for resize
+		    let autoResize &#x3D; false;
+		    let onWindowResize &#x3D; null;
+		    let resizeMargin &#x3D; 1;
+		    let callback &#x3D; null;
+		    let uiDiv &#x3D; null;
+		    let uiElmts &#x3D; [];
+		    /**
+		     * @name game.Viewer#context
+		     * @type {CanvasRenderingContext2D|WebGLRenderingContext}
+		     */
+		    this.context &#x3D; context || null;
+		    /**
+		     * @name game.Viewer#visibleRect
+		     * @type {utils.geometry2d.Rect}
+		     */
+		    this.visibleRect &#x3D;
+			    visibleRect ?
+				    visibleRect.clone()
+			    : (this.context &amp;amp;&amp;amp; this.context.canvas) ?
+				    new Rect(0, 0, this.context.canvas.width, this.context.canvas.height)
+			    : new Rect(0,0,0,0);
+
+		    /**
+		     * allows the canvas to resize automatically when the window size changes.
+		     * The callback function is called after the resize with the first parameter equal to &amp;lt;!--
+		     * --&gt;{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
+		     * @method
+		     * @name game.Viewer#useAutoResize
+		     * @param {boolean} use
+		     * @param {number} [borderMargin]. first use : default to 4. next uses : default to previous values.
+		     */
+		    this.useAutoResize &#x3D; function (use &#x3D; true, borderMargin &#x3D; resizeMargin) {
+			    resizeMargin &#x3D; borderMargin;
+			    if (autoResize &amp;amp;&amp;amp; !use) {
+				    window.removeEventListener(&#x27;resize&#x27;, onWindowResize, false);
+				    window.removeEventListener(&#x27;fullscreenchange&#x27;, onWindowResize, false);
+			    }
+			    else if (!autoResize &amp;amp;&amp;amp; use) {
+				    autoResize &#x3D; true;
+				    if (!onWindowResize) {
+					    onWindowResize &#x3D; function (event) {
+					    	const canvas &#x3D; this.context.canvas,
+							      parent &#x3D; canvas.parentNode,
+							      parentW &#x3D; parent.clientWidth,
+							      parentH &#x3D; parent.clientHeight,
+							      ratio &#x3D; this.visibleRect.ratio;
+							let w &#x3D; parentW - (borderMargin * 2),
+							    h &#x3D; Math.min(parentH - (borderMargin * 2), w / ratio);
+						    w &#x3D; h * ratio;
+						    let left &#x3D; (parentW - w) * 0.5,
+							    top &#x3D; (parentH - h) * 0.5;
+						    w -&#x3D; canvas.offsetWidth - canvas.clientWidth;
+						    h -&#x3D; canvas.offsetHeight - canvas.clientHeight;
+						    this.setCanvasSize(w, h, left, top);
+					    }.bind(this);
+				    }
+				    window.addEventListener(&#x27;resize&#x27;, onWindowResize, false);
+				    window.addEventListener(&#x27;fullscreenchange&#x27;, onWindowResize, false);
+				    onWindowResize(null);
+			    } else if(use) {
+			    	onWindowResize(null);
+			    }
+		    };
+		    /**
+		     * sets the callback function called for rendering events. See {@link game.RenderEvent} &amp;lt;!--
+		     * --&gt;for a list of all possible events
+		     * @method
+		     * @name game.Viewer#setCallback
+		     * @param {?game.renderEventCallback} cb
+		     */
+		    this.setCallback &#x3D; function (cb) {
+			    callback &#x3D; cb;
+		    };
+		    /**
+		     * returns the callback function called for rendering events. See {@link game.RenderEvent} &amp;lt;!--
+		     * --&gt;for a list of all possible events
+		     * @method
+		     * @name game.Viewer#getCallback
+		     * @returns {?game.renderEventCallback}
+		     */
+		    this.getCallback &#x3D; function() {
+		    	return callback;
+		    };
+		    /**
+		     * sets the {@link HTMLDivElement } used to place UI elements. &amp;lt;!--
+		     * --&gt;this div will be maintained the same size as the canvas element
+		     * @method
+		     * @param {HTMLDivElement} divElement
+		     */
+		    this.setUIDiv &#x3D; function(divElement) {
+			    uiDiv &#x3D; divElement;
+		    };
+		    /**
+		     * @method
+		     * @returns {!HTMLDivElement} the div used to place ui elements
+		     */
+		    this.getUIDiv &#x3D; function() {
+		    	return uiDiv;
+		    };
+		    /**
+		     * adds a {@link game.UIElement} to the user interface
+		     * @method
+		     * @param {game.UIElement} elmt - the element to add to the UI
+		     */
+		    this.addUIElement &#x3D; function(elmt) {
+			    uiDiv.appendChild(elmt.elmt);
+			    uiElmts.push(elmt);
+		    };
+		    /**
+		     * remove the {@link game.UIElement} from the user interface
+		     * @param {game.UIElement} elmt
+		     */
+		    this.removeUIElement &#x3D; function(elmt) {
+		    	let i &#x3D; uiElmts.indexOf(elmt);
+		    	if(i &gt;&#x3D; 0) {
+				    uiElmts.splice(i, 1);
+		    		uiDiv.removeChild(elmt.elmt);
+			    }
+
+		    };
+		    /**
+		     * called after the window has been resized or the visible game rect modified.
+		     * calls the {@link game.UIElement#update update(viewer)} method of every element to transform it.
+		     */
+		    this.updateUI &#x3D; function() {
+		    	let i &#x3D; uiElmts.length;
+		    	while(i--) {
+		    		uiElmts[i].update(this);
+			    }
+		    };
+		}
+		/**
+		 * manually changes the size of the canvas, and modifies the scale for the visible rectangle &amp;lt;!--
+		 * --&gt;to fit the canvas without the visible rectangle to change. you can change the visible rect and &amp;lt;!--
+		 * --&gt;the {@link game.Viewer#updateScale} method to change the scale.
+		 * The callback function is then with the first parameter equal to &amp;lt;!--
+		 * --&gt;{@link game.RenderEvent.CANVAS_RESIZE} and the second one equal to the rendering context.
+		 * @method
+		 * @name game.Viewer#setCanvasSize
+		 * @param {number} width
+		 * @param {number} height
+		 * @param {number} marginX
+		 * @param {number} marginY
+		 */
+		setCanvasSize(width, height, marginX, marginY) {
+			let canvas &#x3D; this.context.canvas;
+			canvas.style.width &#x3D; width;
+			canvas.style.height &#x3D; height;
+			if(getComputedStyle(canvas).getPropertyValue(&#x27;position&#x27;) &#x3D;&#x3D;&#x3D; &#x27;absolute&#x27;) {
+				canvas.style.xMin &#x3D; marginX.toString() + &quot;px&quot;;
+				canvas.style.yMin &#x3D; marginY.toString() + &quot;px&quot;;
+			} else {
+				canvas.style.marginLeft &#x3D; marginX.toString() + &quot;px&quot;;
+				canvas.style.marginTop &#x3D; marginY.toString() + &quot;px&quot;;
+			}
+			this.updateTransform();
+			if (this.getCallback()) this.getCallback()(game.RenderEvent.CANVAS_RESIZE, this.context);
+		};
+
+		/**
+		 * sets the canvas resolution
+		 * @param {number} width - number of pixels on the horizontal axis
+		 * @param {number} height - number of pixels on the vertical axis
+		 */
+		setCanvasResolution(width, height) {
+			this.context.canvas.setAttribute(&#x27;width&#x27; , String(width ));
+			this.context.canvas.setAttribute(&#x27;height&#x27;, String(height));
+			this.updateTransform();
+		}
+
+		/**
+		 * @return {CSSStyleDeclaration} the computed style of the canvas, acquired with &amp;lt;!--
+		 * --&gt;&amp;lt;code&gt;getComputedStyle(viewer.context.canvas)&amp;lt;/code&gt;
+		 */
+		getCanvasStyle() {
+			return getComputedStyle(this.context.canvas);
+		}
+		/**
+		 * number of game units by screen pixel (&#x3D;(visible game width)/(canvas width))
+		 * @name game.Viewer#scaleX
+		 * @type {number}
+		 * @readonly
+		 */
+	    get scaleX() { return this.visibleRect.width/parseInt(this.getCanvasStyle().width); }
+	    /**
+	     * number of game units by screen pixel (&#x3D;(visible game height)/(canvas height))
+	     * @name game.Viewer#scaleY
+	     * @type {number}
+	     * @readonly
+	     */
+	    get scaleY() { return this.visibleRect.height/parseInt(this.getCanvasStyle().height); }
+	    /**
+	     * changes the scale for the visible rect size to fit the canvas. Don&#x27;t forget to call this method after &amp;lt;!--
+	     * --&gt; you made manual modifications on the visible rect to avoid errors.
+	     * Be aware that the game may look stretched if the aspect of the canvas is not the same &amp;lt;!--
+	     * --&gt;as the rectangle&#x27;s {@link utils.geometry2d.Rect#ratio|ratio}
+	     */
+	    updateTransform() {
+		    this.context.setTransform(
+			    this.context.canvas.width/this.visibleRect.width, 0,
+			    0, this.context.canvas.height/this.visibleRect.height,
+			    this.visibleRect.xMin, this.visibleRect.yMin);
+			this.updateUI();
+	    }
+		/**
+		 * gives you the game coordinates of a point given in pixel coordinates relative to the canvas.
+		 * @param {utils.geometry2d.Vec2} pixelCoords
+		 * @param {utils.geometry2d.Vec2} out
+		 * @returns {utils.geometry2d.Vec2} out
+		 */
+		pixelToGameCoordinatesTransform(pixelCoords, out &#x3D; Vec2.zero) {
+			return out.setXY(
+				pixelCoords.x*this.scaleX+this.visibleRect.xMin,
+				pixelCoords.y*this.scaleY+this.visibleRect.yMin);
+		}
+		/**
+		 * gives you the pixel coordinates, relative to the canvas, of a point in the game.
+		 * @param {utils.geometry2d.Vec2} gameCoords
+		 * @param {utils.geometry2d.Vec2} out
+		 * @returns {utils.geometry2d.Vec2} out
+		 */
+		gameToPixelCoordinatesTransform(gameCoords, out &#x3D; Vec2.zero) {
+			return out.setXY(
+				(gameCoords.x-this.visibleRect.xMin)/this.scaleX,
+				(gameCoords.y-this.visibleRect.yMin)/this.scaleY);
+		}
+		/**
+		 * called by the game manager after a frame to draw objects on the canvas.
+		 * The callback function is called at the beginning and at the end of the function, and at the &amp;lt;!--
+		 * --&gt;beginning and the end of the drawing of every layer, with the first parameter equal to &amp;lt;!--
+		 * --&gt;{@link game.RenderEvent.RENDER_BEGIN}, {@link game.RenderEvent.RENDER_END}, &amp;lt;!--
+		 * --&gt;{@link game.RenderEvent.RENDER_LAYER_BEGIN} or {@link game.RenderEvent.RENDER_LAYER_END} &amp;lt;!--
+		 * and the second one equal to the rendering context.
+		 * @name game.Viewer#render
+		 * @param {game.GameManager} gameManager
+		 * @param {game.Object[]} objects
+		 * @abstract
+		 */
+		render( gameManager, objects) { }
+
+    }
+    return Viewer;
+})();
+window.game.StandardViewer &#x3D; (function() {
+	/**
+	 * @class game.StandardViewer
+	 * @memberOf game
+	 * @augments game.Viewer
+	 * @extends game.Viewer
+	 */
+    class StandardViewer extends window.game.Viewer {
+    	constructor(parameters) {
+    		if((!parameters.context) &amp;amp;&amp;amp; parameters.canvas)
+    			parameters.context &#x3D; parameters.canvas.getContext(&#x27;2d&#x27;);
+    		super(parameters);
+	    }
+	    render(gameManager, objects) {
+		    let rect &#x3D; this.visibleRect, objs, ctx &#x3D; this.context, l, i, callback &#x3D; this.getCallback();
+		    ctx.clearRect(rect.xMin, rect.yMin, rect.xMax, rect.yMax);
+		    if(callback) {
+			    ctx.save();
+			    callback(game.RenderEvent.RENDER_BEGIN, ctx);
+		    }
+		    objs &#x3D; objects.sort(game.renderLayerSort);
+		    if(!(i &#x3D; objs.length))
+		    	return;
+		    //noinspection StatementWithEmptyBodyJS
+		    while(i &amp;amp;&amp;amp; objs[--i].renderLayer &amp;lt; 0);
+		    if(i&gt;&#x3D;0) {
+			    if(callback) {
+				    callback(game.RenderEvent.RENDER_LAYER_BEGIN, ctx);
+			    }
+			    l &#x3D; objs[i].renderLayer;
+			    do {
+				    if(objs[i].renderLayer &amp;lt; l) {
+					    if(objs[i].renderLayer &amp;lt; 0) {
+						    if(callback) callback(game.RenderEvent.RENDER_LAYER_END, ctx);
+						    ctx.restore();
+						    break;
+					    }
+					    if(callback) {
+						    callback(game.RenderEvent.RENDER_LAYER_END, ctx);
+						    callback(game.RenderEvent.RENDER_LAYER_BEGIN, ctx);
+					    }
+					    ctx.restore();
+					    ctx.save();
+					    l &#x3D; Math.ceil(objs[i].renderLayer);
+				    }
+				    if(!objs[i].isOutOfRect(rect)) objs[i].render(ctx);
+
+			    } while(i--);
+			    if(callback) {
+				    callback(game.RenderEvent.RENDER_LAYER_END, ctx);
+			    }
+		    }
+		    if(callback) {
+			    callback(game.RenderEvent.RENDER_END, ctx);
+			    ctx.restore();
+		    }
+	    }
+
+		/**
+		 * enables or disables image smoothing for the {@link CanvasRenderingContext2D context}
+		 * @param {boolean} enabled
+		 */
+		setImageSmoothingEnabled(enabled) {
+            this.context.imageSmoothingEnabled &#x3D; enabled;
+	    }
+    }
+    return StandardViewer;
+})();
+window.game.StandardDifferedViewer &#x3D; (function(){
+	class StandardDifferedViewer extends game.StandardViewer {
+		constructor(parameters) {
+			super(parameters);
+			this.hidden_canvas &#x3D; this.context.canvas.cloneNode(false);
+			this.hidden_context &#x3D; this.hidden_canvas.getContext(&#x27;2d&#x27;);
+
+		}
+		//*
+		setCanvasSize(width, height, marginX, marginY) {
+			const canvas &#x3D; this.context.canvas, mX &#x3D; &#x60;${marginX}px&#x60;, mY &#x3D; &#x60;${marginY}px&#x60;;
+			canvas.width &#x3D; canvas.style.width &#x3D; width;
+			canvas.height &#x3D; canvas.style.height &#x3D; height;
+
+			if (getComputedStyle(canvas).getPropertyValue(&#x27;position&#x27;) &#x3D;&#x3D;&#x3D; &#x27;absolute&#x27;) {
+				canvas.style.xMin &#x3D; mX; canvas.style.yMin &#x3D; mY;
+			} else {
+				canvas.style.marginLeft &#x3D; mX; canvas.style.marginTop &#x3D; mY;
+			}
+
+			this.hidden_canvas.width &#x3D; this.hidden_canvas.style.width &#x3D; width;
+			this.hidden_canvas.height &#x3D; this.hidden_canvas.style.height &#x3D; height;
+
+			const temp &#x3D; this.context;
+			this.context &#x3D; this.hidden_context;
+			this.updateTransform();
+			this.context &#x3D; temp;
+			console.log(width, height, canvas, this.hidden_canvas);
+			if (this.getCallback()) this.getCallback()(game.RenderEvent.CANVAS_RESIZE, this.context);
+		}
+		/*/
+		setCanvasSize(width, height, marginX, marginY)
+		{
+			super.setCanvasSize(width, height, marginX, marginY);
+			const temp &#x3D; this.context;
+			this.context &#x3D; this.hidden_context;
+			super.setCanvasSize(width, height, marginX, marginY);
+			this.context &#x3D; temp;
+
+			if (callback) callback(game.RenderEvent.CANVAS_RESIZE, this.context);
+
+		}
+		//*/
+		render(gameManager, objects) {
+			const temp &#x3D; this.context, w &#x3D; this.context.canvas.clientWidth, h &#x3D; this.context.canvas.clientHeight;
+			this.context &#x3D; this.hidden_context;
+			super.render(gameManager, objects);
+			this.context &#x3D; temp;
+			let rect &#x3D; this.visibleRect;
+			this.context.clearRect(rect.xMin, rect.yMin, rect.xMax, rect.yMax);
+			//console.log(this.hidden_canvas.width, this.hidden_canvas.height);
+			this.context.drawImage(this.hidden_canvas, 0, 0, w, h, 0, 0, w, h);
+		}
+	}
+	return StandardDifferedViewer;
+})();
+window.game.WebGLViewer &#x3D; (function() {
+	let vertexShader &#x3D;&#x60;#version 300 es
+
+in vec4 a_position;
+
+void main() {
+	gl_Position &#x3D; a_position;
+}
+&#x60;,
+	fragmentShader &#x3D; &#x60;#version 300 es
+
+precision mediump float;
+
+out vec4 outColor;
+
+void main() {
+	outColor &#x3D; vec4(1, 0, 0.5, 1);
+}
+&#x60;;
+	/**
+	 * @class game.WebGLViewer
+	 * @memberOf game
+	 * @augments game.Viewer
+	 * @extends game.Viewer
+	 */
+	class WebGLViewer extends window.game.Viewer {
+		constructor(parameters) {
+			if((!parameters.context) &amp;amp;&amp;amp; parameters.canvas)
+				parameters.context &#x3D; window.webgl.getContext(canvas);
+			super(parameters);
+			const gl &#x3D; this.gl;
+			window.webgl.initContext(gl);
+		}
+
+		get gl() {
+			return this.context;
+		}
+		get scaleX() {
+			return this.context.getParameter(this.context.VIEWPORT)[2]/this.context.canvas.width;
+		}
+		get scaleY() {
+			return this.context.getParameter(this.context.VIEWPORT)[3]/this.context.canvas.height;
+		}
+		updateScale() {
+			this.context.viewport(this.visibleRect.xMin , this.visibleRect.yMin,
+								  this.visibleRect.width, this.visibleRect.height);
+		}
+		render(gameManager, objects) {
+			let obj &#x3D; objects.filter(game.renderableFilter), n &#x3D; obj.length;
+			this.context.clearColor(0,0,0,1);
+			this.context.clear(this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT);
+			while(n--) {
+				obj[n].render(this.context);
+			}
+		}
+	}
+	return WebGLViewer;
+})();</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on October 7, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

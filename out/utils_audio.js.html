@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: utils/audio.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: utils/audio.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>&quot;use strict&quot;;
+utils.tools.polyfill(window, &quot;AudioContext&quot;, [&quot;webkit&quot;]);
+utils.audio &#x3D; {
+	loadSound(audioContext, onResult, onError, url) {
+		const request &#x3D; new XMLHttpRequest();
+		request.open(&#x27;GET&#x27;, url, true);
+		request.responseType &#x3D; &#x27;arraybuffer&#x27;;
+
+		// Decode asynchronously
+		request.onload &#x3D; function() {
+			context.decodeAudioData(request.response, onResult, onError);
+		}
+		request.send();
+	},
+	/**
+	 * &amp;lt;code&gt;
+	 * __________________________________________________________________________________________________________
+	 * |_octave_|___C___|_C#/Db_|___D___|_D#/Eb_|___E___|___F___|_F#/Gb_|___G___|_G#/Ab_|___A___|_A#/Bb_|___B___|
+	 * |        |   0   |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |   10  |   11  |
+	 * |   -5   | 8.176 | 8.662 | 9.177 | 9.723 | 10.30 | 10.91 | 11.56 | 12.25 | 12.98 | 13.75 |&#x60;14.57 | 15.43 |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -4   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -3   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -2   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -1   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    0   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    1   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    2   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    3   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    4   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    5   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * &amp;lt;/code&gt;
+	 * @param {number} midi identification number (see &amp;lt;!--
+	 * --&gt;http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm &amp;lt;!--
+	 * --&gt;or http://tonalsoft.com/pub/news/pitch-bend.aspx) &amp;lt;!--
+	 * --&gt;for a list of all ids)
+	 * @return {number} the note frequency, in Hz
+	 */
+	getNoteFreq(semitones) {
+		return 440*(Math.pow(2, noteId-69));
+	},
+	createSinusOscillator(audioContext, freq) {
+		let o &#x3D; audioContext.createOscillator();
+		o.type &#x3D; &quot;sine&quot;;
+		o.frequency.value &#x3D; freq;
+		return o;
+	},
+	createSquareOscillator(audioContext, freq) {
+		let o &#x3D; audioContext.createOscillator();
+		o.type &#x3D; &quot;square&quot;;
+		o.frequency.value &#x3D; freq;
+		return o;
+	},
+	createTriangleOscillator(audioContext, freq) {
+		let o &#x3D; audioContext.createOscillator();
+		o.type &#x3D; &quot;triangle&quot;;
+		o.frequency.value &#x3D; freq;
+		return o;
+	},
+	createSawToothOscillator(audioContext, freq) {
+		let o &#x3D; audioContext.createOscillator();
+		o.type &#x3D; &quot;sawtooth&quot;;
+		o.frequency.value &#x3D; freq;
+		return o;
+	},
+	createCustomOscillator(audioContext, freq, periodicWave) {
+		let o &#x3D; audioContext.createOscillator();
+		o.type &#x3D; &quot;custom&quot;;
+		o.frequency.value &#x3D; freq;
+		o.setPeriodicWave(periodicWave);
+		return o;
+	},
+	connectNodes(nodes) {
+		let i, n &#x3D; nodes.length;
+		for(i&#x3D;0; i&amp;lt; n-1; i++) {
+			nodes[i].connect(nodes[i+1]);
+		}
+	},
+}</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on October 7, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>

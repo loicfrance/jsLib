@@ -4,10 +4,19 @@ html, body {
     height  : 100%;
     width   : 100%;
 }
+/* NOT AVAILABLE IN CSS3
+*:has( > .game_div) {
+    position: relative;
+}
+*/
 .game_div {
-    position : relative;
-    margin : 0;
+    position : absolute;
+    display: block;
+    margin : auto;
     padding : 0;
+    left : 50%;
+    top : 50%;
+    transform : translate(-50%, -50%);
     background: transparent;
 }
 .game_canvas, .game_ui {

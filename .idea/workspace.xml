@@ -9,20 +9,19 @@
     <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2118" />
     <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2648" />
     <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="2732" />
-    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="3320" />
+    <bookmark url="file://$PROJECT_DIR$/utils/geometry2d.js" line="3337" />
     <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="6" />
     <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="78" />
-    <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="284" />
+    <bookmark url="file://$PROJECT_DIR$/utils/input.js" line="283" />
     <bookmark url="file://$PROJECT_DIR$/game/manager.js" line="9" />
     <bookmark url="file://$PROJECT_DIR$/game/manager.js" line="139" />
     <bookmark url="file://$PROJECT_DIR$/game/manager.js" line="74" />
     <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="26" />
-    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="262" />
-    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="337" />
+    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="288" />
+    <bookmark url="file://$PROJECT_DIR$/game/viewers.js" line="363" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f0fe948-9def-4a4f-96c9-0eb6e9603f42" name="Default" comment="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;minor changes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game/turn.js" />
+    <list default="true" id="7f0fe948-9def-4a4f-96c9-0eb6e9603f42" name="Default" comment="update last commit">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/game.BulletCollider.html" afterPath="$PROJECT_DIR$/doc/game.BulletCollider.html" />
@@ -42,11 +41,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/utils_utils_1.js.html" afterPath="$PROJECT_DIR$/doc/utils_utils_1.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/doc/utils_utils_2.js.html" afterPath="$PROJECT_DIR$/doc/utils_utils_2.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/board.js" afterPath="$PROJECT_DIR$/game/board.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/bullets.js" afterPath="$PROJECT_DIR$/game/bullets.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/imports.html" afterPath="$PROJECT_DIR$/game/imports.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/object.js" afterPath="$PROJECT_DIR$/game/object.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/particles.js" afterPath="$PROJECT_DIR$/game/particles.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/renderer_collider.js" afterPath="$PROJECT_DIR$/game/renderer_collider.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/stylesheet.css" afterPath="$PROJECT_DIR$/game/stylesheet.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/viewers.js" afterPath="$PROJECT_DIR$/game/viewers.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/AABBObjectCollider.html" afterPath="$PROJECT_DIR$/out/AABBObjectCollider.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BulletCollider.html" afterPath="$PROJECT_DIR$/out/BulletCollider.html" />
@@ -78,9 +73,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils_geometry2d.js.html" afterPath="$PROJECT_DIR$/out/utils_geometry2d.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils_input.js.html" afterPath="$PROJECT_DIR$/out/utils_input.js.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/utils_tools.js.html" afterPath="$PROJECT_DIR$/out/utils_tools.js.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/geometry2d.js" afterPath="$PROJECT_DIR$/utils/geometry2d.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/tools.js" afterPath="$PROJECT_DIR$/utils/tools.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/webgl.js" afterPath="$PROJECT_DIR$/utils/webgl.js" />
     </list>
     <ignored path="utils.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,12 +94,110 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="geometry2d.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/utils/geometry2d.js">
+      <file leaf-file-name="manager.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="3155" column="11" lean-forward="false" selection-start-line="3155" selection-start-column="11" selection-end-line="3155" selection-end-column="11" />
+            <state relative-caret-position="969">
+              <caret line="59" column="21" lean-forward="false" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
+              <folding>
+                <marker date="1508705388821" expanded="true" signature="1343:1465" ph="/**...*/" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="object.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/object.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9044">
+              <caret line="532" column="0" lean-forward="false" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="renderer_collider.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/renderer_collider.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15929">
+              <caret line="937" column="5" lean-forward="false" selection-start-line="937" selection-start-column="5" selection-end-line="937" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="turn.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/turn.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+              <folding>
+                <element signature="e#43#1906#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="board.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/board.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2992">
+              <caret line="176" column="9" lean-forward="false" selection-start-line="172" selection-start-column="8" selection-end-line="176" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bullets.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/bullets.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="153" column="34" lean-forward="false" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="34" />
+              <folding>
+                <element signature="e#441#3660#0" expanded="false" />
+                <element signature="e#4072#4989#0" expanded="false" />
+                <element signature="e#5423#9325#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="viewers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/viewers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="117" column="42" lean-forward="true" selection-start-line="117" selection-start-column="42" selection-end-line="117" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#48#0" expanded="false" />
+                <element signature="e#98#1679#0" expanded="false" />
+                <element signature="e#12499#14500#0" expanded="false" />
+                <element signature="e#14553#16536#0" expanded="false" />
+                <element signature="e#16579#17945#0" expanded="false" />
+                <marker date="1511124996307" expanded="true" signature="15716:16003" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stylesheet.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/game/stylesheet.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="2" lean-forward="false" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TiledMap.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/game/TiledMap.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="31" column="58" lean-forward="false" selection-start-line="31" selection-start-column="58" selection-end-line="31" selection-end-column="58" />
+              <folding>
+                <element signature="e#1937#2960#0" expanded="false" />
+                <element signature="e#4219#6765#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,13 +219,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>gamemanager</find>
-      <find>trans</find>
-      <find>.tools.</find>
-      <find>occupationMap</find>
-      <find>getIntersectionPoints</find>
-      <find>num1</find>
-      <find>geometry2d</find>
       <find>bodies</find>
       <find>Vec2</find>
       <find>**********************************************************************************************************************</find>
@@ -159,12 +242,15 @@
       <find>.bottom</find>
       <find>utils.geometry2d.</find>
       <find>utils.</find>
+      <find>map</find>
+      <find>p.y</find>
+      <find>p.x</find>
+      <find>this</find>
+      <find>start</find>
+      <find>util</find>
+      <find>heatmap</find>
     </findStrings>
     <replaceStrings>
-      <replace>let</replace>
-      <replace>Absolute</replace>
-      <replace>_keyboardCallbacks</replace>
-      <replace>keyboardListeners</replace>
       <replace>keyState</replace>
       <replace>InputManager</replace>
       <replace>*</replace>
@@ -191,6 +277,10 @@
       <replace>.yMin</replace>
       <replace>.yMax</replace>
       <replace>module:</replace>
+      <replace>array</replace>
+      <replace>l</replace>
+      <replace>c</replace>
+      <replace>heatMap</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -206,15 +296,13 @@
     <setting file="file://$PROJECT_DIR$/game/particles.js" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/game/bullets.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/game/viewers.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/game/manager.js" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/nodejs/node_modules/jsdoc/templates/default/publish.js" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/utils/geometry2d.js" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/async_render.js" />
-        <option value="$PROJECT_DIR$/utils.min.js" />
-        <option value="$PROJECT_DIR$/old_libs/utils/index.html" />
         <option value="$PROJECT_DIR$/game2/game_3.js" />
         <option value="$PROJECT_DIR$/utils.js" />
         <option value="$PROJECT_DIR$/utils/utils.js" />
@@ -257,12 +345,15 @@
         <option value="$PROJECT_DIR$/game/imports.html" />
         <option value="$PROJECT_DIR$/game/manager.js" />
         <option value="$PROJECT_DIR$/game/bullets.js" />
-        <option value="$PROJECT_DIR$/game/board.js" />
-        <option value="$PROJECT_DIR$/game/viewers.js" />
-        <option value="$PROJECT_DIR$/game/particles.js" />
-        <option value="$PROJECT_DIR$/game/object.js" />
-        <option value="$PROJECT_DIR$/game/renderer_collider.js" />
         <option value="$PROJECT_DIR$/utils/geometry2d.js" />
+        <option value="$PROJECT_DIR$/game/particles.js" />
+        <option value="$PROJECT_DIR$/game/renderer_collider.js" />
+        <option value="$PROJECT_DIR$/game/board.js" />
+        <option value="$PROJECT_DIR$/game/object.js" />
+        <option value="$PROJECT_DIR$/game/TiledMap.js" />
+        <option value="$PROJECT_DIR$/game/object_mixins.js" />
+        <option value="$PROJECT_DIR$/game/viewers.js" />
+        <option value="$PROJECT_DIR$/game/stylesheet.css" />
       </list>
     </option>
   </component>
@@ -284,10 +375,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="x" value="947" />
+    <option name="y" value="-2" />
+    <option name="width" value="974" />
+    <option name="height" value="1087" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -354,8 +445,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -377,13 +466,15 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="last_opened_file_path" value="C:/Program Files/LLVM/bin/clang.exe" />
-    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2640884" />
     <property name="SearchEverywhereHistoryKey" value="Babel&#9;null&#9;null" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
@@ -665,7 +756,14 @@
       <workItem from="1507584081809" duration="599000" />
       <workItem from="1508001573921" duration="6289000" />
       <workItem from="1508276552907" duration="5178000" />
-      <workItem from="1508601750787" duration="6109000" />
+      <workItem from="1508601750787" duration="8565000" />
+      <workItem from="1509051545331" duration="602000" />
+      <workItem from="1509143403893" duration="21513000" />
+      <workItem from="1509984552580" duration="901000" />
+      <workItem from="1510043963343" duration="2114000" />
+      <workItem from="1510095235966" duration="2399000" />
+      <workItem from="1510504052255" duration="1215000" />
+      <workItem from="1511032704803" duration="3324000" />
     </task>
     <task id="LOCAL-00001" summary="- changed let to const&#10;- RGBtoHSV() and createScriptWorker() docs corrected&#10;- utils.tools.rgb and utils.tools.hsv docs improved">
       <created>1496085985377</created>
@@ -751,11 +849,32 @@
       <option name="project" value="LOCAL" />
       <updated>1507332012250</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;improved Polygon.contains method;&#10;minor changes">
+      <created>1508879803793</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1508879803793</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update last commit">
+      <created>1508964895498</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1508964895498</updated>
+    </task>
+    <task id="LOCAL-00015" summary="multiple major changes :&#10; - in utils.geometry2d.Rect :&#10;   replace left, top, right, bottom by xMin, yMin, xMax, yMax&#10; - add game.TiledMap to replace board.Game in the future&#10; - add game.TurnManager&#10; &#10;+ minor changes">
+      <created>1510047620872</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1510047620872</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="760784000" />
+    <option name="totallyTimeSpent" value="795308000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -771,10 +890,9 @@
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18177028" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.328125" sideWeight="0.49516907" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328125" sideWeight="0.49516907" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13985279" sideWeight="0.5063358" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2541841" sideWeight="0.4915701" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14435147" sideWeight="0.4936642" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14375" sideWeight="0.4936642" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23020834" sideWeight="0.4915701" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973601" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.49315068" order="7" side_tool="false" content_ui="tabs" />
@@ -789,6 +907,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32846716" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25416666" sideWeight="0.4915701" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -870,7 +989,10 @@
     <MESSAGE value="webGL support" />
     <MESSAGE value="minor change" />
     <MESSAGE value="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;minor changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;minor changes" />
+    <MESSAGE value="Bug fix on Line.closestPointTo;&#10;Replace Rect members left, top, right, bottom by xmin, ymin, xmax, ymax&#10;respectively;&#10;Add polygon convex division 'divideConvex' method;&#10;Add Vec2[] to Float32Array static method in Vec2 class;&#10;improved Polygon.contains method;&#10;minor changes" />
+    <MESSAGE value="update last commit" />
+    <MESSAGE value="multiple major changes :&#10; - in utils.geometry2d.Rect :&#10;   replace left, top, right, bottom by xMin, yMin, xMax, yMax&#10; - add game.TiledMap to replace board.Game in the future&#10; - add game.TurnManager&#10; &#10;+ minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="multiple major changes :&#10; - in utils.geometry2d.Rect :&#10;   replace left, top, right, bottom by xMin, yMin, xMax, yMax&#10; - add game.TiledMap to replace board.Game in the future&#10; - add game.TurnManager&#10; &#10;+ minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -879,7 +1001,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/old_libs/game/3_objects/5_properties.js" />
     <entry file="file://$PROJECT_DIR$/game2/min/game_2.js" />
     <entry file="file://$PROJECT_DIR$/game2/out/index.html" />
     <entry file="file://$PROJECT_DIR$/old_libs/game/5_physics.js" />
@@ -1006,13 +1127,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/stylesheet.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/asm/test.bc" />
     <entry file="file://$PROJECT_DIR$/utils/asm/test.c">
       <provider selected="true" editor-type-id="text-editor">
@@ -1040,15 +1154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="31" column="17" lean-forward="false" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/webgl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="73" column="22" lean-forward="true" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1056,15 +1161,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
           <caret line="46" column="17" lean-forward="false" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/imports.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="8" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1080,111 +1176,165 @@
           <caret line="9" column="7" lean-forward="false" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
           <caret line="10" column="7" lean-forward="false" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
           <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/manager.js">
+    <entry file="file://$PROJECT_DIR$/utils/imports.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="8" lean-forward="false" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/geometry2d.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-490">
+          <caret line="3361" column="28" lean-forward="false" selection-start-line="3361" selection-start-column="28" selection-end-line="3361" selection-end-column="28" />
+          <folding>
+            <element signature="e#455#13547#0" expanded="false" />
+            <element signature="e#14053#35288#0" expanded="false" />
+            <element signature="e#35966#43884#0" expanded="false" />
+            <element signature="e#44566#51997#0" expanded="false" />
+            <element signature="e#52789#63340#0" expanded="false" />
+            <element signature="e#64057#78973#0" expanded="false" />
+            <element signature="e#79654#81785#0" expanded="false" />
+            <element signature="e#82637#102657#0" expanded="false" />
+            <element signature="e#103022#109677#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/input.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-456">
+          <caret line="62" column="17" lean-forward="true" selection-start-line="62" selection-start-column="17" selection-end-line="62" selection-end-column="17" />
+          <folding>
+            <element signature="e#4181#10872#0" expanded="false" />
+            <element signature="e#11303#15085#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/tools.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-541">
+          <caret line="362" column="16" lean-forward="true" selection-start-line="362" selection-start-column="16" selection-end-line="362" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/webgl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="73" column="22" lean-forward="true" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/turn.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
           <folding>
-            <marker date="1508705388821" expanded="true" signature="1343:1465" ph="/**...*/" />
+            <element signature="e#43#1906#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/renderer_collider.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15929">
+          <caret line="937" column="5" lean-forward="false" selection-start-line="937" selection-start-column="5" selection-end-line="937" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/bullets.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+        <state relative-caret-position="459">
+          <caret line="153" column="34" lean-forward="false" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="34" />
+          <folding>
+            <element signature="e#441#3660#0" expanded="false" />
+            <element signature="e#4072#4989#0" expanded="false" />
+            <element signature="e#5423#9325#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/object.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9044">
+          <caret line="532" column="0" lean-forward="false" selection-start-line="532" selection-start-column="0" selection-end-line="532" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/board.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/viewers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="25" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#48#0" expanded="false" />
-            <marker date="1508705454921" expanded="true" signature="14517:14804" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/turn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="9" lean-forward="true" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/particles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+        <state relative-caret-position="2992">
+          <caret line="176" column="9" lean-forward="false" selection-start-line="172" selection-start-column="8" selection-end-line="176" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/object_mixins.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
+        <state relative-caret-position="918">
+          <caret line="54" column="32" lean-forward="false" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/object.js">
+    <entry file="file://$PROJECT_DIR$/game/particles.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/renderer_collider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2142">
-          <caret line="267" column="31" lean-forward="true" selection-start-line="267" selection-start-column="31" selection-end-line="267" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/input.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/tools.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="40" lean-forward="false" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
+        <state relative-caret-position="203">
+          <caret line="14" column="34" lean-forward="false" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1508004589680" expanded="true" signature="10669:10684" ph="..." />
-            <marker date="1508004589680" expanded="true" signature="10767:10776" ph="..." />
+            <element signature="e#642#1700#0" expanded="false" />
+            <element signature="e#1746#4166#0" expanded="false" />
+            <element signature="e#4210#5446#0" expanded="false" />
+            <element signature="e#12597#18058#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/geometry2d.js">
+    <entry file="file://$PROJECT_DIR$/game/TiledMap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="3155" column="11" lean-forward="false" selection-start-line="3155" selection-start-column="11" selection-end-line="3155" selection-end-column="11" />
+        <state relative-caret-position="527">
+          <caret line="31" column="58" lean-forward="false" selection-start-line="31" selection-start-column="58" selection-end-line="31" selection-end-column="58" />
+          <folding>
+            <element signature="e#1937#2960#0" expanded="false" />
+            <element signature="e#4219#6765#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="59" column="21" lean-forward="false" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
+          <folding>
+            <marker date="1508705388821" expanded="true" signature="1343:1465" ph="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/viewers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="117" column="42" lean-forward="true" selection-start-line="117" selection-start-column="42" selection-end-line="117" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#48#0" expanded="false" />
+            <element signature="e#98#1679#0" expanded="false" />
+            <element signature="e#12499#14500#0" expanded="false" />
+            <element signature="e#14553#16536#0" expanded="false" />
+            <element signature="e#16579#17945#0" expanded="false" />
+            <marker date="1511124996307" expanded="true" signature="15716:16003" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/stylesheet.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="2" lean-forward="false" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
           <folding />
         </state>
       </provider>

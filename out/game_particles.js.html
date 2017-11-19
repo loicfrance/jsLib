@@ -1,0 +1,675 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="generator" content="JSDoc 3.4.3">
+  <meta charset="utf-8">
+  <title>Source: game/particles.js</title>
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+  <link rel="stylesheet" href="https://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: game/particles.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>/**
+ * Created by rfrance on 12/20/2016.
+ */
+/**
+ * @callback game.particleGenerator
+ * @param {number} lifeTime
+ * @param {utils.geometry2d.Vec2} initialPosition
+ * @param {number} angle
+ * @param {number} speed
+ * @returns {game.Particle}
+ */
+//######################################################################################################################
+//#                                                      Particle                                                      #
+//######################################################################################################################
+window.game.Particle &#x3D; (function(){
+	&quot;use strict&quot;;
+	const Rect &#x3D; utils.geometry2d.Rect;
+	/**
+	 * @class game.Particle
+	 * @memberOf game
+	 * @augments game.Object
+	 * A type of object used to show visual effects
+	 */
+	class Particle extends game.Object {
+		/**
+		 * @constructor
+		 * @param {?utils.geometry2d.Vec2} position
+		 * @param {?game.ObjectRenderer} renderer
+		 * @param {number} [lifeTime&#x3D;2.0]
+		 */
+		constructor(position, renderer, lifeTime &#x3D; 2.0) {
+			super(position);
+			if(renderer) this.renderer &#x3D; renderer;
+			this.lifeTime &#x3D; lifeTime;
+		}
+
+		/**
+		 * @returns {utils.geometry2d.Rect}
+		 */
+		getRect() {
+			return this.getRenderRect();
+		}
+
+		/**
+		 * @param gameManager
+		 * @param dT
+		 */
+		onFrame( gameManager, dT ) {
+			super.onFrame(gameManager, dT);
+			if (!(gameManager.viewer.visibleRect.overlap(this.getRenderRect().addMargin(10))) || this.lifeTime &amp;lt;&#x3D; 0) {
+				this.lifeTime &#x3D; 0; this.kill(gameManager);
+			}
+			else this.lifeTime -&#x3D; dT;
+		}
+	}
+	Particle.prototype.bodyLayer &#x3D; -1;
+	Particle.prototype.renderLayer &#x3D; game.RenderLayer.PARTICLES;
+	return Particle;
+})();
+window.game.ShapedParticle &#x3D; (function() {
+	/**
+	 * @class game.ShapedParticle
+	 * @memberOf game
+	 * @augments game.Object
+	 * A type of particle that uses a shape and a color but no renderer for faster rendering
+	 */
+	class ShapedParticle extends game.Particle{
+		/**
+		 * @constructor
+		 * @param {number} lifeTime
+		 * @param {?utils.geometry2d.Shape} shape
+		 * @param {string|number} color
+		 */
+		constructor(lifeTime, shape, color) {
+			if(!shape) {
+				console.log(shape);
+			}
+			super();
+			this.shape &#x3D; shape;
+			this.color &#x3D; color;
+			this.lifeTime &#x3D; lifeTime;
+		}
+		/**
+		 * @name game.ShapedParticle#position
+		 * @type {utils.geometry2d.Vec2}
+		 */
+		get position() { return this.shape.center; }
+		/**
+		 *
+		 * @param {utils.geometry2d.Vec2} p
+		 */
+		set position( p ) { this.shape.center.set(p); }
+		rotate( radians ) { this.shape.rotate(radians); }
+		scale( factor ) { this.shape.scale(factor); }
+		getPosition() { return this.shape.center; }
+		moveXY(x, y) { this.shape.moveXY(x, y); return this; }
+
+		getRect() { return this.shape.getRect(); }
+		getRenderRect() { return this.shape.getRect(); }
+		render(ctx) {
+			if(this.fill) {
+				(ctx.fillStyle !&#x3D;&#x3D; this.color) &amp;amp;&amp;amp; (ctx.fillStyle &#x3D; this.color);
+				this.shape.draw(ctx, true, false);
+			} else {
+				(ctx.strokeStyle !&#x3D;&#x3D; this.color) &amp;amp;&amp;amp; (ctx.strokeStyle &#x3D; this.color);
+				this.shape.draw(ctx, false, true);
+			}
+		}
+		/**
+		 * draws the particle on the canvas with the specified color.
+		 * @param {webgl.GlHandler} handler
+		 * @param {WebGLRenderingContext} handler.gl - webgl context
+		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) &amp;lt;!--
+		 * --&gt;to store vertices
+		 * @param {Uint32Array} handler.colors - a large-enough array to use to store colors
+		 * @param {WebGLBuffer} handler.glBuffer - the buffer created with &amp;lt;code&gt;gl.createBuffer()&amp;lt;/code&gt;
+		 * @param {string} handler.positionAttrib - the location of the &amp;lt;code&gt;vec2&amp;lt;/code&gt; attribute used for &amp;lt;!--
+		 * --&gt;the position of the vertex in the vertex shader
+		 * @param {string} handler.colorUniform - the location of the &amp;lt;code&gt;int&amp;lt;/code&gt; uniform used for &amp;lt;!--
+		 * --&gt;the color in the vertex shader
+		 */
+		renderGL(handler) {
+			handler.gl.uniform1i(handler.colorUniform, this.color);
+			this.shape.glDraw(handler.gl, handler.vertices, handler.glBuffer, handler.positionAttrib, this.stroke);
+		}
+	}
+	ShapedParticle.prototype.fill &#x3D; true;
+	return ShapedParticle;
+})();
+window.game.ImageParticle &#x3D; (function(){
+	let w, h;
+	/**
+	 * @class game.ImageParticle
+	 * @memberOf game
+	 * @augments game.Particle
+	 * A type of particle that uses an image and some transform informations for drawing, without a renderer attribute
+	 */
+    class ImageParticle extends game.Particle {
+		/**
+		 * @constructor
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {Image} renderer
+		 * @param {number} [lifeTime&#x3D;2.0]
+		 */
+    	constructor(position, image, lifeTime &#x3D; 2.0) {
+    		super(position, null, lifeTime);
+    		this.image &#x3D; image;
+    		this.imgW &#x3D; this.image.width;
+    		this.imgH &#x3D; this.image.height;
+	    }
+	    render( ctx ) {
+    		w &#x3D; this.imgW*this.scaleX; h &#x3D; this.imgH*this.scaleY;
+		    if(this.angle) {
+			    ctx.translate(this.position.x, this.position.y);
+			    ctx.rotate(this.angle);
+			    ctx.drawImage(this.image, 0, 0, this.imgW, this.imgH, -w*0.5, -h*0.5, w, h);
+			    ctx.rotate(-this.angle);
+			    ctx.translate(-this.position.x, -this.position.y);
+		    } else ctx.drawImage(this.image, 0, 0, this.imgW, this.imgH,
+			    this.position.x - w*0.5, this.position.y - h*0.5, w, h);
+	    }
+    }
+    utils.tools.merge(ImageParticle.prototype, {
+    	scaleX: 1, scaleY: 1, angle: 0
+    }, true);
+    return ImageParticle;
+})();
+//######################################################################################################################
+//#                                                   ParticleCreator                                                  #
+//######################################################################################################################
+window.game.ParticleCreator &#x3D; (function() {
+	const Vec2 &#x3D; utils.geometry2d.Vec2;
+	/**
+	 * @class game.ParticleCreator
+	 * @memberOf game
+	 * @augments game.Object
+	 * @classdesc a type of object used to continuously generate particles
+	 */
+    class ParticleCreator extends game.Object {
+		/**
+		 * @constructor
+		 * @param {number} rate
+		 * @param {number} [max&#x3D;0]
+		 */
+		constructor(rate, max&#x3D;0) {
+    		super();
+			/**
+			 * number of particles created in one second.
+			 * @name game.ParticleCreator#rate
+			 * @type {number}
+			 */
+			this.rate &#x3D; rate;
+			/**
+			 * number of particles created. equal to -1 if the creator is paused. if the &amp;lt;!--
+			 * --&gt;{@link game.ParticleCreator#max|max} attribute is equal to 0, this value is clamped between &amp;lt;!--
+			 * --&gt;0 and 1 to keep a high precision for creating particles continuously.
+			 * When the creator is restarted, this value is set to 0.
+			 * @name game.ParticleCreator#created
+			 * @type {number}
+			 */
+			this.created &#x3D; 0;
+			/**
+			 * maximum number of particles this creator can create in its lifetime. When this number is reached, &amp;lt;!--
+			 * --&gt;the creator stops creating particles and when no particles are living anymore, the creator &amp;lt;!--
+			 * --&gt;kills itself.
+			 * If this value is equal to 0, the maximum is disabled : the creator will continuously create &amp;lt;!--
+			 * --&gt;particles until the game is over or the value changed.
+			 * @name game.ParticleCreator#max
+			 * @type {number}
+			 */
+			this.max &#x3D; max;
+			/**
+			 * a list of all living particles in the game. Used to perform actions such as &amp;lt;!--
+			 * --&gt;speed damping or size damping.
+			 * @name game.ParticleCreator#particles
+			 * @type {game.Particle[]}
+			 */
+			this.particles &#x3D; [];
+	    }
+	    /**
+		 * sets the number of particles created per second
+		 * @param {number} rate
+		 */
+		setRate( rate ) { this.rate &#x3D; rate; }
+		/**
+		 * returns the number of particles created per second
+		 * @returns {number}
+		 */
+		getRate() { return this.rate; }
+		/**
+		 * sets the minimum and maximum lifetime of the particles created. &amp;lt;!--
+		 * --&gt;The actual lifetime of the particles will be a random value between the maximum and the minimum.
+		 * @param {number} min
+		 * @param {number} [max&#x3D;min] if max &amp;amp;lt; min, then max &#x3D; min.
+		 */
+		setParticlesLifeTime( min, max&#x3D;min ) {
+			this.setMinLifeTime(min);
+			this.setMaxLifeTime(max&amp;lt;min ? min : max);
+		}
+		/**
+		 * sets the minimum lifetime of the particles created.
+		 * @param {number} mlt
+		 */
+		setParticlesMinLifeTime( mlt ) { this.minLifeTime &#x3D; mlt; }
+		/**
+		 * sets the maximum lifetime of the particles created.
+		 * @param {number} mlt. no check is performed to make sure the maximum is above or equal to the maximum.
+		 */
+		setParticlesMaxLifeTime( mlt ) { this.maxLifeTime &#x3D; mlt; }
+		/**
+		 * returns the minimum lifetime of the particles created.
+		 * @returns {number}
+		 */
+		getParticlesMinLifeTime() { return this.minLifeTime; }
+		/**
+		 * returns the maximum lifetime of the particles created.
+		 * @returns {number}
+		 */
+		getParticlesMaxLifeTime() { return this.maxLifeTime; }
+		/**
+		 * restarts the particle creation by setting the &amp;lt;code&gt;{@link game.ParticleCreator#created|created}&amp;lt;/code&gt; attribute to 0.
+		 */
+	    restart() {
+			this.created &#x3D; 0;
+	    }
+		/**
+		 * stops the particle creation by setting the &amp;lt;code&gt;{@link game.ParticleCreator#created}&amp;lt;/code&gt; attribute to -1.
+		 */
+		stop() { this.created &#x3D; -1; }
+		/**
+		 * returns true if the emitter is creating particles every frame (i.e if it hasn&#x27;t been stopped &amp;lt;!--
+		 * --&gt;and if the maximum hasn&#x27;t been reached).
+		 * @returns {boolean}
+		 */
+		isRunning() { return this.emited &gt;&#x3D; 0 &amp;amp;&amp;amp; (max &#x3D;&#x3D;&#x3D;0 || this.emited &amp;lt; max); }
+		/**
+		 * called every frame for each living particle
+		 * @param {game.Particle] particle
+		 * @param {number} dT
+		 */
+	    manageParticleOnFrame(particle, dT) {
+
+	    }
+	    /**
+		 * create the specified number of particles using random values for lifeTime, position, angle and speed
+		 * @param {game.GameManager} gameManager
+		 * @param {number} number
+		 * @returns {game.Particle[]}
+		 */
+	    createParticles(gameManager, number) {
+    		let res &#x3D; new Array(number);
+		    while(number--) res[number] &#x3D; this.createParticle( gameManager );
+		    return res;
+	    }
+		/**
+		 * create a particle using the particle generator.
+		 * @param {game.GameManager} gameManager
+		 * @returns {game.Particle}
+		 */
+	    createParticle(gameManager) {
+    		let r &#x3D; gameManager.viewer.visibleRect;
+			return new game.ShapedParticle(
+				Math.random()*(this.maxLifeTime - this.minLifeTime)+this.minLifeTime,
+				new Point(new Vec2(r.xMin+ Math.random()*r.width, r.yMin + Math.random()*r.height)),
+				utils.tools.randomColor(24));
+	    }
+	    /**
+		 * called every frame by the game manager. creates the needed particles and add them to the game, &amp;lt;!--
+		 * --&gt;change their size and speed, ...
+		 * @param {game.GameManager} gameManager
+		 * @param {number} dT
+		 */
+	    onFrame( gameManager, dT ) {
+    		super.onFrame(gameManager, dT);
+    		let len &#x3D; this.particles.length, i &#x3D; len, p;
+    		while(i--) {
+    			if((p &#x3D; this.particles[i]).lifeTime &amp;lt;&#x3D; 0) {
+    				this.particles.splice(i,1);
+			    }
+			    else this.manageParticleOnFrame(p, dT);
+		    }
+		    if(this.created &gt;&#x3D; 0) { // running
+			    let next &#x3D; this.created + dT * this.rate, n;
+			    if (this.max) {
+				    if (this.created &gt;&#x3D; this.max &amp;amp;&amp;amp; len &#x3D;&#x3D; 0)
+					    this.kill(gameManager);
+				    if (next &gt; this.max) next &#x3D; this.max;
+				    n &#x3D; Math.floor(next) - Math.floor(this.created);
+			    }
+			    else n &#x3D; Math.floor(next);
+
+			    if (n) {
+				    let p &#x3D; this.createParticles(gameManager, n);
+				    if (p &amp;amp;&amp;amp; p.length) {
+					    Array.prototype.push.apply(this.particles, p);
+					    gameManager.addObjects(p, false);
+				    }
+			    }
+			    this.created &#x3D; next;
+			    if(!this.max) this.created %&#x3D; 1;
+		    }
+	    }
+		/**
+		 * returns whether or not this objects can collide with other objects. Particles creators do not collide.
+		 * @param {game.Object} object
+		 * @returns {boolean} false
+		 */
+		canCollide( object ) { return false; }
+    }
+	/** @name game.ParticleCreator#minLifeTime
+	 *  @type {number} */
+	ParticleCreator.prototype.minLifeTime &#x3D; 0.75;
+	/** @name game.ParticleCreator#maxLifeTime
+	 *  @type {number} */
+	ParticleCreator.prototype.maxLifeTime &#x3D; 1.2;
+    return ParticleCreator;
+})();
+//######################################################################################################################
+//#                                                   ParticleEmitter                                                  #
+//######################################################################################################################
+window.game.ParticleEmitter &#x3D; (function() {
+	const PI2 &#x3D; utils.geometry2d.Circle.PI2,
+		  Vec2 &#x3D; utils.geometry2d.Vec2;
+	/**
+	 * @class game.ParticleEmitter
+	 * @memberOf game
+	 * @augments game.ParticleCreator
+	 * @classdesc a type of particle creator that generates particles around its position
+	 */
+	class ParticleEmitter extends game.ParticleCreator {
+		/**
+		 * @constructor
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {number} rate
+		 * @param {number} max
+		 */
+		constructor( position, rate, max&#x3D;0 ) {
+			super(rate, max);
+			this.setPosition(position);
+		}
+		/**
+		 * sets the maximum and minimum emission angles to the specified values.
+		 * @param {number} min
+		 * @param {number} max
+		 */
+		setAngles( min, max&#x3D;min ) {
+			this.setMinAngle(min);
+			this.setMaxAngle(max);
+		}
+		/**
+		 * sets the minimum emission angle to the specified value.
+		 * @param {number} min
+		 */
+		setMinAngle(min) { this.minAngle &#x3D; min; }
+		/**
+		 * sets the maximum emission angle to the specified value.
+		 * @param {number} max
+		 */
+		setMaxAngle(max) { this.maxAngle &#x3D; max; }
+		/**
+		 * returns the minimum emission angle.
+		 * @return {number}
+		 */
+		getMinAngle() { return this.minAngle; }
+		/**
+		 * returns the maximum emission angle.
+		 * @return {number}
+		 */
+		getMaxAngle() { return this.maxAngle; }
+		/**
+		 * sets the distance from the emitter center the particles are created at.
+		 * @param {number} emitDistance
+		 */
+		setEmitDistance( emitDistance ) { this.emitDistance &#x3D; emitDistance; }
+		/**
+		 * returns the distance from the emitter center the particles are created at.
+		 * @returns {number}
+		 */
+		getEmitDistance() { return this.emitDistance; }
+		/**
+		 * sets the speed damping factor.
+		 * @param {number} factor
+		 */
+		setSpeedDampFactor( factor ) { this.speedDampFactor &#x3D; factor; }
+		/**
+		 * returns the speed damping factor.
+		 * @returns {number}
+		 */
+		getSpeedDampFactor() { return this.speedDampFactor; }
+		/**
+		 * sets the size reduce factor
+		 * @param {number} factor
+		 */
+		setSizeReduceFactor( factor ) { this.reduceSizeFactor &#x3D; factor; }
+		/**
+		 * returns the size reduce factor
+		 * @returns {number}
+		 */
+		getSizeReduceFactor() { return this.reduceSizeFactor ; }
+		/**
+		 * rotates the emitter, changing the min and max angles
+		 * @param {number} radians
+		 */
+		rotate( radians ) {
+			super.rotate(radians);
+			this.minAngle +&#x3D; radians;
+			this.maxAngle +&#x3D; radians;
+		}
+		/**
+		 * returns the particleGenerator that generates all particles
+		 * @returns {game.particleGenerator}
+		 */
+		getParticleGenerator() { return this.particleGenerator; }
+		/**
+		 * sets the particle generator of the particle emitter.
+		 * @param {game.particleGenerator} generator
+		 */
+		setParticleGenerator( generator ) { this.particleGenerator &#x3D; generator; }
+		/**
+		 * creates a particle using the particle generator.
+		 * @param {game.GameManager} gameManager
+		 * @returns {game.Particle}
+		 */
+		createParticle( gameManager ) {
+			let lifeTime  &#x3D; this.maxLifeTime&#x3D;&#x3D;&#x3D;this.minLifeTime ? this.minLifeTime :
+					    Math.random()*(this.maxLifeTime-this.minLifeTime)+this.minLifeTime,
+				spd &#x3D; this.maxSpeed&#x3D;&#x3D;&#x3D;this.minSpeed ?
+						this.minSpeed :
+						Math.random()*(this.maxSpeed-this.minSpeed)+this.minSpeed,
+				pos &#x3D; this.getPosition(),
+				angle &#x3D; this.minAngle&#x3D;&#x3D;&#x3D;this.maxAngle ?
+						this.minAngle :
+						Math.random()*(this.minAngle-this.maxAngle)+this.minAngle,
+				p &#x3D; this.particleGenerator(lifeTime, pos, angle, spd);
+			if(p) {
+				if(spd) {
+					let unit &#x3D; Vec2.createFromAngle(angle);
+					this.emitDistance &amp;amp;&amp;amp; p.move(unit.clone().mul(this.emitDistance));
+					p.speed &#x3D; unit.mul(spd);
+				} else if(this.emitDistance) {
+					p.move(Vec2.createFromAngle(angle, this.emitDistance));
+				}
+			} return p;
+		}
+		manageParticleOnFrame( particle, dT ) {
+			let speedFactor &#x3D; Math.max(0, 1-this.speedDampFactor*dT),
+				sizeFactor &#x3D; Math.max(0, 1-this.reduceSizeFactor*dT);
+			(speedFactor !&#x3D;&#x3D; 1) &amp;amp;&amp;amp; particle.speed &amp;amp;&amp;amp; particle.speed.mul(speedFactor);
+			(sizeFactor !&#x3D;&#x3D; 1) &amp;amp;&amp;amp; particle.scale(sizeFactor);
+			if(this.particlePositionRelative) {
+				let spd &#x3D; this.getSpeed();
+				if(!spd.isZero()) particle.move(spd.clone().mul(dT));
+			}
+
+		}
+		static standardGenerator( lifeTime, initialPosition, angle, speed ){
+			let sv &#x3D; 0.5+(speed-this.minSpeed)/(2*(this.maxSpeed-this.minSpeed)),
+				rgb &#x3D; utils.tools.HSVtoRGB(angle/PI2, sv, sv),
+				shape &#x3D; new utils.geometry2d.Point(initialPosition);
+			if(!shape){
+				console.log(&quot;error : shape is null&quot;);
+			} else return new game.ShapedParticle(lifeTime, shape,
+				utils.tools.RGBToHex(rgb.r, rgb.g, rgb.b));
+		}
+	}
+	//default attributes :
+	utils.tools.merge(ParticleEmitter.prototype, {
+		/** @name game.ParticleEmitter#minAngle
+		 *  @type {number} */
+		minAngle : 0,
+		/** @name game.ParticleEmitter#maxAngle
+		 *  @type {number} */
+		maxAngle : 2*Math.PI,
+		/** @name game.ParticleEmitter#minSpeed
+		 *  @type {number} */
+		minSpeed : 300,
+		/** @name game.ParticleEmitter#maxSpeed
+		 *  @type {number} */
+		maxSpeed : 400,
+		/** @name game.ParticleEmitter#speedDampFactor
+		 *  @type {number} */
+		speedDampFactor : 2.5,
+		/** @name game.ParticleEmitter#reduceSizeFactor
+		 *  @type {number} */
+		reduceSizeFactor : 1.2,
+		/** @name game.ParticleEmitter#emitDistance
+		 *  @type {number} */
+		emitDistance : 0,
+		/** @name game.ParticleEmitter#particleGenerator
+		 *  @type {game.particleGenerator} */
+		particleGenerator : ParticleEmitter.standardGenerator
+	}, true);
+	return ParticleEmitter;
+})();
+//######################################################################################################################
+//#                                                  ParticleExplosion                                                 #
+//######################################################################################################################
+window.game.ParticleExplosion &#x3D; (function() {
+	/**
+	 * @class game.ParticleExplosion
+	 * @augments game.ParticleEmitter
+	 * @memberOf game
+	 * @classdesc a type of particle emitter that generates all of its particles in one frame to simulate an explosion
+	 */
+    class ParticleExplosion extends game.ParticleEmitter {
+		/**
+		 * @constructor
+		 * @param {utils.geometry2d.Vec2} position
+		 * @param {number} number
+		 */
+		constructor( position, number ) {
+		    super(position, number*1000, number);
+	    }
+    }
+    utils.tools.merge(ParticleExplosion.prototype, {
+	    minLifeTime : 0.1,
+		maxLifeTime : 0.5,
+		minSpeed : 500,
+		maxSpeed : 1500,
+		speedDampFactor : 2,
+		reduceSizeFactor : 3
+    }, true);
+    return ParticleExplosion;
+})();
+//######################################################################################################################
+//#                                                     TraceDrawer                                                    #
+//######################################################################################################################
+window.game.TraceDrawer &#x3D; (function(){
+	/**
+	 * @class game.TraceDrawer
+	 * @memberOf game
+	 * @classdesc an object used to draw the trace of objects
+	 */
+    class TraceDrawer {
+		/**
+		 * @constructor
+		 * @param {string} color - particle color
+		 * @param {number} lifeTime - particle lifetime
+		 */
+		constructor(color, lifeTime) {
+			if(color)
+				/**
+				 * @name game.TraceDrawer#color
+				 * @type {string}
+				 */
+				this.color &#x3D; color;
+			if(lifeTime)
+				/**
+				 * @name game.TraceDrawer#particleLifeTime
+				 * @type {number}
+				 */
+				this.particleLifeTime &#x3D; lifeTime;
+		}
+		/**
+		 * returns a particle array (or null) for the movement of the specified object
+		 * @param {game.Object} obj
+		 * @param [utils.geometry2d.Vec2} from
+		 * @param [utils.geometry2d.Vec2} to
+		 * @returns {?game.ShapedParticle[]}
+		 */
+	    createParticlesForMovement(obj, from, to) {
+	    	let p &#x3D; new game.ShapedParticle(this.particleLifeTime, new utils.geometry2d.Line(from, to), this.color||&#x27;#FFF&#x27;);
+	    	p.fill &#x3D; false;
+    		return [p];
+	    }
+		/**
+		 * creates particles for the movements of the object
+		 * @param {game.GameManager}
+		 * @param {game.Object} obj
+		 * @param {utils.geometry2d.Vec2} from
+		 * @param {utils.geometry2d.Vec2} to
+		 */
+	    onMovement(gameManager, obj, from, to) {
+    		let p &#x3D; this.createParticlesForMovement(obj, from, to);
+    		if(p &amp;amp;&amp;amp; p.length) {
+			    gameManager.addObjects(p, false);
+		    }
+	    }
+    }
+    return TraceDrawer;
+})();</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.4.3 on October 7, 2017.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+</body>
+
+</html>
