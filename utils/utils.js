@@ -1,4 +1,472 @@
 /**
+ * @module utils/tools
+ */
+{
+if(window) {
+	//not in module, do nothing
+} else {
+	//import {Rect} from "utils/geometry2d";
+}
+/**
+ * @typedef {Object} rgb
+ * @property {number} r - integer in [0;255]
+ * @property {number} g - integer in [0;255]
+ * @property {number} b - integer in [0;255]
+ */
+//noinspection JSSuspiciousNameCombination
+	/**
+ * @typedef {Object} hsv
+ * 
+ * @property {number} h - integer in [0;359]
+ * @property {number} s - integer in [0;255]
+ * @property {number} v - integer in [0;255]
+ */
+
+//######################################################################################################################
+//#                                                    LayoutGravity                                                   #
+//######################################################################################################################
+
+const G = {
+	LEFT: 1, TOP: 2, RIGHT: 4, BOTTOM: 8, CENTER: 16,
+	getRect: (gravity, availableRect, width, height, marginX=0, marginY=marginX)=> {
+		availableRect = availableRect.clone().addMarginsXY(-marginX, -marginY);
+		if (!(gravity & G.CENTER)) {
+			if (gravity) {
+				if (!(gravity & G.LEFT) && !(gravity & G.RIGHT)) gravity |= G.LEFT;
+				if (!(gravity & G.TOP) && (gravity & G.BOTTOM)) gravity |= G.TOP;
+			} else gravity = G.LEFT | G.TOP;
+		}
+		let left = NaN, top = NaN, right = NaN, bottom = NaN;
+		if (gravity & G.CENTER) {
+			let w = (availableRect.width - width)/2, h = (availableRect.h.height-height)/2;
+			left = availableRect.xMin + w; right = availableRect.xMax - w;
+			top = availableRect.yMin + h; bottom = availableRect.yMax - h;
+		}
+		if (gravity & G.LEFT !== 0) left = availableRect.xMin;
+		if (gravity & G.TOP !== 0) top = availableRect.yMin;
+		if (gravity & G.RIGHT !== 0) right = availableRect.xMax;
+		if (gravity & G.BOTTOM !== 0) bottom = availableRect.yMax;
+		if (isNaN(left)) left = right - width;
+		else if (isNaN(right)) right = left + width;
+		if (isNaN(top)) top = bottom - height;
+		else if (isNaN(bottom)) bottom = top + height;
+		return new Rect(left, top, right, bottom);
+	},
+	getHorizontalGravity: (g, defaultG = null) =>
+		(g & G.LEFT) ? G.LEFT : (g & G.RIGHT) ? G.RIGHT : (g & G.CENTER) ? G.CENTER : defaultG ? defaultG : G.LEFT,
+	getVerticalGravity: (g, defaultG = null) =>
+		(g & G.TOP) ? G.TOP : (g & G.BOTTOM) ? G.BOTTOM : (g & G.CENTER) ? G.CENTER : defaultG ? defaultG : G.TOP
+};
+//######################################################################################################################
+//#                                                       filters                                                      #
+//######################################################################################################################
+/**
+ * a filter to use with Array.prototype.filter function, by binding the first argument <!--
+ * -->to the array elements you want to keep.
+ * 
+ * @example [1,2,3,4].filter(intersectionFilter.bind(undefined, [1,4,5,6])); //[1,4]
+ * @param {Array} array
+ * @param {object} x
+ */
+const inclusionFilter = (array, x) => array.indexOf(x) !== -1;
+/**
+ * a filter to use with Array.prototype.filter function, by binding the first argument <!--
+ * -->to the array of element you want to exclude.
+ * 
+ * @example [1,2,3,4].filter(exclusionFilter.bind(undefined, [1,4,5,6])); //[2,3]
+ * @param {Array} array
+ * @param {object} x
+ */
+const exclusionFilter = (array, x) => array.indexOf(x) === -1;
+/**
+ * a filter to use with Array.prototype.filter function, by binding the first argument <!--
+ * -->to the class you want your objects to be instances of.
+ * 
+ * @param {class} _class
+ * @param {object} x
+ */
+const instanceFilter  = (_class, x) => x instanceof _class;
+
+//######################################################################################################################
+//#                                                  color conversion                                                  #
+//######################################################################################################################
+/**
+ * generates a random hex color
+ * 
+ * @param {number} [octets=3] - number of bytes this color will be on (4, 3 or 1.5) (not checked)
+ * @returns {string}
+ */
+const randomColor = (octets=3) => '#'+Math.random().toString(16).substr(2,2*octets);
+/**
+ * convert hsv color to rgb
+ * 
+ * @param {number} h - in [0;1]
+ * @param {number} s - in [0;1]
+ * @param {number} v - in [0;1]
+ * @returns {r,g,b}
+ */
+function HSVtoRGB(h, s, v) {
+	const
+		i = Math.floor(h * 6),
+		f = h * 6 - i,
+		p = v * (1 - s),
+		q = v * (1 - f * s),
+		t = v * (1 - (1 - f) * s);
+	let r,g,b;
+	switch (i % 6) {
+		case 0: r = v, g = t, b = p; break;
+		case 1: r = q, g = v, b = p; break;
+		case 2: r = p, g = v, b = t; break;
+		case 3: r = p, g = q, b = v; break;
+		case 4: r = t, g = p, b = v; break;
+		case 5: r = v, g = p, b = q; break;
+	}
+	return {
+		r: Math.round(r * 255),
+		g: Math.round(g * 255),
+		b: Math.round(b * 255)
+	};
+}
+/**
+ * convert rgb color to hsv
+ * 
+ * @param {number} r - integer in [0;255]
+ * @param {number} g - integer in [0;255]
+ * @param {number} b - integer in [0;255]
+ * @returns {hsv}
+ */
+function RBGtoHSV(r, g, b) {
+	const max = Math.max(r, g, b), min = Math.min(r, g, b),
+		d = max - min,
+		s = (max === 0 ? 0 : d / max),
+		v = max / 255;
+
+	switch (max) {
+		case min: return {h: 0, s: s, v: v};
+		case r: return { h: ((g - b) + d * (g < b ? 6: 0))/(6*d), s: s, v: v};
+		case g: return { h: ((b - r) + d * 2)/(6*d), s: s, v: v};
+		case b: return { h: ((r - g) + d * 4)/(6*d), s: s, v: v};
+		default : return {h: 0, s: 0, s: 0};
+	}
+}
+/**
+ * convert rgb color to hexadecimal string formated color
+ * 
+ * @param {number} r
+ * @param {number} g
+ * @param {number} b
+ * @returns {string}
+ */
+const RGBToHex = (r, g, b)=> ((r<16 && g < 16 && b < 16) || (r >= 16 && g >= 16 && b >= 16)) ?
+				`#${r.toString(16)}${g.toString(16)}${b.toString(16)}` :
+				`#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+//######################################################################################################################
+//#                                                    other methods                                                   #
+//######################################################################################################################
+/**
+ * creates a mix of a superclass and several mixins to make a class extend a class and implements mixins.
+ * 
+ * @example
+ * class A {
+ * 	 constructor(x) {
+ * 	   this.x = x;
+ * 	 }
+ *   hello() {
+ *     alert('hello ' + this.x);
+ * 	 }
+ * };
+ * var B = {
+ *   howRU() {
+ *     alert('How are you ?');
+ *   }
+ * };
+ * class C extends mix(A, B) {
+ *   constructor(x) {
+ *     super(x);
+ *	 }
+ *	 hello() {
+ *	   super.hello();
+ *	   this.howRU();
+ *	 }
+ * }
+ *
+ * var d = new D('John');
+ * d.hello(); // alert('Hi John !'); alert('how are you ?');
+ * @param {class} superclass
+ * @param {Object} mixins
+ * @returns {class}
+ */
+function mix(superclass, ...mixins) {
+	class C extends superclass { }
+	let len = mixins.length, i = -1;
+	while (++i < len) merge(C.prototype, mixins[i], true);
+	return C;
+}
+/**
+ * puts all properties of src in out. if override is false or not set, if a property, <!--
+ * -->of src already exist in the parameter out, they are not overridden.
+ * 
+ * @param {object} out
+ * @param {object} src
+ * @param {boolean} [override=false]
+ */
+function merge(out, src, override = false) {
+	for (let p in src) if (src.hasOwnProperty(p) && (override || !out.hasOwnProperty(p))) out[p] = src[p];
+}
+/**
+ * 
+ * @param {string} url
+ * @returns {Promise} promise resolved with {@link String} object when string is loaded
+ */
+const loadString = (url) =>
+	new Promise(resolve => {
+		const client = new XMLHttpRequest();
+		client.open('GET', url);
+		client.onreadystatechange = () => {
+			if(client.readyState === 4 && client.status === 200 || client.status === 0)
+				resolve(client.responseText);
+		}
+		client.send();
+
+	});
+/**
+ * 
+ * @param {string} url
+ * @returns {Promise} promise resolved with {@link Image} object when image is loaded
+ */
+const loadImage = (url) =>
+	new Promise(resolve => {
+		const img = new Image();
+		img.onload = () => resolve(img);
+		img.src = url;
+	});
+/**
+ * creates a worker running the specified script
+ * 
+ * @param {string} script
+ * @returns {Worker} newly created web worker runnning the script
+ */
+function createScriptWorker(script) {
+	const url = URL.createObjectURL(new Blob([script],
+		{type: 'application/javascript'}));
+	const worker = new Worker(url);
+	URL.revokeObjectURL(url);
+	return worker;
+}
+/**
+ * replaces a function that does not exists by the same function with the vendor prefixes.
+ * @example
+ * polyfill(window, 'requestAnimationFrame', ['ms', 'moz', 'webkit', 'o']);
+ * window.reaquestAnimationFrame(frameFunction);
+ * @param {Object} container
+ * @param {string} name
+ * @param {string[]} vendors
+ */
+function polyfill(container, name, vendors) {
+	for(let i = 0; i < vendors.length && !container[name]; i++) {
+		container[name] = container[vendors[i] + name] ||
+						  container[vendors[i] + name[0].toUpperCase() + name.substr(1)];
+	}
+}
+function waitForEvent(object, event) {
+	const attr = `on${event}`;
+	return new Promise(r=>{
+		const old = object[attr];
+		object[attr] = evt => {
+			object[attr] = old;
+			r(evt)
+		};
+	});
+}
+function delay(ms) {
+	return new Promise(r=>setTimeout(r, ms));
+}
+function textFileUserDownload(text, fileName) {
+	let element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	element.setAttribute('download', fileName);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+}
+/**
+ * convert text with BB code to html text with equivalent tags
+ * @param {string} bbCode
+ * @returns {*}
+ */
+function BBCodeToHTML(bbCode) {
+	let str = bbCode;
+	str = str.replace(/\[b](.+?)\[\/b]/g, "<b>$1</b>");
+
+	str = str.replace(/\[br\/]/g, "");
+	str = str.replace(/\[br]/g, "");
+
+	str = str.replace(/\[i](.+?)\[\/i]/g, "<i>$1</i>");
+
+	str = str.replace(/\[u](.+?)\[\/u]/g, "<u>$1</u>");
+
+	str = str.replace(/\[s](.+?)\[\/s]/g, "<s>$1</s>");
+
+	str = str.replace(/\[code](.+?)\[\/code]/g, "<code>$1</code>");
+	str = str.replace(/\[pre](.+?)\[\/pre]/g, "<code>$1</code>");
+
+	str = str.replace(/\[style (.+?)](.+?)\[\/style]/g, '<font $1>$2</font>');
+
+	//str.replace(/#\[u](.+?)\[\/u]#si/g,'<span style="text-decoration:underline;">$1</span>',$chaine );
+	str = str.replace(/\[size=(.+?)](.+?)\[\/size]/g, '<span style="font-size:$1px;">$2</span>');
+	str = str.replace(/\[color=(.+?)](.+?)\[\/color]/g, '<span style="color:$1;">$2</span>');
+
+
+	str = str.replace(/\[url=([^]+)](.+?)\[\/url]/g,'<a href="$1">$2</a>');
+	str = str.replace(/\[url](.+?)\[\/url]/g, '<a href="$1" target="_blank">$1</a>');
+	str = str.replace(/\[img](.+?)\[\/img]/g, '<img src="$1" border="0">');
+
+
+	return str;
+}
+	/**
+	 *
+	 * @param {string} wasmUrl - url to WebAssembly file.
+	 * @param {object} imports - objects to import in wasm
+	 */
+const loadWASM = (wasmUrl, imports)=>
+		fetch(wasmUrl)
+			.then(response => response.arrayBuffer())
+			.then(bytes => WebAssembly.instantiate(bytes, imports));
+
+const instanciateWASM = (wasmUrl, imports)=>
+		loadWASM(wasmUrl, imports)
+			.then(results => results.instance);
+/**
+ *
+ * @param {number} min
+ * @param {number} max
+ * @return {number} random number between min and max
+ */
+Math.rangedRandom = ( min, max ) => Math.random()*(max-min)+min;
+/**
+ * generate a pseudo-gaussian random number in ]-1;1[
+ * @return {number}
+ */
+Math.gaussianRandom = () => (Math.random()+Math.random()+Math.random()
+					   +Math.random()+Math.random()+Math.random()-3)/3;
+
+CanvasRenderingContext2D.prototype.wrapText = function(text, rect, lineHeight, textGravity, fill = true, stroke = false) {
+	const paragraphs = text.split('\n');
+	const parLen = paragraphs.length;
+	const rectWidth = rect.width;
+	let lines = [], line;
+	let linesX = [], lineX = 0;
+	let words, len;
+	let testLine;
+	let metrics;
+	let width = 0;
+	let n;
+	for (let i = 0; i < parLen; i++) {
+		words = paragraphs[i].split(' ');
+		len = words.length;
+		if (!len) {
+			lines.push(paragraphs[i]);
+			linesX.push(0);
+			continue;
+		}
+		line = words[0];
+		for (n = 1; n < len; n++) {
+			testLine = line + ' ' + words[n];
+			metrics = this.measureText(testLine);
+			width = metrics.width;
+			if (width > rectWidth && n > 0) {
+				lineX = rect.xMin;
+				if (!(textGravity & G.LEFT)) {
+					if (textGravity & G.RIGHT) lineX += this.measureText(line).width - width;
+					else if (textGravity & G.CENTER) lineX += (this.measureText(line).width - width) / 2;
+				}
+				lines.push(line);
+				line = words[n];
+				linesX.push(lineX);
+			}
+			else {
+				line = testLine;
+			}
+		}
+		lineX = rect.xMin;
+		if (!(textGravity & G.LEFT)) {
+			metrics = this.measureText(line);
+			width = metrics.width;
+			if (textGravity & G.RIGHT) lineX += rectWidth - width;
+			else if (textGravity & G.CENTER) lineX += (rectWidth - width) / 2;
+		}
+		lines.push(line);
+		linesX.push(lineX);
+	}
+	len = lines.length;
+	let y = rect.yMin + lineHeight;
+	if (!(textGravity & G.TOP)) {
+		if (textGravity & G.BOTTOM) y = rect.yMax - lineHeight * (len - 1);
+		else if (textGravity & G.CENTER) y += (rect.height - lineHeight * len) / 2;
+	}
+	for (n = 0; n < len; n++) {
+		if (fill)   this.fillText(lines[n], linesX[n], y);
+		if (stroke) this.strokeText(lines[n], linesX[n], y);
+		y += lineHeight;
+	}
+};
+if(window) {
+	window.utils = window.utils || {};
+	utils.tools = {
+		LayoutGravity : G,
+		inclusionFilter,
+		exclusionFilter,
+		instanceFilter,
+		randomColor,
+		HSVtoRGB,
+		RBGtoHSV,
+		RGBToHex,
+		mix,
+		merge,
+		loadString,
+		loadImage,
+		createScriptWorker,
+		polyfill,
+		textFileUserDownload,
+		BBCodeToHTML,
+		loadWASM,
+		instanciateWASM
+
+	};
+} else {
+	/*
+	const rangedRandom = Math.rangedRandom;
+	const gaussianRandom = Math.gaussianRandom;
+	const wrapText = CanvasRenderingContext2D.prototype.wrapText;
+	export {
+		G as LayoutGravity,
+			inclusionFilter,
+			exclusionFilter,
+			instanceFilter,
+			randomColor,
+			HSVtoRGB,
+			RBGtoHSV,
+			RGBToHex,
+			mix,
+			merge,
+			loadString,
+			loadImage,
+			createScriptWorker,
+			polyfill,
+			textFileUserDownload,
+			BBCodeToHTML,
+			loadWASM,
+			instanciateWASM,
+			rangedRandom,
+			gaussianRandom,
+			wrapText
+	};
+	*/
+}
+}
+/**
 * Created by rfrance on 12/20/2016.
 */
 
@@ -3602,3 +4070,840 @@ if(window) {
 	//export {Vec2, Rect, Shape, Circle, Ellipsoid, Line, Point, Polygon, Ray};
 }
 }
+/**
+ * Created by rfrance on 12/20/2016.
+ */
+/**
+ * @module utils/input
+ */
+{
+if(window) {
+	//not in module, do nothing
+} else {
+	//import {Vec2} from "utils/geometry2d";
+}
+//######################################################################################################################
+//#                                             enumerations and callbacks                                             #
+//######################################################################################################################
+/**
+ * @callback keyboardCallback
+ * @param {Key|number} keyCode
+ * @param {KeyState|number} keyState
+ * @returns {void|boolean} prevent default behavior
+ */
+/**
+ * @callback mouseCallback
+ * @param {MouseEvent} event
+ * @param {MouseEvent} eventType
+ * @param {MouseButton} button
+ * @param {module:utils/geometry.Vec2} position
+ * @returns {void|boolean} prevent default behavior.
+ */
+/**
+ * @callback InputManager.focusCallback
+ * @param {boolean} hasFocus
+ */
+/**
+ * @callback KeyMap.keyMapCallback
+ * @param {*} action associated to the event's key
+ * @param {InputManager.KeyState} keyState
+ * @returns {void|boolean} prevent default key behavior
+ */
+/**
+ * @memberOf utils
+ * @namespace input
+ */
+/**
+ * @enum {number}
+ * @readonly
+ */
+const KeyState = { RELEASED: 0, PRESSED:1 };
+/**
+ * @enum {number}
+ * @readonly
+ */
+const Key = {
+	BACKSPACE: 8, TAB: 9, ENTER: 13, SHIFT: 16, CTRL: 17,  ALT: 18,  CAPS_LOCK: 20,  ESCAPE: 27, SPACE: 32,	PAGE_UP: 33,
+	PAGE_DOWN: 34, END: 35, HOME: 36, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, PRINT_SCR: 44,	INSERT: 45, DELETE: 46,
+	ZERO: 48, ONE: 49, TWO: 50, THREE: 51, FOUR: 52, FIVE: 53, SIX: 54, SEVEN: 55, EIGHT: 56, NINE: 57, A: 65, B: 66,
+	C: 67, D: 68, E: 69, F: 70, G: 71, H: 72, I: 73, J: 74, K: 75, L: 76, M: 77, N: 78, O: 79, P: 80, Q: 81, R: 82,
+	S: 83, T: 84, U: 85, V: 86, W: 87, X: 88, Y: 89, Z: 90, LEFT_WIN: 91, RIGH_WIN: 92, SELECT: 93,	NUM_0: 96,
+	NUM_1: 97, NUM_2: 98, NUM_3: 99, NUM_4: 100, NUM_5: 101, NUM_6: 102, NUM_7: 103, NUM_8: 104, NUM_9: 105,
+	MULTIPLY: 106, ADD: 107, SUBTRACT: 109, DECIMAL_POINT: 110, DIVIDE: 111, F1: 112, F2: 113, F3: 114, F4: 115,
+	F5: 116, F6: 117, F7: 118, F8: 119, F9: 120, F10: 121, F11: 122, F12: 123, NUM_LOCK: 144, SCROLL_LOCK: 145,
+	SEMI_COLON: 186, EQUAL: 187, COMMA: 188, DASH: 189, PERIOD: 190, FORWARD_SLASH: 191, GRAVE_ACCENT: 192,
+	OPEN_BRACKET: 219, BACK_SLASH: 220, CLOSE_BRACKET: 221, SINGLE_QUOTE: 222, FN: 255,
+	number: 256
+};
+/**
+ * @enum {string}
+ * @readonly
+ */
+const MouseEvent = {
+	UP: 'onmouseup', DOWN: 'onmousedown', CLICK: 'onclick', DBCLICK: 'ondbclick',
+	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout', CTX_MENU: 'oncontextmenu'
+};
+/**
+ * @enum {number}
+ * @readonly
+ */
+const MouseButton = { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 }
+
+//######################################################################################################################
+//#                                                    InputManager                                                    #
+//######################################################################################################################
+
+//___________________________________________________private constants__________________________________________________
+const KEYS_NUMBER = Key.number;
+const KEY_STATE = KeyState;
+const MOUSE_BTN = MouseButton;
+
+const fixMouseWhich = evt => {
+	if (!evt.which && evt.button) {
+		evt.which =
+			((evt.button % 8 - evt.button % 4) === 4) ? MOUSE_BTN.MIDDLE :
+				((evt.button % 4 - evt.button % 2) === 2) ? MOUSE_BTN.RIGHT :
+					((evt.button % 2) === 1) ? MOUSE_BTN.LEFT :
+						MOUSE_BTN.UNKNOWN;
+	}
+};
+const onKeyEvt = (keyStates, callbacks, state, evt) => {
+	if (keyStates[evt.keyCode] !== state) {
+		keyStates[evt.keyCode] = state;
+		let len = callbacks.length;
+		for (let i = 0; i < len; i++)
+			if (callbacks[i](evt.keyCode, state)) evt.preventDefault();
+	}
+}
+
+/**
+ * @class InputManager
+ * @classdesc a class managing keyboard and mouse events, related to a particular HTMLElement
+ */
+class InputManager {
+	/**
+	 * @constructor
+	 * @param {HTMLElement} element
+	 */
+	constructor(element) {
+		/**
+		 * @name InputManager#element
+		 * @type {HTMLElement}
+		 */
+		this.element = element;
+
+		let keyStates = new Uint8Array(KEYS_NUMBER);
+		for (let i = KEYS_NUMBER - 1; i >= 0; i--) {
+			keyStates[i] = KEY_STATE.RELEASED;
+		}
+		/**
+		 * @name InputManager~_keyboardCallbacks
+		 * @type {Array.<keyboardCallback>}
+		 * @private
+		 */
+		let keyboardCallbacks = [];
+//____________________________________________________private methods___________________________________________________
+		const onKeyUp = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.RELEASED);
+		const onKeyDown = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.PRESSED);
+		const getVec = evt => {
+			let elmtRect = this.element.getBoundingClientRect();
+			return new Vec2(
+				evt.pageX - elmtRect.left,
+				evt.pageY - elmtRect.top);
+		}
+		const onMouseEvt = (callback, evtType, evt) => {
+			fixMouseWhich(evt);
+			if (callback(evt, evtType, evt.which, getVec(evt))) evt.preventDefault();
+		}
+//____________________________________________________public methods____________________________________________________
+//* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 * enable or disable the keyboard listener in capturing on bubbling mode, depending <!--
+		 * -->on the 2nd parameter value
+		 * @function
+		 * @name InputManager#enableKeyboardListener
+		 * @param {boolean} enable
+		 * @param {boolean} [capturingMode=true]
+		 */
+		this.enableKeyboardListener = function (enable, capturingMode = true) {
+			if (enable) {
+				if (this.element != document && !this.element.hasAttribute('tabindex')) {
+					this.element.setAttribute('tabindex', -1); // so it can receive keyboard events
+				}
+				this.element.addEventListener('keydown', onKeyDown, capturingMode);
+				this.element.addEventListener('keyup', onKeyUp, capturingMode);
+			} else {
+				this.element.removeEventListener('keydown', onKeyDown);
+				this.element.removeEventListener('keyup', onKeyUp);
+			}
+		};
+		/**
+		 * adds a keyboard events callback. don't forget to launch the capture of keyboard events by calling <!--
+		 * -->{@link InputManager#enableKeyboardListener} method
+		 * @function
+		 * @name InputManager#addKeyCallback
+		 * @param {keyboardCallback} callback
+		 */
+		this.addKeyCallback = (callback) => {
+			keyboardCallbacks.push(callback);
+		};
+		/**
+		 * removes a keyboard events callback.
+		 * @function
+		 * @name InputManager#removeKeyCallback
+		 * @param {keyboardCallback} callback
+		 */
+		this.removeKeyCallback = (callback) => {
+			keyboardCallbacks.remove(callback);
+		};
+		/**
+		 * returns the state of the key
+		 * @function
+		 * @name InputManager#getKeyState
+		 * @param {number} keyCode
+		 * @returns {KeyState} key state : one of <!--
+		 * -->{@link KeyState.RELEASED|RELEASED} and <!--
+		 * -->{@link KeyState.PRESSED|PRESSED}
+		 */
+		this.getKeyState = keyCode => keyStates[keyCode];
+//* * * * * * * * * * * * * * * * * * * * * * * * * * * * mouse* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 * @function
+		 * @name InputManager#setMouseEventsCallback
+		 * @param {mouseCallback} callback
+		 */
+		this.setMouseEventsCallback = function (callback) {
+			if (callback) {
+				let e;
+				for (let evtType in MouseEvent) {
+					if (MouseEvent.hasOwnProperty(evtType)) {
+						e = MouseEvent[evtType];
+						this.element[e] = onMouseEvt.bind(this, callback, e);
+					}
+				}
+			} else {
+				for (let evtType in MouseEvent) {
+					if (MouseEvent.hasOwnProperty(evtType)) {
+						this.element[MouseEvent[evtType]] = null;
+					}
+				}
+			}
+		};
+//* * * * * * * * * * * * * * * * * * * * * * focus, pointer lock, fullscreen* * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 * @function
+		 * @name InputManager#setFocusCallback
+		 * @param {focusCallback} callback
+		 */
+		this.setFocusCallback = (callback) => {
+			if (callback) {
+				this.element.onfocus = _ => callback(true);
+				this.element.onblur = _ => callback(false);
+			} else {
+				this.element.onfocus = null;
+				this.element.onblur = null;
+			}
+		};
+		/**
+		 * requests pointer lock
+		 * @function
+		 * @name InputManager#pointerLock
+		 * @param eventListener
+		 */
+		this.pointerLock = (eventListener) => {
+			if (eventListener) {
+				if (eventListener.pointerLockChange) {
+					document.addEventListener('pointerlockchange', eventListener.pointerLockChange, false);
+					document.addEventListener('mozpointerlockchange', eventListener.pointerLockChange, false);
+					document.addEventListener('webkitpointerlockchange', eventListener.pointerLockChange, false);
+				}
+				if (eventListener.pointerLockError) {
+					document.addEventListener('pointerlockerror', eventListener.pointerLockError, false);
+					document.addEventListener('mozpointerlockerror', eventListener.pointerLockError, false);
+					document.addEventListener('webkitpointerlockerror', eventListener.pointerLockError, false);
+				}
+			}
+			if (document.webkitFullscreenElement === this.element ||
+				document.mozFullscreenElement === this.element ||
+				document.fullscreenElement === this.element) {
+				this.element.requestPointerLock = this.element.requestPointerLock ||
+					this.element.mozRequestPointerLock ||
+					this.element.webkitRequestPointerLock;
+				this.element.requestPointerLock();
+			}
+		};
+		/**
+		 * requests full screen
+		 * @function
+		 * @name InputManager#fullScreen
+		 * @param callback
+		 */
+		this.fullScreen = (callback) => {
+			element.requestFullscreen = element.requestFullscreen ||
+				element.mozRequestFullscreen ||
+				element.mozRequestFullScreen || // 'S' instead of 's' in the old API.
+				element.webkitRequestFullscreen;
+			element.requestFullscreen();
+			if (callback) {
+				document.addEventListener('fullscreenchange', callback, false);
+				document.addEventListener('mozfullscreenchange', callback, false);
+				document.addEventListener('webkitfullscreenchange', callback, false);
+			}
+		};
+	}
+}
+//######################################################################################################################
+//#                                                       KeyMap                                                       #
+//######################################################################################################################
+/**
+ * @class KeyMap
+ * @classdesc a useful class to use with {@link InputManager|InputManager} class to make <!--
+ * -->easy-to-use keymaps. call {@link KeyMap#apply|apply} method to use it, <!--
+ * -->{@link KeyMap#setAction|setAction} to add mappings, and <!--
+ * -->{@link KeyMap#setCallback|setCallback} to add a callback method called when event occur on <!--
+ * -->selected keys.
+ */
+class KeyMap {
+	/**
+	 * @constructor
+	 */
+	constructor() {
+		let actions = new Array(Key.number);
+		let cb = undefined;
+//--------------------------------------------------- private methods --------------------------------------------------
+		const callback = (keyCode, keyState)=> {
+			if (cb) {
+				let a = this.getAction(keyCode);
+				return (a && cb(a, keyState)) || false;
+			}
+		};
+//--------------------------------------------------- public methods ---------------------------------------------------
+		/**
+		 * @function
+		 * @name KeyMap#setAction
+		 * @param {Key|Key[]|number|number[]} keyCode
+		 * @param {number|string|*} action
+		 */
+		this.setAction = (keyCode, action)=> {
+			if(keyCode.length) {
+				for(let i=0; i<keyCode.length; i++) {
+					this.setAction(keyCode[i], action);
+				}
+			}
+			else {
+				if(action == undefined) {
+					if(actions[keyCode] != undefined) actions[keyCode] = undefined;
+				} else actions[keyCode] = action;
+			}
+		};
+		/**
+		 * @function
+		 * @name KeyMap#getAction
+		 * @param {Key|number} keyCode
+		 * @returns {number|string|*} action associated to the key
+		 */
+		this.getAction = keyCode => {
+			return actions[keyCode];
+		};
+		/**
+		 * returns whether or not at least one key associated to the specified action is pressed
+		 * @function
+		 * @name KeyMap#isKeyDown
+		 * @param {InputManager} inputManager
+		 * @param {*} action
+		 * @returns {boolean} true if at least one key associated to the specified action is pressed
+		 */
+		this.isKeyDown = (inputManager, action) => {
+			let code=-1;
+			do {
+				code = actions.indexOf(action, code+1);
+				if(code!== -1)
+					if(inputManager.getKeyState(code) === InputManager.KeyState.DOWN) return true;
+			} while(code!==-1);
+			return false;
+		};
+		/**
+		 * returns the set of keys associated with the specified action.
+		 * @function
+		 * @name KeyMap#getKeys
+		 * @param {*} action
+		 * @returns {InputManager.Key[]|number[]} key codes
+		 */
+		this.getKeys = action => {
+			let codes = [], i = actions.indexOf(action);
+			while(i !== -1) { codes.push(i); i = actions.indexOf(action, i+1); }
+			return codes;
+		};
+		/**
+		 * sets the callback function which will be called when a useful keyboard event happens.
+		 * @function
+		 * @name KeyMap#setCallback
+		 * @param {KeyMap.keyMapCallback} callback
+		 */
+		this.setCallback = callback => { cb = callback; };
+		/**
+		 * allow the instance to catch keyboard events by adding a callback function using the parameter's <!--
+		 * -->{@link InputManager#addKeyCallback|addKeyCallback} method.
+		 * @function
+		 * @name KeyMap#enable
+		 * @param {InputManager} inputManager
+		 */
+		this.enable = function(inputManager) {
+			inputManager.addKeyCallback(callback);
+		};
+		/**
+		 * removes the callback function from the keyboard listener of the parameter.
+		 * @function
+		 * @name KeyMap#disable
+		 * @param {InputManager} inputManager
+		 */
+		this.disable = function(inputManager) {
+			inputManager.removeKeyCallback(callback);
+		};
+	}
+}
+if(window) {
+	window.utils = window.utils || {};
+	utils.input = {
+		KeyState,
+		Key,
+		MouseEvent,
+		MouseButton,
+		InputManager,
+		KeyMap
+
+	}
+} else {
+	/*
+	export {
+		KeyState,
+		Key,
+		MouseEvent,
+		MouseButton,
+		InputManager,
+		KeyMap
+	};
+	*/
+}
+}
+{
+	/**
+	 * @class utils.p2p.PeerConnection
+	 * A class used to handle P2P connection.
+	 * @example
+	 * //### BOTH USERS ###
+	 *
+	 * peer = new PeerConnection();
+	 *
+	 * //### USER 1 ###
+	 *
+	 * peer.createOffer()
+	 *      .then(({description, candidate})=> {
+	 *          //send description and candidate to user 2
+	 *      });
+	 *
+	 * //### USER 2 ###
+	 *
+	 * peer.createAnswer({remote: {description, candidate}})
+	 *      .then(({description, candidate})=> {
+	 *          //send description and candidate to user 1
+	 *      });
+	 * //### USER 1 ###
+	 *
+	 * peer.onOfferAnswer({description, candidate});
+	 *
+	 * //### BOTH USERS ###
+	 *
+	 * peer.waitRx().then( ()=> {
+	 *          //ready to communicate !
+	 *          peer.onclose = ()=>
+	 *          peer.onMsg = ({data})=>{
+	 *              //process incoming data
+	 *          }
+	 *          peer.send(data);
+	 *      });
+	 *
+	 */
+	class PeerConnection {
+		/**
+		 * @constructor
+		 * @param {Object} config
+		 * @param {RTCConfiguration} config.pcConfig - configuration for the RTCPeerConnection
+		 * @param {string} config.chName - name of the output channel (and the input channel on the remote peer)
+		 * @param {RTCDataChannelInit} config.txConfig - configuration for the output RTCChannel
+		 */
+		constructor({pcConfig, chName, txConfig}) {
+			this.pc = new RTCPeerConnection(pcConfig);
+		}
+
+		createDataChannel(name, config) {
+			return this.pc.createDataChannel(name || "", config);
+		}
+
+		addTrack(track, ...streams) {
+			return this.pc.addTrack(track, ...streams);
+		}
+
+		/**
+		 * creates a {@link Promise} resolved with a {@link RTCDataChannel} when the 'datachannel' event is fired <!--
+		 * -->on the {@link RTCPeerConnection}.
+		 * @returns {Promise<RTCDataChannel>} the created {@link Promise}
+		 */
+		waitDataChannel() {
+			return new Promise(resolve => {
+				this.pc.ondatachannel = ({channel})=> {
+					this.pc.ondatachannel = null;
+					resolve(channel);
+				};
+			})
+		}
+
+		/**
+		 * creates a {@link Promise} resolved with a {@link RTCTrackEvent} when the the 'track' event is fired <!--
+		 * -->on the {@link RTCPeerConnection}.
+		 * @returns {Promise<RTCTrackEvent>}
+		 */
+		waitTrack() {
+			return new Promise(resolve => {
+				this.pc.ontrack = (evt)=> {
+					this.ontrack = null;
+					resolve(evt);
+				};
+			})
+		}
+
+		/**
+		 * initialize the connection by creating an offer to be answered by a remote peer
+		 * @param {RTCOfferOptions} options - passed to {@link RTCPeerConnection.createOffer} function
+		 * @returns {Promise<{description, candidate}>} resolved when the local peer is ready to accept a <!--
+		 * -->remote peer, with the peer's local description and the candidate to pass to the remote peer.
+		 */
+		createOffer(options) {
+			return new Promise((resolve, reject) => {
+				this.pc.onicecandidate = (evt)=> {
+					if(!evt.candidate) return;
+					this.candidate = evt.candidate;
+					resolve({description: this.pc.localDescription, candidate: this.candidate});
+				}
+				this.pc.createOffer(options).then((desc)=>{
+					this.pc.setLocalDescription(desc);
+				}, reject);
+			})
+		}
+
+		/**
+		 * must be called after {@link createOffer} with the remote description and candidate
+		 * @param {Object} remote
+		 * @param {RTCCandidate|Object} remote.candidate
+		 * @param {RTCSessionDescription|Object} remote.description
+		 */
+		onOfferAnswer({candidate, description}) {
+			this.pc.setRemoteDescription(description);
+			this.pc.addIceCandidate(candidate);
+		}
+
+		/**
+		 * initialize the connection by answering the remote peer's answer
+		 * @param {Object} remote
+		 * @param {RTCCandidate|Object} remote.candidate
+		 * @param {RTCSessionDescription|Object} remote.description
+		 * @param {RTCAnswerOptions} options
+		 * @returns {Promise<{description, candidate}>}
+		 */
+		createAnswer({candidate, description}, options) {
+			this.pc.setRemoteDescription(description);
+			this.pc.addIceCandidate(candidate);
+			return new Promise((resolve, reject) => {
+				let a = false;
+				this.pc.onicecandidate = (evt)=> {
+					if(!evt.candidate) return;
+					this.candidate = evt.candidate;
+					resolve({description: this.pc.localDescription, candidate: this.candidate});
+				}
+				this.pc.createAnswer(options).then((desc)=>{
+					this.pc.setLocalDescription(desc);
+				}, reject);
+			})
+		}
+	}
+	function test3() {
+		var peer1 = new PeerConnection();
+		peer1.tx = peer1.createDataChannel("peer 1 -> 2");
+		var peer2 = new PeerConnection();
+		peer2.tx = peer2.createDataChannel("peer 2 -> 1");
+		const onMsg = function({data}) {
+			alert(`${this.label} >> ${data}`);
+		}
+		peer1.createOffer()
+			.then((desc_cand)=>peer2.createAnswer(desc_cand))
+			.then((desc_cand)=>peer1.onOfferAnswer(desc_cand))
+			.then(()=>peer1.waitDataChannel())
+			.then(channel=>channel.onmessage = onMsg)
+			.then(()=>peer2.waitDataChannel())
+			.then(channel=>channel.onmessage = onMsg)
+			.then(_=>console.log("finish"))
+			.then(_=>peer1.tx.readyState == 'open' || utils.tools.waitForEvent(peer1.tx, 'open'))
+			.then(peer1.tx.send('Hello'));
+	}
+	window.utils = window.utils || {};
+	window.utils.p2p = {
+		PeerConnection
+	};
+}utils.tools.polyfill(window, "AudioContext", ["webkit"]);
+utils.audio = {
+	loadSound(audioContext, onResult, onError, url) {
+		const request = new XMLHttpRequest();
+		request.open('GET', url, true);
+		request.responseType = 'arraybuffer';
+
+		// Decode asynchronously
+		request.onload = function() {
+			context.decodeAudioData(request.response, onResult, onError);
+		}
+		request.send();
+	},
+	/**
+	 * <code>
+	 * __________________________________________________________________________________________________________
+	 * |_octave_|___C___|_C#/Db_|___D___|_D#/Eb_|___E___|___F___|_F#/Gb_|___G___|_G#/Ab_|___A___|_A#/Bb_|___B___|
+	 * |        |   0   |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |   10  |   11  |
+	 * |   -5   | 8.176 | 8.662 | 9.177 | 9.723 | 10.30 | 10.91 | 11.56 | 12.25 | 12.98 | 13.75 |`14.57 | 15.43 |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -4   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -3   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -2   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |   -1   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    0   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    1   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    2   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    3   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    4   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * |        |
+	 * |    5   |
+	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
+	 * </code>
+	 * @param {number} midi identification number (see <!--
+	 * -->http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm <!--
+	 * -->or http://tonalsoft.com/pub/news/pitch-bend.aspx) <!--
+	 * -->for a list of all ids)
+	 * @return {number} the note frequency, in Hz
+	 */
+	getNoteFreq(semitones) {
+		return 440*(Math.pow(2, noteId-69));
+	},
+	createSinusOscillator(audioContext, freq) {
+		let o = audioContext.createOscillator();
+		o.type = "sine";
+		o.frequency.value = freq;
+		return o;
+	},
+	createSquareOscillator(audioContext, freq) {
+		let o = audioContext.createOscillator();
+		o.type = "square";
+		o.frequency.value = freq;
+		return o;
+	},
+	createTriangleOscillator(audioContext, freq) {
+		let o = audioContext.createOscillator();
+		o.type = "triangle";
+		o.frequency.value = freq;
+		return o;
+	},
+	createSawToothOscillator(audioContext, freq) {
+		let o = audioContext.createOscillator();
+		o.type = "sawtooth";
+		o.frequency.value = freq;
+		return o;
+	},
+	createCustomOscillator(audioContext, freq, periodicWave) {
+		let o = audioContext.createOscillator();
+		o.type = "custom";
+		o.frequency.value = freq;
+		o.setPeriodicWave(periodicWave);
+		return o;
+	},
+	connectNodes(nodes) {
+		let i, n = nodes.length;
+		for(i=0; i< n-1; i++) {
+			nodes[i].connect(nodes[i+1]);
+		}
+	},
+}/**
+ * Created by rfrance on 11/29/2016.
+ */
+window['webgl'] = {
+	getContext(canvas) {
+		return canvas.getContext("webgl2")
+			|| canvas.getContext("webgl")
+			|| canvas.getContext("experimental-webgl");
+	},
+	/**
+	 * @param {WebGLRenderingContext} gl
+	 */
+	initContext(gl) {
+		gl.clearColor(0.0, 0.0, 0.0, 1.0); // set clear color to opaque black
+		gl.enable(gl.CULL_FACE);
+		gl.enable(gl.DEPTH_TEST);
+		gl.depthFunc(gl.LEQUAL); // near objects hide far objects
+		gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT); //clear depth and color buffer
+	},
+	setAlphaEnabled(gl, enable) {
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+		if(enable) gl.enable(gl.BLEND);
+		else gl.disable(gl.BLEND);
+	},
+	createShader(gl, shaderScript, type) {
+		let shader;
+		if((type != WebGLRenderingContext.VERTEX_SHADER) || type != (WebGLRenderingContext.FRAGMENT_SHADER)) {
+			switch (type) {
+				case 'vertex' : type = WebGLRenderingContext.VERTEX_SHADER; break;
+				case 'fragment' : type = WebGLRenderingContext.FRAGMENT_SHADER; break;
+				default :
+					console.error(new Error(
+						`'${type}' is not a valid shader type. only 'vertex' and 'fragment' are accepted as shader type.
+						you can also use VERTEX_SHADER or FRAGMENT_SHADER constants of the WebGLRenderingContext class`
+					).stack);
+					return;
+			}
+		}
+		shader = gl.createShader(type);
+		gl.shaderSource(shader, shaderScript);
+		gl.compileShader(shader);
+
+		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+			console.error(new Error(gl.getShaderInfoLog(shader)).stack);
+			gl.deleteShader(shader);
+			return null;
+		}
+		return shader;
+	},
+	/**
+	 *
+	 * @param {WebGLRenderingContext|WebGL2RenderingContext} gl
+	 * @param {WebGLShader|string} vertexShader
+	 * @param {WebGLShader|string} fragmentShader
+	 * @returns {WebGLProgram}
+	 */
+	createProgram(gl, vertexShader, fragmentShader) {
+		const prog = gl.createProgram();
+		if(  vertexShader.substr)
+			gl.attachShader(prog, webgl.createShader(gl,   vertexShader, 'vertex'  ));
+		else gl.attachShader(prog, vertexShader);
+		if(fragmentShader.substr)
+			gl.attachShader(prog, webgl.createShader(gl, fragmentShader, 'fragment'));
+		else gl.attachShader(prog, fragmentShader);
+
+		gl.linkProgram(prog);
+		if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+			console.error(new Error(gl.getProgramInfoLog(prog)).stack);
+			gl.deleteProgram(prog);
+			return;
+		}
+		return prog;
+	},
+	getAttribLocations(gl, program, names) {
+		let result = new Array(names.length);
+		for(let i=0; i<names.length; i++) {
+			result[i] = gl.getAttribLocation(program, names[i]);
+		}
+		return result;
+	},
+	getUniformLocations(gl, program, names) {
+		let result = new Array(names.length);
+		for(let i=0; i<names.length; i++) {
+			result[i] = gl.getUniformLocation(program, names[i]);
+		}
+		return result;
+	},
+	/**
+	 * creates a {@link WebGLBuffer} buffer, binds it and copy the datas in it, using the methods <!--
+	 * -->{@link https://developer.mozilla.org/fr/docs/Web/API/WebGLRenderingContext/bufferData} and <!--
+	 * -->{@link https://developer.mozilla.org/fr/docs/Web/API/WebGLRenderingContext/bindBuffer}. <!--
+	 * -->Use these links for more details
+	 *
+	 * @param {WebGLRenderingContext|WebGL2RenderingContext} gl - the WebGL context used
+	 * @param {GLEnum|number} target - specifies the binding point. e.g: gl.ARRAY_BUFFER, for vertex attributes, or <!--
+	 * -->gl.ELEMENT_ARRAY_BUFFER, for element indices.
+	 * @param {ArrayBuffer} srcData - data that will be copied in the data store
+	 * @param {GLEnum|number} usage - specifies the usage of the data store. e.g: gl.STATIC_DRAW, <!--
+	 * -->gl.DYNAMIC_DRAW, gl.STREAM_DRAW.
+	 * @param {GLuint|number} srcOffset - specifies the element index offset where to start reading the buffer
+	 * @param {GLuint|number} length - specifies the number of elements to read from the buffer. <!--
+	 * -->Default to 0 (read to the end)
+	 */
+	createAttribBuffer(gl, target, srcData, usage = WebGLRenderingContext.STATIC_DRAW, srcOffset=0, length = 0) {
+		const buffer = gl.createBuffer();
+		gl.bindBuffer(target, buffer);
+		gl.bufferData(target, srcData, usage, srcOffset, length);
+		return buffer;
+	},
+	standardFragmentShader : `#version 300 es
+precision mediump float;
+in vec4 v_color;
+out vec4 outColor;
+void main() { outColor = v_color; }
+	`,
+	createMVMat3: function(tx, ty, rad, scaleX, scaleY) {
+		let cos = Math.cos(rad), sin = Math.sin(rad);
+		return [ cos * scaleX , -sin * scaleY , 0,
+				 sin * scaleX ,  cos * scaleY , 0,
+					  tx      ,       ty      , 1];
+	},
+	translationMat3: function(dX, dY) {
+		return [1,0,0,  0,1,0,  dX,dY,1];
+	},
+	rotationMat3: function(rad) {
+		return [cos,-sin,0,  sin,cos,0,  0,0,1];
+	},
+	scaleMat3: function(scaleX, scaleY) {
+		return [scaleX,0,0,  0,scaleY,0,  0,0,1];
+	},
+	perspectiveMat4: function(fov, aspect, zNear, zFar) {
+		const f = Math.tan(Math.PI*0.5 - 0.5 * fov),
+			  rangeInv = 1.0 / (zNear-zFar);
+		/*
+		return [
+			1/16, 0, 0, 0,
+			0, 1/9, 0, 0,
+			0, 0, 1, -1,
+			0, 0, 0, 1
+		];
+		/*/
+		return [
+			f/aspect, 0, 0                          , 0 ,
+			0       , f, 0                          , 0 ,
+			0       , 0, (zNear + zFar) * rangeInv  , -1,
+			0       , 0, zNear * zFar * rangeInv * 2, 1
+		];//*/
+	},
+	projectionMat4: function(xmin, xmax, ymin, ymax, zNear, zFar) {
+		const w = xmax - xmin, h = ymax - ymin, d = zFar - zNear;
+		return [
+			2/w, 0 , 0 , -(xmax+xmin)/w,
+			0 , 2/h, 0 , -(ymax+ymin)/h,
+			0 , 0 , -2/d, -(zFar+zNear)/d,
+			0 , 0 , 0 , 1
+		];
+	},
+	identityMat4: function() {
+		return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
+	}
+};

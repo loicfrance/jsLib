@@ -1,4 +1,3 @@
-"use strict";
 utils.tools.polyfill(window, "AudioContext", ["webkit"]);
 utils.audio = {
 	loadSound(audioContext, onResult, onError, url) {

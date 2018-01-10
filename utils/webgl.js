@@ -1,5 +1,5 @@
 /**
- * Created by rfrance on 11/29/2016.
+ * Created by Loic France on 11/29/2016.
  */
 window['webgl'] = {
 	getContext(canvas) {
@@ -12,9 +12,9 @@ window['webgl'] = {
 	 */
 	initContext(gl) {
 		gl.clearColor(0.0, 0.0, 0.0, 1.0); // set clear color to opaque black
-		//gl.enable(gl.CULL_FACE);
-		//gl.enable(gl.DEPTH_TEST);
-		//gl.depthFunc(gl.LEQUAL); // near objects hide far objects
+		gl.enable(gl.CULL_FACE);
+		gl.enable(gl.DEPTH_TEST);
+		gl.depthFunc(gl.LEQUAL); // near objects hide far objects
 		gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT); //clear depth and color buffer
 	},
 	setAlphaEnabled(gl, enable) {
