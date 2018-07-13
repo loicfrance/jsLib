@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/game/TiledMap.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/board.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/bullets.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/manager.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/object.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/object_mixins.js" libraries="{game}" />
-    <file url="file://$PROJECT_DIR$/game/particles.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/renderer_collider.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/game/viewers.js" libraries="{game, utils}" />
-    <file url="file://$PROJECT_DIR$/utils/audio.js" libraries="{utils}" />
-    <file url="file://$PROJECT_DIR$/utils/geometry2d.js" libraries="{utils}" />
+    <file url="PROJECT" libraries="{game, utils}" />
     <includedPredefinedLibrary name="Node.js Core" />
-    <includedPredefinedLibrary name="WebGL" />
   </component>
 </project>

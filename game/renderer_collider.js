@@ -1,938 +1,923 @@
 /**
- * Created by rfrance on 12/20/2016.
+ * Created by Loic France on 12/20/2016.
+ */
+import {Rect, Vec2} from "../utils/geometry2d";
+import {merge} from "../utils/tools";
+
+/**
+ * @module game/renderer_collider
  */
 //######################################################################################################################
 //#                                                   ObjectRenderer                                                   #
 //######################################################################################################################
-window.game.ObjectRenderer = (function() {
+/**
+ * @class game.ObjectRenderer
+ * @memberOf game
+ * @abstract
+ * @classdesc the base class of object renderers. Renderers are used to handle collision detection of objects.
+ */
+class ObjectRenderer {
+	constructor() {
+	}
 	/**
-	 * @class game.ObjectRenderer
-	 * @memberOf game
-	 * @abstract
-	 * @classdesc the base class of object renderers. Renderers are used to handle collision detection of objects.
+	 * sets the position of the renderer.
+	 * @param {utils.geometry2d.Vec2} pos
+	 * @returns {game.ObjectRenderer} <code>this</code>
 	 */
-    class ObjectRenderer {
-		constructor() {
-		}
-		/**
-		 * sets the position of the renderer.
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.ObjectRenderer} <code>this</code>
-		 */
-		setPosition(pos) {
-			return this;
-		}
+	setPosition(pos) {
+		return this;
+	}
 
-		/**
-		 * rotates the renderer by the specified angle in radians
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-		}
+	/**
+	 * rotates the renderer by the specified angle in radians
+	 * @param {number} radians
+	 */
+	rotate(radians) {
+	}
 
-		/**
-		 * multiplies the dimensions of the renderer by the specified factor
-		 * @param factor
-		 */
-		scale(factor) {
-		}
+	/**
+	 * multiplies the dimensions of the renderer by the specified factor
+	 * @param factor
+	 */
+	scale(factor) {
+	}
 
-		/**
-		 * draw the renderer on the canvas at the specified position if set and not null
-		 * @param {CanvasRenderingContext2D} context2d
-		 */
-		render(context2d) {
-		}
+	/**
+	 * draw the renderer on the canvas at the specified position if set and not null
+	 * @param {CanvasRenderingContext2D} context2d
+	 */
+	render(context2d) {
+	}
 
-		/**
-		 * creates and returns a {@link utils.geometry2d.Rect|Rect} that fits the renderer.
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			return null;
-		}
-		/**
-		 * returns the maximum distance of the center to a point of the renderer.
-		 * @returns {number}
-		 */
-		getRadius() {
-			return 0;
-		}
-    }
-    return ObjectRenderer;
-})();
+	/**
+	 * creates and returns a {@link utils.geometry2d.Rect|Rect} that fits the renderer.
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		return null;
+	}
+	/**
+	 * returns the maximum distance of the center to a point of the renderer.
+	 * @returns {number}
+	 */
+	getRadius() {
+		return 0;
+	}
+}
 //######################################################################################################################
 //#                                                ShapedObjectRenderer                                                #
 //######################################################################################################################
-window.game.ShapedObjectRenderer = (function() {
+/**
+ * @class game.ShapedObjectRenderer
+ * @augments game.ObjectRenderer
+ * @memberOf game
+ * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using a <!--
+ * -->{@link utils.geometry2d.Shape} instance and a color for drawings.
+ */
+class ShapedObjectRenderer extends ObjectRenderer {
 	/**
-	 * @class game.ShapedObjectRenderer
-	 * @augments game.ObjectRenderer
-	 * @memberOf game
-	 * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using a <!--
-	 * -->{@link utils.geometry2d.Shape} instance and a color for drawings.
+	 * @constructor
+	 * @param {utils.geometry2d.Shape}shape
+	 * @param {string} color
 	 */
-	class ShapedObjectRenderer extends game.ObjectRenderer {
+	constructor(shape, color = '#FFF') {
+		super();
 		/**
-		 * @constructor
-		 * @param {utils.geometry2d.Shape}shape
-		 * @param {string} color
+		 * @name game.ShapedObjectRenderer#shape
+		 * @type {utils.geometry2d.Shape}
 		 */
-		constructor(shape, color = '#FFF') {
-			super();
-			/**
-			 * @name game.ShapedObjectRenderer#shape
-			 * @type {utils.geometry2d.Shape}
-			 */
-			this.shape = shape.clone();
-			/**
-			 * @name game.ShapedObjectRenderer#color
-			 * @type {string}
-			 */
-			this.color = color;
-		}
+		this.shape = shape.clone();
+		/**
+		 * @name game.ShapedObjectRenderer#color
+		 * @type {string}
+		 */
+		this.color = color;
+	}
 
-		/**
-		 * sets the renderer's shape center to the specified position
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.ShapedObjectRenderer} <code>this</code>
-		 */
-		setPosition(pos) {
-			this.shape.setCenter(pos);
-			return this;
-		}
+	/**
+	 * sets the renderer's shape center to the specified position
+	 * @param {utils.geometry2d.Vec2} pos
+	 * @returns {game.ShapedObjectRenderer} <code>this</code>
+	 */
+	setPosition(pos) {
+		this.shape.setCenter(pos);
+		return this;
+	}
 
-		/**
-		 * rotates the shape of the renderer by the specified angle in radians.
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-			this.shape.rotate(radians);
-		}
+	/**
+	 * rotates the shape of the renderer by the specified angle in radians.
+	 * @param {number} radians
+	 */
+	rotate(radians) {
+		this.shape.rotate(radians);
+	}
 
-		/**
-		 * multiplies the dimensions of the shape by the specified factor.
-		 * @param {number} factor
-		 */
-		scale(factor) {
-			this.shape.scale(factor);
-		}
+	/**
+	 * multiplies the dimensions of the shape by the specified factor.
+	 * @param {number} factor
+	 */
+	scale(factor) {
+		this.shape.scale(factor);
+	}
 
-		/**
-		 * returns the {@link game.ShapedObjectRenderer#color|color} attribute of the renderer.
-		 * @returns {string}
-		 */
-		getColor() {
-			return this.color;
-		}
+	/**
+	 * returns the {@link game.ShapedObjectRenderer#color|color} attribute of the renderer.
+	 * @returns {string}
+	 */
+	getColor() {
+		return this.color;
+	}
 
-		/**
-		 * sets the {@link game.ShapedObjectRenderer#color|color} attribute of the renderer to the specified value.
-		 * @param {string} color
-		 */
-		setColor(color) {
-			this.color = color;
-		}
+	/**
+	 * sets the {@link game.ShapedObjectRenderer#color|color} attribute of the renderer to the specified value.
+	 * @param {string} color
+	 */
+	setColor(color) {
+		this.color = color;
+	}
 
-		/**
-		 * returns the {@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer.
-		 * @returns {utils.geometry2d.Shape}
-		 */
-		getShape() {
-			return this.shape;
-		}
+	/**
+	 * returns the {@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer.
+	 * @returns {utils.geometry2d.Shape}
+	 */
+	getShape() {
+		return this.shape;
+	}
 
-		/**
-		 * sets the {@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer to a copy of the <!--
-		 * -->specified shape.
-		 * @param {utils.geometry2d.Shape} shape
-		 */
-		setShape(shape) {
-			this.shape = shape.clone();
-		}
+	/**
+	 * sets the {@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer to a copy of the <!--
+	 * -->specified shape.
+	 * @param {utils.geometry2d.Shape} shape
+	 */
+	setShape(shape) {
+		this.shape = shape.clone();
+	}
 
-		/**
-		 * draws the shape on the canvas with the specified color.
-		 * @param {CanvasRenderingContext2D} context2d
-		 */
-		render(context2d) {
-			if(!(this.color.substr)) {
-				let c = this.color.toString(16);
-				if(c.length < 6) c = '0'.repeat(6-c.length)+c;
-				this.color = '#'+c;
-			}
-			this.fill && (context2d.fillStyle = this.color);
-			this.stroke && (context2d.strokeStyle = this.color);
-			this.shape.draw(context2d, this.fill, this.stroke);
+	/**
+	 * draws the shape on the canvas with the specified color.
+	 * @param {CanvasRenderingContext2D} context2d
+	 */
+	render(context2d) {
+		if(!(this.color.substr)) {
+			let c = this.color.toString(16);
+			if(c.length < 6) c = '0'.repeat(6-c.length)+c;
+			this.color = '#'+c;
 		}
-		/**
-		 * draws the shape on the canvas with the specified color.
-		 * @param {webgl.GlHandler} handler
-		 * @param {WebGLRenderingContext} handler.gl - webgl context
-		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
-		 * -->to store vertices
-		 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
-		 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
-		 * -->the position of the vertex in the vertex shader
-		 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
-		 * -->the color in the vertex shader
-		 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
-		 * -->the depth in the vertex shader
-		 */
-		renderGL(handler) {
-			if(this.color.substr) {
-				let c = 0;
-				switch(this.color.length) {
-					case 4: c = 0xFF;
-					case 5: c += parseInt(this.color.substr(1,1),16)*17 << 24
-						+ parseInt(this.color.substr(2,1),16)*17 << 16
-						+ parseInt(this.color.substr(3,1),16)*17 << 8
-						+ parseInt(this.color.substr(4,1),16)*17;
-						break;
-					case 7: c = 0xFF;
-					case 9: c += parseInt(this.color.substr(1,1),16) << 24
-						+ parseInt(this.color.substr(3,1),16) << 16
-						+ parseInt(this.color.substr(5,1),16) << 8
-						+ parseInt(this.color.substr(7,1),16);
-						break;
-					default: console.stack(this.color + ' is not a valid color');
-				}
-			}
-			handler.gl.uniform1i(handler.colorUniform, this.color);
-			handler.gl.bindBuffer(handler.glBuffer);
-			let points = this.shape.glSetVertices(handler.vertices);
-			handler.gl.bufferData(handler.glBuffer, handler.vertices, handler.gl.STATIC_DRAW);
-			gl.vertexAttribPointer(handler.positionAttrib, 2, gl.FLOAT, false, 0, 0);
-			gl.drawArrays(this.stroke ? gl.LINE_LOOP : gl.TRIANGLE_FAN, 0, points );
-		}
-		/**
-		 * returns a {@link utils.geometry2d.Rect|Rect} instance fitting the <!--
-		 * -->{@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer.
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			return this.shape.getRect();
-		}
-
-		/**
-		 * returns the maximum distance of the center to a point of the renderer.
-		 * @returns {number}
-		 */
-		getRadius() {
-			return this.shape.getRadius();
-		}
+		this.fill && (context2d.fillStyle = this.color);
+		this.stroke && (context2d.strokeStyle = this.color);
+		this.shape.draw(context2d, this.fill, this.stroke);
 	}
 	/**
-	 * whether or not the renderer should fill the shape. as it is common to all instances of the class, <!--
-	 * -->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want <!--
-	 * -->for your renderers.
-	 * @name game.ShapedObjectRenderer#fill
-	 * @type {boolean}
+	 * draws the shape on the canvas with the specified color.
+	 * @param {webgl.GlHandler} handler
+	 * @param {WebGLRenderingContext} handler.gl - webgl context
+	 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
+	 * -->to store vertices
+	 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
+	 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
+	 * -->the position of the vertex in the vertex shader
+	 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
+	 * -->the color in the vertex shader
+	 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
+	 * -->the depth in the vertex shader
 	 */
-	ShapedObjectRenderer.prototype.fill = true;
+	renderGL(handler) {
+		if(this.color.substr) {
+			let c = 0; //TODO check switch below
+			switch(this.color.length) {
+				case 4: c = 0xFF;
+				case 5: c += parseInt(this.color.substr(1,1),16)*17 << 24
+					+ parseInt(this.color.substr(2,1),16)*17 << 16
+					+ parseInt(this.color.substr(3,1),16)*17 << 8
+					+ parseInt(this.color.substr(4,1),16)*17;
+					break;
+				case 7: c = 0xFF;
+				case 9: c += parseInt(this.color.substr(1,1),16) << 24
+					+ parseInt(this.color.substr(3,1),16) << 16
+					+ parseInt(this.color.substr(5,1),16) << 8
+					+ parseInt(this.color.substr(7,1),16);
+					break;
+				default: console.stack(this.color + ' is not a valid color');
+			}
+		}
+		handler.gl.uniform1i(handler.colorUniform, this.color);
+		handler.gl.bindBuffer(handler.glBuffer);
+		let points = this.shape.glSetVertices(handler.vertices);
+		handler.gl.bufferData(handler.glBuffer, handler.vertices, handler.gl.STATIC_DRAW);
+		gl.vertexAttribPointer(handler.positionAttrib, 2, gl.FLOAT, false, 0, 0);
+		gl.drawArrays(this.stroke ? gl.LINE_LOOP : gl.TRIANGLE_FAN, 0, points );
+	}
 	/**
-	 * whether or not the renderer should stroke the shape. as it is common to all instances of the class, <!--
-	 * -->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want <!--
-	 * -->for your renderers.
-	 * @name game.ShapedObjectRenderer#stroke
-	 * @type {boolean}
+	 * returns a {@link utils.geometry2d.Rect|Rect} instance fitting the <!--
+	 * -->{@link game.ShapedObjectRenderer#shape|shape} attribute of the renderer.
+	 * @returns {utils.geometry2d.Rect}
 	 */
-	ShapedObjectRenderer.prototype.stroke = false;
-	return ShapedObjectRenderer;
-})();
+	getRect() {
+		return this.shape.getRect();
+	}
+
+	/**
+	 * returns the maximum distance of the center to a point of the renderer.
+	 * @returns {number}
+	 */
+	getRadius() {
+		return this.shape.getRadius();
+	}
+}
+/**
+ * whether or not the renderer should fill the shape. as it is common to all instances of the class, <!--
+ * -->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want <!--
+ * -->for your renderers.
+ * @name game.ShapedObjectRenderer#fill
+ * @type {boolean}
+ */
+ShapedObjectRenderer.prototype.fill = true;
+/**
+ * whether or not the renderer should stroke the shape. as it is common to all instances of the class, <!--
+ * -->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want <!--
+ * -->for your renderers.
+ * @name game.ShapedObjectRenderer#stroke
+ * @type {boolean}
+ */
+ShapedObjectRenderer.prototype.stroke = false;
 //######################################################################################################################
 //#                                                ImageObjectRenderer                                                 #
 //######################################################################################################################
-window.game.ImageObjectRenderer = (function() {
-	const Rect = utils.geometry2d.Rect;
+
+/**
+ * @class game.ImageObjectRenderer
+ * @augments game.ObjectRenderer
+ * @memberOf game
+ * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using an image instance and <!--
+ * -->transform informations for drawing
+ */
+class ImageObjectRenderer extends ObjectRenderer {
+
 	/**
-	 * @class game.ImageObjectRenderer
-	 * @augments game.ObjectRenderer
-	 * @memberOf game
-	 * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using an image instance and <!--
-	 * -->transform informations for drawing
+	 * @constructor
+	 * @param {Image} image
+	 * @param {utils.geometry2d.Rect} clipRect
 	 */
-	class ImageObjectRenderer extends game.ObjectRenderer {
-
+	constructor(image, clipRect= new Rect(0,0, image.width, image.height)) {
+		super();
 		/**
-		 * @constructor
-		 * @param {Image} image
-		 * @param {utils.geometry2d.Rect} clipRect
+		 * @name game.ImageObjectRenderer#image
+		 * @type {Image}
 		 */
-		constructor(image, clipRect= new Rect(0,0, image.width, image.height)) {
-			super();
-			/**
-			 * @name game.ImageObjectRenderer#image
-			 * @type {Image}
-			 */
-			this.image = image;
-			this.position = utils.geometry2d.Vec2.zero;
-			this.clipRect = clipRect;
-		}
-
-		/**
-		 * sets the renderer's shape center to the specified position
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.ShapedObjectRenderer} <code>this</code>
-		 */
-		setPosition(pos) {
-			this.position.set(pos);
-			return this;
-		}
-
-		/**
-		 * rotates the shape of the renderer by the specified angle in radians.
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-			this.angle += radians;
-		}
-
-		/**
-		 * multiplies the dimensions of the shape by the specified factor.
-		 * @param {number} factor
-		 */
-		scale(factor) {
-			this.scaleX *= factor;
-			this.scaleY *= factor;
-		}
-
-		/**
-		 * returns the {@link game.ImageObjectRenderer#image|image} attribute of the renderer.
-		 * @returns {Image}
-		 */
-		getImage() {
-			return this.image;
-		}
-
-		/**
-		 * sets the {@link game.ImageObjectRenderer#image|image} attribute of the renderer to the <!--
-		 * -->specified image.
-		 * @param {Image} image
-		 */
-		setImage(image) {
-			this.image = image;
-		}
-		setImageClipRect(clipRect) {
-			this.clipRect.setRect(clipRect);
-		}
-
-		/**
-		 * draws on the canvas
-		 * @param {CanvasRenderingContext2D} context2d
-		 */
-		render(context2d) {
-			if(!this.image.complete) return;
-			const w = this.clipRect.width, h = this.clipRect.height, ws = w * this.scaleX, hs = h * this.scaleY;
-			if(this.angle) {
-				context2d.translate(this.position.x, this.position.y);
-				context2d.rotate(this.angle);
-				context2d.drawImage(this.image,
-					this.clipRect.xMin, this.clipRect.yMin, w, h,
-					-ws*0.5, -hs*0.5, ws, hs);
-				context2d.rotate(-this.angle);
-				context2d.translate(-this.position.x, -this.position.y);
-			} else context2d.drawImage(this.image,
-					this.clipRect.xMin, this.clipRect.yMin, w, h,
-					this.position.x - ws*0.5, this.position.y - hs*0.5,
-					ws, hs);
-		}
-		/**
-		 * draws on the canvas.
-		 * @param {webgl.GlHandler} handler
-		 * @param {WebGLRenderingContext} handler.gl - webgl context
-		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
-		 * -->to store vertices
-		 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
-		 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
-		 * -->the position of the vertex in the vertex shader
-		 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
-		 * -->the color in the vertex shader
-		 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
-		 * -->the depth in the vertex shader
-		 */
-		renderGL(handler) {
-		}
-		/**
-		 * returns a {@link utils.geometry2d.Rect|Rect} instance fitting the <!--
-		 * -->{@link game.ImageObjectRenderer#image|image} attribute of the renderer.
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			return Rect.createFromCenterWidthHeight(this.position,
-				this.clipRect.width*this.scaleX, this.clipRect.height*this.scaleY);
-		}
-
-		/**
-		 * returns the maximum distance of the center to a point of the renderer.
-		 * @returns {number}
-		 */
-		getRadius() {
-			const r = this.getRect();
-			return Math.max(r.width, r.height);
-		}
+		this.image = image;
+		this.position = Vec2.zero;
+		this.clipRect = clipRect;
 	}
-	utils.tools.merge(ImageObjectRenderer.prototype, {
-		angle: 0, scaleX: 1, scaleY: 1
-	});
-	return ImageObjectRenderer;
-})();
+
+	/**
+	 * sets the renderer's shape center to the specified position
+	 * @param {utils.geometry2d.Vec2} pos
+	 * @returns {game.ShapedObjectRenderer} <code>this</code>
+	 */
+	setPosition(pos) {
+		this.position.set(pos);
+		return this;
+	}
+
+	/**
+	 * rotates the shape of the renderer by the specified angle in radians.
+	 * @param {number} radians
+	 */
+	rotate(radians) {
+		this.angle += radians;
+	}
+
+	/**
+	 * multiplies the dimensions of the shape by the specified factor.
+	 * @param {number} factor
+	 */
+	scale(factor) {
+		this.scaleX *= factor;
+		this.scaleY *= factor;
+	}
+
+	/**
+	 * returns the {@link game.ImageObjectRenderer#image|image} attribute of the renderer.
+	 * @returns {Image}
+	 */
+	getImage() {
+		return this.image;
+	}
+
+	/**
+	 * sets the {@link game.ImageObjectRenderer#image|image} attribute of the renderer to the <!--
+	 * -->specified image.
+	 * @param {Image} image
+	 */
+	setImage(image) {
+		this.image = image;
+	}
+	setImageClipRect(clipRect) {
+		this.clipRect.setRect(clipRect);
+	}
+
+	/**
+	 * draws on the canvas
+	 * @param {CanvasRenderingContext2D} context2d
+	 */
+	render(context2d) {
+		if(!this.image.complete) return;
+		const w = this.clipRect.width, h = this.clipRect.height, ws = w * this.scaleX, hs = h * this.scaleY;
+		if(this.angle) {
+			context2d.translate(this.position.x, this.position.y);
+			context2d.rotate(this.angle);
+			context2d.drawImage(this.image,
+				this.clipRect.xMin, this.clipRect.yMin, w, h,
+				-ws*0.5, -hs*0.5, ws, hs);
+			context2d.rotate(-this.angle);
+			context2d.translate(-this.position.x, -this.position.y);
+		} else context2d.drawImage(this.image,
+				this.clipRect.xMin, this.clipRect.yMin, w, h,
+				this.position.x - ws*0.5, this.position.y - hs*0.5,
+				ws, hs);
+	}
+	/**
+	 * draws on the canvas.
+	 * @param {webgl.GlHandler} handler
+	 * @param {WebGLRenderingContext} handler.gl - webgl context
+	 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
+	 * -->to store vertices
+	 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
+	 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
+	 * -->the position of the vertex in the vertex shader
+	 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
+	 * -->the color in the vertex shader
+	 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
+	 * -->the depth in the vertex shader
+	 */
+	renderGL(handler) {
+	}
+	/**
+	 * returns a {@link utils.geometry2d.Rect|Rect} instance fitting the <!--
+	 * -->{@link game.ImageObjectRenderer#image|image} attribute of the renderer.
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		return Rect.createFromCenterWidthHeight(this.position,
+			this.clipRect.width*this.scaleX, this.clipRect.height*this.scaleY);
+	}
+
+	/**
+	 * returns the maximum distance of the center to a point of the renderer.
+	 * @returns {number}
+	 */
+	getRadius() {
+		const r = this.getRect();
+		return Math.max(r.width, r.height);
+	}
+}
+merge(ImageObjectRenderer.prototype, {
+	angle: 0, scaleX: 1, scaleY: 1
+});
 //######################################################################################################################
 //#                                                 WebGLObjectRenderer                                                #
 //######################################################################################################################
-window.game.WebGLObjectRenderer = (function() {
-	"use strict";
-	class WebGLObjectRenderer extends game.ObjectRenderer {
-		constructor(shaderProgram) {
-			super();
-			this.shaderProgram = shaderProgram;
-		}
-		setPosition(pos) {
-			return this;
-		}
-		rotate(radians) {
-		}
-		scale(factor) {
-		}
-		render(glContext) {
-			glContext.useProgram(this.shaderProgram);
-		}
+class WebGLObjectRenderer extends ObjectRenderer {
+	constructor(shaderProgram) {
+		super();
+		this.shaderProgram = shaderProgram;
 	}
-	return WebGLObjectRenderer;
-})();
+	setPosition(pos) {
+		return this;
+	}
+	rotate(radians) {
+	}
+	scale(factor) {
+	}
+	render(glContext) {
+		glContext.useProgram(this.shaderProgram);
+	}
+}
 //######################################################################################################################
 //#                                         WebGL2dTransformableObjectRenderer                                         #
 //######################################################################################################################
-window.game.WebGL2dTransformableObjectRenderer = (function() {
-	"use strict";
-	class WebGL2dTransformableObjectRenderer extends game.WebGLObjectRenderer {
-		constructor(shaderProgram) {
-			super();
-			this.shaderProgram = shaderProgram;
-			this.transformMatrices =[
-				[1,0,0,
-				 0,1,0,
-				 0,0,1],
-				[1,0,0,
-				 0,1,0,
-				 0,0,1],
-				[1,0,0,
-				 0,1,0,
-				 0,0,1]
-			];
-		}
-		get translationMatrix() {
-			return this.transformMatrices[0];
-		}
-		get rotationMatrix() {
-			return this.transformMatrices[1];
-		}
-		get scaleMatrix() {
-			return this.transformMatrices[2];
-		}
-		setPosition(pos) {
-			this.transformMatrices[0][2] = pos.x;
-			this.transformMatrices[0][5] = pos.y;
-			return this;
-		}
-		rotate(radians) {
-			const c = Math.cos(radians), s = Math.sin(radians);
-			const a = this.transformMatrices[1][0], b = this.transformMatrices[1][3];
-			this.transformMatrices[1][0] =   this.transformMatrices[1][4] = a*c-b*s;
-			this.transformMatrices[1][1] = -(this.transformMatrices[1][3] = a*s+b*c);
-		}
-		scale(factor) {
-			this.transformMatrices[2][0] *= factor;
-			this.transformMatrices[2][4] *= factor;
-		}
+class WebGL2dTransformableObjectRenderer extends WebGLObjectRenderer {
+	constructor(shaderProgram) {
+		super();
+		this.shaderProgram = shaderProgram;
+		this.transformMatrices =[
+			[1,0,0,
+			 0,1,0,
+			 0,0,1],
+			[1,0,0,
+			 0,1,0,
+			 0,0,1],
+			[1,0,0,
+			 0,1,0,
+			 0,0,1]
+		];
 	}
-	return WebGL2dTransformableObjectRenderer;
-})();
+	get translationMatrix() {
+		return this.transformMatrices[0];
+	}
+	get rotationMatrix() {
+		return this.transformMatrices[1];
+	}
+	get scaleMatrix() {
+		return this.transformMatrices[2];
+	}
+	setPosition(pos) {
+		this.transformMatrices[0][2] = pos.x;
+		this.transformMatrices[0][5] = pos.y;
+		return this;
+	}
+	rotate(radians) {
+		const c = Math.cos(radians), s = Math.sin(radians);
+		const a = this.transformMatrices[1][0], b = this.transformMatrices[1][3];
+		this.transformMatrices[1][0] =   this.transformMatrices[1][4] = a*c-b*s;
+		this.transformMatrices[1][1] = -(this.transformMatrices[1][3] = a*s+b*c);
+	}
+	scale(factor) {
+		this.transformMatrices[2][0] *= factor;
+		this.transformMatrices[2][4] *= factor;
+	}
+}
 //######################################################################################################################
 //#                                            MultiRenderersObjectRenderer                                            #
 //######################################################################################################################
-window.game.MultiRenderersObjectRenderer = (function(){
-	"use strict";
+/**
+ * @class game.MultiRenderersObjectRenderer
+ * @augments game.ObjectRenderer
+ * @memberOf game
+ * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using several instances of <!--
+ * -->{@link game.ObjectRenderer}.
+ */
+class MultiRenderersObjectRenderer extends ObjectRenderer {
 	/**
-	 * @class game.MultiRenderersObjectRenderer
-	 * @augments game.ObjectRenderer
-	 * @memberOf game
-	 * @classdesc an implementation of the {@link game.ObjectRenderer|ObjectRenderer} using several instances of <!--
-	 * -->{@link game.ObjectRenderer}.
+	 * @constructor
+	 * @param {game.ObjectRenderer[]} renderers
 	 */
-	class MultiRenderersObjectRenderer extends game.ObjectRenderer {
-		/**
-		 * @constructor
-		 * @param {game.ObjectRenderer[]} renderers
-		 */
-		constructor(renderers) {
-			super();
-			this.renderers = renderers;
-			this.renderersNumber = renderers.length;
-			this.position = utils.geometry2d.Vec2.zero;
+	constructor(renderers) {
+		super();
+		this.renderers = renderers;
+		this.renderersNumber = renderers.length;
+		this.position = Vec2.zero;
+	}
+	/**
+	 * sets the renderer's shape center to the specified position
+	 * @param {utils.geometry2d.Vec2} pos
+	 * @returns {game.ShapedObjectRenderer} <code>this</code>
+	 */
+	setPosition(pos) {
+		this.position.set(pos);
+		let i = this.renderersNumber;
+		while(i--) {
+			this.renderers[i].setPosition(pos);
 		}
-		/**
-		 * sets the renderer's shape center to the specified position
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.ShapedObjectRenderer} <code>this</code>
-		 */
-		setPosition(pos) {
-			this.position.set(pos);
-			let i = this.renderersNumber;
-			while(i--) {
-				this.renderers[i].setPosition(pos);
-			}
-			return this;
-		}
-		updateRenderersNumber() {
-			this.renderersNumber = this.renderers.length;
-		}
-		/**
-		 * rotates the shape of the renderer by the specified angle in radians.
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-			let i = this.renderersNumber;
-			while(i--) {
-				this.renderers[i].rotate(radians);
-			}
-		}
-		/**
-		 * multiplies the dimensions by the specified factor.
-		 * @param {number} factor
-		 */
-		scale(factor) {
-			let i = this.renderersNumber;
-			while(i--) {
-				this.renderers[i].scale(factor);
-			}
-		}
-		/**
-		 * draws on the canvas
-		 * @param {CanvasRenderingContext2D} context2d
-		 */
-		render(context2d) {
-			let i = -1, n = this.renderersNumber;
-			while(++i < n) {
-				this.renderers[i].render(context2d);
-			}
-		}
-		/**
-		 * draws on the canvas.
-		 * @param {webgl.GlHandler} handler
-		 * @param {WebGLRenderingContext} handler.gl - webgl context
-		 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
-		 * -->to store vertices
-		 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
-		 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
-		 * -->the position of the vertex in the vertex shader
-		 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
-		 * -->the color in the vertex shader
-		 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
-		 * -->the depth in the vertex shader
-		 */
-		renderGL(handler) {
-			let i = -1, n = this.renderersNumber;
-			while(++i < n) {
-				this.renderers[i].renderGL(handler);
-			}
-		}
-		/**
-		 * creates and returns a {@link utils.geometry2d.Rect|Rect} that fits the renderer.
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			if(this.renderersNumber == 0)
-				return utils.geometry2d.Rect.createFromPoint(this.position);
-			let rects = [], i = this.renderersNumber, r;
-			while(i--) {
-				r = this.renderers[i].getRect();
-				if(r)rects.push(r);
-			}
-			return utils.geometry2d.Rect.getUnion(rects);
-		}
-		/**
-		 * returns the maximum distance of the center to a point of the renderer.
-		 * @returns {number}
-		 */
-		getRadius() {
-			if(this.renderersNumber == 0) return 0;
-			let max = 0, i = this.renderersNumber, r;
-			while(i--) {
-				r = this.renderers[i].getRadius();
-				if(r > max) max = r;
-			}
-			return max;
-		}
-
-		addRenderer(renderer) {
-			this.renderers.push(renderer);
-			this.updateRenderersNumber();
-		}
-		removeRenderer(renderer) {
-			const i = this.renderers.indexOf(renderer);
-			if(i >= 0) {
-				this.renderers.splice(i, i+1);
-				this.updateRenderersNumber();
-			}
+		return this;
+	}
+	updateRenderersNumber() {
+		this.renderersNumber = this.renderers.length;
+	}
+	/**
+	 * rotates the shape of the renderer by the specified angle in radians.
+	 * @param {number} radians
+	 */
+	rotate(radians) {
+		let i = this.renderersNumber;
+		while(i--) {
+			this.renderers[i].rotate(radians);
 		}
 	}
-	return MultiRenderersObjectRenderer;
-})();
+	/**
+	 * multiplies the dimensions by the specified factor.
+	 * @param {number} factor
+	 */
+	scale(factor) {
+		let i = this.renderersNumber;
+		while(i--) {
+			this.renderers[i].scale(factor);
+		}
+	}
+	/**
+	 * draws on the canvas
+	 * @param {CanvasRenderingContext2D} context2d
+	 */
+	render(context2d) {
+		let i = -1, n = this.renderersNumber;
+		while(++i < n) {
+			this.renderers[i].render(context2d);
+		}
+	}
+	/**
+	 * draws on the canvas.
+	 * @param {webgl.GlHandler} handler
+	 * @param {WebGLRenderingContext} handler.gl - webgl context
+	 * @param {Float32Array} handler.vertices - a large-enough array to use (avoids creating arrays every time) <!--
+	 * -->to store vertices
+	 * @param {WebGLBuffer} handler.glBuffer - the buffer created with <code>gl.createBuffer()</code>
+	 * @param {string} handler.positionAttrib - the location of the <code>vec2</code> attribute used for <!--
+	 * -->the position of the vertex in the vertex shader
+	 * @param {string} handler.colorUniform - the location of the <code>int</code> uniform used for <!--
+	 * -->the color in the vertex shader
+	 * @param {string} handler.depthUniform - the location of the <code>float</code> uniform used for <!--
+	 * -->the depth in the vertex shader
+	 */
+	renderGL(handler) {
+		let i = -1, n = this.renderersNumber;
+		while(++i < n) {
+			this.renderers[i].renderGL(handler);
+		}
+	}
+	/**
+	 * creates and returns a {@link utils.geometry2d.Rect|Rect} that fits the renderer.
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		if(this.renderersNumber == 0)
+			return Rect.createFromPoint(this.position);
+		let rects = [], i = this.renderersNumber, r;
+		while(i--) {
+			r = this.renderers[i].getRect();
+			if(r)rects.push(r);
+		}
+		return Rect.getUnion(rects);
+	}
+	/**
+	 * returns the maximum distance of the center to a point of the renderer.
+	 * @returns {number}
+	 */
+	getRadius() {
+		if(this.renderersNumber == 0) return 0;
+		let max = 0, i = this.renderersNumber, r;
+		while(i--) {
+			r = this.renderers[i].getRadius();
+			if(r > max) max = r;
+		}
+		return max;
+	}
+
+	addRenderer(renderer) {
+		this.renderers.push(renderer);
+		this.updateRenderersNumber();
+	}
+	removeRenderer(renderer) {
+		const i = this.renderers.indexOf(renderer);
+		if(i >= 0) {
+			this.renderers.splice(i, i+1);
+			this.updateRenderersNumber();
+		}
+	}
+}
 //######################################################################################################################
 //#                                                   ObjectCollider                                                   #
 //######################################################################################################################
-window.game.ObjectCollider = (function() {
+/**
+ * @class game.ObjectCollider
+ * @memberOf game
+ * @abstract
+ * @classdesc the base class of object colliders. Colliders are used to handle collision detection of objects.
+ */
+class ObjectCollider {
 	/**
-	 * @class game.ObjectCollider
-	 * @memberOf game
-	 * @abstract
-	 * @classdesc the base class of object colliders. Colliders are used to handle collision detection of objects.
+	 * @constructor
 	 */
-	class ObjectCollider {
-		/**
-		 * @constructor
-		 */
-		constructor() {
-		}
-		/**
-		 * sets the collider position to the specified one
-		 * @param pos
-		 * @returns {game.ObjectCollider} <code>this</code>
-		 */
-		setPosition(pos) {
-			return this;
-		}
-		/**
-		 * scales the collider with the specified factor.
-		 * Automatically called when the {@link game.Object#scale|scale} method of the associated object is called.
-		 * @param {number} factor
-		 */
-		scale(factor) {
-		}
-		/**
-		 * returns whether or not this collider can be considered as colliding with the specified collider
-		 * is it is inside. Otherwise, the colliders will need to intersect for the <!--
-		 * -->{@link game.ObjectCollider#collides|collides} method to return true.
-		 * @param {game.ObjectCollider} collider
-		 * @returns {boolean}
-		 */
-		collidesInside(collider) {
-			return false;
-		}
-		/**
-		 * prepare the collision detection by acquiring necessary variables, such as the the <!--
-		 * -->{@link game.ObjectCollider#rect|rect} attribute.
-		 * @param {utils.geometry2d.Vec2} position
-		 */
-		prepareCollision(position) {
-			this.setPosition(position);
-		}
-		/**
-		 * tells the collider that the collision detection is over for this object on this frame.
-		 */
-		finishCollision() {
-		}
-		/**
-		 * returns true if the two colliders are colliding.
-		 * @param {game.ObjectCollider} collider
-		 * @returns {boolean}
-		 */
-		collides(collider) {
-			return false;
-		}
-		/**
-		 * draw the collider on the canvas for debug purpose.
-		 * @param context
-		 */
-		render(context) {
-		}
+	constructor() {
 	}
-
 	/**
-	 * whether or not the object will collide. As this won't change during the life of most objects, it is defined <!--
-	 * -->in the prototype. But if you change it for some objects, it is preferable to define it in the <!--
-	 * -->constructor of the object-specific collider.
-	 * @name game.ObjectCollider#activated
-	 * @type {boolean}
+	 * sets the collider position to the specified one
+	 * @param pos
+	 * @returns {game.ObjectCollider} <code>this</code>
 	 */
-	ObjectCollider.prototype.activated = true;
-	return ObjectCollider;
-})();
+	setPosition(pos) {
+		return this;
+	}
+	/**
+	 * scales the collider with the specified factor.
+	 * Automatically called when the {@link game.Object#scale|scale} method of the associated object is called.
+	 * @param {number} factor
+	 */
+	scale(factor) {
+	}
+	/**
+	 * returns whether or not this collider can be considered as colliding with the specified collider
+	 * is it is inside. Otherwise, the colliders will need to intersect for the <!--
+	 * -->{@link game.ObjectCollider#collides|collides} method to return true.
+	 * @param {game.ObjectCollider} collider
+	 * @returns {boolean}
+	 */
+	collidesInside(collider) {
+		return false;
+	}
+	/**
+	 * prepare the collision detection by acquiring necessary variables, such as the the <!--
+	 * -->{@link game.ObjectCollider#rect|rect} attribute.
+	 * @param {utils.geometry2d.Vec2} position
+	 */
+	prepareCollision(position) {
+		this.setPosition(position);
+	}
+	/**
+	 * tells the collider that the collision detection is over for this object on this frame.
+	 */
+	finishCollision() {
+	}
+	/**
+	 * returns true if the two colliders are colliding.
+	 * @param {game.ObjectCollider} collider
+	 * @returns {boolean}
+	 */
+	collides(collider) {
+		return false;
+	}
+	/**
+	 * draw the collider on the canvas for debug purpose.
+	 * @param context
+	 */
+	render(context) {
+	}
+}
+
+/**
+ * whether or not the object will collide. As this won't change during the life of most objects, it is defined <!--
+ * -->in the prototype. But if you change it for some objects, it is preferable to define it in the <!--
+ * -->constructor of the object-specific collider.
+ * @name game.ObjectCollider#activated
+ * @type {boolean}
+ */
+ObjectCollider.prototype.activated = true;
+ObjectCollider.prototype.physic = false;
 //######################################################################################################################
 //#                                                  Object2dCollider                                                  #
 //######################################################################################################################
-window.game.Object2dCollider = (function() {
+/**
+ * @class game.Object2dCollider
+ * @memberOf game
+ * @abstract
+ * @classdesc The base class of object colliders, using a {@link utils.geometry2d.Rect} to detect collisions.
+ * Colliders are used to handle collision detection of objects.
+ */
+class Object2dCollider extends ObjectCollider{
 	/**
-	 * @class game.Object2dCollider
-	 * @memberOf game
-	 * @abstract
-	 * @classdesc the base class of object colliders. Colliders are used to handle collision detection of objects.
+	 * @constructor
+	 * @param {utils.geometry2d.Rect} rect
 	 */
-	class Object2dCollider extends game.ObjectCollider{
+	constructor(rect) {
+		super();
 		/**
-		 * @constructor
-		 * @param {utils.geometry2d.Rect} rect
+		 * @name game.Object2dCollider#rect
+		 * @type {utils.geometry2d.Rect}
 		 */
-		constructor(rect) {
-			super();
-			/**
-			 * @name game.Object2dCollider#rect
-			 * @type {utils.geometry2d.Rect}
-			 */
-			this.rect = rect.clone();
-		}
-		/**
-		 * sets the collider position to the specified one
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.Object2dCollider} <code>this</code>
-		 */
-		setPosition(pos) {
-			this.rect.setCenter(pos); return this;
-		}
-		/**
-		 * rotates the collider with the specified angle in radians.
-		 * Automatically called when the {@link game.Object#rotate|rotate} method of the associated object is called.
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-		}
-		/**
-		 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
-		 * @returns {number}
-		 */
-		getRadius() {
-			return 0;
-		}
-		/**
-		 * returns the {@link game.Object2dCollider#rect} attribute of the collider
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			return this.rect;
-		}
-		/**
-		 * draw the collider on the canvas for debug purpose.
-		 * @param context2d
-		 */
-		render(context2d) {
-			this.rect.draw(context2d);
-		}
+		this.rect = rect.clone();
 	}
-	return Object2dCollider;
-})();
+	/**
+	 * sets the collider position to the specified one
+	 * @param {utils.geometry2d.Vec2} pos
+	 * @returns {game.Object2dCollider} <code>this</code>
+	 */
+	setPosition(pos) {
+		this.rect.setCenter(pos); return this;
+	}
+	/**
+	 * rotates the collider with the specified angle in radians.
+	 * Automatically called when the {@link game.Object#rotate|rotate} method of the associated object is called.
+	 * @param {number} radians
+	 */
+	rotate(radians) {
+	}
+	/**
+	 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
+	 * @returns {number}
+	 */
+	getRadius() {
+		return 0;
+	}
+	/**
+	 * returns the {@link game.Object2dCollider#rect} attribute of the collider
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		return this.rect;
+	}
+	/**
+	 * draw the collider on the canvas for debug purpose.
+	 * @param context2d
+	 */
+	render(context2d) {
+		this.rect.draw(context2d);
+	}
+}
+//######################################################################################################################
+//#                                                ShapedObject2dCollider                                              #
+//######################################################################################################################
+/**
+ * @class game.ShapedObject2dCollider
+ * @augments game.Object2dCollider
+ * @memberOf game
+ * @classdesc an implementation of the {@link game.Object2dCollider|Object2dCollider} using a <!--
+ * -->{@link utils.geometry2d.Shape} instance for collision detection.
+ */
+class ShapedObject2dCollider extends Object2dCollider {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Shape} shape
+	 */
+	constructor(shape) {
+		super(shape.getRect());
+		/**
+		 * @name game.ShapedObject2dCollider#shape}
+		 * @type {utils.geometry2d.Shape}
+		 */
+		this.shape = shape.clone();
+	}
+
+	/**
+	 * sets the position of the collider.
+	 * @param {utils.geometry2d.Vec2} pos
+	 * @returns {game.ShapedObject2dCollider} <code>this</code>
+	 */
+	setPosition(pos) {
+		this.rect.setRect(this.shape.setCenter(pos).getRect()); return this;
+	}
+
+	/**
+	 * rotates the {@link game.ShapedObject2dCollider#shape}.
+	 * @param {number} radians
+	 */
+	rotate(radians) {
+		this.shape.rotate(radians);
+	}
+
+	/**
+	 * scales the {@link game.ShapedObject2dCollider#shape}.
+	 * @param {number} factor
+	 */
+	scale(factor) {
+		this.shape.scale(factor);
+	}
+
+	/**
+	 * returns the {@link game.ShapedObject2dCollider#shape}.
+	 * @returns {utils.geometry2d.Shape}
+	 */
+	getShape() {
+		return this.shape;
+	}
+
+	/**
+	 * returns the {@link utils.geometry2d.Shape} used to compute collision
+	 * @returns {utils.geometry2d.Shape}
+	 */
+	getCollisionShape() {
+		return this.getShape();
+	}
+
+	/**
+	 * sets the {@link game.ShapedObject2dCollider#shape} to a copy of the argument.
+	 * @param {utils.geometry2d.Shape} shape
+	 */
+	setShape(shape) {
+		this.shape = shape.clone();
+	}
+
+	/**
+	 * returns true if the two colliders are colliding.
+	 * @param {game.ObjectCollider} collider
+	 * @returns {boolean}
+	 */
+	collides(collider) {
+		if(collider instanceof ShapedObject2dCollider) {
+			if(!collider.rect.overlap(this.rect)) return false;
+			const shape = collider.getCollisionShape();
+
+			return (this.collidesInside(collider) && shape.contains(this.shape.center)) ||
+				   (collider.collidesInside(this) && this.shape.contains(shape.center)) ||
+					this.shape.intersect(shape);
+
+		} else return (collider instanceof Object2dCollider) && collider.collides(this);
+	}
+
+	/**
+	 * returns the {@link game.Object2dCollider#rect|rect} attribute of the collider after setting the <!--
+	 * -->{@link game.Object2dCollider#rect|rect} to the return value of the <!--
+	 * -->{@link game.ShapedObject2dCollider#shape|shape}'s {@link utils.geometry2d.Shape#getRect|getRect} method.
+	 * @returns {utils.geometry2d.Rect}
+	 */
+	getRect() {
+		return this.rect.setRect(this.shape.getRect());
+	}
+
+	/**
+	 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
+	 * @returns {number}
+	 */
+	getRadius() {
+		return this.shape.getRadius();
+	}
+
+	/**
+	 * draws the rect and the shape on the canvas.
+	 * @param {CanvasRenderingContext2D} context2d
+	 */
+	render(context2d) {
+		super.render(context2d);
+		this.shape.draw(context2d);
+	}
+
+}
 //######################################################################################################################
 //#                                                    AABBCollider                                                    #
 //######################################################################################################################
-window.game.AABBObject2dCollider = (function() {
-	"use strict";
+/**
+ * @class game.AABBObject2dCollider
+ * @augments game.Object2dCollider
+ * @memberOf game
+ * @classdesc an implementation of the {@link game.Object2dCollider|Object2dCollider} using the <!--
+ * -->Axis-Aligned Bounding Box (AABB) of a moving shape for collision detection. the AABB is computed <!--
+ * -->each frame from the shape
+ */
+class AABBObject2dCollider extends ShapedObject2dCollider {
 	/**
-	 * @class game.AABBObject2dCollider
+	 * @constructor
+	 * @param {utils.geometry2d.Shape} shape
+	 */
+	constructor(shape) {
+		super(shape);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @returns {utils.geometry2d.Shape}
+	 */
+	getCollisionShape() {
+		return this.rect.getShape();
+	}
+
+
+	/**
+	 * returns true if the two colliders are colliding.
+	 * @param {game.ObjectCollider} collider
+	 * @returns {boolean}
+	 */
+	collides(collider) {
+		if(collider instanceof AABBObject2dCollider)
+			return collider.rect.overlap(this.rect) &&
+				(this.collidesInside(collider) || !collider.rect.containsRect(this.rect)) &&
+				(collider.collidesInside(this) || !this.rect.containsRect(collider.rect));
+		else return (collider instanceof Object2dCollider) && collider.collides(this);
+	}
+
+	/**
+	 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
+	 * @returns {number}
+	 */
+	getRadius() {
+		return Math.sqrt(this.rect.width*this.rect.width + this.rect.height*this.rect.height)*0.5;
+	}
+}
+
+//######################################################################################################################
+//#                                               CircularObject2dCollider                                             #
+//######################################################################################################################
+/**
+	 * @class game.CircularObject2dCollider
 	 * @augments game.Object2dCollider
 	 * @memberOf game
-	 * @classdesc an implementation of the {@link game.Object2dCollider|Object2dCollider} using a <!--
-	 * -->an Axis-Aligned Bounding Box (AABB) for collision detection.
+	 * @classdesc an implementation of the {@link game.Object2dCollider} using a <!--
+	 * -->{@link utils.geometry2d.Circle} instance for collision detection
 	 */
-	class AABBObject2dCollider extends game.Object2dCollider {
-		/**
-		 * @constructor
-		 * @param {utils.geometry2d.Shape} shape
-		 */
-		constructor(shape) {
-			super(shape.getRect());
-			/**
-			 * @name game.ShapedObject2dCollider#shape}
-			 * @type {utils.geometry2d.shapes}
-			 */
-			this.shape = shape.clone();
-		}
-
-		/**
-		 * sets the position of the collider.
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.ShapedObject2dCollider} <code>this</code>
-		 */
-		setPosition(pos) {
-			this.shape.setCenter(pos); return super.setPosition(pos);
-		}
-
-		/**
-		 * rotates the {@link game.ShapedObject2dCollider#shape}.
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-			this.shape.rotate(radians);
-		}
-
-		/**
-		 * scales the {@link game.ShapedObject2dCollider#shape}.
-		 * @param {number} factor
-		 */
-		scale(factor) {
-			this.shape.scale(factor);
-		}
-
-		/**
-		 * returns the {@link game.ShapedObject2dCollider#shape}.
-		 * @returns {utils.geometry2d.Shape}
-		 */
-		getShape() {
-			return this.shape;
-		}
-
-		/**
-		 * sets the {@link game.ShapedObject2dCollider#shape} to a copy of the argument.
-		 * @param {utils.geometry2d.Shape} shape
-		 */
-		setShape(shape) {
-			this.shape = shape.clone();
-		}
-
-		/**
-		 * returns true if the two colliders are colliding.
-		 * @param {game.Object2dCollider} collider
-		 * @returns {boolean}
-		 */
-		collides(collider) {
-			if(collider instanceof AABBObject2dCollider)
-				return collider.rect.overlap(this.rect) &&
-					(this.collidesInside(collider) || !collider.rect.containsRect(this.rect)) &&
-					(collider.collidesInside(this) || !this.rect.containsRect(collider.rect));
-			else return collider.collides(this);
-		}
-
-		/**
-		 * returns the {@link game.Object2dCollider#rect|rect} attribute of the collider.
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			return this.rect;
-		}
-
-		/**
-		 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
-		 * @returns {number}
-		 */
-		getRadius() {
-			return Math.sqrt(this.rect.width*this.rect.width + this.rect.height*this.rect.height)*0.5;
-		}
+class CircularObject2dCollider extends ShapedObject2dCollider {
+	constructor(circle) {
+		super(circle);
 	}
-	return AABBObject2dCollider;
-})();
-//######################################################################################################################
-//#                                                ShapedObject2dCollider                                                #
-//######################################################################################################################
-window.game.ShapedObject2dCollider = (function() {
+	get circle() { return this.shape; }
+	set circle(circle) { this.shape = circle; }
+
+	getCollisionShape() {
+		return new this.shape.getCircle();
+	}
 	/**
-	 * @class game.ShapedObject2dCollider
-	 * @augments game.Object2dCollider
-	 * @memberOf game
-	 * @classdesc an implementation of the {@link game.Object2dCollider|Object2dCollider} using a <!--
-	 * -->{@link utils.geometry2d.Shape} instance for collision detection.
+	 * returns true if the two colliders are colliding.
+	 * @param {game.ObjectCollider} collider
+	 * @returns {boolean}
 	 */
-	class ShapedObject2dCollider extends game.Object2dCollider {
-		/**
-		 * @constructor
-		 * @param {utils.geometry2d.Shape} shape
-		 */
-		constructor(shape) {
-			super(shape.getRect());
-			/**
-			 * @name game.ShapedObject2dCollider#shape}
-			 * @type {utils.geometry2d.shapes}
-			 */
-			this.shape = shape.clone();
+	collides(collider) {
+		if(collider instanceof CircularObject2dCollider) {
+			const d = Vec2.distance(this.shape.center, collider.shape.center);
+			return d < this.shape.radius + collider.shape.radius &&
+				(!this.collidesInside(collider) && d + this.shape.radius > collider.shape.radius) ||
+				(!collider.collidesInside(this) && d + collider.shape.radius > this.shape.radius);
 		}
-
-		/**
-		 * sets the position of the collider.
-		 * @param {utils.geometry2d.Vec2} pos
-		 * @returns {game.ShapedObject2dCollider} <code>this</code>
-		 */
-		setPosition(pos) {
-			this.shape.setCenter(pos); return super.setPosition(pos);
-		}
-
-		/**
-		 * rotates the {@link game.ShapedObject2dCollider#shape}.
-		 * @param {number} radians
-		 */
-		rotate(radians) {
-			this.shape.rotate(radians);
-		}
-
-		/**
-		 * scales the {@link game.ShapedObject2dCollider#shape}.
-		 * @param {number} factor
-		 */
-		scale(factor) {
-			this.shape.scale(factor);
-		}
-
-		/**
-		 * returns the {@link game.ShapedObject2dCollider#shape}.
-		 * @returns {utils.geometry2d.Shape}
-		 */
-		getShape() {
-			return this.shape;
-		}
-
-		/**
-		 * sets the {@link game.ShapedObject2dCollider#shape} to a copy of the argument.
-		 * @param {utils.geometry2d.Shape} shape
-		 */
-		setShape(shape) {
-			this.shape = shape.clone();
-		}
-
-		/**
-		 * returns true if the two colliders are colliding.
-		 * @param {game.Object2dCollider} collider
-		 * @returns {boolean}
-		 */
-		collides(collider) {
-			if(collider instanceof game.AABBObject2dCollider) {
-				if(collider.rect.overlap(this.rect)) {
-					let shape = collider.rect.getShape();
-					return (this.collidesInside(collider) && shape.contains(this.shape.center)) ||
-						(collides.collidesInside(this) && this.shape.contains(shape.center)) ||
-						this.shape.intersect(shape);
-				}
-			} else if(collider instanceof ShapedObject2dCollider) {
-				return collider.shape && collider.rect.overlap(this.rect) &&
-					(this.collidesInside(collider) && collider.shape.contains(this.shape.center)) ||
-					(collider.collidesInside(this) && this.shape.contains(collider.shape.center)) ||
-					this.shape.intersect(collider.shape);
-			} else return collider.collides(this);
-		}
-
-		/**
-		 * returns the {@link game.Object2dCollider#rect|rect} attribute of the collider after setting the <!--
-		 * -->{@link game.Object2dCollider#rect|rect} to the return value of the <!--
-		 * -->{@link game.ShapedObject2dCollider#shape|shape}'s {@link utils.geometry2d.Shape#getRect|getRect} method.
-		 * @returns {utils.geometry2d.Rect}
-		 */
-		getRect() {
-			return this.rect.setRect(this.shape.getRect());
-		}
-
-		/**
-		 * returns the radius of the collider, i.e the maximum distance from the center to any point of the collider.
-		 * @returns {number}
-		 */
-		getRadius() {
-			return this.shape.getRadius();
-		}
-
-		/**
-		 * draws the rect and the shape on the canvas.
-		 * @param {CanvasRenderingContext2D} context2d
-		 */
-		render(context2d) {
-			super.render(context2d);
-			this.shape.draw(context2d);
-		}
-
+		else return (collider instanceof Object2dCollider) && collider.collides(this);
 	}
-	return ShapedObject2dCollider;
-})();
+}
+
+export {
+	ObjectRenderer,
+	ShapedObjectRenderer,
+	ImageObjectRenderer,
+	WebGLObjectRenderer,
+	MultiRenderersObjectRenderer,
+	WebGL2dTransformableObjectRenderer,
+	MultiRenderersObjectRenderer,
+	ObjectCollider,
+	Object2dCollider,
+	ShapedObject2dCollider,
+	AABBObject2dCollider,
+	CircularObject2dCollider
+};

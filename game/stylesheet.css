@@ -3,6 +3,9 @@ html, body {
     padding : 0;
     height  : 100%;
     width   : 100%;
+    background: black;
+    position: absolute;
+    color: white;
 }
 /* NOT AVAILABLE IN CSS3
 *:has( > .game_div) {
@@ -18,7 +21,14 @@ html, body {
     top : 50%;
     transform : translate(-50%, -50%);
     background: transparent;
+    outline: none;
 }
+.game_canvas {
+    border: 1px solid #FFF;
+    box-sizing: border-box;
+    outline: none;
+}
+
 .game_canvas, .game_ui {
     margin : 0;
     position : absolute;

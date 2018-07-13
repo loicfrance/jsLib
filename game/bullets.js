@@ -1,159 +1,165 @@
 /**
- * Created by rfrance on 12/20/2016.
+ * Created by Loic France on 12/20/2016.
+ */
+import GameObject from "./object";
+import {ShapedObject2dCollider} from "./renderer_collider";
+import {Polygon, Vec2} from "../utils/geometry2d";
+import {collisionLayersFilter} from "./manager";
+/**
+ * @module game/bullets
  */
 //######################################################################################################################
 //#                                                       Bullet                                                       #
 //######################################################################################################################
-window.game.Bullet = (function() {
+
+/**
+ * @class game.Bullet
+ * @memberOf game
+ * @augments game.Object
+ * @classdesc a simple object defining a bullet, i.e an object that deals damage to the first object <!--
+ * -->it touches (if the object can receive damage), and die when it happens.
+ */
+class Bullet extends GameObject {
 	/**
-	 * @class game.Bullet
-	 * @memberOf game
-	 * @augments game.Object
-	 * @classdesc a simple object defining a bullet, i.e an object that deals damages to the first object <!--
-	 * -->it touches (if the object can receive damages), and die when it happens.
+	 * @constructor
+	 * @param {game.Object} launcher
+	 * @param {utils.geometry2d.Vec2} position
+	 * @param {utils.geometry2d.Vec2} speed
+	 * @param {number} damage
+	 * @param {utils.geometry2d.Rect} maxRect - when the bullet will go out of this rect, it will be destroyed
+	 * @param {number} [lifeTime=0]
 	 */
-	class Bullet extends game.Object {
+	constructor(launcher, position, speed, damage, maxRect, lifeTime=0) {
+		super(position, speed);
 		/**
-		 * @constructor
-		 * @param {game.Object} launcher
-		 * @param {utils.geometry2d.Vec2} position
-		 * @param {utils.geometry2d.Vec2} speed
-		 * @param {number} damages
-		 * @param {number} [lifeTime=0]
+		 * @name game.Bullet#damage
+		 * @type {number}
 		 */
-		constructor(launcher, position, speed, damages, lifeTime=0) {
-			super(position, speed);
+		this.damage = damage;
+		if(lifeTime)
 			/**
-			 * @name game.Bullet#damages
+			 * @name game.Bullet#lifeTime
 			 * @type {number}
 			 */
-			this.damages = damages;
-			if(lifeTime)
-				/**
-				 * @name game.Bullet#lifeTime
-				 * @type {number}
-				 */
-				this.lifeTime = lifeTime;
-			/**
-			 * @name game.Bullet#launcher
-			 * @type {game.Object}
-			 */
-			this.launcher = launcher;
-
-		}
+			this.lifeTime = lifeTime;
 		/**
-		 * sets the launcher of the bullet
-		 * @param {game.Object} object
+		 * @name game.Bullet#launcher
+		 * @type {game.Object}
 		 */
-		setLauncher( object ) { this.launcher = object; }
+		this.launcher = launcher;
 
 		/**
-		 * returns the launcher of the bullet
-		 * @returns {game.Object}
+		 * @nam game.Bullet#maxRect
+		 * @type {utils.geometry2d.Rect}
 		 */
-		getLauncher() { return this.launcher; }
-		/**
-		 * sets the damages dealt by the bullet on the impact
-		 * @param {number} value
-		 */
-		setDamages( value ) { this.damages = value; }
-		/**
-		 * returns the damages dealt by the bullet on the impact
-		 * @returns {number}
-		 */
-		getDamages() { return this.damages; }
-		/**
-		 * called by the game manager every frame. moves the bullet.
-		 * @param {game.GameManager} gameManager
-		 * @param {number} dT
-		 */
-		onFrame( gameManager, dT ) {
-			super.onFrame(gameManager, dT);
-			if(this.lifeTime !== undefined) {
-				if(this.lifeTime <=0) this.kill(gameManager);
-				this.lifeTime -= dT;
-			}
-		}
-		/**
-		 * called once a frame. moves the bullet according to its speed. if the bullet goes out <!--
-		 * -->of the game rectangle, is is destroyed.
-		 * @param {game.GameManager} gameManager
-		 * @param {number} dT
-		 */
-		moveOnFrame( gameManager, dT ) {
-			super.moveOnFrame(gameManager, dT);
-			if(this.isOutOfRect(gameManager.gameRect)) {
-				this.kill(gameManager);
-			}
-		}
-		/**
-		 * tells if the bullet can collide withe the specified object. returns true if the object is not its launcher
-		 * @param {?game.Object} object
-		 * @returns {boolean}
-		 */
-		canCollide( object ) { return this.collider !== undefined && object !== this.launcher; }
+		this.maxRect = maxRect;
+	}
+	/**
+	 * sets the launcher of the bullet
+	 * @param {game.Object} object
+	 */
+	setLauncher( object ) { this.launcher = object; }
 
-		/**
-		 * called when the collision is confirmed between the bullet and the specified object
-		 * @param {game.GameManager} gameManager
-		 * @param {game.Object} object
-		 */
-		onCollision( gameManager, object ) {
-			if(this.damages && object.receiveDamages) {
-				object.receiveDamages(gameManager, this.damages);
-				if(this.killOnCollision) {
-					this.damages = 0;
-					this.kill(gameManager);
-				}
-			} else if(this.killOnCollision && this.damages) {
-				this.kill(gameManager);
-			}
+	/**
+	 * returns the launcher of the bullet
+	 * @returns {game.Object}
+	 */
+	getLauncher() { return this.launcher; }
+	/**
+	 * sets the damage dealt by the bullet on the impact
+	 * @param {number} value
+	 */
+	setDamages( value ) { this.damage = value; }
+	/**
+	 * returns the damage dealt by the bullet on the impact
+	 * @returns {number}
+	 */
+	getDamages() { return this.damage; }
+	/**
+	 * called by the game manager every frame. moves the bullet.
+	 * @param {game.GameManager} gameManager
+	 * @param {number} dT
+	 */
+	onFrame( gameManager, dT ) {
+		super.onFrame(gameManager, dT);
+		if(this.lifeTime !== undefined) {
+			if(this.lifeTime <=0) this.kill(gameManager);
+			this.lifeTime -= dT;
 		}
 	}
-	Bullet.defaultShape = utils.geometry2d.Polygon.Absolute(utils.geometry2d.Vec2.createVec2Array([
-		-10,2,   5,2,   7,1,   8,0,   7,1,   5,-2,   -10,-2
-	]));
-	Bullet.prototype.renderLayer = game.RenderLayer.OBJ3;
-	Bullet.prototype.killOnCollision = true;
-    return Bullet;
-})();
-//######################################################################################################################
-//#                                                   BulletCollider                                                   #
-//######################################################################################################################
-window.game.BulletCollider = (function() {
 	/**
-	 * @class game.BulletCollider
-	 * @memberOf game
-	 * @augments game.ShapedObject2dCollider
-	 * @classdesc the collider to use with bullets. the difference with a standard shaped collider is that <!--
-	 * -->it can collide when it is inside an object but not touching the outline. it allows bullets to go faster <!--
-	 * -->than normal objects even if they are small, because the collision will happen event if the the object moves <!--
-	 * -->too fast to intersect with the outline of the opposite object's collider.
+	 * called once a frame. moves the bullet according to its speed. if the bullet goes out <!--
+	 * -->of the game rectangle, is is destroyed.
+	 * @param {game.GameManager} gameManager
+	 * @param {number} dT
 	 */
-    class BulletCollider extends game.ShapedObject2dCollider {
-		/**
-		 * @constructor
-		 * @param {utils.geometry2d.Shape} shape
-		 */
-		constructor(shape) {
-			super(shape);
+	moveOnFrame( gameManager, dT ) {
+		super.moveOnFrame(gameManager, dT);
+		if(this.isOutOfRect(this.maxRect)) {
+			this.kill(gameManager);
 		}
-		/**
-		 * returns true because bullets collide when they are inside other objects.
-		 * @param {game.Object2dCollider} collider
-		 * @returns {boolean}
-		 */
-		collidesInside( collider ) { return true; }
-    }
+	}
+	/**
+	 * tells if the bullet can collide withe the specified object. returns true if the object is not its launcher
+	 * @param {?game.Object} object
+	 * @returns {boolean}
+	 */
+	canCollide( object ) { return this.collider !== undefined && object !== this.launcher; }
 
-	return BulletCollider;
-})();
+	/**
+	 * called when the collision is confirmed between the bullet and the specified object
+	 * @param {game.GameManager} gameManager
+	 * @param {game.Object} object
+	 */
+	onCollision( gameManager, object ) {
+		if(this.damage && object.receiveDamage) {
+			object.receiveDamage(gameManager, this.damage);
+			if(this.killOnCollision) {
+				this.damage = 0;
+				this.kill(gameManager);
+			}
+		} else if(this.killOnCollision && this.damage) {
+			this.kill(gameManager);
+		}
+	}
+}
+Bullet.defaultShape = Polygon.Absolute(Vec2.createVec2Array([
+	-10,2,   5,2,   7,1,   8,0,   7,1,   5,-2,   -10,-2
+]));
+Bullet.prototype.renderLayer = 0;
+Bullet.prototype.killOnCollision = true;
 //######################################################################################################################
 //#                                                   BulletCollider                                                   #
 //######################################################################################################################
-window.game.HomingBullet = (function() {
-	let Vec2 = utils.geometry2d.Vec2;
-	let getSteeringForce = ( objPos,maxSpd,maxForce,currentSpd,targetPos )=>
+
+/**
+ * @class game.BulletCollider
+ * @memberOf game
+ * @augments game.ShapedObject2dCollider
+ * @classdesc the collider to use with bullets. the difference with a standard shaped collider is that <!--
+ * -->it can collide when it is inside an object but not touching the outline. it allows bullets to go faster <!--
+ * -->than normal objects even if they are small, because the collision will happen event if the the object moves <!--
+ * -->too fast to intersect with the outline of the opposite object's collider.
+ */
+class BulletCollider extends ShapedObject2dCollider {
+	/**
+	 * @constructor
+	 * @param {utils.geometry2d.Shape} shape
+	 */
+	constructor(shape) {
+		super(shape);
+	}
+	/**
+	 * returns true because bullets collide when they are inside other objects.
+	 * @param {game.Object2dCollider} collider
+	 * @returns {boolean}
+	 */
+	collidesInside( collider ) { return true; }
+}
+//######################################################################################################################
+//#                                                   BulletCollider                                                   #
+//######################################################################################################################
+	const getSteeringForce = ( objPos,maxSpd,maxForce,currentSpd,targetPos )=>
 		Vec2.translation(objPos, targetPos).setMagnitude(maxSpd)
 			.remove(currentSpeed).clampMagnitude(0, maxForce);// maxSpeed=0, steerForce=0, getTarget=0
 	/**
@@ -163,19 +169,19 @@ window.game.HomingBullet = (function() {
 	 * @classdesc a type of bullet that has a homing property : it searches for the best target to avoid <!--
 	 * -->direction changes, and changes it's direction to touch it.
 	 */
-    class HomingBullet extends game.Bullet {
+    class HomingBullet extends Bullet {
 		/**
 		 * @constructor
 		 * @param {game.Object} launcher
-		 * @param {number} damages
+		 * @param {number} damage
 		 * @param {utils.geometry2d.Vec2} position
 		 * @param {utils.geometry2d.Vec2} speed
 		 * @param {number} lifeTime
 		 * @param {number} steerForce
 		 * @param {number} maxAngle
 		 */
-		constructor(launcher, damages, position, speed, lifeTime, steerForce, maxAngle) {
-			super(launcher, position, speed, damages, lifeTime);
+		constructor(launcher, damage, position, speed, lifeTime, steerForce, maxAngle) {
+			super(launcher, position, speed, damage, lifeTime);
 			/**
 			 * @name game.HomingBullet#steerForce
 			 * @type {number}
@@ -222,7 +228,7 @@ window.game.HomingBullet = (function() {
 				maxAngle = this.maxAngle,
 				pos = this.getPosition(),
 				//dist = 0,
-				targets = gameManager.getObjects(game.collisionLayersFilter.bind(undefined, this.bodyLayer)),
+				targets = gameManager.getObjects(collisionLayersFilter.bind(undefined, this.bodyLayer)),
 				i = targets.length;
 			while(i--) {
 				if(targets[i] !== this.launcher) {
@@ -247,9 +253,7 @@ window.game.HomingBullet = (function() {
 				let p = this.getPosition(), accel = Vec2.translation(p, t),
 					d = accel.magnitude, ms = this.getMaxSpeed(dist), steer = this.getSteerForce(ms, d);
 				accel.magnitude = steer;
-				accel.add(Game.objects.properties.Homing.getSteeringForce(
-					pos, maxSpeed, steer,
-					this.getSpeed(), target)).magnitude = steer;
+				accel.add(getSteeringForce(pos, maxSpeed, steer, this.getSpeed(), target)).magnitude = steer;
 				this.setAcceleration(accel);
 				super.onFrame(gameManager, dT);
 				this.setSpeed(this.getSpeed().clampMagnitude(0, maxSpeed));
@@ -262,5 +266,3 @@ window.game.HomingBullet = (function() {
 			this.angle = a;
 		}
     }
-    return HomingBullet;
-})();

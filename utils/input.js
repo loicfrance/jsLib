@@ -1,15 +1,10 @@
 /**
- * Created by rfrance on 12/20/2016.
+ * Created by Loic France on 12/20/2016.
  */
+import {Vec2} from "utils/geometry2d";
 /**
  * @module utils/input
  */
-{
-if(window) {
-	//not in module, do nothing
-} else {
-	//import {Vec2} from "utils/geometry2d";
-}
 //######################################################################################################################
 //#                                             enumerations and callbacks                                             #
 //######################################################################################################################
@@ -24,7 +19,7 @@ if(window) {
  * @param {MouseEvent} event
  * @param {MouseEvent} eventType
  * @param {MouseButton} button
- * @param {module:utils/geometry.Vec2} position
+ * @param {utils.geometry2d.Vec2} position
  * @returns {void|boolean} prevent default behavior.
  */
 /**
@@ -75,7 +70,7 @@ const MouseEvent = {
  * @enum {number}
  * @readonly
  */
-const MouseButton = { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 }
+const MouseButton = { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 };
 
 //######################################################################################################################
 //#                                                    InputManager                                                    #
@@ -102,7 +97,7 @@ const onKeyEvt = (keyStates, callbacks, state, evt) => {
 		for (let i = 0; i < len; i++)
 			if (callbacks[i](evt.keyCode, state)) evt.preventDefault();
 	}
-}
+};
 
 /**
  * @class InputManager
@@ -138,11 +133,11 @@ class InputManager {
 			return new Vec2(
 				evt.pageX - elmtRect.left,
 				evt.pageY - elmtRect.top);
-		}
+		};
 		const onMouseEvt = (callback, evtType, evt) => {
 			fixMouseWhich(evt);
 			if (callback(evt, evtType, evt.which, getVec(evt))) evt.preventDefault();
-		}
+		};
 //____________________________________________________public methods____________________________________________________
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		/**
@@ -225,8 +220,8 @@ class InputManager {
 		 */
 		this.setFocusCallback = (callback) => {
 			if (callback) {
-				this.element.onfocus = _ => callback(true);
-				this.element.onblur = _ => callback(false);
+				this.element.onfocus = () => callback(true);
+				this.element.onblur = () => callback(false);
 			} else {
 				this.element.onfocus = null;
 				this.element.onblur = null;
@@ -390,27 +385,13 @@ class KeyMap {
 		};
 	}
 }
-if(window) {
-	window.utils = window.utils || {};
-	utils.input = {
-		KeyState,
-		Key,
-		MouseEvent,
-		MouseButton,
-		InputManager,
-		KeyMap
+//TODO add gamepad support
 
-	}
-} else {
-	/*
-	export {
-		KeyState,
-		Key,
-		MouseEvent,
-		MouseButton,
-		InputManager,
-		KeyMap
-	};
-	*/
-}
-}
+export {
+	KeyState,
+	Key,
+	MouseEvent,
+	MouseButton,
+	InputManager,
+	KeyMap
+};

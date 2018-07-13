@@ -12,5 +12,7 @@
     <orderEntry type="library" name="game" level="application" />
     <orderEntry type="library" name="utils" level="application" />
     <orderEntry type="library" name="customWebGL" level="application" />
+    <orderEntry type="library" name="game" level="application" />
+    <orderEntry type="library" name="utils" level="application" />
   </component>
 </module>

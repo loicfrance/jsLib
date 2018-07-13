@@ -1,11 +1,26 @@
 /**
-* Created by rfrance on 12/20/2016.
+* Created by Loic France on 12/20/2016.
 */
 
 /**
  * @module utils/geometry
  */
-{
+
+/**
+ * 2 \* PI
+ * @static
+ * @constant
+ * @type {number}
+ */
+const PI2 = 2 * Math.PI;
+/**
+ * PI / 2
+ * @static
+ * @constant
+ * @type {number}
+ */
+const PI_2 = Math.PI/2;
+
 //######################################################################################################################
 //#                                                        Vec2                                                        #
 //######################################################################################################################
@@ -13,6 +28,8 @@
  * A simple class with 2 members : <code>{@link Vec2#x|x}</code> and <code>{@link Vec2#y|y}</code>, <!--
  * -->used to represent points and vectors in a 2-dimensions space
  * @class Vec2
+ * @memberOf utils.geometry2d
+ * @alias utils.geometry2d.Vec2
  */
 class Vec2 {
 	/** @constructor
@@ -157,6 +174,15 @@ class Vec2 {
 	remove(vec) {
 		this.x -= vec.x;
 		this.y -= vec.y;
+		return this;
+	}
+
+	/**
+	 * makes the vector the opposite of itself : p = - p.
+	 */
+	negate() {
+		this.x = -this.x;
+		this.y = -this.y;
 		return this;
 	}
 
@@ -544,16 +570,299 @@ class Vec2 {
  */
 Vec2.ZERO = Vec2.zero;
 //######################################################################################################################
+//#                                                        Shape                                                       #
+//######################################################################################################################
+    /**
+     * @class Shape
+     * @abstract
+     * @memberOf utils.geometry2d
+     * @alias utils.geometry2d.Shape
+     * @classdesc the base class of all shapes. has only one member : <!--
+     * --><code>{@link Shape#center|center}</code>, the center of the shape, <!--
+     * -->and plenty of useful methods with default behavior.
+     */
+    class Shape {
+        /**
+         * @constructor
+         */
+        constructor() { }
+
+        /**
+         * center of the shape
+         * @name utils.geometry2d.Shape#center
+         * @type {Vec2}
+         */
+
+        /**
+         * perimeter of the instance.
+         * @readonly
+         * @type {number}
+         */
+        get perimeter() {
+            return 0;
+        }
+
+        /**
+         * area of the instance.
+         * @readonly
+         * @type {number}
+         */
+        get area() {
+            return 0;
+        }
+
+        /**
+         * returns a copy of the <code>{@link Shape#center|center}</code> attribute of the instance.
+         * @returns {Vec2} a copy of the center
+         */
+        copyCenter() {
+            return this.center.clone();
+        }
+
+        /**
+         * sets the center's attributes to the same as the parameter's
+         * @param {Vec2}center
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#setCenterXY}
+         */
+        setCenter(center) {
+            this.center.set(center);
+            return this;
+        }
+
+        /**
+         * sets the center's attributes to the parameters
+         * @param {number} x
+         * @param {number} y
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#setCenter}
+         */
+        setCenterXY(x, y) {
+            this.center.setXY(x, y);
+            return this;
+        }
+
+        /**
+         * makes the shape bigger by multiplying it's dimensions by the given factor
+         * @param {number} factor - the number which will multiply the dimensions
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#growDistance}
+         */
+        scale(factor) {
+            return this;
+        }
+
+        /**
+         * makes the shape bigger by adding to it's dimensions the given distance
+         * @param {number} delta - the number to add to the dimensions
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#scale}
+         */
+        growDistance(delta) {
+            return this;
+        }
+
+        /**
+         * rotates the shape by the given angle in radians.
+         * @param {number} radians - angle.
+         * @returns {Shape} <code>this</code>
+         */
+        rotate(radians) {
+            return this;
+        }
+
+        /**
+         * adds the instructions to draw this instance to the context.
+         * @param {CanvasRenderingContext2D} context
+         * @see {@link Shape#draw}
+         */
+        pushPath(context) {
+        }
+
+        /**
+         * draw the shape on the canvas using its webgl context.
+         * To fill the shape, the draw mode must de TRIANGLES.
+         * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
+         * -->by using the attributes {@link Circle#glPointsNumber} and <!--
+         * -->{@link Circle#glTriangles}
+         * @param {Array} verticesArray array where the points x and y coordinates will be placed
+         * @param {number} vOffset indice of the first free place in the array (must be even)
+         * @param {Array} indicesArray array where the indices of the points <!--
+         * -->for the triangles to be drawned will be placed
+         * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
+         */
+        getVertices(verticesArray, vOffset, indicesArray, iOffset){
+
+        }
+
+        /**
+         * draws the shape on the canvas
+         * @param {CanvasRenderingContext2D} context
+         * @param {boolean} [fill=false]
+         * @param {boolean} [stroke=!fill]
+         * @see {@link Shape#pushPath}
+         */
+        draw(context, fill = false, stroke = !fill) {
+            context.beginPath();
+            this.pushPath(context);
+            fill && context.fill();
+            stroke && context.stroke();
+        }
+
+        /**
+         * returns whether or not the instance intersect (=collide) with the given shape.
+         * @param {Shape} shape
+         * @returns {boolean} true if the 2 shapes intersect.
+         */
+        intersect(shape) {
+            return false;
+        }
+
+        /**
+         * returns the intersection points with the given shape
+         * @param {Shape} shape
+         * @returns {Vec2[]}
+         */
+        getIntersectionPoints(shape) {
+            return [];
+        }
+
+        /**
+         * @param {Vec2} point
+         * @returns {boolean} true if the point is located inside the shape.
+         */
+        contains(point) {
+            return false;
+        }
+
+        /**
+         * returns a {@link Rect|Rect} containing the entire shape.
+         * @returns {Rect} the outside {@link Rect|Rect}
+         */
+        getRect() {
+            return Rect.createFromPoint(this.center);
+        }
+
+        /**
+         * returns the maximum distance to the <code>{@link Shape#center|center}</code> <!--
+         * -->a point of the shape could have.
+         * @returns {number} max distance to <code>{@link Shape#center|center}</code>
+         */
+        getRadius() {
+            return 0;
+        }
+
+        /**
+         * creates a <code>{@link Circle|Circle}</code> with the same center as the shape, <!--
+         * -->and the radius returned by <code>{@link Shape#getRadius|getRadius}</code>.
+         * @returns {Circle}
+         */
+        getCircle() {
+            return new Circle(this.center, this.getRadius());
+        }
+
+        /**
+         * returns the point corresponding to a certain percent of the instance's outline,
+         * the start point depends on the shape.
+         * @param {number} percent - percentage. must be in [0-1[.
+         * @returns {Vec2} the corresponding point.
+         */
+        getPercentPoint(percent) {
+            return this.center
+        };
+
+        /**
+         * returns the closest point of the shape to the given point
+         * @param {Vec2} p
+         * @returns {Vec2} closest point of the shape.
+         */
+        closestPointTo(p) {
+            return this.center;
+        }
+
+        /**
+         * returns a copy of this shape.
+         * @returns {Shape} the instance's copy
+         */
+        clone() {
+            return new Shape();
+        }
+
+        /**
+         * makes the shape the opposite of itself relative to the given horizontal axis
+         * if no value is set for axisY, the mirror will be made relative to the center's y coordinate.
+         * @param {number} [axisY=center.y]
+         *          ordinate of the horizontal axis
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#mirrorHorizontally}
+         */
+        mirrorVertically(axisY = this.center.y) {
+            this.center.mirrorVertically(axisY);
+            return this;
+        }
+
+        /**
+         * makes the shape the opposite of itself relative to the given vertical axis
+         * if no value is set for axisX, the mirror will be made relative to the center's x coordinate.
+         * @param {number} [axisX=center.x]
+         *          abscissa of the vertical axis
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#mirrorVertically}
+         */
+        mirrorHorizontally(axisX = this.center.x) {
+            this.center.mirrorHorizontally(axisX);
+            return this;
+        }
+
+        /**
+         * moves the shape according to the parameters
+         * @param {number} dX
+         * @param {number} dY
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#move}
+         */
+        moveXY(dX, dY) {
+            this.center.addXY(dX, dY);
+            return this;
+        }
+
+        /**
+         * moves the shape according to the parameter
+         * @param {Vec2} delta
+         * @returns {Shape}
+         * @returns {Shape} <code>this</code>
+         * @see {@link Shape#moveXY}
+         */
+        move(delta) {
+            this.center.add(delta);
+            return this;
+        }
+    }
+    /**
+     * number of points used to draw this shape.
+     * @type {number}
+     * @name Shape#glPointsNumber
+     */
+    Shape.prototype.glPointsNumber = 0;
+    /**
+     * number of triangles used to draw this shape.
+     * @type {number}
+     * @name Shape#glTriangles
+     */
+    Shape.prototype.glTriangles = 0;
+//######################################################################################################################
 //#                                                        Rect                                                        #
 //######################################################################################################################
-/** @class Rect
+/**
  * @memberOf utils.geometry2d
+ * @class Rect
+ * @alias utils.geometry2d.Rect
  * @classdesc a class with four attributes : <code>{@link Rect#left|xMin}</code>, <!--
  * --><code>{@link Rect#top|yMin}</code>, <!--
  * --><code>{@link Rect#right|xMax}</code> and <!--
  * --><code>{@link Rect#bottom|yMax}</code>, used to represent a non-rotated rectangle.
  */
-class Rect {
+class Rect extends Shape{
 	/** @constructor
 	 * @param {number} xMin
 	 * @param {number} yMin
@@ -561,7 +870,8 @@ class Rect {
 	 * @param {number} yMax
 	 */
 	constructor(xMin, yMin, xMax, yMax) {
-		/**
+        super();
+        /**
 		 * @name Rect#xMin
 		 * @type {number}
 		 */
@@ -584,7 +894,7 @@ class Rect {
 	}
 
 	/**
-	 * width (= right - left) of the instance.
+	 * width (= xMax - yMin) of the instance.
 	 * @type {number}
 	 * @readonly
 	 */
@@ -593,7 +903,7 @@ class Rect {
 	}
 
 	/**
-	 * height (= bottom - top) of the instance.
+	 * height (= yMax - yMin) of the instance.
 	 * @type {number}
 	 * @readonly
 	 */
@@ -632,7 +942,7 @@ class Rect {
 	}
 
 	/**
-	 * center of the instance. when modified, keeps the dimensions.
+	 * center of the instance (computed). to modify it, use {@code rect.center = center}. When modified, keeps the dimensions.
 	 * @type {Vec2}
 	 */
 	get center() {
@@ -651,6 +961,10 @@ class Rect {
 	 */
 	clone() {
 		return new Rect(this.xMin, this.yMin, this.xMax, this.yMax);
+	}
+
+	copyCenter() {
+		return this.center;
 	}
 
 	/**
@@ -695,6 +1009,52 @@ class Rect {
 		this.yMax += dh;
 		return this;
 	}
+
+    /**
+     * makes the Rect bigger by making the corner further from the center by the given distance.
+	 * The ratio width/height is preserved.
+     * @param {number} delta - the number to add to the dimensions
+     * @returns {Rect} <code>this</code>
+     * @see {@link Rect#scale}
+     */
+	growDistance(delta)
+	{
+		let toCorner = new Vec2((this.xMax-this.xMin)/2, (this.yMax-this.yMin)/2).setMagnitude(delta);
+		this.xMin -= toCorner.x;
+		this.xMax += toCorner.x;
+		this.yMin -= toCorner.y;
+		this.yMax += toCorner.y;
+	}
+
+    /**
+     * returns whether or not the instance intersect (=collide) with the given shape.
+     * @param {Shape} shape
+     * @returns {boolean} true if the 2 shapes intersect.
+     */
+    intersect(shape) {
+    	return shape instanceof Rect ? (this.overlap(rect) && !this.containsRect(rect)) : shape.intersect(this);
+    }
+
+    /**
+     * returns the intersection points with the given shape
+     * @param {Shape} shape
+     * @returns {Vec2[]}
+     */
+    getIntersectionPoints(shape) {
+        if(shape instanceof Rect) {
+        	let array = [];
+        	let intersection = Rect.getIntersection([this, shape]);
+        	let xSelf = (intersection.xMin == this.xMin);
+			const ySelf1 = (intersection.yMin == shape.yMin),
+				  ySelf2 = (intersection.yMax == shape.yMax);
+        	if(xSelf == ySelf1) array.push(new Vec2(intersection.xMin, intersection.yMin));
+			if(xSelf == ySelf2) array.push(new Vec2(intersection.xMin, intersection.yMax));
+			xSelf = (intersection.xMax == this.xMax);
+            if(xSelf == ySelf1) array.push(new Vec2(intersection.xMax, intersection.yMin));
+            if(xSelf == ySelf2) array.push(new Vec2(intersection.xMax, intersection.yMax));
+            return array;
+        } else return shape.getIntersectionPoints(this);
+    }
 
 	/**
 	 * @param {Rect} rect
@@ -1082,15 +1442,95 @@ class Rect {
 		return new Vec2(this.xMin, this.yMax - (percent * 4 - 3) * this.height);
 	}
 
+	closestPointTo(point) {
+		const p = new Vec2(point.x < this.xMin ? this.xMin : point.x > this.xMax ? this.xMax : point.x,
+								point.y > this.yMax ? this.yMax : point.y < this.yMin ? this.yMin : point.y);
+		if(p.x > this.xMin && p.x < this.xMax && p.y > this.yMin && p.y < this.yMax) {
+			const dx = (p.x - this.xMin) < (this.xMax - p.x) ? (this.xMin - p.x) : (this.xMax - p.x);
+			const dy = (p.y - this.yMin) < (this.yMax - p.y) ? (this.yMin - p.y) : (this.yMax - p.y);
+			if(Math.abs(dx) < Math.abs(dy)) p.addXY(dx, 0);
+			else p.addXY(0, dy);
+		}
+		return p;
+	}
+
+    /**
+     * creates a rectangular {@link Polygon} corresponding to the instance
+     * @returns {Polygon}
+     */
+	toPolygon()
+	{
+        return Polygon.Absolute(Vec2.createVec2Array([this.xMin, this.yMin, this.xMax, this.yMin,
+            this.xMax, this.yMax, this.xMin, this.yMax]));
+	}
 	/**
 	 * creates a rectangular {@link Polygon} corresponding to the instance
 	 * @returns {Polygon}
+     * @deprecated
 	 */
 	getShape() {
-		return Polygon.Absolute(Vec2.createVec2Array([this.xMin, this.yMin, this.xMax, this.yMin,
-			this.xMax, this.yMax, this.xMin, this.yMax]));
+		const error = new Error("Rect.getShape() is deprecated. use Rect.toPolygon() instead. The result is the same.")
+		console.error(error.message + "\n" + error.stack);
+		return this.toPolygon();
 	}
 
+    /**
+	 * copy the instance. Implemented for compatibility with the parent Shape class
+     * @returns {utils.geometry2d.Rect}
+     */
+	getRect()
+	{
+		return this.clone();
+	}
+
+	/**
+     * returns the maximum distance to the <code>{@link Shape#center|center}</code> <!--
+     * -->a point of the shape could have.
+     * @returns {number} max distance to <code>{@link Shape#center|center}</code>
+     */
+	getRadius()
+	{
+		return Math.sqrt(Math.pow(this.xMax-this.xMin, 2)+Math.pow(this.yMax-this.yMin, 2))/2;
+	}
+	/**
+     * creates a <code>{@link Circle|Circle}</code> with the same center as the shape, <!--
+     * -->and the radius returned by <code>{@link Shape#getRadius|getRadius}</code>.
+     * @returns {Circle}
+     */
+	getCircle()
+	{
+		let dX = (this.xMax-this.xMin)/2, dY = (this.yMax - this.yMin)/2;
+		return new Circle(new Vec2(this.xMin+dX, this.yMin+dY), Math.sqrt(dX*dX+dY*dY));
+	}
+    /**
+     * makes the shape the opposite of itself relative to the given horizontal axis
+     * if no value is set for axisY, the mirror will be made relative to the center's y coordinate.
+     * @param {number} [axisY=center.y]
+     *          ordinate of the horizontal axis
+     * @returns {Shape} <code>this</code>
+     * @see {@link Shape#mirrorHorizontally}
+     */
+    mirrorVertically(axisY = (this.yMax+this.yMin)/2) {
+        const yMax = this.yMin + (axisY - this.yMin);
+        this.yMin = this.yMax + (axisY - this.yMax);
+        this.yMax = yMax;
+        return this;
+    }
+
+    /**
+     * makes the shape the opposite of itself relative to the given vertical axis
+     * if no value is set for axisX, the mirror will be made relative to the center's x coordinate.
+     * @param {number} [axisX=center.x]
+     *          abscissa of the vertical axis
+     * @returns {Shape} <code>this</code>
+     * @see {@link Shape#mirrorVertically}
+     */
+    mirrorHorizontally(axisX = (this.xMax+this.xMin)/2) {
+        const xMax = this.xMin + (axisx - this.xMin);
+        this.xMin = this.xMax + (axisX - this.xMax);
+        this.xMax = xMax;
+        return this;
+    }
 	/**
 	 * returns a string representing the instance.
 	 * @returns {string} [left, top, right, bottom]
@@ -1125,8 +1565,8 @@ class Rect {
 
 	/**
 	 * returns the intersection of the given rectangles, i.e. the rectangle formed by
-	 * the maximum left and top, and the minimum right and bottom of all rects.
-	 * if the max left(resp. top) happen to be higher than the minimum right(resp. bottom),
+	 * the maximum xMin and yMin, and the minimum xMax and yMax of all rects.
+	 * if the max xMin(resp. yMin) happen to be higher than the minimum xMax(resp. yMax),
 	 * or if the given array is null, this function returns <code>null</code>.
 	 * @static
 	 * @param {Rect[]} rects
@@ -1149,9 +1589,9 @@ class Rect {
 	}
 
 	/**
-	 * create a {@link Rect|Rect} where the <code>left</code> and <code>right</code> <!--
+	 * create a {@link Rect|Rect} where the <code>xMin</code> and <code>xMax</code> <!--
 	 * -->components are equal to the x coordinate <!--
-	 * -->and the <code>top</code> and <code>bottom</code> components to the y coordinate of the given point.
+	 * -->and the <code>yMin</code> and <code>yMax</code> components to the y coordinate of the given point.
 	 * @static
 	 * @param {Vec2} p - the point to build the rectangle around
 	 * @returns {Rect} the newly created {@link Rect|Rect}
@@ -1226,50 +1666,54 @@ Rect.prototype.glPointsNumber = 4;
  */
 Rect.prototype.glTriangles = 2;
 //######################################################################################################################
-//#                                                        Shape                                                       #
+//#                                                       Circle                                                       #
 //######################################################################################################################
 /**
- * @class Shape
- * @abstract
+ * @class Circle
+ * @augments Shape
  * @memberOf utils.geometry2d
- * @classdesc the base class of all shapes. has only one member : <!--
- * --><code>{@link Shape#center|center}</code>, the center of the shape, <!--
- * -->and plenty of useful methods with default behavior.
+ * @alias utils.geometry2d.Circle
+ * @classdesc a shape representing a circle. Adds one member to the one present in <!--
+ * --><code>{@link Shape|Shape}</code> : <!--
+ * --><code>{@link Circle#radius|radius}</code>, <!--
+ * -->the radius of the circle.
  */
-class Shape {
+class Circle extends Shape {
 	/**
 	 * @constructor
-	 * @param {Vec2} center the new center of the shape.
-	 * The member of the new instance is not the same, the attributes of the parameter are copied to the member.
-	 * If undefined, the member won't be set, but the superclass has to provide a getter and a setter<!--
-	 * --> to modify the shape's center
+	 * @param {Vec2} center
+	 * @param {number} radius
 	 */
-	constructor(center) {
+	constructor(center, radius) {
+		super();
 		/**
-		 * @name Shape#center
+		 * @name Circle#center
+		 * the circle's center
 		 * @type {Vec2}
 		 */
-		if(center) this.center = center.clone();
+		this.center = center.clone();
+		/**
+		 * @name Circle#radius
+		 * @type {number}
+		 */
+		this.radius = radius;
 	}
 
 	/**
-	 * perimeter of the instance.
-	 * @readonly
+	 * perimeter of the circle : <code>2 \* &pi; \* {@link Circle#radius|radius}</code>
 	 * @type {number}
 	 */
 	get perimeter() {
-		return 0;
+		return PI2 * this.radius;
 	}
 
 	/**
-	 * area of the instance.
-	 * @readonly
+	 * area of the circle : <code>&pi; \* {@link Circle#radius|radius}<sup>2</sup></code>
 	 * @type {number}
 	 */
 	get area() {
-		return 0;
+		return Math.pow(this.radius, 2) * Math.PI;
 	}
-
 	/**
 	 * returns a copy of the <code>{@link Shape#center|center}</code> attribute of the instance.
 	 * @returns {Vec2} a copy of the center
@@ -1300,153 +1744,6 @@ class Shape {
 		this.center.setXY(x, y);
 		return this;
 	}
-
-	/**
-	 * makes the shape bigger by multiplying it's dimensions by the given factor
-	 * @param {number} factor - the number which will multiply the dimensions
-	 * @returns {Shape} <code>this</code>
-	 * @see {@link Shape#growDistance}
-	 */
-	scale(factor) {
-		return this;
-	}
-
-	/**
-	 * makes the shape bigger by adding to it's dimensions the given distance
-	 * @param {number} delta - the number to add to the dimensions
-	 * @returns {Shape} <code>this</code>
-	 * @see {@link Shape#scale}
-	 */
-	growDistance(delta) {
-		return this;
-	}
-
-	/**
-	 * rotates the shape by the given angle in radians.
-	 * @param {number} radians - angle.
-	 * @returns {Shape} <code>this</code>
-	 */
-	rotate(radians) {
-		return this;
-	}
-
-	/**
-	 * adds the instructions to draw this instance to the context.
-	 * @param {CanvasRenderingContext2D} context
-	 * @see {@link Shape#draw}
-	 */
-	pushPath(context) {
-	}
-
-	/**
-	 * draw the shape on the canvas using its webgl context.
-	 * To fill the shape, the draw mode must de TRIANGLES.
-	 * you can acquire how many points will be added to the array or how many triangles will be drawned <!--
-	 * -->by using the attributes {@link Circle#glPointsNumber} and <!--
-	 * -->{@link Circle#glTriangles}
-	 * @param {Array} verticesArray array where the points x and y coordinates will be placed
-	 * @param {number} vOffset indice of the first free place in the array (must be even)
-	 * @param {Array} indicesArray array where the indices of the points <!--
-	 * -->for the triangles to be drawned will be placed
-	 * @param {number} iOffset indice of the first free place in indicesArray (should be a multiple of 3)
-	 */
-	getVertices(verticesArray, vOffset, indicesArray, iOffset){
-
-	}
-
-	/**
-	 * draws the shape on the canvas
-	 * @param {CanvasRenderingContext2D} context
-	 * @param {boolean} [fill=false]
-	 * @param {boolean} [stroke=!fill]
-	 * @see {@link Shape#pushPath}
-	 */
-	draw(context, fill = false, stroke = !fill) {
-		context.beginPath();
-		this.pushPath(context);
-		fill && context.fill();
-		stroke && context.stroke();
-	}
-
-	/**
-	 * returns whether or not the instance intersect (=collide) with the given shape.
-	 * @param {Shape} shape
-	 * @returns {boolean} true if the 2 shapes intersect.
-	 */
-	intersect(shape) {
-		return false;
-	}
-
-	/**
-	 * returns the intersection points with the given shape
-	 * @param {Shape} shape
-	 * @returns {Vec2[]}
-	 */
-	getIntersectionPoints(shape) {
-		return [];
-	}
-
-	/**
-	 * @param {Vec2} point
-	 * @returns {boolean} true if the point is located inside the shape.
-	 */
-	contains(point) {
-		return false;
-	}
-
-	/**
-	 * returns a {@link Rect|Rect} containing the entire shape.
-	 * @returns {Rect} the outside {@link Rect|Rect}
-	 */
-	getRect() {
-		return Rect.createFromPoint(this.center);
-	}
-
-	/**
-	 * returns the maximum distance to the <code>{@link Shape#center|center}</code> <!--
-	 * -->a point of the shape could have.
-	 * @returns {number} max distance to <code>{@link Shape#center|center}</code>
-	 */
-	getRadius() {
-		return 0;
-	}
-
-	/**
-	 * creates a <code>{@link Circle|Circle}</code> with the same center as the shape, <!--
-	 * -->and the radius returned by <code>{@link Shape#getRadius|getRadius}</code>.
-	 * @returns {Circle}
-	 */
-	getCircle() {
-		return new Circle(this.center, this.getRadius());
-	}
-
-	/**
-	 * returns the point corresponding to a certain percent of the instance's outline,
-	 * the start point depends on the shape.
-	 * @param {number} percent - percentage. must be in [0-1[.
-	 * @returns {Vec2} the corresponding point.
-	 */
-	getPercentPoint(percent) {
-		return this.center
-	};
-
-	/**
-	 * returns the closest point of the shape to the given point
-	 * @param {Vec2} p
-	 * @returns {Vec2} closest point of the shape.
-	 */
-	closestPointTo(p) {
-		return this.center;
-	}
-
-	/**
-	 * returns a copy of this shape.
-	 * @returns {Shape} the instance's copy
-	 */
-	clone() {
-		return new Shape(this.center);
-	}
-
 	/**
 	 * makes the shape the opposite of itself relative to the given horizontal axis
 	 * if no value is set for axisY, the mirror will be made relative to the center's y coordinate.
@@ -1496,60 +1793,6 @@ class Shape {
 		this.center.add(delta);
 		return this;
 	}
-}
-/**
- * number of points used to draw this shape.
- * @type {number}
- * @name Shape#glPointsNumber
- */
-Shape.prototype.glPointsNumber = 0;
-/**
- * number of triangles used to draw this shape.
- * @type {number}
- * @name Shape#glTriangles
- */
-Shape.prototype.glTriangles = 0;
-//######################################################################################################################
-//#                                                       Circle                                                       #
-//######################################################################################################################
-/**
- * @class Circle
- * @augments Shape
- * @memberOf utils.geometry2d
- * @classdesc a shape representing a circle. Adds one member to the one present in <!--
- * --><code>{@link Shape|Shape}</code> : <!--
- * --><code>{@link Circle#radius|radius}</code>, <!--
- * -->the radius of the circle.
- */
-class Circle extends Shape {
-	/**
-	 * @constructor
-	 * @param {Vec2} center
-	 * @param {number} radius
-	 */
-	constructor(center, radius) {
-		super(center);
-		/**
-		 * @name Circle#radius
-		 * @type {number}
-		 */ this.radius = radius;
-	}
-
-	/**
-	 * perimeter of the circle : <code>2 \* &pi; \* {@link Circle#radius|radius}</code>
-	 * @type {number}
-	 */
-	get perimeter() {
-		return Circle.PI2 * this.radius;
-	}
-
-	/**
-	 * area of the circle : <code>&pi; \* {@link Circle#radius|radius}<sup>2</sup></code>
-	 * @type {number}
-	 */
-	get area() {
-		return Math.pow(this.radius, 2) * Math.PI;
-	}
 
 	/**
 	 * @description multiplies the radius by the argument.
@@ -1597,7 +1840,7 @@ class Circle extends Shape {
 
 	/**@inheritDoc*/
 	pushPath(context) {
-		context.arc(this.center.x, this.center.y, this.radius, 0, Circle.PI2, false);
+		context.arc(this.center.x, this.center.y, this.radius, 0, PI2, false);
 	}
 	/**
 	 * draws the shape on the canvas
@@ -1608,7 +1851,7 @@ class Circle extends Shape {
 	 */
 	draw(context, fill = false, stroke = !fill) {
 		context.beginPath();
-		context.arc(this.center.x, this.center.y, this.radius, 0, Circle.PI2, false);
+		context.arc(this.center.x, this.center.y, this.radius, 0, PI2, false);
 		fill && context.fill();
 		stroke && context.stroke();
 	}
@@ -1627,7 +1870,7 @@ class Circle extends Shape {
 	 */
 	getVertices(verticesArray, vOffset, indicesArray, iOffset){
 		const o = vOffset/2;
-		let n = this.glPointsNumber, dA = Circle.PI2/n, a = -dA, i = -1, t;
+		let n = this.glPointsNumber, dA = PI2/n, a = -dA, i = -1, t;
 		while(++i < n) {
 			verticesArray[vOffset++] = (t = Vec2.createFromAngle(a += dA, this.radius)).x;
 			verticesArray[vOffset++] = t.y;
@@ -1656,15 +1899,19 @@ class Circle extends Shape {
 	 * @returns {boolean}
 	 */
 	intersect(shape) {
-		if (shape instanceof Circle) {
+		if (shape instanceof Rect) {
+			// TODO optimiser
+			return shape.toPolygon().intersect(this);
+		}
+		else if (shape instanceof Circle) {
 			/*
 			return !!(asm.circlesIntersect(this.center.x, this.center.y, this.radius,
 								shape.center.x, shape.center.y, shape.radius));
 			/*/
 			let d = Vec2.distance(this.center, shape.center);
-			return d < this.radius + shape.radius &&
-				this.radius < d + shape.radius && // the other circle is not inside this circle
-				shape.radius < d + this.radius; // this circle is not inside the other circle
+			return d <= this.radius + shape.radius &&
+				this.radius <= d + shape.radius && // the other circle is not inside this circle
+				shape.radius <= d + this.radius; // this circle is not inside the other circle
 			//*/
 		}
 		else return shape.intersect(this);
@@ -1676,13 +1923,18 @@ class Circle extends Shape {
 	 * @returns {Vec2[]}
 	 */
 	getIntersectionPoints(shape) {
-		if(shape instanceof Circle) {
+		if(shape instanceof Rect) {
+			//TODO optimiser
+			return shape.toPolygon().getIntersectionPoints(this);
+		}
+		else if(shape instanceof Circle) {
 			let trans = Vec2.translation(this.center, shape.center),
 				d2 = trans.squareMagnitude,
 				da = Math.acos(d2-shape.radius*shape.radius+this.radius*this.radius)/(2*Math.sqrt(d2)*this.radius),
 				a = trans.angle;
 			return [Vec2.createFromAngle(a + da, this.radius), Vec2.createFromAngle(a-da, this.radius)];
-		} else return shape.getIntersectionPoints(this);
+		}
+		else return shape.getIntersectionPoints(this);
 	}
 
 	/**@inheritDoc*/
@@ -1697,7 +1949,7 @@ class Circle extends Shape {
 
 	/**@inheritDoc*/
 	getPercentPoint(percent) {
-		return this.pointForAngle(percent * Circle.PI2);
+		return this.pointForAngle(percent * PI2);
 	}
 
 	/**@inheritDoc*/
@@ -1746,22 +1998,6 @@ class Circle extends Shape {
  * @name Circle#glPointsNumber
  */
 Circle.prototype.glPointsNumber = 16;
-/**
- * 2 \* PI
- * @static
- * @constant
- * @memberOf Circle
- * @type {number}
- */
-Circle.PI2 = 2 * Math.PI;
-/**
- * PI / 2
- * @static
- * @constant
- * @memberOf Circle
- * @type {number}
- */
-Circle.PI_2 = 2 * Math.PI;
 //######################################################################################################################
 //#                                                      Ellipsoid                                                     #
 //######################################################################################################################
@@ -1769,6 +2005,7 @@ Circle.PI_2 = 2 * Math.PI;
  * @class Ellipsoid
  * @augments Shape
  * @memberOf utils.geometry2d
+ * @alias utils.geometry2d.Ellipsoid
  * @classdesc a shape representing an ellipsoid, optimized for drawing. make sure to always have <!--
  * -->{@link Ellipsoid#radiusX|radiusX} &ge; <!--
  * -->{@link Ellipsoid#radiusX|radiusX} for the methods to work properly.
@@ -1788,7 +2025,13 @@ class Ellipsoid extends Shape {
 	 * @param {number} radians
 	 */
 	constructor(center, radiusX, radiusY, radians = 0) {
-		super(center);
+		super();
+		/**
+		 * center of the ellipsoid
+		 * @name Ellipsoid#center
+		 * @type {Vec2}
+		 */
+		this.center = center.clone();
 		/**
 		 * horizontal radius
 		 * @name Ellipsoid#radiusX
@@ -1857,6 +2100,37 @@ class Ellipsoid extends Shape {
 	}
 
 	/**
+	 * returns a copy of the <code>{@link Shape#center|center}</code> attribute of the instance.
+	 * @returns {Vec2} a copy of the center
+	 */
+	copyCenter() {
+		return this.center.clone();
+	}
+
+	/**
+	 * sets the center's attributes to the same as the parameter's
+	 * @param {Vec2}center
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#setCenterXY}
+	 */
+	setCenter(center) {
+		this.center.set(center);
+		return this;
+	}
+
+	/**
+	 * sets the center's attributes to the parameters
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#setCenter}
+	 */
+	setCenterXY(x, y) {
+		this.center.setXY(x, y);
+		return this;
+	}
+
+	/**
 	 * makes the ellipsoid the opposite of itself relative to the given vertical axis
 	 * if no value is set for axisX, the mirror will be made relative to the center's x coordinate.
 	 * @param {number} [axisX=center.x]
@@ -1865,7 +2139,8 @@ class Ellipsoid extends Shape {
 	 */
 	mirrorHorizontally(axisX = this.center.x) {
 		this.radians = -this.radians;
-		return super.mirrorHorizontally(axisX);
+		this.center.mirrorHorizontally(axisX);
+		return this;
 	}
 
 	/**
@@ -1877,7 +2152,32 @@ class Ellipsoid extends Shape {
 	 */
 	mirrorVertically(axisY = this.center.y) {
 		this.radians = -this.radians;
-		return super.mirrorVertically(axisY);
+		this.center.mirrorVertically(axisY);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameters
+	 * @param {number} dX
+	 * @param {number} dY
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#move}
+	 */
+	moveXY(dX, dY) {
+		this.center.addXY(dX, dY);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameter
+	 * @param {Vec2} delta
+	 * @returns {Shape}
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#moveXY}
+	 */
+	move(delta) {
+		this.center.add(delta);
+		return this;
 	}
 
 	/**
@@ -1930,7 +2230,7 @@ class Ellipsoid extends Shape {
 	checkRadius() {
 		if (this.radiusX < this.radiusY) {
 			[this.radiusX, this.radiusY] = [this.radiusY, this.radiusX];
-			this.setAngle(this.radians + Circle.PI_2);
+			this.setAngle(this.radians + PI_2);
 		}
 		return this;
 	}
@@ -1978,7 +2278,7 @@ class Ellipsoid extends Shape {
 
 	/**@inheritDoc*/
 	pushPath(context) {
-		context.ellipse(this.center.x, this.center.y, this.radiusX, this.radiusY, this.radians, 0, Circle.PI2);
+		context.ellipse(this.center.x, this.center.y, this.radiusX, this.radiusY, this.radians, 0, PI2);
 	}
 	/**
 	 * draws the shape on the canvas
@@ -1989,7 +2289,7 @@ class Ellipsoid extends Shape {
 	 */
 	draw(context, fill = false, stroke = !fill) {
 		context.beginPath();
-		context.ellipse(this.center.x, this.center.y, this.radiusX, this.radiusY, this.radians, 0, Circle.PI2);
+		context.ellipse(this.center.x, this.center.y, this.radiusX, this.radiusY, this.radians, 0, PI2);
 		fill && context.fill();
 		stroke && context.stroke();
 	}
@@ -2007,7 +2307,7 @@ class Ellipsoid extends Shape {
 	 */
 	getVertices(verticesArray, vOffset, indicesArray, iOffset){
 		const o = offset/2;
-		let n = this.glPointsNumber-1, dA = Circle.PI2/n, a = 0, i = -1;
+		let n = this.glPointsNumber-1, dA = PI2/n, a = 0, i = -1;
 		while(++i < n) {
 			float32Array[vOffset++] = (t = this.pointForAngle(a += dA)).x;
 			float32Array[vOffset++] = t.y;
@@ -2056,7 +2356,7 @@ class Ellipsoid extends Shape {
 
 	/**@inheritDoc*/
 	getPercentPoint(percent) {
-		return this.pointForAngle(Circle.PI2 * percent + this.radians);
+		return this.pointForAngle(PI2 * percent + this.radians);
 	}
 
 	/**@inheritDoc*/
@@ -2074,7 +2374,7 @@ class Ellipsoid extends Shape {
 	 * @param {number} edges
 	 * @returns {@link Polygon} polygon equivalent of this ellipsoid
 	 */
-	createPolygon(edges) {
+	toPolygon(edges) {
 		return Polygon.createEllipsoid(this.center, this.radiusX, this.radiusY, edges, this.radians);
 	}
 }
@@ -2093,6 +2393,7 @@ let A = Vec2.zero, B = Vec2.zero, C = Vec2.zero, D = Vec2.zero, AB = Vec2.zero, 
  * @class Line
  * @augments Shape
  * @memberOf utils.geometry2d
+ * @alias utils.geometry2d.Line
  * @classdesc a linear shape, represented by its center, length and rotation. the representation brings <!--
  *        -->optimizations for movements, rotations and dimensions changes, but also brings lack of optimization<!--
  *        --> for collisions and drawing.
@@ -2104,7 +2405,7 @@ class Line extends Shape {
 	 * @param {Vec2} p1
 	 */
 	constructor(p0, p1) {
-		super(undefined);
+		super();
 		/**
 		 * start point of the line.
 		 * @type {Vec2}
@@ -2116,9 +2417,19 @@ class Line extends Shape {
 		 */
 		this.p1 = p1.clone();
 	}
+
+	/**
+	 * center of the line
+	 * @name Line#center
+	 * @returns {Vec2}
+	 */
 	get center() {
 		return A.set(this.p0).add(this.p1).mul(0.5);
 	}
+
+	/**
+	 * @param {Vec2}center
+	 */
 	set center(center) {
 		const d = Vec2.translation(this.center, center);
 		this.p0.add(d);
@@ -2238,6 +2549,7 @@ class Line extends Shape {
 		this.p1.set(p1);
 		return this;
 	}
+
 	/**
 	 * sets the center's attributes to the same as the parameter's
 	 * @param {Vec2}center
@@ -2245,7 +2557,7 @@ class Line extends Shape {
 	 * @see {@link Line#setCenterXY}
 	 */
 	setCenter(center) {
-		this.center = center;
+		this.center.set(center);
 		return this;
 	}
 
@@ -2262,6 +2574,14 @@ class Line extends Shape {
 		this.p0.addXY(dX, dY);
 		this.p1.addXY(dX, dY);
 		return this;
+	}
+
+	/**
+	 * returns the center of the line. equivalent to line.center
+	 * @returns {Vec2}
+	 */
+	copyCenter() {
+		return this.center;
 	}
 	/**
 	 * moves the shape according to the parameters
@@ -2403,7 +2723,11 @@ class Line extends Shape {
 	 * @returns {boolean}
 	 */
 	intersect(shape) {
-		if (shape instanceof Circle) {
+		if(shape instanceof Rect) {
+			//TODO optimiser
+			return shape.toPolygon().intersect(this);
+		}
+		else if (shape instanceof Circle) {
 			/*
 			return asm.circleLineIntersect(shape.center.x, shape.center.y, shape.radius, this.p0.x, this.p0.y,
 											this.p1.x, this.p1.y);
@@ -2411,7 +2735,7 @@ class Line extends Shape {
 			if (shape.contains(this.p0) != shape.contains(this.p1)) return true;
 			const l = this.length;
 			AC.set(shape.center).remove(this.p0);
-			u.set(this.p1).remove(this.p0).mul(1/length);
+			u.set(this.p1).remove(this.p0).mul(1/this.length);
 			d = Vec2.dotProd(u, AC);
 
 			//checking d < 0 and d > length is useless because it would mean A or B is in the circle,
@@ -2421,7 +2745,8 @@ class Line extends Shape {
 			return  (d >= 0 && d <= l && Vec2.squareDistance(u.mul(d).add(this.p0), shape.center)
 				<= shape.radius*shape.radius);
 			//*/
-		} else if (shape instanceof Line) {
+		}
+		else if (shape instanceof Line) {
 			/*
 			return asm.linesIntersect(this.p0.x, this.p0.y, this.p1.x, this.p1.y, C.x, C.y, D.x, D.y);
 			/*/
@@ -2444,7 +2769,11 @@ class Line extends Shape {
 	 * @returns {Vec2[]}
 	 */
 	getIntersectionPoints(shape) {
-		if(shape instanceof Circle) {
+		if(shape instanceof Rect) {
+			//TODO optimiser
+			return shape.toPolygon().getIntersectionPoints(this);
+		}
+		else if(shape instanceof Circle) {
 			A = this.p0.clone();
 			C = shape.center;
 			u.set(this.p1).remove(A).normalize();
@@ -2466,11 +2795,13 @@ class Line extends Shape {
 					return [A.add(u.mul(l2))];
 				}
 			} else return [];
-		} else if(shape instanceof Line) {
+		}
+		else if(shape instanceof Line) {
 			let p = Line.intersectionPoint(this, shape);
 			if(p.onLine1 && p.onLine2) return [p.point];
 			else return [];
-		} else return shape.getIntersectionPoints(this);
+		}
+		else return shape.getIntersectionPoints(this);
 	}
 
 	/**
@@ -2514,7 +2845,7 @@ class Line extends Shape {
 	 * @returns {Vec2}
 	 */
 	getNormalVect(left = true) {
-		return this.directorVect.rotate(left ? -Circle.PI_2 : Circle.PI_2);
+		return this.directorVect.rotate(left ? -PI_2 : PI_2);
 	}
 
 	/**
@@ -2614,6 +2945,7 @@ Line.prototype.glPointsNumber = 1;
  * @class Point
  * @augments Shape
  * @memberOf utils.geometry2d
+ * @alias utils.geometry2d.Point
  * @classdesc a very simple shape containing only necessary overridden methods to make it usable
  */
 class Point extends Shape {
@@ -2622,7 +2954,92 @@ class Point extends Shape {
 	 * @param {Vec2} p
 	 */
 	constructor(p) {
-		super(p);
+		super();
+		/**
+		 * position of the point
+		 * @name Point#center
+		 * @type {Vec2}
+		 */
+		this.center = p.clone();
+	}/**
+	 * returns a copy of the <code>{@link Shape#center|center}</code> attribute of the instance.
+	 * @returns {Vec2} a copy of the center
+	 */
+	copyCenter() {
+		return this.center.clone();
+	}
+
+	/**
+	 * sets the center's attributes to the same as the parameter's
+	 * @param {Vec2}center
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#setCenterXY}
+	 */
+	setCenter(center) {
+		this.center.set(center);
+		return this;
+	}
+
+	/**
+	 * sets the center's attributes to the parameters
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#setCenter}
+	 */
+	setCenterXY(x, y) {
+		this.center.setXY(x, y);
+		return this;
+	}
+
+	/**
+	 * makes the shape the opposite of itself relative to the given horizontal axis
+	 * if no value is set for axisY, the mirror will be made relative to the center's y coordinate.
+	 * @param {number} [axisY=center.y]
+	 *          ordinate of the horizontal axis
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#mirrorHorizontally}
+	 */
+	mirrorVertically(axisY = this.center.y) {
+		this.center.mirrorVertically(axisY);
+		return this;
+	}
+
+	/**
+	 * makes the shape the opposite of itself relative to the given vertical axis
+	 * if no value is set for axisX, the mirror will be made relative to the center's x coordinate.
+	 * @param {number} [axisX=center.x]
+	 *          abscissa of the vertical axis
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#mirrorVertically}
+	 */
+	mirrorHorizontally(axisX = this.center.x) {
+		this.center.mirrorHorizontally(axisX);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameters
+	 * @param {number} dX
+	 * @param {number} dY
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#move}
+	 */
+	moveXY(dX, dY) {
+		this.center.addXY(dX, dY);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameter
+	 * @param {Vec2} delta
+	 * @returns {Shape}
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#moveXY}
+	 */
+	move(delta) {
+		this.center.add(delta);
+		return this;
 	}
 
 	/**
@@ -2642,7 +3059,8 @@ class Point extends Shape {
 	 * @see {@link Shape#pushPath}
 	 */
 	draw(context, fill = true, stroke = !fill) {
-		context.fillRect(this.center.x - 1, this.center.y - 1, 2, 2);
+		context.fillRect(this.center.x - this.drawThickness, this.center.y - this.drawThickness,
+			2*this.drawThickness, 2*this.drawThickness);
 	}
 
 	/**
@@ -2674,6 +3092,13 @@ class Point extends Shape {
 		return new Point(this.center);
 	}
 }
+
+/**
+ * size of the drawn point in a standard context2d.
+ * @type {number}
+ * @name Point#drawThickness
+ */
+Point.prototype.drawThickness = 1;
 /**
  * number of points used to draw this shape.
  * @type {number}
@@ -2695,6 +3120,7 @@ let len = 0, i = 0, res = 0, p0 = Vec2.zero, p1 = Vec2.zero;
  * @class Polygon
  * @augments Shape
  * @memberOf utils.geometry2d
+ * @alias utils.geometry2d.Polygon
  * @classdesc a class using multiple points, where their coordinates are relative to the center of the shape.
  * This representation is optimized for movements and transformations, but not optimized for drawing and <!--
  * -->memory,  because it has all the points in memory (2 numbers each), plus the center <!--
@@ -2708,7 +3134,13 @@ class Polygon extends Shape {
 	 * @param {Vec2[]} relativePoints
 	 */
 	constructor(center, relativePoints) {
-		super(center);
+		super();
+		/**
+		 * center of the polygon
+		 * @name Polygon#center
+		 * @type {Vec2}
+		 */
+		this.center = center.clone();
 		i = relativePoints.length;
 		/**
 		 * @name Polygon#points
@@ -2745,6 +3177,61 @@ class Polygon extends Shape {
 			p1 = p0;
 		}
 		return res / 2;
+	}
+
+	/**
+	 * returns a copy of the <code>{@link Shape#center|center}</code> attribute of the instance.
+	 * @returns {Vec2} a copy of the center
+	 */
+	copyCenter() {
+		return this.center.clone();
+	}
+
+	/**
+	 * sets the center's attributes to the same as the parameter's
+	 * @param {Vec2}center
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#setCenterXY}
+	 */
+	setCenter(center) {
+		this.center.set(center);
+		return this;
+	}
+
+	/**
+	 * sets the center's attributes to the parameters
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#setCenter}
+	 */
+	setCenterXY(x, y) {
+		this.center.setXY(x, y);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameters
+	 * @param {number} dX
+	 * @param {number} dY
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#move}
+	 */
+	moveXY(dX, dY) {
+		this.center.addXY(dX, dY);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameter
+	 * @param {Vec2} delta
+	 * @returns {Shape}
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#moveXY}
+	 */
+	move(delta) {
+		this.center.add(delta);
+		return this;
 	}
 
 	/**
@@ -2788,7 +3275,7 @@ class Polygon extends Shape {
 	 * @returns {Polygon} <code>this</code>
 	 */
 	mirrorVertically(axisY = this.center.y) {
-		super.mirrorVertically(axisY);
+		this.center.mirrorVertically(axisY);
 		i = this.points.length;
 		while (i--) this.points[i].mirrorVertically();
 		return this;
@@ -2802,7 +3289,7 @@ class Polygon extends Shape {
 	 * @returns {Polygon} <code>this</code>
 	 */
 	mirrorHorizontally(axisX) {
-		super.mirrorHorizontally(axisX);
+		this.center.mirrorHorizontally(axisX);
 		i = this.points.length;
 		while (i--) this.points[i].mirrorHorizontally();
 		return this;
@@ -3057,7 +3544,8 @@ class Polygon extends Shape {
 					if (lines2[j].intersect(l)) return true;
 				}
 			}
-		} else while (i--) {
+		}
+		else while (i--) {
 			if (lines[i].intersect(shape)) return true;
 		}
 		return false;
@@ -3068,7 +3556,8 @@ class Polygon extends Shape {
 	 * @param {Shape} shape
 	 * @returns {Vec2[]}
 	 */
-	getIntersectionPoints(shape) {
+	getIntersectionPoints(shape) { //TODO performance : instead of getting lines in global coords.,
+		// move other shape to local coords.
 		let lines = this.getLines(), i = lines.length, res = [];
 		if(!i) return [];
 		if(shape instanceof Polygon) {
@@ -3080,7 +3569,8 @@ class Polygon extends Shape {
 					Array.prototype.push.apply(res, lines2[j].getIntersectionPoints(l));
 				}
 			}
-		} else while(i--) {
+		}
+		else while(i--) {
 			Array.prototype.push.apply(res, lines[i].getIntersectionPoints(shape));
 		}
 		return res;
@@ -3252,7 +3742,7 @@ class Polygon extends Shape {
 		if (!i) return;
 		if (!delta) {
 			delta = Vec2.zero;
-			let len = i;
+			const len = i;
 			while (i--) delta.add(this.points[i]);
 			delta.mul(1 / len);
 			i = len;
@@ -3276,7 +3766,13 @@ class Polygon extends Shape {
 	 * @returns {Polygon}
 	 */
 	static Absolute(pointsArray) {
-		return new Polygon(Vec2.ZERO, pointsArray).redefineCenter();
+		const len = pointsArray.length;
+		const c = Vec2.zero;
+		let i = len;
+		while(i--) {
+			c.add(pointsArray[i]);
+		}
+		return new Polygon(c.mul(1/len), pointsArray).redefineCenter(c);
 	}
 
 	/**
@@ -3301,7 +3797,7 @@ class Polygon extends Shape {
 	 * @returns {Polygon}
 	 */
 	static Ellipsoidal(center, radiusX, radiusY, edges, radians = 0) {
-		let dA = Circle.PI2 / edges, a = Circle.PI2, points = new Array(edges), i = edges;
+		let dA = PI2 / edges, a = PI2, points = new Array(edges), i = edges;
 		while (i--) {
 			a -= dA;
 			points[i] = Vec2(radiusX * Math.cos(a), radiusY * Math.sin(a));
@@ -3318,7 +3814,7 @@ class Polygon extends Shape {
 	 * @returns {Polygon}
 	 */
 	static Regular(center, radiusArray, pointsNumber, startRadians) {
-		let dR = (Circle.PI2) / pointsNumber, angle = startRadians, rLen = radiusArray.length,
+		let dR = (PI2) / pointsNumber, angle = startRadians, rLen = radiusArray.length,
 			p = new Polygon(center, []);
 		p.points = new Array(pointsNumber);
 		if (rLen !== undefined) {
@@ -3345,6 +3841,7 @@ class Polygon extends Shape {
  * @class Ray
  * @augments Shape
  * @memberOf utils.geometry2d
+ * @alias utils.geometry2d.Ray
  * @classdesc a class representing an infinite ray, defined by an origin point and the angle of the direction <!--
  * -->it is pointing toward. the origin of the ray is defined by the <!--
  * -->{@link Shape#center|center} attribute.
@@ -3356,13 +3853,31 @@ class Ray extends Shape {
 	 * @param {number} radians
 	 */
 	constructor(origin, radians) {
-		super(origin);
+		super();
+		/**
+		 * origin of the Ray
+		 * @name Ray#origin
+		 * @type {Vec2}
+		 */
+		this.origin = origin;
 		/**
 		 * @name Ray#angle
 		 * @type {number}
 		 */
 		this.angle = radians;
 	}
+
+	/**
+	 * origin of the Ray. Equivalent to ray.origin
+	 * @name Ray#center
+	 * @returns {Vec2}
+	 */
+	get center() { return this.origin; }
+
+	/**
+	 * @param {Vec2} center
+	 */
+	set center(center) { this.origin.set(center); }
 
 	/**
 	 * <code>=Infinity</code>
@@ -3374,6 +3889,30 @@ class Ray extends Shape {
 		return Infinity;
 	}
 
+
+	/**
+	 * moves the shape according to the parameters
+	 * @param {number} dX
+	 * @param {number} dY
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#move}
+	 */
+	moveXY(dX, dY) {
+		this.origin.addXY(dX, dY);
+		return this;
+	}
+
+	/**
+	 * moves the shape according to the parameter
+	 * @param {Vec2} delta
+	 * @returns {Shape}
+	 * @returns {Shape} <code>this</code>
+	 * @see {@link Shape#moveXY}
+	 */
+	move(delta) {
+		this.origin.add(delta);
+		return this;
+	}
 	/**
 	 * rotates the ray around its origin.
 	 * @param {number} radians
@@ -3392,7 +3931,7 @@ class Ray extends Shape {
 	 * @see {@link Ray#mirrorHorizontally}
 	 */
 	mirrorVertically(axisY = this.center.y) {
-		super.mirrorVertically(axisY);
+		this.origin.mirrorVertically(axisY);
 		this.angle = -this.angle;
 		return this;
 	}
@@ -3406,7 +3945,7 @@ class Ray extends Shape {
 	 * @see {@link Ray#mirrorVertically}
 	 */
 	mirrorHorizontally(axisX = this.center.x) {
-		super.mirrorHorizontally(axisX);
+		this.origin.mirrorHorizontally(axisX);
 		this.angle = Math.PI - this.angle;
 		return this;
 	}
@@ -3418,7 +3957,7 @@ class Ray extends Shape {
 	 * @returns {Vec2|Vec2}
 	 */
 	endPoint(length) {
-		return this.center.clone().addXY(Math.cos(this.angle) * length, Math.sin(this.angle) * length);
+		return this.origin.clone().addXY(Math.cos(this.angle) * length, Math.sin(this.angle) * length);
 	}
 
 	/**
@@ -3428,7 +3967,7 @@ class Ray extends Shape {
 	 * @returns {Line}
 	 */
 	getLine(length) {
-		return Line.createFromPointVector(this.center, Vec2.createFromAngle(this.angle, length));
+		return Line.createFromPointVector(this.origin, Vec2.createFromAngle(this.angle, length));
 	}
 
 	/**
@@ -3438,8 +3977,8 @@ class Ray extends Shape {
 	 */
 	pushPath(context) {
 		const p = this.endPoint(context.canvas.clientWidth + context.canvas.clientHeight);
-		context.moveTo(this.center.x, this.center.y);
-		context.moveTo(this.center.x, this.center.y);
+		context.moveTo(this.origin.x, this.origin.y);
+		context.moveTo(this.origin.x, this.origin.y);
 		context.lineTo(p.x, p.y);
 	}
 
@@ -3457,8 +3996,8 @@ class Ray extends Shape {
 	 */
 	getVertices(verticesArray, vOffset, indicesArray, iOffset){
 		const o = offset/2, t = this.endPoint(Number.MAX_SAFE_INTEGER);
-		verticesArray[vOffset++] = this.center.x;
-		verticesArray[vOffset++] = this.center.y;
+		verticesArray[vOffset++] = this.origin.x;
+		verticesArray[vOffset++] = this.origin.y;
 		verticesArray[vOffset++] = t.x;
 		verticesArray[vOffset++] = t.y;
 		indicesArray[iOffset++] = o;
@@ -3472,9 +4011,9 @@ class Ray extends Shape {
 	 * @returns {boolean}
 	 */
 	intersect(shape) {
-		const rect = shape.getRect();
+		const rect = (shape instanceof Rect) ? shape : shape.getRect();
 		return new Line(this.center,
-			this.endPoint(Vec2.distance(this.center, shape.center) + rect.width + rect.height)).intersect(shape);
+			this.endPoint(Vec2.distance(this.origin, shape.center) + rect.width + rect.height)).intersect(shape);
 	}
 
 	/**
@@ -3483,8 +4022,8 @@ class Ray extends Shape {
 	 * @returns {Vec2[]}
 	 */
 	getIntersectionPoints(shape) {
-		const rect = shape.getRect();
-		return this.getLine(Vec2.distance(this.center, shape.center) + rect.width + rect.height)
+        const rect = (shape instanceof Rect) ? shape : shape.getRect();
+		return this.getLine(Vec2.distance(this.origin, shape.center) + rect.width + rect.height)
 			.getIntersectionPoints(shape);
 	}
 
@@ -3495,7 +4034,7 @@ class Ray extends Shape {
 	 * @returns {boolean}
 	 */
 	contains(point) {
-		return this.endPoint(Vec2.distance(this.center, point)).equals(point);
+		return this.endPoint(Vec2.distance(this.origin, point)).equals(point);
 	}
 
 	/**
@@ -3505,8 +4044,8 @@ class Ray extends Shape {
 	 */
 	getRect() {
 		const endPoint = this.endPoint(Infinity);
-		return new Rect(Math.min(endPoint.x, this.center.x), Math.min(endPoint.y, this.center.y),
-			Math.max(endPoint.x, this.center.x), Math.max(endPoint.y, this.center.y));
+		return new Rect(Math.min(endPoint.x, this.origin.x), Math.min(endPoint.y, this.origin.y),
+			Math.max(endPoint.x, this.origin.x), Math.max(endPoint.y, this.origin.y));
 	}
 
 	/**
@@ -3523,7 +4062,7 @@ class Ray extends Shape {
 	 * @returns {Vec2}
 	 */
 	closestpointTo(p) {
-		let A = this.center, AC = Vec2.translation(A, p), u = this.directorVect, d = Vec2.dotProd(u, AC);
+		let A = this.origin, AC = Vec2.translation(A, p), u = this.directorVect, d = Vec2.dotProd(u, AC);
 		return d < 0 ? u.set(A) : u.mul(d).add(A);
 	}
 
@@ -3540,7 +4079,7 @@ class Ray extends Shape {
 	 * @returns {Ray}
 	 */
 	clone() {
-		return new Ray(this.center, this.angle);
+		return new Ray(this.origin, this.angle);
 	}
 }
 /**
@@ -3556,49 +4095,4 @@ Ray.prototype.glPointsNumber = 2;
  */
 Ray.prototype.glTrinagles = 1;
 
-
-let asm = {};
-let wasmCode = new Uint8Array([
-	0,97,115,109,1,0,0,0,1,189,128,128,128,0,7,96,1,125,1,125,96,6,125,125,125,125,125,125,1,127,96,4,125,125,125,
-	125,1,127,96,2,125,125,1,125,96,4,125,125,125,125,1,125,96,7,125,125,125,125,125,125,125,1,127,96,8,125,125,125,
-	125,125,125,125,125,1,125,3,142,128,128,128,0,13,1,2,3,3,4,4,4,4,4,4,1,5,6,4,132,128,128,128,0,1,112,0,0,5,131,
-	128,128,128,0,1,0,1,6,129,128,128,128,0,0,7,225,129,128,128,0,14,6,109,101,109,111,114,121,2,0,3,99,99,119,0,0,
-	4,99,99,119,50,0,1,15,115,113,117,97,114,101,77,97,103,110,105,116,117,100,101,0,2,9,109,97,103,110,105,116,117,
-	100,101,0,3,10,100,111,116,80,114,111,100,117,99,116,0,4,13,118,101,99,116,111,114,80,114,111,100,117,99,116,0,
-	5,23,115,113,117,97,114,101,69,117,99,108,105,100,101,97,110,68,105,115,116,97,110,99,101,0,6,17,101,117,99,108,
-	105,100,101,97,110,68,105,115,116,97,110,99,101,0,7,17,109,97,110,104,97,116,116,97,110,68,105,115,116,97,110,
-	99,101,0,8,16,100,105,97,103,111,110,97,108,68,105,115,116,97,110,99,101,0,9,16,99,105,114,99,108,101,115,73,
-	110,116,101,114,115,101,99,116,0,10,19,99,105,114,99,108,101,76,105,110,101,73,110,116,101,114,115,101,99,116,0,
-	11,14,108,105,110,101,115,73,110,116,101,114,115,101,99,116,0,12,10,236,132,128,128,0,13,153,128,128,128,0,0,32,
-	2,32,0,147,32,5,32,1,147,148,32,3,32,1,147,32,4,32,0,147,148,94,11,141,128,128,128,0,0,32,0,32,3,148,32,1,32,2,
-	148,94,11,141,128,128,128,0,0,32,0,32,0,148,32,1,32,1,148,146,11,142,128,128,128,0,0,32,0,32,0,148,32,1,32,1,
-	148,146,145,11,141,128,128,128,0,0,32,0,32,2,148,32,1,32,3,148,146,11,141,128,128,128,0,0,32,0,32,3,148,32,1,32,
-	2,148,147,11,151,128,128,128,0,0,32,2,32,0,147,34,2,32,2,148,32,3,32,1,147,34,2,32,2,148,146,11,152,128,128,128,
-	0,0,32,2,32,0,147,34,2,32,2,148,32,3,32,1,147,34,2,32,2,148,146,145,11,158,128,128,128,0,1,1,127,32,2,32,0,147,
-	32,3,32,1,147,146,168,34,4,32,4,65,31,117,34,4,106,32,4,115,178,11,182,128,128,128,0,1,1,127,32,2,32,0,147,168,
-	34,4,32,4,65,31,117,34,4,106,32,4,115,178,34,2,32,3,32,1,147,168,34,4,32,4,65,31,117,34,4,106,32,4,115,178,34,0,
-	32,2,32,0,94,27,11,178,128,128,128,0,0,32,3,32,0,147,34,3,32,3,148,32,4,32,1,147,34,3,32,3,148,146,145,34,3,32,
-	2,146,32,5,94,32,3,32,2,32,5,146,93,32,3,32,5,146,32,2,94,113,113,11,173,129,128,128,0,2,3,125,1,127,65,1,33,10,
-	2,64,32,0,32,3,147,34,7,32,7,148,32,1,32,4,147,34,8,32,8,148,146,145,32,2,93,32,0,32,5,147,34,9,32,9,148,32,1,
-	32,6,147,34,9,32,9,148,146,145,32,2,93,115,13,0,65,0,33,10,32,7,32,5,32,3,147,34,5,32,5,32,5,148,32,6,32,4,147,
-	34,5,32,5,148,146,145,34,6,149,34,9,148,32,8,32,5,32,6,149,34,7,148,146,34,5,67,0,0,0,0,93,13,0,32,5,32,6,94,13,
-	0,32,0,32,9,32,5,148,32,3,146,147,34,0,32,0,148,32,1,32,7,32,5,148,32,4,146,147,34,0,32,0,148,146,32,2,32,2,148,
-	95,33,10,11,32,10,11,237,128,128,128,0,1,4,125,67,0,0,0,0,33,11,2,64,32,4,32,0,147,34,4,32,7,32,1,147,34,10,148,
-	32,5,32,1,147,34,8,32,6,32,0,147,34,9,148,94,32,5,32,2,147,32,7,32,3,147,148,32,5,32,3,147,32,6,32,2,147,148,94,
-	70,13,0,32,2,32,0,147,34,5,32,8,148,32,3,32,1,147,34,1,32,4,148,94,32,5,32,10,148,32,1,32,9,148,94,115,179,33,
-	11,11,32,11,11
-]);
-
-if(WebAssembly) WebAssembly.instantiate(wasmCode, {/* imports */}).then(wasm=>{
-	asm = wasm.instance.exports;
-});
-if(window) {
-	//not in module
-	window.utils = window.utils || {};
-	utils.geometry2d = {
-		Vec2, Rect, Shape, Circle, Ellipsoid, Line, Point, Polygon, Ray
-	}
-} else {
-	//export {Vec2, Rect, Shape, Circle, Ellipsoid, Line, Point, Polygon, Ray};
-}
-}
+export {PI2, PI_2, Vec2, Rect, Shape, Circle, Ellipsoid, Line, Point, Polygon, Ray};

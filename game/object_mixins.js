@@ -1,18 +1,13 @@
 /**
- * Created by rfrance on 12/20/2016.
+ * Created by Loic France on 12/20/2016.
  */
 "use strict";
 
 /**
+ * @module game/object_mixins
  * contains mixins to create objects with useful properties such as {@link game.objectProperties.health|health}<!--
  * -->, {@link game.objectProperties.energy|energy}, {@link game.objectProperties.tag|tag}, ...
- * @namespace
- * @memberOf game
- * @property health
- * @property energy
- * @property tag
  */
-game.objectProperties = {
 //######################################################################################################################
 //#                                                       health                                                       #
 //######################################################################################################################
@@ -24,11 +19,11 @@ game.objectProperties = {
 	 * -->(not created by default, but used in method if it exists).
 	 * also adds getters and setters for those two attributes, and two other methods : <!--
 	 * --><code>{@link game.objectProperties.health.heal|heal}</code> and <!--
-	 * --><code>{@link game.objectProperties.health.receiveDamages|receiveDamages}</code>
+	 * --><code>{@link game.objectProperties.health.receiveDamage|receiveDamage}</code>
 	 * @memberOf game.objectProperties
 	 * @mixin game.objectProperties.health
 	 */
-	health: {
+const health = {
 		health: 0,
 		/**
 		 * sets the value of the <code>health</code> attribute of the object to the specified value, <!--
@@ -64,7 +59,7 @@ game.objectProperties = {
 		 * @param {game.GameManager} gameManager
 		 * @param {number} damages
 		 */
-		receiveDamages : function( gameManager, damages ) {
+		receiveDamage : function(gameManager, damages ) {
 			if(damages >= this.health) {
 				this.setHealth(0);
 				this.kill(gameManager);
@@ -100,7 +95,7 @@ game.objectProperties = {
 	 * @memberOf game.objectProperties
 	 * @mixin game.objectProperties.energy
 	 */
-	energy: {
+	energy = {
 		energy : 0,
 		/**
 		 * sets the value of the <code>energy</code> attribute to the specified value.
@@ -122,11 +117,9 @@ game.objectProperties = {
 		 * @param {number} value
 		 */
 		recoverEnergy : function( value ) {
-			if(this.maxEnergy !== undefined && this.energy+value > this.maxEnergy) {
-				value = this.maxEnergy
-			}
-			else value += this.energy;
-			this.setEnergy(value);
+			const max = this.getMaxEnergy(), e = this.getEnergy();
+			if(e < max)
+				this.setEnergy( (e + value < max) ? e + value : max);
 		},
 		/**
 		 * removes the specified value from the player's <code>energy</code> attribute if it has enough <!--
@@ -135,9 +128,10 @@ game.objectProperties = {
 		 * @returns {boolean}
 		 */
 		useEnergy : function( value ) {
-			if(value > this.energy) return false;
+			const e = this.getEnergy();
+			if(value > e) return false;
 			else {
-				this.energy -= value;
+				this.setEnergy(e - value);
 				return true;
 			}
 		},
@@ -146,20 +140,20 @@ game.objectProperties = {
 		 * @returns {number}
 		 */
 		getEnergy : function() {
-			return this.energy;
+			return this.energy || 0;
 		},
 		/**
 		 * returns the value of the <code>maxEnergy</code> attribute, or undefined if not set.
 		 * @returns {number}
 		 */
 		getMaxEnergy : function() {
-			return this.maxEnergy;
+			return this.maxEnergy || 0;
 		}
 	},
 //######################################################################################################################
 //#                                                         tag                                                        #
 //######################################################################################################################
-	tiledMap: {
+	tiledMap = {
 		tilesOccupation: [[1]],
 		setTile(tiledMap,x,y) {
 			this.position.set(tiledMap.getTileCenter(x,y));
@@ -193,7 +187,7 @@ game.objectProperties = {
 	 * @property {Array|undefined} tags
 	 * @mixin game.objectProperties.tag
 	 */
-	tag: {
+	tag = {
 		/**
 		 * adds the specified tag to the object. If the object had no tag, the attribute <code>tags</code> <!--
 		 * -->is created.
@@ -238,7 +232,7 @@ game.objectProperties = {
 	 * @param {game.Object} obj
 	 * @returns {boolean}
 	 */
-	tag_canHaveTag: obj=>obj.hasTag !== undefined,
+	tag_canHaveTag = obj=>obj.hasTag !== undefined,
 	/**
 	 * returns true if the object implements the {@link game.objectProperties.tag|tag} mixin, <!--
 	 * -->and has the specified tag. can be used as a filter to get all objects with a tag by binding the <!--
@@ -247,21 +241,16 @@ game.objectProperties = {
 	 * @param {game.Object} obj
 	 * @returns {boolean}
 	 */
-	tag_hasTag: (tag, obj)=> obj.hasTag && obj.hasTag(tag),
+	tag_hasTag = (tag, obj)=> obj.hasTag && obj.hasTag(tag),
 	/**
 	 * returns all objects in the game with the specified tag
 	 * @param {game.GameManager} gameManager
 	 * @param {*} tag
 	 * @returns {game.Object[]}
 	 */
-	tag_getAllObjectsWithTag: (gameManager, tag=null)=> {
-		if(tag) return gameManager.getObjects(game.objectProperties.tag_hasTag.bind(undefined, tag));
-		else return gameManager.getObjects(game.objectProperties.tag_canHaveTag);
-	},
-//######################################################################################################################
-//#                                                       control                                                      #
-//######################################################################################################################
-	control: {
+	tag_getAllObjectsWithTag = (gameManager, tag=null)=> {
+		if(tag) return gameManager.getObjects(tag_hasTag.bind(undefined, tag));
+		else return gameManager.getObjects(tag_canHaveTag);
+	};
 
-	}
-};
+export {health, energy, tiledMap, tag, tag_canHaveTag, tag_hasTag, tag_getAllObjectsWithTag};

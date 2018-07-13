@@ -1,6 +1,10 @@
-utils.tools.polyfill(window, "AudioContext", ["webkit"]);
-utils.audio = {
-	loadSound(audioContext, onResult, onError, url) {
+import {polyfill} from "./tools";
+
+/**
+ * @module utils/audio
+ */
+polyfill(window, "AudioContext", ["webkit"]);
+function loadSound(audioContext, onResult, onError, url) {
 		const request = new XMLHttpRequest();
 		request.open('GET', url, true);
 		request.responseType = 'arraybuffer';
@@ -8,9 +12,9 @@ utils.audio = {
 		// Decode asynchronously
 		request.onload = function() {
 			context.decodeAudioData(request.response, onResult, onError);
-		}
+		};
 		request.send();
-	},
+	}
 	/**
 	 * <code>
 	 * __________________________________________________________________________________________________________
@@ -49,50 +53,60 @@ utils.audio = {
 	 * |    5   |
 	 * |________|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|_______|
 	 * </code>
-	 * @param {number} midi identification number (see <!--
+	 * @param {number} semitones - midi identification number (see <!--
 	 * -->http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm <!--
 	 * -->or http://tonalsoft.com/pub/news/pitch-bend.aspx) <!--
 	 * -->for a list of all ids)
 	 * @return {number} the note frequency, in Hz
 	 */
-	getNoteFreq(semitones) {
-		return 440*(Math.pow(2, noteId-69));
-	},
-	createSinusOscillator(audioContext, freq) {
+function getNoteFreq(semitones) {
+		return 440*(Math.pow(2, semitones-69));
+	}
+function createSinusOscillator(audioContext, freq) {
 		let o = audioContext.createOscillator();
 		o.type = "sine";
 		o.frequency.value = freq;
 		return o;
-	},
-	createSquareOscillator(audioContext, freq) {
+	}
+function createSquareOscillator(audioContext, freq) {
 		let o = audioContext.createOscillator();
 		o.type = "square";
 		o.frequency.value = freq;
 		return o;
-	},
-	createTriangleOscillator(audioContext, freq) {
+	}
+function createTriangleOscillator(audioContext, freq) {
 		let o = audioContext.createOscillator();
 		o.type = "triangle";
 		o.frequency.value = freq;
 		return o;
-	},
-	createSawToothOscillator(audioContext, freq) {
+	}
+function createSawToothOscillator(audioContext, freq) {
 		let o = audioContext.createOscillator();
 		o.type = "sawtooth";
 		o.frequency.value = freq;
 		return o;
-	},
-	createCustomOscillator(audioContext, freq, periodicWave) {
+	}
+function createCustomOscillator(audioContext, freq, periodicWave) {
 		let o = audioContext.createOscillator();
 		o.type = "custom";
 		o.frequency.value = freq;
 		o.setPeriodicWave(periodicWave);
 		return o;
-	},
-	connectNodes(nodes) {
-		let i, n = nodes.length;
-		for(i=0; i< n-1; i++) {
-			nodes[i].connect(nodes[i+1]);
-		}
-	},
+	}
+function connectNodes(nodes) {
+	let i, n = nodes.length;
+	for(i=0; i< n-1; i++) {
+		nodes[i].connect(nodes[i+1]);
+	}
+}
+
+export {
+	loadSound,
+	getNoteFreq,
+	createSinusOscillator,
+	createSquareOscillator,
+	createTriangleOscillator,
+	createSawToothOscillator,
+	createCustomOscillator,
+	connectNodes
 }
