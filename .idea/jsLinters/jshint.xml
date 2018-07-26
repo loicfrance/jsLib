@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JSHintConfiguration" version="2.9.2" use-config-file="false">
+  <component name="JSHintConfiguration" version="2.9.5" use-config-file="false">
     <option asi="false" />
-    <option bitwise="true" />
-    <option boss="false" />
+    <option bitwise="false" />
+    <option boss="true" />
     <option browser="true" />
     <option browserify="false" />
     <option camelcase="false" />
     <option couch="false" />
-    <option curly="true" />
+    <option curly="false" />
     <option debug="false" />
     <option devel="false" />
     <option dojo="false" />
@@ -20,12 +20,12 @@
     <option es5="false" />
     <option esnext="true" />
     <option evil="false" />
-    <option expr="false" />
+    <option expr="true" />
     <option forin="true" />
     <option freeze="false" />
     <option funcscope="false" />
     <option futurehostile="false" />
-    <option gcl="false" />
+    <option gcl="true" />
     <option globalstrict="false" />
     <option immed="false" />
     <option iterator="false" />
@@ -38,7 +38,7 @@
     <option loopfunc="false" />
     <option maxerr="50" />
     <option mocha="false" />
-    <option module="false" />
+    <option module="true" />
     <option mootools="false" />
     <option moz="false" />
     <option multistr="false" />
@@ -54,7 +54,7 @@
     <option notypeof="false" />
     <option noyield="false" />
     <option onevar="false" />
-    <option passfail="true" />
+    <option passfail="false" />
     <option phantom="false" />
     <option plusplus="false" />
     <option proto="false" />
@@ -66,11 +66,11 @@
     <option shadow="false" />
     <option shelljs="false" />
     <option singleGroups="false" />
-    <option smarttabs="false" />
+    <option smarttabs="true" />
     <option strict="true" />
     <option sub="false" />
     <option supernew="false" />
-    <option trailing="false" />
+    <option trailing="true" />
     <option typed="false" />
     <option undef="true" />
     <option unused="false" />

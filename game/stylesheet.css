@@ -6,6 +6,7 @@ html, body {
     background: black;
     position: absolute;
     color: white;
+    font-family: Arial, sans-serif;
 }
 /* NOT AVAILABLE IN CSS3
 *:has( > .game_div) {
@@ -41,4 +42,5 @@ html, body {
     top: 50%;
     display: inline-block;
     transform : translate(-50%, -50%);
+    transform-origin: left top;
 }

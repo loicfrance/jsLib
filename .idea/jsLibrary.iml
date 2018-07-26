@@ -14,5 +14,8 @@
     <orderEntry type="library" name="customWebGL" level="application" />
     <orderEntry type="library" name="game" level="application" />
     <orderEntry type="library" name="utils" level="application" />
+    <orderEntry type="library" name="@types/webgl2" level="application" />
+    <orderEntry type="library" name="Generated files" level="project" />
+    <orderEntry type="library" name="geometry2d" level="application" />
   </component>
 </module>

@@ -1,31 +1,5 @@
 <component name="libraryTable">
   <library name="Generated files" type="javaScript">
-    <properties>
-      <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/game/TiledMap.min.js" />
-        <item url="file://$PROJECT_DIR$/game/board.min.js" />
-        <item url="file://$PROJECT_DIR$/game/bullets.min.js" />
-        <item url="file://$PROJECT_DIR$/game/game.min.js" />
-        <item url="file://$PROJECT_DIR$/game/manager.min.js" />
-        <item url="file://$PROJECT_DIR$/game/object.min.js" />
-        <item url="file://$PROJECT_DIR$/game/object_mixins.min.js" />
-        <item url="file://$PROJECT_DIR$/game/particles.min.js" />
-        <item url="file://$PROJECT_DIR$/game/physics.min.js" />
-        <item url="file://$PROJECT_DIR$/game/renderer_collider.min.js" />
-        <item url="file://$PROJECT_DIR$/game/turn.min.js" />
-        <item url="file://$PROJECT_DIR$/game/viewers.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/audio.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/colors.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/filters.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/geometry2d.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/input.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/layout.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/p2p.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/tools.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/utils.min.js" />
-        <item url="file://$PROJECT_DIR$/utils/webgl.min.js" />
-      </sourceFilesUrls>
-    </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../file_watchers/node_modules/1_utils-compiled.js" />
       <root url="file://$PROJECT_DIR$/utils/1_utils-compiled.js" />
@@ -57,6 +31,11 @@
       <root url="file://$PROJECT_DIR$/utils/tools.min.js" />
       <root url="file://$PROJECT_DIR$/utils/utils.min.js" />
       <root url="file://$PROJECT_DIR$/utils/webgl.min.js" />
+      <root url="file://$PROJECT_DIR$/geometry2d/Rect.mjs.min.js" />
+      <root url="file://$PROJECT_DIR$/geometry2d/Shape.min.js" />
+      <root url="file://$PROJECT_DIR$/geometry2d/Circle.mjs.min.js" />
+      <root url="file://$PROJECT_DIR$/geometry2d/Vec2.mjs.min.js" />
+      <root url="file://$PROJECT_DIR$/demos/breakout/main.mjs.min.js" />
     </CLASSES>
     <SOURCES />
   </library>
