@@ -458,7 +458,9 @@ class Line extends Shape {
      * @returns {Vec2}
      */
     getNormalVect(left = true) {
-        return this.directorVect.rotate(left ? -PI_2 : PI_2);
+        let d = this.directorVect;//.rotate(left ? -PI_2 : PI_2);
+        [d.x,d.y] = left ? [d.y, -d.x] : [-d.y, d.x];
+        return d;
     }
 
     /**

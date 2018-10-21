@@ -323,10 +323,11 @@ class Viewer {
 	 * -->as the rectangle's {@link Rect#ratio|ratio}
 	 */
 	updateTransform() {
+		const scaleX = this.context.canvas.width/this.visibleRect.width,
+			  scaleY = this.context.canvas.height/this.visibleRect.height;
 		this.context.setTransform(
-			this.context.canvas.width/this.visibleRect.width, 0,
-			0, this.context.canvas.height/this.visibleRect.height,
-			this.visibleRect.xMin, this.visibleRect.yMin);
+			scaleX, 0, 0, scaleY,
+			-this.visibleRect.xMin*scaleX, -this.visibleRect.yMin*scaleY);
 		this.updateUI();
 	}
 	/**
@@ -392,7 +393,7 @@ class StandardViewer extends Viewer {
 	}
 	render(gameManager, objects) {
 		let rect = this.visibleRect, objs, ctx = this.context, l, i, callback = this.getCallback();
-		ctx.clearRect(rect.xMin, rect.yMin, rect.xMax, rect.yMax);
+		ctx.clearRect(rect.xMin, rect.yMin, rect.width, rect.height);
 		if(callback) {
 			ctx.save();
 			callback(RenderEvent.RENDER_BEGIN, ctx);
@@ -501,7 +502,7 @@ class WebGLViewer extends Viewer {
 		this.context.viewport(0, 0, this.context.canvas.width, this.context.canvas.height);
 		this.updateUI();
 	}
-	get gl() {
+	get gl() { //alias for context
 		return this.context;
 	}
 	setBgColor(red, green, blue, alpha) {

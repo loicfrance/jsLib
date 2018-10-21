@@ -148,13 +148,14 @@ class Polygon extends Shape {
      * @returns {Polygon}
      */
     rotate(radians) {
+        const c = Math.cos(radians), s = Math.sin(radians);
         i = this.points.length;
-        while (i--) this.points[i].angle += radians;
+        while (i--) this.points[i].transform(c,-s,s,c,0,0);
         return this;
     }
 
     /**
-     * makes the line the mirror of itself relative to the given horizontal axis
+     * makes the polygon the mirror of itself relative to the given horizontal axis
      * if no value is set for axisY, the mirror will be made relative to the center's y coordinate.
      * @param {number} [axisY=center.y]
      *          ordinate of the horizontal axis
@@ -168,13 +169,13 @@ class Polygon extends Shape {
     }
 
     /**
-     * makes the line the mirror of itself relative to the given vertical axis
+     * makes the polygon the mirror of itself relative to the given vertical axis
      * if no value is set for axisX, the mirror will be made relative to the center's x coordinate.
      * @param {number} [axisX=center.x]
      *          abscissa of the vertical axis
      * @returns {Polygon} <code>this</code>
      */
-    mirrorHorizontally(axisX) {
+    mirrorHorizontally(axisX = this.center.x) {
         this.center.mirrorHorizontally(axisX);
         i = this.points.length;
         while (i--) this.points[i].mirrorHorizontally();
@@ -244,6 +245,19 @@ class Polygon extends Shape {
         }
         return z <= 0;
     }
+
+    /**
+     * inverts the order of the points. This can be used to make the points in ccw order if they are not,
+     * or the opposite.
+     * @returns {Polygon} <code>this</code>
+     */
+    invertPointsOrder() {
+        let l = (this.points.length-1)/2, r = l>>0
+        l = r==l ? l : r+1;
+        while(r++,l--)
+            [this.points[l], this.points[r]] = [this.points[r], this.points[l]];
+        return this;
+    }
     /**
      * divide the polygon into several new convex polygons, without creating intermediate points
      * @return {[Polygon]} convex polygons
@@ -252,7 +266,7 @@ class Polygon extends Shape {
         let polygons = [];
         let points = this.points.slice(0);
         let n = points.length;
-        if(n < 4) return [new Polygon(this.center, points)];
+        if(n < 4) return [ConvexPolygon.createCCW(this.center, points)];
         const ccw = this.ccw();
         let i=0;
         while(n > 3) {
@@ -279,10 +293,10 @@ class Polygon extends Shape {
                 j = j % n;
             }
             array.push(points[i]);
-            polygons.push(new Polygon(this.center, array));
+            polygons.push(ConvexPolygon.createCCW(this.center, array));
             if(n < 4) break;
         }
-        polygons.push(new Polygon(this.center, points));
+        polygons.push(ConvexPolygon.createCCW(this.center, points));
         return polygons;
     }
 
@@ -599,6 +613,27 @@ class Polygon extends Shape {
     }
 
     /**
+     * returns the Support Point (in global coordinates) of the polygon for the specified direction.
+     * The support point is the corner of the polygon that is the farthest away along a given direction.
+     * If there is 2 points at equal distance, only the one with the highest index is retrieved
+     * @param {Vec2} direction
+     * @return {Vec2} support point for the given direction
+     */
+    supportPoint(direction)
+    {
+        let bestProj = -Infinity,
+            bestPoint, i = this.points.length;
+        while(i--) {
+            const p = this.points[i], proj = Vec2.dotProd(p, direction);
+            if(proj > bestProj)
+            {
+                bestProj = proj;
+                bestPoint = p;
+            }
+        }
+        return bestPoint.clone().add(this.center);
+    }
+    /**
      * returns the maximum distance of a point of the polygon to the center.
      * @returns {number}
      */
@@ -688,7 +723,7 @@ class Polygon extends Shape {
             a -= dA;
             points[i] = Vec2(radiusX * Math.cos(a), radiusY * Math.sin(a));
         }
-        return new Polygon(center, points);
+        return new ConvexPolygon(center, points);
     }
 
     /**
@@ -720,6 +755,61 @@ class Polygon extends Shape {
         return p;
     }
 }
+class ConvexPolygon extends Polygon {
+    constructor(center, relativePoints)
+    {
+        super(center, relativePoints);
+    }
+    clone()
+    {
+        return new ConvexPolygon(this.center, this.points);
+    }
+    intersect(shape) {
+        if(shape instanceof Circle) {
+            let i = this.points.length;
+            //let bestD = -Infinity, bestI = -1;
+            while(i--)
+            {
+                const norm = this.getNormalVectForLine(i);
+                const support = shape.center.add(norm.clone().mul(shape.radius))
+                const d = Vec2.dotProd(norm, support.remove(this.points[i]).remove(this.center));
+                if(d > 0) return false;
+                /*
+                if(d > bestD) {
+                    bestD = d;
+                    bestI = i;
+                }
+                */
+            }
+            return true;
+        }
+        if (shape instanceof ConvexPolygon) {
+            let i = this.points.length;
+            //let bestD = -Infinity, bestI = -1;
+            while(i--)
+            {
+                const norm = this.getNormalVectForLine(i);
+                const support = shape.supportPoint(norm.mirror()); // supportPoint(-norm)
+                const d = -Vec2.dotProd(norm, support.remove(this.points[i]).remove(this.center)); // norm * (support - point)
+                if(d > 0) return false;
+                /*
+                if(d > bestD) {
+                    bestD = d;
+                    bestI = i;
+                }
+                */
+            }
+            return true;
+        } else super.intersect(this);
+    }
+    static createCCW(center, points)
+    {
+        const p = new ConvexPolygon(center, points);
+        if(!p.ccw())
+            p.invertPointsOrder();
+        return p;
+    }
+}
 
 export default Polygon;
-export {Polygon};
+export {Polygon, ConvexPolygon};

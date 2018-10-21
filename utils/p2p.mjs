@@ -1,6 +1,7 @@
 /**
  * @module utils/p2p
  */
+import {waitForEvent} from "./tools.mjs"
 /**
  * @class utils.p2p.PeerConnection
  * A class used to handle P2P connection.
@@ -154,9 +155,9 @@ function test3() {
 		.then(channel=>channel.onmessage = onMsg)
 		.then(()=>peer2.waitDataChannel())
 		.then(channel=>channel.onmessage = onMsg)
-		.then(_=>console.log("finish"))
-		.then(_=>peer1.tx.readyState == 'open' || utils.tools.waitForEvent(peer1.tx, 'open'))
-		.then(peer1.tx.send('Hello'));
+		.then(()=>console.log("finish"))
+		.then(()=>peer1.tx.readyState == 'open' || waitForEvent(peer1.tx, 'open'))
+		.then(()=>eer1.tx.send('Hello'));
 }
 export {
 	PeerConnection

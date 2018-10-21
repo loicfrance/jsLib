@@ -86,12 +86,12 @@ class ShapedObjectRenderer extends ObjectRenderer {
 		 * @name ShapedObjectRenderer#shape
 		 * @type {Shape}
 		 */
-		this.shape = shape.clone();
+		this.setShape(shape);
 		/**
 		 * @name ShapedObjectRenderer#color
 		 * @type {string}
 		 */
-		this.color = color;
+		this.setColor(color);
 	}
 
 	/**
@@ -133,7 +133,11 @@ class ShapedObjectRenderer extends ObjectRenderer {
 	 * @param {string} color
 	 */
 	setColor(color) {
-		this.color = color;
+        if(!(color.substr)) {
+            let c = color.toString(16);
+            if(c.length < 6) c = '0'.repeat(6-c.length)+c;
+            this.color = '#'+c;
+        } else this.color = color;
 	}
 
 	/**
@@ -158,11 +162,6 @@ class ShapedObjectRenderer extends ObjectRenderer {
 	 * @param {CanvasRenderingContext2D} context2d
 	 */
 	render(context2d) {
-		if(!(this.color.substr)) {
-			let c = this.color.toString(16);
-			if(c.length < 6) c = '0'.repeat(6-c.length)+c;
-			this.color = '#'+c;
-		}
 		this.fill && (context2d.fillStyle = this.color);
 		this.stroke && (context2d.strokeStyle = this.color);
 		this.shape.draw(context2d, this.fill, this.stroke);

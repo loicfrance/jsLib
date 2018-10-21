@@ -29,5 +29,5 @@ export { Circle } from "./Circle.mjs";
 export { Ellipsoid } from "./Ellipsoid.mjs";
 export { Line } from "./Line.mjs";
 export { Point } from "./Point.mjs";
-export { Polygon } from "./Polygon.mjs";
+export { Polygon, ConvexPolygon } from "./Polygon.mjs";
 export { Ray } from "./Ray.mjs";

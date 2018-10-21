@@ -76,10 +76,7 @@ class ShapedParticle extends Particle {
 	 * @param {?Shape} shape
 	 * @param {string|number} color
 	 */
-	constructor(lifeTime, shape, color) {
-		if(!shape) {
-			console.log(shape);
-		}
+	constructor(shape, color, lifeTime = 2.0) {
 		super();
 		this.shape = shape;
 		this.color = color;
@@ -104,10 +101,10 @@ class ShapedParticle extends Particle {
 	getRenderRect() { return this.shape.getRect(); }
 	render(ctx) {
 		if(this.fill) {
-			(ctx.fillStyle !== this.color) && (ctx.fillStyle = this.color);
+			/*if(ctx.fillStyle !== this.color)*/ ctx.fillStyle = this.color;
 			this.shape.draw(ctx, true, false);
 		} else {
-			(ctx.strokeStyle !== this.color) && (ctx.strokeStyle = this.color);
+			/*if(ctx.strokeStyle !== this.color)*/ ctx.strokeStyle = this.color;
 			this.shape.draw(ctx, false, true);
 		}
 	}
@@ -297,9 +294,9 @@ class ParticleCreator extends GameObject {
 	createParticle(gameManager) {
 		let r = gameManager.viewer.visibleRect;
 		return new ShapedParticle(
-			Math.random()*(this.maxLifeTime - this.minLifeTime)+this.minLifeTime,
 			new Point(new Vec2(r.xMin+ Math.random()*r.width, r.yMin + Math.random()*r.height)),
-			randomColor(24));
+			randomColor(24),
+        	Math.random()*(this.maxLifeTime - this.minLifeTime)+this.minLifeTime);
 	}
 	/**
 	 * called every frame by the game manager. creates the needed particles and add them to the game, <!--
@@ -493,12 +490,12 @@ class ParticleEmitter extends ParticleCreator {
 	}
 	static standardGenerator( lifeTime, initialPosition, angle, speed ){
 		let sv = 0.5+(speed-this.minSpeed)/(2*(this.maxSpeed-this.minSpeed)),
-			rgb = HSVtoRGB(angle*180/Math.PI, sv, sv),
+			rgb = HSVtoRGB(angle/(2*Math.PI), sv, sv),
 			shape = new Point(initialPosition);
 		if(!shape){
 			console.log("error : shape is null");
-		} else return new ShapedParticle(lifeTime, shape,
-			RGBtoHex(rgb.r, rgb.g, rgb.b));
+		} else return new ShapedParticle(shape,
+			RGBtoHex(rgb.r, rgb.g, rgb.b), lifeTime);
 	}
 }
 //default attributes :
@@ -592,7 +589,7 @@ class TraceDrawer {
 	 * @returns {?ShapedParticle[]}
 	 */
 	createParticlesForMovement(obj, from, to) {
-		let p = new ShapedParticle(this.particleLifeTime, new Line(from, to), this.color||'#FFF');
+		let p = new ShapedParticle(new Line(from, to), this.color||'#FFF', this.particleLifeTime);
 		p.fill = false;
 		return [p];
 	}

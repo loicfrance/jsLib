@@ -323,6 +323,39 @@ class Circle extends Shape {
     toPolygon(edges, startRadians = 0) {
         return Polygon.Regular(this.center, [this.radius], edges, startRadians);
     }
+
+    /**
+     * calculates the Circumcircle (or Excircle) of the triangle
+     * specified by the three points in arguments
+     * @param {Vec2}A
+     * @param {Vec2}B
+     * @param {Vec2}C
+     * @return {Circle}
+     */
+    static CircumCircle(A, B, C) {
+        const
+            AB = Vec2.translation(A, B),
+            AC = Vec2.translation(A, C),
+            E  = AB.x * (A.x + B.x) + AB.y * (A.y + B.y),
+            F  = AC.x * (A.x + C.x) + AC.y * (A.y + C.y),
+            G  = 2 * (AB.x * (C.y - B.y) - AB.y * (C.x - B.x));
+        if(Math.abs(G) < 0.000001) {
+            const pos = new Vec2(
+                    Math.min(A.x, B.x, C.x),
+                    Math.min(A.y, B.y, C.y)),
+                dX = (Math.max(A.x, B.x, C.x) - pos.x) * 0.5,
+                dY = (Math.max(A.y, B.y, C.y) - pos.y) * 0.5;
+            return new Circle(pos.addXY(dX, dY), Math.sqrt(dX*dX + dY*dY));
+        }
+        else {
+            const pos = new Vec2(
+                    (AC.y*E - AB.y*F) / G,
+                    (AB.x* - AC.x*EF) / G),
+                dX = pos.x - A.x,
+                dY = pos.y - A.y;
+            return new Circle(pos, Math.sqrt(dX*dX + dY*dY));
+        }
+    }
 }
 /**
  * number of points used to draw this shape.

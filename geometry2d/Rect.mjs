@@ -1,4 +1,4 @@
-import {Vec2, Shape, Circle, Polygon} from "./geometry2d.mjs";
+import {Vec2, Shape, Circle, Polygon, ConvexPolygon} from "./geometry2d.mjs";
 /**
  * @module geometry2d/Rect
  */
@@ -179,7 +179,7 @@ class Rect extends Shape{
      * @returns {boolean} true if the 2 shapes intersect.
      */
     intersect(shape) {
-        return shape instanceof Rect ? (this.overlap(rect) && !this.containsRect(rect)) : shape.intersect(this);
+        return shape instanceof Rect ? (this.overlap(shape) && !this.containsRect(shape)) : shape.intersect(this);
     }
 
     /**
@@ -602,12 +602,11 @@ class Rect extends Shape{
     }
 
     /**
-     * creates a rectangular {@link Polygon} corresponding to the instance
-     * @returns {Polygon}
+     * creates a rectangular {@link ConvexPolygon} corresponding to the instance
+     * @returns {ConvexPolygon}
      */
-    toPolygon()
-    {
-        return Polygon.Absolute(Vec2.createVec2Array([this.xMin, this.yMin, this.xMax, this.yMin,
+    toPolygon() {
+    return ConvexPolygon.Absolute(Vec2.createVec2Array([this.xMin, this.yMin, this.xMax, this.yMin,
             this.xMax, this.yMax, this.xMin, this.yMax]));
     }
     /**

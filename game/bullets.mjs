@@ -159,111 +159,147 @@ class BulletCollider extends ShapedObject2dCollider {
 //######################################################################################################################
 //#                                                   BulletCollider                                                   #
 //######################################################################################################################
-	const getSteeringForce = ( objPos,maxSpd,maxForce,currentSpd,targetPos )=>
-		Vec2.translation(objPos, targetPos).setMagnitude(maxSpd)
-			.remove(currentSpeed).clampMagnitude(0, maxForce);// maxSpeed=0, steerForce=0, getTarget=0
+const getSteeringForce = ( objPos,maxSpd,maxForce,currentSpd,targetPos )=>
+	Vec2.translation(objPos, targetPos).setMagnitude(maxSpd)
+		.remove(currentSpeed).clampMagnitude(0, maxForce);// maxSpeed=0, steerForce=0, getTarget=0
+/**
+ * @class HomingBullet
+ * @memberOf game
+ * @augments Bullet
+ * @classdesc a type of bullet that has a homing property : it searches for the best target to avoid <!--
+ * -->direction changes, and changes it's direction to touch it.
+ */
+class HomingBullet extends Bullet {
 	/**
-	 * @class HomingBullet
-	 * @memberOf game
-	 * @augments Bullet
-	 * @classdesc a type of bullet that has a homing property : it searches for the best target to avoid <!--
-	 * -->direction changes, and changes it's direction to touch it.
+	 * @constructor
+	 * @param {GameObject} launcher
+	 * @param {number} damage
+	 * @param {Vec2} position
+	 * @param {Vec2} speed
+	 * @param {Rect} maxRect
+	 * @param {number} lifeTime
+	 * @param {number} steerForce
+	 * @param {number} maxAngle
 	 */
-    class HomingBullet extends Bullet {
+	constructor(launcher, damage, position, speed, maxRect, lifeTime, steerForce, maxAngle) {
+		super(launcher, position, speed, damage, maxRect, lifeTime);
 		/**
-		 * @constructor
-		 * @param {GameObject} launcher
-		 * @param {number} damage
-		 * @param {Vec2} position
-		 * @param {Vec2} speed
-		 * @param {Rect} maxRect
-		 * @param {number} lifeTime
-		 * @param {number} steerForce
-		 * @param {number} maxAngle
+		 * @name HomingBullet#steerForce
+		 * @type {number}
 		 */
-		constructor(launcher, damage, position, speed, maxRect, lifeTime, steerForce, maxAngle) {
-			super(launcher, position, speed, damage, maxRect, lifeTime);
-			/**
-			 * @name HomingBullet#steerForce
-			 * @type {number}
-			 */
-			this.steerForce = steerForce;
-			/**
-			 * @name HomingBullet#maxSpeed
-			 * @type {number}
-			 */
-			this.maxSpeed = speed.magnitude;
-			/**
-			 * @name HomingBullet#maxAngle
-			 * @type {number}
-			 */
-			this.maxAngle = maxAngle;
-			this.angle = 0;
-			this.setAccelerationXY(0,0);
-		}
+		this.steerForce = steerForce;
 		/**
-		 * return the maximum speed the bullet can reach depending on the distance to the target.
-		 * @param {number} distance
-		 * @returns {number}
+		 * @name HomingBullet#maxSpeed
+		 * @type {number}
 		 */
-		getMaxSpeed( distance ) {
-			return this.maxSpeed*(1-Math.sqrt(this.maxSpeed/(150*distance)));
-		}
+		this.maxSpeed = speed.magnitude;
 		/**
-		 * a method for private use only. returns the appropriate steer force the bullet have to use <!--
-		 * -->to aim to its target, depending on its maximum speed and the distance to its target.
-		 * @param {number} maxSpeed - result  of the {@link HomingBullet#getMaxSpeed|getMaxSpeed} method.
-		 * @param {number} distance
-		 * @returns {number}
+		 * @name HomingBullet#maxAngle
+		 * @type {number}
 		 */
-		getSteerForce( maxSpeed, distance) {
-			return this.steerForce*(maxSpeed/Math.pow(distance, 1.2));
-		}
-		/**
-		 * method for private use only. returns the target position to aim to, or null if no target was found.
-		 * @param {GameManager} gameManager
-		 * @returns {?Vec2}
-		 */
-		getTargetPosition( gameManager ) {
-			let res, angle,
-				maxAngle = this.maxAngle,
-				pos = this.getPosition(),
-				//dist = 0,
-				targets = gameManager.getObjects(collisionLayersFilter.bind(undefined, this.bodyLayer)),
-				i = targets.length;
-			while(i--) {
-				if(targets[i] !== this.launcher) {
-					angle = (Vec2.translation(pos, targets[i].getPosition()).angle-this.radians) % (Math.PI*2);
-					if(angle > Math.PI) angle = Circle.PI2-angle;
-					if(angle < maxAngle) {
-						maxAngle = angle;
-						res = targets[i];
-					}   }   }
-			return res? res.getPosition() : null;
-		}
+		this.maxAngle = maxAngle;
+		this.angle = 0;
+		this.setAccelerationXY(0,0);
+	}
+	/**
+	 * return the maximum speed the bullet can reach depending on the distance to the target.
+	 * @param {number} distance
+	 * @returns {number}
+	 */
+	getMaxSpeed( distance ) {
+		return this.maxSpeed*(1-Math.sqrt(this.maxSpeed/(150*distance)));
+	}
+	/**
+	 * a method for private use only. returns the appropriate steer force the bullet have to use <!--
+	 * -->to aim to its target, depending on its maximum speed and the distance to its target.
+	 * @param {number} maxSpeed - result  of the {@link HomingBullet#getMaxSpeed|getMaxSpeed} method.
+	 * @param {number} distance
+	 * @returns {number}
+	 */
+	getSteerForce( maxSpeed, distance) {
+		return this.steerForce*(maxSpeed/Math.pow(distance, 1.2));
+	}
+	/**
+	 * method for private use only. returns the target position to aim to, or null if no target was found.
+	 * @param {GameManager} gameManager
+	 * @returns {?Vec2}
+	 */
+	getTargetPosition( gameManager ) {
+		let res, angle,
+			maxAngle = this.maxAngle,
+			pos = this.getPosition(),
+			//dist = 0,
+			targets = gameManager.getObjects(collisionLayersFilter.bind(undefined, this.bodyLayer)),
+			i = targets.length;
+		while(i--) {
+			if(targets[i] !== this.launcher) {
+				angle = (Vec2.translation(pos, targets[i].getPosition()).angle-this.radians) % (Math.PI*2);
+				if(angle > Math.PI) angle = Circle.PI2-angle;
+				if(angle < maxAngle) {
+					maxAngle = angle;
+					res = targets[i];
+				}   }   }
+		return res? res.getPosition() : null;
+	}
 
-		/**
-		 * called every frame by the game manager. does the usual frame work, calculate the target position, <!--
-		 * -->and set the acceleration to hit it. makes sure the speed do not exceed the maximum.
-		 * @param {GameManager} gameManager
-		 * @param {number} dT
-		 */
-		onFrame( gameManager, dT ) {
-			let t = this.getTargetPosition(gameManager);
-			if(t) {
-				let p = this.getPosition(), accel = Vec2.translation(p, t),
-					d = accel.magnitude, ms = this.getMaxSpeed(dist), steer = this.getSteerForce(ms, d);
-				accel.magnitude = steer;
-				accel.add(getSteeringForce(pos, maxSpeed, steer, this.getSpeed(), target)).magnitude = steer;
-				this.setAcceleration(accel);
-				super.onFrame(gameManager, dT);
-				this.setSpeed(this.getSpeed().clampMagnitude(0, maxSpeed));
-			} else {
-				this.setAccelerationXY(0,0);
-				super.onFrame(gameManager, dT);
-			}
-			const a = this.getSpeed().angle;
-			this.rotate(a-this.angle);
-			this.angle = a;
+	/**
+	 * called every frame by the game manager. does the usual frame work, calculate the target position, <!--
+	 * -->and set the acceleration to hit it. makes sure the speed do not exceed the maximum.
+	 * @param {GameManager} gameManager
+	 * @param {number} dT
+	 */
+	onFrame( gameManager, dT ) {
+		let t = this.getTargetPosition(gameManager);
+		if(t) {
+			let p = this.getPosition(), accel = Vec2.translation(p, t),
+				d = accel.magnitude, ms = this.getMaxSpeed(dist), steer = this.getSteerForce(ms, d);
+			accel.magnitude = steer;
+			accel.add(getSteeringForce(pos, maxSpeed, steer, this.getSpeed(), target)).magnitude = steer;
+			this.setAcceleration(accel);
+			super.onFrame(gameManager, dT);
+			this.setSpeed(this.getSpeed().clampMagnitude(0, maxSpeed));
+		} else {
+			this.setAccelerationXY(0,0);
+			super.onFrame(gameManager, dT);
 		}
-    }
+		const a = this.getSpeed().angle;
+		this.rotate(a-this.angle);
+		this.angle = a;
+	}
+}
+class Weapon {
+	constructor(bulletGenerator, minFirePeriod) {
+		this.minFirePeriod = minFirePeriod;
+		this.bulletGenerator = bulletGenerator;
+		this.timeBeforeNext = 0;
+		this.auto = false;
+		this.oneShot = false;
+	}
+	fireOnce() {
+		this.oneShot = true;
+	}
+	autoFire(enable) {
+		this.auto = enable;
+	}
+	onFrame(gameManager, dT) {
+		if(this.timeBeforeNext === 0) {
+			if(this.oneShot || this.auto) {
+				this.oneShot = false;
+				const bullet = this.bulletGenerator(gameManager);
+				if(bullet) {
+                    gameManager.addObject(bullet);
+                    this.timeBeforeNext = this.minFirePeriod;
+                }
+			}
+		} else {
+			this.timeBeforeNext -= dT;
+			if(this.timeBeforeNext < 0) this.timeBeforeNext = 0;
+		}
+	}
+}
+export {
+	Bullet,
+	BulletCollider,
+	HomingBullet,
+	Weapon
+}

@@ -16,8 +16,8 @@ import Vec2 from "../geometry2d/Vec2.mjs"
  */
 /**
  * @callback mouseCallback
- * @param {MouseEvent} event
- * @param {MouseEvent} eventType
+ * @param {MouseEvents} event
+ * @param {MouseEvents} eventType
  * @param {MouseButton} button
  * @param {Vec2} position
  * @returns {void|boolean} prevent default behavior.
@@ -61,7 +61,7 @@ const Key = {
  * @enum {string}
  * @readonly
  */
-const MouseEvent = {
+const MouseEvents = {
 	UP: 'onmouseup', DOWN: 'onmousedown', CLICK: 'onclick', DBCLICK: 'ondbclick',
 	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout', CTX_MENU: 'oncontextmenu'
 };
@@ -70,6 +70,9 @@ const MouseEvent = {
  * @readonly
  */
 const MouseButton = { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 };
+const GamepadEvents = {
+	CONNECTED: 'gamepadconnected', DISCONNECTED: 'gamepaddisconnected'
+}
 
 //######################################################################################################################
 //#                                                    InputManager                                                    #
@@ -137,6 +140,10 @@ class InputManager {
 			fixMouseWhich(evt);
 			if (callback(evt, evtType, evt.which, getVec(evt))) evt.preventDefault();
 		};
+		let gamepads = [];
+		const onGamepadEvt = (callback, evtType, evt) => {
+			callback(evtType, evt.gamepad);
+		}
 //____________________________________________________public methods____________________________________________________
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		/**
@@ -197,20 +204,37 @@ class InputManager {
 		this.setMouseEventsCallback = function (callback) {
 			if (callback) {
 				let e;
-				for (let evtType in MouseEvent) {
-					if (MouseEvent.hasOwnProperty(evtType)) {
-						e = MouseEvent[evtType];
+				for (let evtType in MouseEvents) {
+					if (MouseEvents.hasOwnProperty(evtType)) {
+						e = MouseEvents[evtType];
 						this.element[e] = onMouseEvt.bind(this, callback, e);
 					}
 				}
 			} else {
-				for (let evtType in MouseEvent) {
-					if (MouseEvent.hasOwnProperty(evtType)) {
-						this.element[MouseEvent[evtType]] = null;
+				for (let evtType in MouseEvents) {
+					if (MouseEvents.hasOwnProperty(evtType)) {
+						this.element[MouseEvents[evtType]] = null;
 					}
 				}
 			}
 		};
+//* * * * * * * * * * * * * * * * * * * * * * * * * * * *gamepad * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+		this.setGamePadEventsCallback = function (callback, autoUpdatePeriod=1/60) {
+			if(callback) {
+				for (let evtType in GamepadEvents) {
+					if(GamepadEvents.hasOwnProperty(evtType)) {
+						e = GamepadEvents[evtType];
+						this.element[e] = onGamepadEvt.bind(this, callback, e);
+					}
+				}
+			} else {
+                for (let evtType in GamepadEvents) {
+                    if (GamepadEvents.hasOwnProperty(evtType)) {
+                        this.element[GamepadEvents[evtType]] = null;
+                    }
+                }
+			}
+		}
 //* * * * * * * * * * * * * * * * * * * * * * focus, pointer lock, fullscreen* * * * * * * * * * * * * * * * * * * * * *
 		/**
 		 * @function
@@ -405,7 +429,7 @@ class KeyMap {
 export {
 	KeyState,
 	Key,
-	MouseEvent,
+	MouseEvents,
 	MouseButton,
 	InputManager,
 	KeyMap

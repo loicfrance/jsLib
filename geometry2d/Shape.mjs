@@ -96,6 +96,11 @@ class Shape {
      * @returns {Shape} <code>this</code>
      */
     rotate(radians) {
+        /*
+        |1, 0, x|   |c,-s, 0|   |1, 0,-x|   |1, 0, x|   |c,-s,-cx+sy|   |c,-s,-cx+sy+x|
+        |0, 1, y| * |s, c, 0| * |0, 1,-y| = |0, 1, y| * |s, c,-sx-cy| = |s, c,-sx-cy+y|
+        |0, 0, 1|   |0, 0, 1|   |0, 0, 1|   |0, 0, 1|   |0, 0,   1  |   |0, 0,    1   |
+         */
         return this;
     }
 
@@ -265,6 +270,7 @@ class Shape {
         this.center.add(delta);
         return this;
     }
+
 }
 /**
  * number of points used to draw this shape.

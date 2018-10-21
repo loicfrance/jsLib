@@ -358,6 +358,26 @@ class Vec2 {
     }
 
     /**
+     * multiply the vector by the matrix
+     * <code>m11, m12, dX,</code> <br/>
+     * <code>m21, m22, dY,</code> <br/>
+     * <code>0  ,   0,  1</code> <br/>
+     * @param {Vec2} m11 horizontal scaling
+     * @param {Vec2} m12 horizontal skewing
+     * @param {Vec2} m21 vertical skewing
+     * @param {Vec2} m22 vertical scaling
+     * @param {Vec2} [dX=0] horizontal moving
+     * @param {Vec2} [dY=0] vertical moving
+     */
+    transform(m11, m12, m21, m22, dX = 0, dY = 0)
+    {
+        [this.x, this.y] = [
+            m11*this.x + m12*this.y + dX,
+            m21*this.x + m22*this.y + dY
+        ];
+    }
+
+    /**
      * @static
      * @param {Vec2} u
      * @param {Vec2} v

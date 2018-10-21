@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/utils/input.mjs" line="9" />
-    <bookmark url="file://$PROJECT_DIR$/utils/input.mjs" line="279" />
-    <bookmark url="file://$PROJECT_DIR$/geometry2d/geometry2d.mjs" line="24" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="7f0fe948-9def-4a4f-96c9-0eb6e9603f42" name="Default" comment="Big change to ES6 modules">
-      <change afterPath="$PROJECT_DIR$/demos/breakout/Breakout_Objects.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demos/breakout/ScoreView.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demos/breakout/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demos/breakout/main.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Circle.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Ellipsoid.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Line.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Point.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Polygon.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Ray.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Rect.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Shape.mjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/geometry2d/Vec2.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Asteroid/Asteroid.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Asteroid/SpaceShip.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Asteroid/constants.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Asteroid/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Asteroid/main.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Conway_Game_of_LIfe/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Conway_Game_of_LIfe/main.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Voronoi/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/Voronoi/main.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/p2p/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/p2p/main.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/platform/Character.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/platform/Platform.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/platform/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/platform/main.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/vertical_shooter/Character.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/vertical_shooter/PlayerCharacter.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/vertical_shooter/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demos/vertical_shooter/main.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/plug-ins/CellularTiledMapLayer.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/transitions.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibrary.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibrary.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demos/breakout/main.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/demos/breakout/main.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demos/breakout/main.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/demos/breakout/main.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/css/baseline.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/css/baseline_default.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/game.AbstractGameMap.html" beforeDir="false" />
@@ -78,31 +79,35 @@
       <change beforePath="$PROJECT_DIR$/doc/utils_utils_1.js.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/utils_utils_2.js.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/doc/webgl.js.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/TiledMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/TiledMap.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/TiledMap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/board.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/board.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/board.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/bullets.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/bullets.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/bullets.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/manager.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/manager.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/object.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/object.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/object.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/object_mixins.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/object_mixins.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/object_mixins.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/particles.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/particles.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/particles.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/physics.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/physics.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/physics.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/renderer_collider.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/renderer_collider.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/renderer_collider.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/stylesheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/game/stylesheet.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/turn.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/turn.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/turn.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/viewers.js" beforeDir="false" afterPath="$PROJECT_DIR$/game/viewers.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/viewers.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/geometry.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/old_libs.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/TiledMap.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/TiledMap.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/TiledMap.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/TiledMap.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/bullets.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/bullets.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/bullets.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/bullets.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/manager.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/manager.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/manager.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/manager.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/object.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/object.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/object_mixins.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/object_mixins.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/particles.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/particles.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/particles.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/particles.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/physics.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/physics.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/physics.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/physics.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/renderer_collider.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/renderer_collider.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/renderer_collider.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/renderer_collider.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/viewers.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/viewers.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/viewers.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/game/viewers.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Circle.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Circle.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Circle.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Circle.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Line.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Line.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Line.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Line.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Polygon.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Polygon.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Polygon.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Polygon.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Rect.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Rect.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Rect.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Rect.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Shape.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Shape.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Vec2.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Vec2.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/Vec2.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/Vec2.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/geometry2d.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/geometry2d.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geometry2d/geometry2d.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/geometry2d.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/AABBObjectCollider.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/Board.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/Bullet.html" beforeDir="false" />
@@ -218,25 +223,12 @@
       <change beforePath="$PROJECT_DIR$/out/utils_tools.js.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/utils_webgl.js.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/webgl.js.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/audio.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/audio.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/audio.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/colors.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/colors.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/filters.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/filters.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/geometry2d.js" beforeDir="false" afterPath="$PROJECT_DIR$/geometry2d/geometry2d.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/geometry2d.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/input.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/input.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/input.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/layout.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/layout.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/p2p.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/p2p.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/p2p.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tools.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tools.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/webgl.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webgl.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/webgl.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/input.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/input.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/input.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/input.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/p2p.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/p2p.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/tools.min.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tools.min.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/tools.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tools.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/webgl.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webgl.mjs" afterDir="false" />
     </list>
     <ignored path="utils.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -249,6 +241,12 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/jsLibrary$index_html__1_.dat" NAME="index.html (1) Coverage Results" MODIFIED="1532601708503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="WipCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="258" />
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
@@ -256,33 +254,52 @@
     <session id="-1427718073">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.closed" value="9" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.10" value="2" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="1" />
-          <entry key="mjs" value="4" />
+          <entry key="JavaScript-modules-diagram/C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game" value="1" />
+          <entry key="html" value="14" />
+          <entry key="js" value="1" />
+          <entry key="mjs" value="101" />
+          <entry key="ts" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="ECMAScript 6" value="4" />
-          <entry key="HTML" value="1" />
+          <entry key="ECMAScript 6" value="100" />
+          <entry key="HTML" value="14" />
+          <entry key="JavaScript" value="1" />
+          <entry key="TypeScript" value="2" />
+          <entry key="UML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="mjs" value="670" />
+          <entry key="html" value="94" />
+          <entry key="mjs" value="34636" />
+          <entry key="txt" value="91" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ECMAScript 6" value="670" />
+          <entry key="ECMAScript 6" value="34636" />
+          <entry key="HTML" value="94" />
+          <entry key="PLAIN_TEXT" value="91" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.vcs.git.usages" />
     </session>
   </component>
   <component name="FavoritesManager">
@@ -290,108 +307,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/demos/Voronoi/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="7" column="7" lean-forward="true" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/demos/Voronoi/main.mjs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="656">
+              <caret line="89" column="6" lean-forward="true" selection-start-line="36" selection-start-column="3" selection-end-line="89" selection-end-column="6" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/geometry2d/Polygon.mjs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="818">
+              <caret line="814" column="32" lean-forward="true" selection-start-line="814" selection-start-column="32" selection-end-line="814" selection-end-column="32" />
+              <folding>
+                <element signature="n#!!block;n#rotate#0;n#Polygon#0" expanded="true" />
+                <element signature="n#!!block;n#invertPointsOrder#0;n#Polygon#0" expanded="true" />
+                <element signature="n#!!block;n#divideConvex#0;n#Polygon#0" expanded="true" />
+                <element signature="n#!!doc;n#getIntersectionLine#0;n#Polygon#0" expanded="true" />
+                <element signature="n#!!block;n#intersect#0;n#ConvexPolygon#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/demos/breakout/main.mjs">
+        <entry file="file://$PROJECT_DIR$/geometry2d/Circle.mjs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+            <state relative-caret-position="395">
+              <caret line="336" column="40" lean-forward="true" selection-start-line="336" selection-start-column="40" selection-end-line="336" selection-end-column="40" />
               <folding>
-                <element signature="e#894#1159#0" expanded="true" />
-                <element signature="e#1018#1120#0" expanded="true" />
-                <element signature="e#1275#1315#0" expanded="true" />
-                <element signature="n#!!block;n#init#0" expanded="true" />
-                <element signature="e#1711#1935#0" expanded="true" />
-                <element signature="e#1744#1929#0" expanded="true" />
-                <element signature="e#1742#1770#0" expanded="true" />
-                <element signature="e#2036#2376#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/manager.mjs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="248" column="49" lean-forward="true" selection-start-line="248" selection-start-column="49" selection-end-line="248" selection-end-column="49" />
-              <folding>
-                <element signature="e#191#240#0" expanded="true" />
-                <element signature="e#605#828#0" expanded="true" />
-                <element signature="e#10202#10378#0" expanded="true" />
-                <element signature="e#10831#10977#0" expanded="true" />
-                <element signature="e#11304#11341#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/filters.mjs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demos/breakout/Breakout_Objects.mjs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="48" column="57" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
-              <folding>
-                <element signature="n#!!block;n#constructor#0;n#Paddle#0" expanded="true" />
-                <element signature="n#!!block;n#onFrame#0;n#Paddle#0" expanded="true" />
-                <element signature="n#!!block;n#constructor#0;n#Ball#0" expanded="true" />
-                <element signature="n#!!block;n#onFrame#0;n#Ball#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demos/breakout/ScoreView.mjs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#29#78#0" expanded="true" />
-                <element signature="n#!!block;n#constructor#0;n#Title#0" expanded="true" />
-                <element signature="n#!!block;n#setScore#0;n#ScoreView#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demos/breakout/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="5" column="61" lean-forward="true" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game/stylesheet.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/geometry2d/Vec2.mjs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1328">
-              <caret line="275" column="5" selection-start-line="275" selection-start-column="5" selection-end-line="275" selection-end-column="5" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="n#!!doc;n#Vec2#0" expanded="true" />
-                <element signature="n#!!block;n#getRoundedY#0;n#Vec2#0" expanded="true" />
-                <element signature="n#!!block;n#roundedVec#0;n#Vec2#0" expanded="true" />
+                <element signature="n#!!doc;n#CircumCircle#0;n#Circle#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -408,33 +367,15 @@
         <option value="XML file" />
         <option value="external JSDoc" />
         <option value="Javascript class" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
-        <option value="ES6 Module" />
+        <option value="HTML File" />
         <option value="ES6 Class Module" />
+        <option value="ES6 Module" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setCanvasSize</find>
-      <find>body</find>
-      <find>gaussianRandom</find>
-      <find>wrapText</find>
-      <find>context</find>
-      <find>window</find>
-      <find>Vec2</find>
-      <find>utils</find>
-      <find>Circle.PI2</find>
-      <find>PI_2</find>
-      <find>Circle.PI</find>
-      <find>PI2</find>
-      <find>physics.</find>
-      <find>mixins</find>
-      <find>utils.</find>
-      <find>particles.</find>
-      <find>TOD</find>
-      <find>draw</find>
       <find>utils.geometry2d.</find>
       <find>tools.</find>
       <find>update</find>
@@ -447,13 +388,26 @@
       <find>/.mjs</find>
       <find>geometry2d</find>
       <find>clearObjects</find>
+      <find>World</find>
+      <find>norm</find>
+      <find>nSpd</find>
+      <find>getDeltaSpeed</find>
+      <find>ShapedParticle</find>
+      <find>setTransform</find>
+      <find>getNormalVectForLine</find>
+      <find>getLine</find>
+      <find>wait</find>
+      <find>wai</find>
+      <find>MouseEventss</find>
+      <find>isK</find>
+      <find>main</find>
+      <find>tiledMap</find>
+      <find>10</find>
+      <find>visibleRect</find>
+      <find>array</find>
+      <find>random</find>
     </findStrings>
     <replaceStrings>
-      <replace>*</replace>
-      <replace>DOWN</replace>
-      <replace>KeyState</replace>
-      <replace>G</replace>
-      <replace>scale</replace>
       <replace>GameMap</replace>
       <replace>createFromAngle</replace>
       <replace>this.getPosition()</replace>
@@ -479,6 +433,11 @@
       <replace>heatMap</replace>
       <replace>PI</replace>
       <replace>GameObject</replace>
+      <replace>PhysicWorld</replace>
+      <replace>MouseEvents</replace>
+      <replace>line</replace>
+      <replace>this.</replace>
+      <replace>this.array</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -502,57 +461,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/game/viewers.js" />
-        <option value="$PROJECT_DIR$/game/object_mixins.js" />
-        <option value="$PROJECT_DIR$/utils/geometry2d.js" />
-        <option value="$PROJECT_DIR$/game/particles.js" />
-        <option value="$PROJECT_DIR$/game/physics.js" />
-        <option value="$PROJECT_DIR$/game/bullets.js" />
-        <option value="$PROJECT_DIR$/game/TiledMap.js" />
-        <option value="$PROJECT_DIR$/game/turn.js" />
-        <option value="$PROJECT_DIR$/utils/layout.js" />
-        <option value="$PROJECT_DIR$/utils/webgl.js" />
-        <option value="$PROJECT_DIR$/utils/colors.js" />
-        <option value="$PROJECT_DIR$/game/manager.js" />
-        <option value="$PROJECT_DIR$/game/board.js" />
-        <option value="$PROJECT_DIR$/utils/input.js" />
-        <option value="$PROJECT_DIR$/game/renderer_collider.js" />
-        <option value="$PROJECT_DIR$/geometry2d/Vec2.mjs.js" />
-        <option value="$PROJECT_DIR$/geometry2d/Shape.js" />
-        <option value="$PROJECT_DIR$/geometry2d/Rect.mjs.js" />
-        <option value="$PROJECT_DIR$/geometry2d/Circle.mjs.js" />
-        <option value="$PROJECT_DIR$/demos/breakout/main.mjs.js" />
-        <option value="$PROJECT_DIR$/demos/breakout/index.html" />
-        <option value="$PROJECT_DIR$/utils/layout.mjs" />
-        <option value="$PROJECT_DIR$/demos/breakout/Brick.mjs" />
         <option value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts" />
-        <option value="$PROJECT_DIR$/geometry2d/Vec2.mjs" />
-        <option value="$PROJECT_DIR$/geometry2d/Circle.mjs" />
         <option value="$PROJECT_DIR$/geometry2d/Ellipsoid.mjs" />
-        <option value="$PROJECT_DIR$/geometry2d/Line.mjs" />
         <option value="$PROJECT_DIR$/geometry2d/Point.mjs" />
-        <option value="$PROJECT_DIR$/geometry2d/Polygon.mjs" />
         <option value="$PROJECT_DIR$/geometry2d/Ray.mjs" />
-        <option value="$PROJECT_DIR$/geometry2d/Rect.mjs" />
-        <option value="$PROJECT_DIR$/geometry2d/Shape.mjs" />
-        <option value="$PROJECT_DIR$/geometry2d/geometry2d.mjs" />
-        <option value="$PROJECT_DIR$/utils/input.mjs" />
         <option value="$PROJECT_DIR$/game/board.mjs" />
-        <option value="$PROJECT_DIR$/game/object.mjs" />
         <option value="$PROJECT_DIR$/utils/colors.mjs" />
-        <option value="$PROJECT_DIR$/game/object_mixins.mjs" />
-        <option value="$PROJECT_DIR$/game/physics.mjs" />
         <option value="$PROJECT_DIR$/game/renderer_collider.mjs" />
-        <option value="$PROJECT_DIR$/game/bullets.mjs" />
-        <option value="$PROJECT_DIR$/utils/tools.mjs" />
-        <option value="$PROJECT_DIR$/game/particles.mjs" />
-        <option value="$PROJECT_DIR$/game/TiledMap.mjs" />
         <option value="$PROJECT_DIR$/game/stylesheet.css" />
-        <option value="$PROJECT_DIR$/game/viewers.mjs" />
         <option value="$PROJECT_DIR$/demos/breakout/Breakout_Objects.mjs" />
         <option value="$PROJECT_DIR$/demos/breakout/ScoreView.mjs" />
+        <option value="$PROJECT_DIR$/demos/plateform/index.html" />
         <option value="$PROJECT_DIR$/game/manager.mjs" />
+        <option value="$PROJECT_DIR$/game/viewers.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/Line.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/Shape.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/geometry2d.mjs" />
+        <option value="$PROJECT_DIR$/demos/platform/Character.mjs" />
+        <option value="$PROJECT_DIR$/demos/platform/Platform.mjs" />
+        <option value="$PROJECT_DIR$/demos/platform/main.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/Rect.mjs" />
+        <option value="$PROJECT_DIR$/demos/vertical_shooter/index.html" />
+        <option value="$PROJECT_DIR$/game/object_mixins.mjs" />
+        <option value="$PROJECT_DIR$/game/physics.mjs" />
+        <option value="$PROJECT_DIR$/demos/vertical_shooter/main.mjs" />
+        <option value="$PROJECT_DIR$/demos/vertical_shooter/Character.mjs" />
+        <option value="$PROJECT_DIR$/demos/vertical_shooter/PlayerCharacter.mjs" />
+        <option value="$PROJECT_DIR$/utils/math_animations.mjs" />
         <option value="$PROJECT_DIR$/demos/breakout/main.mjs" />
+        <option value="$PROJECT_DIR$/demos/p2p/index.html" />
+        <option value="$PROJECT_DIR$/demos/p2p/main.mjs" />
+        <option value="$PROJECT_DIR$/utils/p2p.mjs" />
+        <option value="$PROJECT_DIR$/utils/tools.mjs" />
+        <option value="$PROJECT_DIR$/utils/input.mjs" />
+        <option value="$PROJECT_DIR$/game/object.mjs" />
+        <option value="$PROJECT_DIR$/demos/Asteroid/index.html" />
+        <option value="$PROJECT_DIR$/demos/Asteroid/main.mjs" />
+        <option value="$PROJECT_DIR$/demos/Asteroid/constants.mjs" />
+        <option value="$PROJECT_DIR$/game/bullets.mjs" />
+        <option value="$PROJECT_DIR$/game/particles.mjs" />
+        <option value="$PROJECT_DIR$/demos/Asteroid/Asteroid.mjs" />
+        <option value="$PROJECT_DIR$/demos/Asteroid/SpaceShip.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/Vec2.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/Polygon.mjs" />
+        <option value="$PROJECT_DIR$/demos/Conway_Game_of_LIfe/index.html" />
+        <option value="$PROJECT_DIR$/game/TiledMap.mjs" />
+        <option value="$PROJECT_DIR$/utils/transitions.mjs" />
+        <option value="$PROJECT_DIR$/demos/Conway_Game_of_LIfe/CellularTiledMap.mjs" />
+        <option value="$PROJECT_DIR$/demos/Conway_Game_of_LIfe/main.mjs" />
+        <option value="$PROJECT_DIR$/demos/Voronoi/index.html" />
+        <option value="$PROJECT_DIR$/geometry2d/math2d.mjs" />
+        <option value="$PROJECT_DIR$/geometry2d/Circle.mjs" />
       </list>
     </option>
   </component>
@@ -574,9 +533,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="width" value="980" />
-    <option name="height" value="1090" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
+    <option name="height" value="1087" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -600,7 +559,13 @@
               <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
               <item name="jsLibs_Modules" type="462c0819:PsiDirectoryNode" />
               <item name="demos" type="462c0819:PsiDirectoryNode" />
-              <item name="breakout" type="462c0819:PsiDirectoryNode" />
+              <item name="Conway_Game_of_LIfe" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
+              <item name="jsLibs_Modules" type="462c0819:PsiDirectoryNode" />
+              <item name="demos" type="462c0819:PsiDirectoryNode" />
+              <item name="Voronoi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
@@ -611,18 +576,12 @@
               <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
               <item name="jsLibs_Modules" type="462c0819:PsiDirectoryNode" />
               <item name="game" type="462c0819:PsiDirectoryNode" />
-              <item name="viewers.mjs" type="620a8d5e:NestingTreeNode" />
+              <item name="plug-ins" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
               <item name="jsLibs_Modules" type="462c0819:PsiDirectoryNode" />
               <item name="geometry2d" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
-              <item name="jsLibs_Modules" type="462c0819:PsiDirectoryNode" />
-              <item name="geometry2d" type="462c0819:PsiDirectoryNode" />
-              <item name="Circle.mjs" type="620a8d5e:NestingTreeNode" />
             </path>
             <path>
               <item name="jsLibrary" type="b2602c69:ProjectViewProjectNode" />
@@ -647,7 +606,7 @@
     <property name="javascript.nodejs.core.library.configured.version" value="10.6.0" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/game" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Google_Drive/ChromeDevEditor/Asteroid" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.jscs" value="true" />
@@ -665,17 +624,19 @@
     <property name="settings.editor.splitter.proportion" value="0.2640884" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules" />
-      <recent name="C:\Users\IBM_ADMIN\WebstormProjects\jsLibs\game" />
-      <recent name="C:\Users\IBM_ADMIN\WebstormProjects\jsLibs\utils" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\game\plug-ins" />
       <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\geometry2d" />
       <recent name="C:\Users\IBM_ADMIN\WebstormProjects\jsLibs\utils" />
       <recent name="C:\Users\IBM_ADMIN\WebstormProjects\jsLibs\game2\min" />
       <recent name="C:\Users\IBM_ADMIN\WebstormProjects\jsLibs\old_libs" />
-      <recent name="C:\Users\IBM_ADMIN\WebstormProjects\jsLibs\game2" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\demos\Voronoi" />
+      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\demos\Conway_Game_of_LIfe" />
+      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\demos\Asteroid" />
+      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\demos\vertical_shooter" />
+      <recent name="C:\Users\RichardFrance\Documents\Programmation\WebstormProjects\jsLibs_Modules\demos\plateform" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -690,7 +651,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.index.html (1)">
+  <component name="RunManager" selected="JavaScript Debug.index.html (4)">
     <configuration default="true" type="NodeJSRemoteDebug" factoryName="Node.js Remote Debug">
       <node-js-remote-debug />
       <method />
@@ -726,16 +687,16 @@
     <configuration name="index.html (1)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/jsLibrary/demos/breakout/index.html">
       <method v="2" />
     </configuration>
+    <configuration name="index.html (2)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/jsLibrary/demos/platform/index.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html (3)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/jsLibrary/demos/platform/index.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html (4)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/jsLibrary/demos/vertical_shooter/index.html">
+      <method v="2" />
+    </configuration>
     <configuration name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/jsLibrary/demos/breakout/index.html">
-      <method v="2" />
-    </configuration>
-    <configuration name="es6-minify.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="es6-minify.js" working-dir="$PROJECT_DIR$/../file_watchers">
-      <method v="2" />
-    </configuration>
-    <configuration name="test.js (1)" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="test.js" working-dir="$PROJECT_DIR$/../file_watchers/node_modules/google-closure-compiler-js">
-      <method v="2" />
-    </configuration>
-    <configuration name="test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-js-file="test.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -752,19 +713,19 @@
       <item itemvalue="Attach to Node.js/Chrome.Unnamed" />
       <item itemvalue="Bash.compile.bash" />
       <item itemvalue="JavaScript Debug.Unnamed" />
-      <item itemvalue="Node.js.test.js" />
-      <item itemvalue="Node.js.test.js (1)" />
-      <item itemvalue="Node.js.es6-minify.js" />
       <item itemvalue="JavaScript Debug.index.html" />
       <item itemvalue="JavaScript Debug.index.html (1)" />
+      <item itemvalue="JavaScript Debug.index.html (2)" />
+      <item itemvalue="JavaScript Debug.index.html (3)" />
+      <item itemvalue="JavaScript Debug.index.html (4)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug.index.html (4)" />
+        <item itemvalue="JavaScript Debug.index.html (3)" />
+        <item itemvalue="JavaScript Debug.index.html (2)" />
         <item itemvalue="JavaScript Debug.index.html (1)" />
         <item itemvalue="JavaScript Debug.index.html" />
-        <item itemvalue="Node.js.es6-minify.js" />
-        <item itemvalue="Node.js.test.js (1)" />
-        <item itemvalue="Node.js.test.js" />
       </list>
     </recent_temporary>
   </component>
@@ -926,7 +887,18 @@
       <workItem from="1531681128471" duration="428000" />
       <workItem from="1531681573940" duration="48407000" />
       <workItem from="1532526511203" duration="142000" />
-      <workItem from="1532526823176" duration="5898000" />
+      <workItem from="1532526823176" duration="43487000" />
+      <workItem from="1533062504793" duration="23691000" />
+      <workItem from="1533147255903" duration="9414000" />
+      <workItem from="1536855443963" duration="623000" />
+      <workItem from="1537023052181" duration="3225000" />
+      <workItem from="1537042004835" duration="1267000" />
+      <workItem from="1537044287981" duration="6665000" />
+      <workItem from="1537554711929" duration="63000" />
+      <workItem from="1537649356784" duration="9505000" />
+      <workItem from="1537868872684" duration="14650000" />
+      <workItem from="1539381881739" duration="69845000" />
+      <workItem from="1540069121257" duration="11802000" />
     </task>
     <task id="LOCAL-00001" summary="- changed let to const&#10;- RGBtoHSV() and createScriptWorker() docs corrected&#10;- utils.tools.rgb and utils.tools.hsv docs improved">
       <created>1496085985377</created>
@@ -1054,13 +1026,20 @@
       <option name="project" value="LOCAL" />
       <updated>1531488596777</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="change files extensions,&#10;moved geometry2d to specific folder,&#10;created Breakout demo">
+      <created>1532601078521</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1532601078521</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1067887000" />
+    <option name="totallyTimeSpent" value="1256226000" />
   </component>
-  <component name="TodoView" selected-index="4">
+  <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -1070,20 +1049,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="784" height="872" extended-state="0" />
+    <frame x="953" y="0" width="974" height="1087" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.5649264" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.24920969" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49825174" visible="true" weight="0.24786325" />
+      <window_info id="Structure" order="1" sideWeight="0.50174826" side_tool="true" weight="0.35860306" />
+      <window_info id="Favorites" order="2" sideWeight="0.50174826" side_tool="true" weight="0.35860306" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4915701" weight="0.25067386" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4915701" weight="0.22684564" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4915701" weight="0.2872629" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4915701" weight="0.14690451" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6533066" weight="0.4407008" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49516907" weight="0.328125" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5063358" side_tool="true" weight="0.37172773" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4936642" weight="0.45127118" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49516907" weight="0.32746956" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5063358" side_tool="true" weight="0.2228261" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" sideWeight="0.4936642" visible="true" weight="0.4512067" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49315068" weight="0.27897575" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.52021563" />
       <window_info anchor="bottom" id="Thumbnails" order="11" weight="0.32884097" />
@@ -1095,6 +1074,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" x="98" y="78" width="979" height="887" id="Documentation" order="3" type="FLOATING" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.33536056" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.279577" />
@@ -1186,581 +1166,458 @@
     <MESSAGE value="improve resize management to allow non-fixed canvas size" />
     <MESSAGE value="add p2p.js, small changes on files structure" />
     <MESSAGE value="Big change to ES6 modules" />
-    <option name="LAST_COMMIT_MESSAGE" value="Big change to ES6 modules" />
+    <MESSAGE value="change files extensions,&#10;moved geometry2d to specific folder,&#10;created Breakout demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="change files extensions,&#10;moved geometry2d to specific folder,&#10;created Breakout demo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://JavaScript-modules-diagram/C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/webgl.js">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JavaScript-modules-diagram</ID>
-          <OriginalElement>$PROJECT_DIR$/utils/webgl.js</OriginalElement>
-          <nodes />
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="622.0" y="345.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>All</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>Details</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JavaScript-modules-diagram/C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JavaScript-modules-diagram</ID>
-          <OriginalElement>$PROJECT_DIR$/utils</OriginalElement>
-          <nodes>
-            <node x="" y="">$PROJECT_DIR$/utils/audio.js#polyfill#8;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/audio.min.js#polyfill#20;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/geometry2d.js#Rect#21624;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/layout.js#Rect#8;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/layout.min.js#Rect#20;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/tools.js#polyfill#2286;</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="275.0" y="161.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>All</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>Details</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jsLibs/utils/geometry2d.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="1992" column="7" selection-start-line="1992" selection-start-column="7" selection-end-line="1992" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/compile.bat" />
-    <entry file="file://$PROJECT_DIR$/game/compile.bat" />
-    <entry file="file://$PROJECT_DIR$/game/game.js" />
-    <entry file="file://$PROJECT_DIR$/out/scripts/jsdoc-toc.js" />
-    <entry file="file://$PROJECT_DIR$/out/Board.html" />
-    <entry file="file://$PROJECT_DIR$/game/manager.min.js" />
-    <entry file="uml://JavaScript-modules-diagram/C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JavaScript-modules-diagram</ID>
-          <OriginalElement>$PROJECT_DIR$</OriginalElement>
-          <nodes>
-            <node x="" y="">$PROJECT_DIR$/game/TiledMap.mjs#GameObject#70;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/TiledMap.mjs#Rect#29;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/TiledMap.mjs#Vec2#23;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/audio.mjs#polyfill#8;</node>
-            <node x="" y="">$PROJECT_DIR$/game/board.mjs#GameObject#117;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/board.mjs#Rect#76;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/board.mjs#Vec2#70;</node>
-            <node x="" y="">$PROJECT_DIR$/game/bullets.mjs#GameObject#56;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/bullets.mjs#Polygon#152;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/bullets.mjs#ShapedObject2dCollider#92;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/bullets.mjs#Vec2#161;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/bullets.mjs#collisionLayersFilter#203;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/colors.mjs#HSVtoRGB#663;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/colors.mjs#RGBToHex#2268;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/colors.mjs#randomColor#584;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/filters.mjs#exclusionFilter#662;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/geometry2d.mjs#Circle#45461;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/geometry2d.mjs#Line#66531;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/geometry2d.mjs#Point#80871;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/geometry2d.mjs#Polygon#86030;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/geometry2d.mjs#Rect#21796;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/geometry2d.mjs#Vec2#617;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/input.mjs#Vec2#57;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/layout.mjs#Rect#8;</node>
-            <node x="" y="">$PROJECT_DIR$/game/manager.mjs#RenderEvent#1578;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/manager.mjs#Viewer#107;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/manager.mjs#collisionLayersFilter#3061;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/manager.mjs#exclusionFilter#57;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/manager.mjs#renderLayerSort#2347;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/manager.mjs#renderableFilter#2069;</node>
-            <node x="" y="">$PROJECT_DIR$/game/object.mjs#Rect#87;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/object.mjs#Vec2#81;</node>
-            <node x="" y="">$PROJECT_DIR$/game/particles.mjs#GameObject#219;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#HSVtoRGB#108;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#Line#173;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#PI2#179;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#Point#166;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#RGBToHex#118;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#Vec2#160;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#merge#57;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/particles.mjs#randomColor#95;</node>
-            <node x="" y="">$PROJECT_DIR$/game/physics.mjs#AABBObject2dCollider#132;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/physics.mjs#Circle#69;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/physics.mjs#Object2dCollider#114;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/physics.mjs#Rect#63;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/physics.mjs#ShapedObject2dCollider#154;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/physics.mjs#Vec2#57;</node>
-            <node x="" y="">$PROJECT_DIR$/game/renderer_collider.mjs#AABBObject2dCollider#25587;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/renderer_collider.mjs#Object2dCollider#20430;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/renderer_collider.mjs#Rect#57;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/renderer_collider.mjs#ShapedObject2dCollider#22227;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/renderer_collider.mjs#Vec2#63;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/renderer_collider.mjs#merge#105;</node>
-            <node x="" y="">$PROJECT_DIR$/utils/tools.mjs#merge#836;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/utils/tools.mjs#polyfill#2286;</node>
-            <node x="" y="">$PROJECT_DIR$/game/viewers.mjs#Rect#78;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/viewers.mjs#RenderEvent#119;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/viewers.mjs#Vec2#72;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/viewers.mjs#Viewer#1976;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/viewers.mjs#renderLayerSort#132;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/game/viewers.mjs#renderableFilter#149;</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="0.7735426008968609" x="798.0" y="511.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>All</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>Details</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsLibs_Modules.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/webgl.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="135" column="55" selection-start-line="135" selection-start-column="55" selection-end-line="135" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Vec2.mjs.min.js" />
-    <entry file="file://$PROJECT_DIR$/geometry2d/Shape.min.js" />
-    <entry file="uml://JavaScript-modules-diagram/C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JavaScript-modules-diagram</ID>
-          <OriginalElement>$PROJECT_DIR$/geometry2d</OriginalElement>
-          <nodes>
-            <node x="1910.125" y="333.0">$PROJECT_DIR$/geometry2d/Circle.min.mjs#PI2#20;;</node>
-            <node x="990.1249999999999" y="333.0">;;</node>
-            <node x="871.4204545454543" y="466.0">$PROJECT_DIR$/geometry2d/Ellipsoid.min.mjs#PI2#20;;;;</node>
-            <node x="1772.8532196969695" y="466.0">;;;;</node>
-            <node x="215.4999999999999" y="333.0">$PROJECT_DIR$/geometry2d/Point.min.mjs#Shape#25;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/Point.min.mjs#Vec2#20;</node>
-            <node x="1703.125" y="344.0">$PROJECT_DIR$/geometry2d/Polygon.min.mjs#PI2#20;</node>
-            <node x="1518.125" y="344.0">;</node>
-            <node x="781.1249999999999" y="333.0">$PROJECT_DIR$/geometry2d/Shape.min.mjs#Circle#20;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/Shape.min.mjs#Rect#27;</node>
-            <node x="1343.125" y="333.0">$PROJECT_DIR$/geometry2d/Shape.mjs#Circle#8;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/Shape.mjs#Rect#16;</node>
-            <node x="613.1249999999999" y="355.0">$PROJECT_DIR$/geometry2d/Vec2.mjs</node>
-            <node x="909.4999999999998" y="0.0">Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;</node>
-          </nodes>
-          <notes />
-          <edges>
-            <edge source=";;" target="$PROJECT_DIR$/geometry2d/Vec2.mjs">
-              <point x="41.5" y="-36.5" />
-              <point x="644.4999999999999" y="446.0" />
-              <point x="668.6249999999999" y="446.0" />
-              <point x="-18.5" y="14.5" />
-            </edge>
-            <edge source=";;;;" target=";">
-              <point x="-20.875" y="-58.5" />
-              <point x="1835.4782196969695" y="426.0" />
-              <point x="1641.875" y="426.0" />
-              <point x="41.25" y="25.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Ellipsoid.min.mjs#PI2#20;;;;" target="$PROJECT_DIR$/geometry2d/Vec2.mjs">
-              <point x="-71.25" y="-58.5" />
-              <point x="895.1704545454543" y="446.0" />
-              <point x="705.6249999999999" y="446.0" />
-              <point x="18.5" y="14.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Polygon.min.mjs#PI2#20;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="0.0" y="-25.5" />
-              <point x="1796.625" y="243.0" />
-              <point x="1061.4374999999998" y="243.0" />
-              <point x="58.4375" y="91.5" />
-            </edge>
-            <edge source=";;;;" target="$PROJECT_DIR$/geometry2d/Vec2.mjs">
-              <point x="-62.625" y="-58.5" />
-              <point x="1793.7282196969695" y="436.0" />
-              <point x="742.6249999999999" y="436.0" />
-              <point x="55.5" y="14.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Circle.min.mjs#PI2#20;;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="-43.5" y="-36.5" />
-              <point x="1953.625" y="233.0" />
-              <point x="1069.2291666666665" y="233.0" />
-              <point x="66.22916666666669" y="91.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Shape.mjs#Circle#8;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/Shape.mjs#Rect#16;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="-38.75" y="-36.5" />
-              <point x="1381.875" y="273.0" />
-              <point x="1038.0625" y="273.0" />
-              <point x="35.06250000000006" y="91.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Shape.min.mjs#Circle#20;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/Shape.min.mjs#Rect#27;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="-44.25" y="-36.5" />
-              <point x="825.3749999999999" y="283.0" />
-              <point x="975.7291666666665" y="283.0" />
-              <point x="-27.270833333333314" y="91.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Point.min.mjs#Shape#25;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/Point.min.mjs#Vec2#20;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="-43.0" y="-36.5" />
-              <point x="258.4999999999999" y="233.0" />
-              <point x="936.7708333333331" y="233.0" />
-              <point x="-66.22916666666669" y="91.5" />
-            </edge>
-            <edge source=";;;;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="20.875" y="-58.5" />
-              <point x="1877.2282196969695" y="436.0" />
-              <point x="2094.625" y="436.0" />
-              <point x="2094.625" y="213.0" />
-              <point x="1084.8124999999998" y="213.0" />
-              <point x="81.8125" y="91.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Ellipsoid.min.mjs#PI2#20;;;;" target=";">
-              <point x="71.25" y="-58.5" />
-              <point x="1037.6704545454543" y="446.0" />
-              <point x="1559.375" y="446.0" />
-              <point x="-41.25" y="25.5" />
-            </edge>
-            <edge source=";" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="0.0" y="-25.5" />
-              <point x="1600.625" y="253.0" />
-              <point x="1053.6458333333333" y="253.0" />
-              <point x="50.64583333333337" y="91.5" />
-            </edge>
-            <edge source=";;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="-38.0" y="-36.5" />
-              <point x="445.4999999999999" y="253.0" />
-              <point x="952.3541666666665" y="253.0" />
-              <point x="-50.645833333333314" y="91.5" />
-            </edge>
-            <edge source="$PROJECT_DIR$/geometry2d/Ellipsoid.min.mjs#PI2#20;;;;" target="Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;">
-              <point x="23.75" y="-58.5" />
-              <point x="990.1704545454543" y="446.0" />
-              <point x="979.6249999999999" y="446.0" />
-              <point x="979.6249999999999" y="313.0" />
-              <point x="999.1041666666665" y="313.0" />
-              <point x="-3.8958333333333144" y="91.5" />
-            </edge>
-          </edges>
-          <settings layout="Hierarchic Group" zoom="0.8679245283018868" x="700.0" y="257.0" />
-          <SelectedNodes>
-            <node>Circle;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI2#150;C:/Users/RichardFrance/Documents/Programmation/WebstormProjects/jsLibs_Modules/geometry2d/geometry2d.mjs#PI_2#235;Polygon;Rect;Shape;Vec2;</node>
-          </SelectedNodes>
-          <Categories>
-            <Category>All</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>Details</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/audio.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="33" selection-start-column="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/p2p.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="106" column="4" lean-forward="true" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/layout.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="42" column="28" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/viewers.min.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="2" column="483" selection-start-line="2" selection-start-column="483" selection-end-line="2" selection-end-column="483" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="549" column="9" selection-start-line="549" selection-start-column="9" selection-end-line="549" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/manager.min.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="5" column="114" selection-start-line="5" selection-start-column="114" selection-end-line="5" selection-end-column="114" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Line.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="555" column="14" selection-start-line="555" selection-start-column="14" selection-end-line="555" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Point.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="175" column="15" selection-start-line="175" selection-start-column="15" selection-end-line="175" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Polygon.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="724" column="17" selection-start-line="724" selection-start-column="17" selection-end-line="724" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Ray.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="261" column="13" selection-start-line="261" selection-start-column="13" selection-end-line="261" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Shape.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="282" column="15" selection-start-line="282" selection-start-column="15" selection-end-line="282" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/geometry2d/Rect.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="816" column="14" selection-start-line="816" selection-start-column="14" selection-end-line="816" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Ellipsoid.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="387" column="19" selection-start-line="387" selection-start-column="19" selection-end-line="387" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Circle.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="334" column="16" selection-start-line="334" selection-start-column="16" selection-end-line="334" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/input.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#971#1159#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#InputManager#0" expanded="true" />
-            <element signature="n#!!doc;n#KeyMap#0" expanded="true" />
-            <element signature="n#!!doc;n#constructor#0;n#KeyMap#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#KeyMap#0" expanded="true" />
-            <element signature="e#11218#11322#0" expanded="true" />
-            <element signature="e#11368#11505#0" expanded="true" />
-            <element signature="e#11545#11820#0" expanded="true" />
-            <element signature="e#12001#12034#0" expanded="true" />
-            <element signature="e#13521#13568#0" expanded="true" />
-            <element signature="e#13783#13833#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2160">
+          <caret line="603" column="4" selection-start-line="603" selection-start-column="4" selection-end-line="603" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/geometry2d/geometry2d.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#48#77#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="256">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/colors.mjs">
+    <entry file="file://$PROJECT_DIR$/demos/vertical_shooter/PlayerCharacter.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="32">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/vertical_shooter/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/platform/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="35" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/vertical_shooter/main.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="23" column="46" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/platform/main.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/platform/Platform.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="13" column="41" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game/board.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9072">
-          <caret line="576" column="23" lean-forward="true" selection-start-line="576" selection-start-column="23" selection-end-line="576" selection-end-column="23" />
+        <state relative-caret-position="1392">
+          <caret line="576" column="23" selection-start-line="576" selection-start-column="23" selection-end-line="576" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/bullets.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="114" column="33" selection-start-line="114" selection-start-column="33" selection-end-line="114" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/tools.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/object.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/object_mixins.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3872">
-          <caret line="248" column="27" selection-start-line="248" selection-start-column="27" selection-end-line="248" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/particles.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="5" column="40" selection-start-line="5" selection-start-column="40" selection-end-line="5" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/physics.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="49" column="37" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/turn.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/TiledMap.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/renderer_collider.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10768">
-          <caret line="682" column="54" selection-start-line="682" selection-start-column="54" selection-end-line="682" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/stylesheet.css">
+    <entry file="file://$PROJECT_DIR$/demos/platform/Character.mjs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <caret line="20" column="38" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/geometry2d/Vec2.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1328">
-          <caret line="275" column="5" selection-start-line="275" selection-start-column="5" selection-end-line="275" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!doc;n#Vec2#0" expanded="true" />
-            <element signature="n#!!block;n#getRoundedY#0;n#Vec2#0" expanded="true" />
-            <element signature="n#!!block;n#roundedVec#0;n#Vec2#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/game/viewers.mjs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="26" column="7" lean-forward="true" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-            <element signature="e#64#119#0" expanded="true" />
-            <element signature="e#186#211#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#UIElement#0" expanded="true" />
-            <element signature="e#521#581#0" expanded="true" />
-            <element signature="e#662#719#0" expanded="true" />
-            <element signature="e#776#837#0" expanded="true" />
-            <element signature="n#!!doc;n#update#0;n#UIElement#0" expanded="true" />
-            <element signature="n#!!block;n#update#0;n#UIElement#0" expanded="true" />
-            <element signature="e#1305#1956#0" expanded="true" />
-            <element signature="n#!!doc;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#constructor#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#setCanvasSize#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#setCanvasSize#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#setCanvasResolution#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#setCanvasResolution#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#getCanvasStyle#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#getCanvasStyle#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#scaleX#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#scaleY#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#updateTransform#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#updateTransform#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#pixelToGameCoordinatesTransform#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#pixelToGameCoordinatesTransform#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#gameToPixelCoordinatesTransform#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#gameToPixelCoordinatesTransform#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#setVisibleRect#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!block;n#setVisibleRect#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#render#0;n#Viewer#0" expanded="true" />
-            <element signature="n#!!doc;n#StandardViewer#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#StandardViewer#0" expanded="true" />
-            <element signature="n#!!block;n#render#0;n#StandardViewer#0" expanded="true" />
-            <element signature="n#!!doc;n#setImageSmoothingEnabled#0;n#StandardViewer#0" expanded="true" />
-            <element signature="n#!!block;n#setImageSmoothingEnabled#0;n#StandardViewer#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#StandardDifferedViewer#0" expanded="true" />
-            <element signature="n#!!block;n#setCanvasSize#0;n#StandardDifferedViewer#0" expanded="true" />
-            <element signature="n#!!block;n#updateTransform#0;n#StandardDifferedViewer#0" expanded="true" />
-            <element signature="n#!!block;n#setCanvasResolution#0;n#StandardDifferedViewer#0" expanded="true" />
-            <element signature="n#!!block;n#render#0;n#StandardDifferedViewer#0" expanded="true" />
-            <element signature="n#!!block;n#setImageSmoothingEnabled#0;n#StandardDifferedViewer#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/demos/breakout/Breakout_Objects.min.mjs">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/demos/breakout/Breakout_Objects.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="48" column="57" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
-          <folding>
-            <element signature="n#!!block;n#constructor#0;n#Paddle#0" expanded="true" />
-            <element signature="n#!!block;n#onFrame#0;n#Paddle#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#Ball#0" expanded="true" />
-            <element signature="n#!!block;n#onFrame#0;n#Ball#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="128">
+          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/filters.mjs">
+    <entry file="file://$PROJECT_DIR$/demos/breakout/main.min.mjs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/physics.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
+        <state relative-caret-position="1088">
+          <caret line="203" column="23" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/manager.mjs">
+    <entry file="file://$PROJECT_DIR$/utils/p2p.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="248" column="49" lean-forward="true" selection-start-line="248" selection-start-column="49" selection-end-line="248" selection-end-column="49" />
-          <folding>
-            <element signature="e#191#240#0" expanded="true" />
-            <element signature="e#605#828#0" expanded="true" />
-            <element signature="e#10202#10378#0" expanded="true" />
-            <element signature="e#10831#10977#0" expanded="true" />
-            <element signature="e#11304#11341#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="413">
+          <caret line="149" column="6" selection-start-line="149" selection-start-column="6" selection-end-line="149" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demos/breakout/ScoreView.mjs">
+    <entry file="file://$PROJECT_DIR$/demos/p2p/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+        <state relative-caret-position="144">
+          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/p2p/main.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" column="38" lean-forward="true" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#29#78#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#Title#0" expanded="true" />
-            <element signature="n#!!block;n#setScore#0;n#ScoreView#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
+            <element signature="n#!!block;n#step#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/demos/breakout/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="5" column="61" lean-forward="true" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="61" />
+        <state relative-caret-position="208">
+          <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Google_Drive/ChromeDevEditor/Asteroid_web/src/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="27" selection-start-column="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="5424" column="12" selection-start-line="5424" selection-start-column="12" selection-end-line="5424" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/demos/breakout/main.mjs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+        <state relative-caret-position="112">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/vertical_shooter/Character.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="23" column="14" selection-start-line="23" selection-start-column="14" selection-end-line="23" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/renderer_collider.min.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="313" selection-start-column="313" selection-end-column="313" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/renderer_collider.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="155" column="4" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/input.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="99" column="60" lean-forward="true" selection-start-line="99" selection-start-column="60" selection-end-line="99" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/object_mixins.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="110" column="8" selection-start-line="110" selection-start-column="8" selection-end-line="110" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/bullets.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="287" column="63" selection-start-line="287" selection-start-column="63" selection-end-line="287" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/manager.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="110" column="50" selection-start-line="110" selection-start-column="50" selection-end-line="110" selection-end-column="50" />
           <folding>
-            <element signature="e#894#1159#0" expanded="true" />
-            <element signature="e#1018#1120#0" expanded="true" />
-            <element signature="e#1275#1315#0" expanded="true" />
-            <element signature="n#!!block;n#init#0" expanded="true" />
-            <element signature="e#1711#1935#0" expanded="true" />
-            <element signature="e#1744#1929#0" expanded="true" />
-            <element signature="e#1742#1770#0" expanded="true" />
-            <element signature="e#2036#2376#0" expanded="true" />
+            <element signature="e#49#118#0" expanded="true" />
+            <element signature="e#2356#2607#0" expanded="true" />
+            <element signature="e#4597#4631#0" expanded="true" />
+            <element signature="n#!!doc;n#constructor#0;n#GameManager#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#GameManager#0" expanded="true" />
+            <element signature="e#8940#9269#0" expanded="true" />
+            <element signature="e#12524#12668#0" expanded="true" />
+            <element signature="e#12672#12796#0" expanded="true" />
+            <element signature="e#14639#15355#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/object.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="482" column="11" selection-start-line="482" selection-start-column="7" selection-end-line="482" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Asteroid/constants.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="38" column="26" selection-start-line="38" selection-start-column="4" selection-end-line="38" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/particles.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="468" column="58" selection-start-line="468" selection-start-column="58" selection-end-line="468" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Asteroid/SpaceShip.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="40" column="27" lean-forward="true" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Asteroid/main.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="29" column="19" lean-forward="true" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/object_mixins.min.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="1" column="455" selection-start-line="1" selection-start-column="455" selection-end-line="1" selection-end-column="455" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Asteroid/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="13" column="7" lean-forward="true" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Asteroid/Asteroid.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="15" column="94" lean-forward="true" selection-start-line="15" selection-start-column="94" selection-end-line="15" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/colors.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="34" column="9" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!block;n#HSVtoRGB#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/viewers.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1536">
+          <caret line="375" column="35" selection-start-line="375" selection-start-column="35" selection-end-line="375" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#Viewer#0" expanded="true" />
+            <element signature="e#6015#6040#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#StandardViewer#0" expanded="true" />
+            <element signature="n#!!block;n#render#0;n#StandardViewer#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es2015.core.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="253" column="13" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/tools.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="233" column="4" selection-start-line="233" selection-start-column="4" selection-end-line="233" selection-end-column="4" />
+          <folding>
+            <element signature="n#!!doc;n#mix#0" expanded="true" />
+            <element signature="n#!!block;n#waitForEvent#0" expanded="true" />
+            <element signature="e#3450#3546#0" expanded="true" />
+            <element signature="e#3504#3542#0" expanded="true" />
+            <element signature="n#!!block;n#delay#0" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!doc;n#next#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!block;n#next#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!doc;n#nextRanged#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!block;n#nextRanged#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!doc;n#nextFloat#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!block;n#nextFloat#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!doc;n#nextRangedFloat#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!block;n#nextRangedFloat#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!doc;n#randomIntFunction#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!block;n#randomIntFunction#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!doc;n#randomFloatFunction#0;n#PRNG#0" expanded="true" />
+            <element signature="n#!!block;n#randomFloatFunction#0;n#PRNG#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/transitions.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="31" column="28" lean-forward="true" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#Transition#0" expanded="true" />
+            <element signature="e#667#803#0" expanded="true" />
+            <element signature="e#1229#1325#0" expanded="true" />
+            <element signature="e#1495#1592#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/plug-ins/CellularTiledMapLayer.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="37" column="28" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#CellularTiledMapLayer#0" expanded="true" />
+            <element signature="n#!!block;n#step#0;n#CellularTiledMapLayer#0" expanded="true" />
+            <element signature="e#3145#3261#0" expanded="true" />
+            <element signature="e#3359#3471#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Conway_Game_of_LIfe/main.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#24#75#0" expanded="true" />
+            <element signature="e#1007#1271#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Conway_Game_of_LIfe/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game/TiledMap.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="428" column="22" selection-start-line="428" selection-start-column="22" selection-end-line="428" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#TiledMapLayer#0" expanded="true" />
+            <element signature="n#!!block;n#getValue#0;n#TiledMapLayer#0" expanded="true" />
+            <element signature="n#!!block;n#setValue#0;n#TiledMapStaticLayer#0" expanded="true" />
+            <element signature="n#!!block;n#constructor#0;n#TiledMap#0" expanded="true" />
+            <element signature="n#!!block;n#getLayer#0;n#TiledMap#0" expanded="true" />
+            <element signature="n#!!block;n#getLayerId#0;n#TiledMap#0" expanded="true" />
+            <element signature="n#!!block;n#render#0;n#DebugTiledMapRenderer#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geometry2d/Vec2.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="378" selection-start-line="378" selection-end-line="378" />
+          <folding>
+            <element signature="n#!!block;n#angle#0;n#Vec2#0" expanded="true" />
+            <element signature="n#!!block;n#angle#1;n#Vec2#0" expanded="true" />
+            <element signature="n#!!block;n#magnitude#0;n#Vec2#0" expanded="true" />
+            <element signature="n#!!block;n#magnitude#1;n#Vec2#0" expanded="true" />
+            <element signature="n#!!block;n#setAngle#0;n#Vec2#0" expanded="true" />
+            <element signature="n#!!block;n#rotate#0;n#Vec2#0" expanded="true" />
+            <element signature="n#!!doc;n#transform#0;n#Vec2#0" expanded="true" />
+            <element signature="n#!!block;n#transform#0;n#Vec2#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Voronoi/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="7" lean-forward="true" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demos/Voronoi/main.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="656">
+          <caret line="89" column="6" lean-forward="true" selection-start-line="36" selection-start-column="3" selection-end-line="89" selection-end-column="6" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geometry2d/Polygon.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="818">
+          <caret line="814" column="32" lean-forward="true" selection-start-line="814" selection-start-column="32" selection-end-line="814" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!block;n#rotate#0;n#Polygon#0" expanded="true" />
+            <element signature="n#!!block;n#invertPointsOrder#0;n#Polygon#0" expanded="true" />
+            <element signature="n#!!block;n#divideConvex#0;n#Polygon#0" expanded="true" />
+            <element signature="n#!!doc;n#getIntersectionLine#0;n#Polygon#0" expanded="true" />
+            <element signature="n#!!block;n#intersect#0;n#ConvexPolygon#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geometry2d/math2d.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/geometry2d/Circle.mjs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="336" column="40" lean-forward="true" selection-start-line="336" selection-start-column="40" selection-end-line="336" selection-end-column="40" />
+          <folding>
+            <element signature="n#!!doc;n#CircumCircle#0;n#Circle#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -38,7 +38,7 @@ const GM = new GameManager({
 });
 GM.viewer.context.lineWidth = 0.16;
 //</editor-fold>
-const paddle = new Paddle(new Rect(0,0,20, 5));
+const paddle = new Paddle(new Rect(0,0,20, 1));
 const ball = new Ball(new Circle(Vec2.ZERO, 2), Vec2.ZERO);
 function gameInit() {
     GM.clearObjects();
@@ -48,7 +48,7 @@ function gameInit() {
     GM.addObjects([ball, paddle]);
     for(let i=0; i< 5; i++) {
         for(let j=0; j<8; j++) {
-            const color = HSVtoRGB(Math.random(), 1, 1);
+            const color = HSVtoRGB(i*0.2+j*0.02, 1, 1);
             GM.addObject(new Brick(new Rect(j*20+1, i*10+1, j*20+19, i*10+9), RGBtoHex(color.r, color.g, color.b)));
         }
     }

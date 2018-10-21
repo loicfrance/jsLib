@@ -170,6 +170,23 @@ const Matrix = {
 		return [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
 	}
 };
+
+class ShaderInfo {
+    constructor(gl, vertexShader, fragmentShader, attributes, uniforms) {
+        /**
+         * @type {WebGLProgram}
+         */
+        this.program = webgl.createProgram(gl, vertexShader, fragmentShader);
+        /**
+         * @type Array
+         */
+        this.attr_locs = webgl.getAttribLocations(gl, this.program, attributes);
+        /**
+         * @type Array
+         */
+        this.uni_locs = webgl.getUniformLocations(gl, this.program, uniforms);
+    }
+}
 export {
 	getContext,
 	initContext,
@@ -180,5 +197,6 @@ export {
 	getUniformLocations,
 	createAttribBuffer,
 	standardFragmentShader,
-	Matrix
+	Matrix,
+	ShaderInfo
 };

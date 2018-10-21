@@ -21,7 +21,7 @@ function AABBvsAABB(aabb1, aabb2, rSpd) {
 	if(r.yMin === rct1.yMin) norm.y = - r.height;
 	else if(r.yMax === rct1.yMax) norm.y = r.height;
 	if(norm.x && norm.y) {
-		if(r.ratio > rSpd.x/rSpd.y) norm.x = 0;
+		if(Math.abs(r.ratio) > Math.abs(rSpd.x/rSpd.y)) norm.x = 0;
 		else norm.y = 0;
 	}
 	return norm;
@@ -43,6 +43,8 @@ function CirclevsCircle(collider1, collider2, rSpd) {
 
 	if(d === 0) return norm.setXY(R,0);
 	else return norm.setMagnitude(R-d);
+}
+function PolygonvsPolygon(collider1, collider2, rSpd) {
 
 }
 
@@ -58,16 +60,49 @@ const Materials = {
 };
 const G = 6.67408e-11;
 class Force {
-		constructor(vector) {
-			this.vector = vector;
-		}
-		getDeltaSpeed(object, invMass, dT) {
-			return this.vector.clone().mul(invMass * dT);
-		}
+    /**
+	 *
+     * @param {Vec2} vector
+     */
+	constructor(vector) {
+            /**
+			 * @type {Vec2}
+             */
+			this.vector = vector.clone();
+	}
+	getDeltaSpeed(object, invMass, dT) {
+		return this.vector.clone().mul(invMass * dT);
+	}
+	mul(factor) {
+		this.vector.mul(factor);
+		return this;
+	}
+	negate() {
+		this.vector.negate();
+		return this;
+	}
 }
 class Impulse extends Force {
 	constructor(vector) {super(vector);}
 	getDeltaSpeed(object, invMass, dT) { return this.vector.clone().mul(invMass); }
+}
+class AmbientFriction extends Force {
+    /**
+	 * gaz friction simulated with constant C_d and area approximated with rectangle diagonale.
+     * @param {number} factor equal to: 0.5 *density * C_d
+     */
+	constructor(flowSpeed = Vec2.ZERO, factor = 0.5 * 1.2 * 0.47) {
+		super(flowSpeed);
+		this.factor = factor;
+	}
+	getDeltaSpeed(object, invMass, dT) {
+		const rect = object.getColliderRect();
+
+		const result = Vec2.translation(object.getSpeed(), this.vector); // flow speed relative ot the object
+		if(result.isZero()) return Vec2.ZERO;
+		//result.mul((rect.width**2 + rect.height**2)**0.5) //diagonal of the rectangle
+		return result.mul(result.magnitude * this.factor * invMass * dT).clampMagnitude(0, object.getSpeed().magnitude*dT);
+	}
 }
 class SpaceGravity extends Force {
 	constructor(position, mass) {
@@ -80,8 +115,60 @@ class SpaceGravity extends Force {
 		let vector = Vec2.translation(object.getPosition(), this.position);
 		return vector.setMagnitude(this.factor*dT/vector.squareMagnitude);
 	}
+
+	mul(factor) {
+		this.factor *= factor;
+		return this;
+	}
+	negate() {
+		this.factor = -factor;
+		return this;
+	}
 }
-class World {
+class UniDirectionalControllerForce extends Force {
+	constructor(reactivity) {
+        super(Vec2.ZERO);
+        this.reactivity = reactivity;
+	}
+	getDeltaSpeed(object, invMass, dT) {
+		if(this.vector.isZero()) return Vec2.ZERO;
+		const delta = Vec2.translation(object.getSpeed(), this.vector); // desired speed - actual speed
+		const directed = Vec2.dotProd(delta, this.vector.clone().normalize()); // projection of delta on desired direction
+		if (directed <= 0) return Vec2.ZERO; // object speed is already enough (or higher than necessary)
+		else return this.vector.clone().setMagnitude(directed * this.reactivity);
+	}
+}
+class SpatialControllerForce extends Force {
+	constructor(reactivity) {
+		super(Vec2.ZERO);
+		this.reactivity = reactivity;
+	}
+    getDeltaSpeed(object, invMass, dT) {
+        if(this.vector.isZero()) return Vec2.ZERO;
+        const delta = Vec2.translation(object.getSpeed(), this.vector); // desired speed - actual speed
+        const directed = Vec2.dotProd(delta, this.vector.clone().normalize());
+
+        // directional speed is already enough (or higher than necessary), so only correct perpendicular speed
+        if (directed <= 0) delta.remove(this.vector.clone().setMagnitude(directed));
+        else return delta.mul(this.reactivity);
+    }
+}
+class BreakerControllerForce extends Force{
+	constructor(direction, reactivity) {
+		super(direction);
+		this.vector.normalize();
+        this.reactivity = reactivity;
+        this.enabled = false
+	}
+    getDeltaSpeed(object, invMass, dT) {
+        if(!this.enabled) return Vec2.ZERO;
+        if(this.vector.isZero()) // spatial break
+        	return object.copySpeed().mul(-this.reactivity);
+        else // uni-directional break
+        	return this.vector.clone().mul(-Vec2.dotProd(object.copySpeed(), this.vector)*this.reactivity);
+    }
+}
+class PhysicWorld {
 	constructor() {
 		this.forces = [];
 	}
@@ -94,9 +181,14 @@ class RigidBody {
 	constructor(material = Materials.Rock) {
 		this.material = material;
 		/**
-		 * @type {Array<physics.Force>}
+		 * @type {Array<?Force>}
 		 */
 		this.frameForces = [];
+        /**
+		 *
+         * @type {Array<?Force>}
+         */
+		this.permanentForces = [];
 		/**
 		 * @type {Array<Vec2>}
 		 */
@@ -114,17 +206,22 @@ class RigidBody {
 			}
 			this.frameForces = [];
 		}
-		i = world.forces.length;
-		while(i--) {
+
+		for(i = this.permanentForces.length;i--;)
+			sum.add(this.permanentForces[i].getDeltaSpeed(object, this.invMass, dT));
+
+		if(world) for(i = world.forces.length;i--;)
 			sum.add(world.forces[i].getDeltaSpeed(object, this.invMass, dT));
-		}
+
 		if(!sum.isZero()) object.speed.add(sum);
 		const len = this.positionCorrections.length;
 		if(len) {
 			sum.set(this.positionCorrections[0]);
-			i = len;
-			while(--i) sum.add(this.positionCorrections[i]);
-			sum.mul(1/len);
+			if(len > 1) {
+                i = len;
+                while (--i) sum.add(this.positionCorrections[i]);
+                sum.mul(1 / len);
+            }
 			object.move(sum);
 			this.positionCorrections = [];
 		}
@@ -140,7 +237,7 @@ class RigidBody {
 		if(mass_sum === 0)
 			return; //objects have no mass. don't touch them.
 
-		let norm, rSpd;
+		let norm, rSpd; /* normal vector, relative speed */
 		if(collider1 instanceof AABBObject2dCollider) {
 			if(collider2 instanceof AABBObject2dCollider) {
 				rSpd = obj2.speed.clone().remove(obj1.speed);
@@ -158,27 +255,30 @@ class RigidBody {
 			else if(collider2 instanceof ShapedObject2dCollider && collider2.shape instanceof Circle) {
 				rSpd = obj2.speed.clone().remove(obj1.speed);
 				norm = CirclevsCircle(collider1, collider2, rSpd);
-			}
+            } else {
+                console.error(`${collider1} and ${collider2} (objects ${obj1} and ${obj2} are not handled for physics collisions`);
+                return;
+            }
+		} else {
+			console.error(`${collider1} and ${collider2} (objects ${obj1} and ${obj2} are not handled for physics collisions`);
+			return;
 		}
-		const nSpd = norm.clone().normalize();
-		const spdAlongNorm = Vec2.dotProd(rSpd, nSpd);
+		const intersection_distance = norm.magnitude;
+		norm.normalize();
+		const spdAlongNorm = Vec2.dotProd(rSpd, norm);
 
 		if(spdAlongNorm > 0) return; //the two objects are already separating each others
 
-
-
-
 		//positional correction :
-		const pos_corr = norm.clone().mul(1/mass_sum);
-		norm.set(nSpd);
+		const pos_corr = norm.clone().mul(intersection_distance/mass_sum);
 		//restitution impulse
-		const rest = Math.min(
+		const rest_factor = Math.min(
 			obj1.rigidBody.material.restitution,
 			obj2.rigidBody.material.restitution);
-		norm.mul(-(1 + rest) * spdAlongNorm / (mass_sum));
+		const rest = norm.clone().mul(-(1 + rest_factor) * spdAlongNorm / mass_sum);
 
-		nSpd.mul(spdAlongNorm);
-		rSpd.remove(nSpd); // WARNING : rSpd is now relative tangent speed
+		//we don't need the variable "norm anymore, so we don't have to clone it before multiplying it"
+		rSpd.remove(norm.mul(spdAlongNorm)); // WARNING : rSpd is now relative tangent speed
 
 		//Friction calculation
 		let mu = Math.sqrt(	obj1.rigidBody.material.staticSquareFriction +
@@ -196,13 +296,13 @@ class RigidBody {
 		if(im1) {
 			obj1.rigidBody.positionCorrections.push(pos_corr.clone().mul(-im1));
 			obj1.rigidBody.frameForces.push(
-				new Impulse(norm.clone().negate()),
+				new Impulse(rest.clone().negate()),
 				new Impulse(rSpd.clone().negate()));
 		}
 		if(im2) {
 			obj2.rigidBody.positionCorrections.push(pos_corr.mul(im2));
 			obj2.rigidBody.frameForces.push(
-					new Impulse(norm),
+					new Impulse(rest),
 					new Impulse(rSpd));
 		}
 	}
@@ -212,6 +312,10 @@ RigidBody.prototype.invMass = 1; // 1/mass
 export {
 	Materials, G,
 	Force, Impulse, SpaceGravity,
-	World,
+    AmbientFriction,
+	UniDirectionalControllerForce,
+	SpatialControllerForce,
+    BreakerControllerForce,
+    PhysicWorld,
 	RigidBody
 }

@@ -1,5 +1,10 @@
 <component name="libraryTable">
   <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/utils/progress.mjs.min.js" />
+      </sourceFilesUrls>
+    </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../file_watchers/node_modules/1_utils-compiled.js" />
       <root url="file://$PROJECT_DIR$/utils/1_utils-compiled.js" />
@@ -36,6 +41,7 @@
       <root url="file://$PROJECT_DIR$/geometry2d/Circle.mjs.min.js" />
       <root url="file://$PROJECT_DIR$/geometry2d/Vec2.mjs.min.js" />
       <root url="file://$PROJECT_DIR$/demos/breakout/main.mjs.min.js" />
+      <root url="file://$PROJECT_DIR$/utils/progress.mjs.min.js" />
     </CLASSES>
     <SOURCES />
   </library>

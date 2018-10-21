@@ -55,7 +55,7 @@ function merge(out, src, override = false) {
 /**
  * 
  * @param {string} url
- * @returns {Promise} promise resolved with {@link String} object when string is loaded
+ * @returns {Promise} promise resolved with a {@link String} object when string is loaded
  */
 const loadString = (url) =>
 	new Promise(resolve => {
@@ -68,6 +68,22 @@ const loadString = (url) =>
 		client.send();
 
 	});
+/**
+ *
+ * @param {string} url
+ * @return {Promise} promise resolved with a {@link XMLDocument} once the file is loaded
+ */
+const loadXml = (url) => {
+	return loadString(url).then((text)=>{
+		if(window.DOMParser) return new DOMParser().parseFromString(text, "text/xml");
+		else { // Internet Explorer
+            const xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async = false;
+            xmlDoc.loadXML(text);
+            return xmlDoc;
+		}
+	})
+};
 /**
  * 
  * @param {string} url
@@ -190,7 +206,77 @@ const rangedRandom = ( min, max ) => Math.random()*(max-min)+min;
  */
 const gaussianRandom = () => (Math.random()+Math.random()+Math.random()
 					   +Math.random()+Math.random()+Math.random()-3)/3;
+class PRNG {
+    /**
+     * Creates a pseudo-random value generator. The seed must be an integer.
+     *
+     * Uses an optimized version of the Park-Miller PRNG.
+     * http://www.firstpr.com.au/dsp/rand31/
+	 * @param {number} seed - Pseudo-Random Number Generator seed value
+     */
+    constructor(seed) {
+        this.seed = seed % 2147483647;
+        if (this.seed <= 0) this.seed += 2147483646;
+    }
 
+    /**
+     * Returns a pseudo-random value in range [<code>1</code>, <code>2^32 - 2</code>].
+     */
+    next() {
+        return (this.seed = (this.seed * 16807) % 2147483647);
+    }
+
+    /**
+     * Returns a pseudo-random value in range [<code>min</code>, <code>max-1</code>].
+     * @param {number} min in range [<code>1</code>, <code>2^32 - 2</code>].
+     * @param {number} max in range [<code>1</code>, <code>2^32 - 2</code>].
+     */
+    nextRanged(min, max) {
+    	return this.next() % (max-min)+min;
+	}
+    /**
+     * Returns a pseudo-random floating point number in range [<code>0</code>, <code>1</code>[.
+     */
+    nextFloat() {
+        // We know that result of next() will be 1 to 2147483646 (inclusive).
+        return (this.next() - 1) / 2147483646;
+    }
+
+    /**
+	 * Returns a pseudo-random floating point number in range [<code>min</code>, <code>max</code>[.
+     * @param {number} min
+     * @param {number} max
+     */
+    nextRangedFloat(min, max) {
+		return this.nextFloat()*(max-min)+min;
+	}
+
+    /**
+	 * a stand-alone random integer function using the same seed as the <code>PRNG</code> instance. Get it if you want to use it separately from the PRNG instance.
+	 * For example, <br/>
+	 * <code>Math.random = new PRNG(123456).randomIntFunction</code>
+	 * will replace the <code>random</code> function of the <code>Math</code> object.
+	 * Remember that the function will still be linked to the <code>PRNG</code> instance, so the seed will be shared.
+	 * Calling this function will be exactly the same as calling the <code>next</code> function of the <code>PRNG</code> instance
+     * @return {PRNG~next}
+     */
+    get randomIntFunction() {
+    	return this.next.bind(this);
+	}
+
+    /**
+     * a stand-alone random float function using the same seed as the <code>PRNG</code> instance. Get it if you want to use it separately from the PRNG instance.
+     * For example, <br/>
+     * <code>Math.random = new PRNG(123456).randomFloatFunction</code>
+     * will replace the <code>random</code> function of the <code>Math</code> object.
+     * Remember that the function will still be linked to the <code>PRNG</code> instance, so the seed will be shared.
+     * Calling this function will be exactly the same as calling the <code>nextFloat</code> function of the <code>PRNG</code> instance
+	 * @return {PRNG~nextFloat}
+     */
+    get randomFloatFunction() {
+    	return this.nextFloat.bind(this);
+	}
+}
 /**
  *
  * @param text
@@ -260,10 +346,44 @@ const wrapText = function(text, rect, lineHeight, textGravity, fill = true, stro
 		y += lineHeight;
 	}
 };
+/**
+ * generates a hashcode from the specified string
+ * @param {string} string
+ * @return {number} hash code generated from the parameter
+ */
+const hashCode = function(string) {
+	const len = string.length;
+    if (len === 0) return 0;
+    let hash = 0;
+    for (let i = 0; i < len; ++i) {
+        hash = ((hash<<5)-hash)+string.charCodeAt(i);
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+
+};
+
+/**
+ * listen for the Developer tools to be opened. When opens, the return promised is resolved.
+ * A line is printed after the promise is resolved, and you can print a message in the console by returning
+ * a value to the resolved promise
+ * @return {Promise} resolved when the developer tools open (immediately if already opened)
+ */
+const listenDevToolsOpening = function() {
+	return new Promise(r=> {
+        var devtools = /./;
+        devtools.toString = function() {
+            r()
+        };
+        console.log('%c', devtools);
+	});
+};
+
 export {
     mix,
     merge,
     loadString,
+	loadXml,
     loadImage,
     createScriptWorker,
     polyfill,
@@ -275,5 +395,8 @@ export {
     instanciateWASM,
 	rangedRandom,
     gaussianRandom,
-    wrapText
+	PRNG,
+    wrapText,
+	hashCode,
+	listenDevToolsOpening
 };

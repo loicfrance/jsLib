@@ -1,7 +1,8 @@
 "use strict";
 
-import {Vec2, Rect} from "../geometry2d/geometry2d.mjs";
+import {Vec2, Rect, Line} from "../geometry2d/geometry2d.mjs";
 import GameObject from "./object.mjs";
+import {ShapedObjectRenderer} from "./renderer_collider.mjs";
 
 /**
  * @module game/TiledMap
@@ -214,7 +215,7 @@ const GridHelper = {
  * @abstract
  */
 class TiledMapLayer {
-	constructor(lineStart, columnStart, lines, columns) {
+	constructor(lineStart = 0, columnStart = 0, lines, columns) {
 		this.lineStart = lineStart;
 		this.columnStart = columnStart;
 		this.lines = lines;
@@ -272,7 +273,7 @@ class TiledMapStaticBinaryLayer extends TiledMapStaticLayer {
 	}
 }
 class TiledMapObjectsOccupationLayer extends TiledMapLayer {
-	constructor(tiledMap, lineStart, columnStart, lines, columns) {
+	constructor(tiledMap, lineStart = 0, columnStart = 0, lines = tiledMap.lines, columns = tiledMap.columns) {
 		super(lineStart, columnStart, lines, columns);
 		this.objects = [];
 		this.tiledMap = tiledMap;
@@ -410,7 +411,7 @@ class TiledMap extends GameObject {
 	}
 
 	getLayer(id) {
-		return layers[id];
+		return this.layers[id];
 	}
 	getLayersOnTile(column, line) {
 		const layers = [];
@@ -491,7 +492,34 @@ class TiledMap extends GameObject {
 TiledMap.prototype.bodyLayer = -1;
 TiledMap.prototype.living = false;
 
+class DebugTiledMapRenderer extends ShapedObjectRenderer {
+	constructor(map, color) {
+        super(map.getMapRect(), color);
+        this.map = map;
+    }
+    render(context) {
+		super.render(context); // render border rectangle
+        let i = this.map.lines;
+        while(--i) {
+            new Line(
+            	new Vec2(this.shape.xMin, this.shape.yMin+i * this.map.tileHeight),
+                new Vec2(this.shape.xMax, this.shape.yMin+i * this.map.tileHeight)
+			).draw(context);
+        }
+        i = this.map.columns;
+        while(--i) {
+            new Line(
+                new Vec2(this.shape.xMin + i * this.map.tileWidth, this.shape.yMin),
+                new Vec2(this.shape.xMin + i * this.map.tileWidth, this.shape.yMax)
+            ).draw(context);
+        }
+	}
+}
+DebugTiledMapRenderer.prototype.fill = false;
+DebugTiledMapRenderer.prototype.stroke = true;
+
 export {
 	GridHelper, TiledMap,
+    DebugTiledMapRenderer,
 	TiledMapLayer, TiledMapStaticLayer, TiledMapStaticBinaryLayer, TiledMapObjectsOccupationLayer
 };

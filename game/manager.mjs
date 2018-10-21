@@ -3,6 +3,7 @@
  */
 import {exclusionFilter, instanceFilter} from "../utils/filters.mjs";
 import {Viewer} from "./viewers.mjs";
+import {PhysicWorld} from "./physics.mjs";
 
 /**
  * @module game/manager
@@ -130,7 +131,8 @@ class GameManager {
 	 * @param {gameEventCallback} [parameters.onGameEvent] - callback function called on various game events
 	 * @param {?Viewer} [parameters.viewer] - the object that will be used to render the game
 	 * @param {?number} [parameters.gameDt] - the difference (in seconds) between each frame, from the point of view of objects
-	 * @param {?number} [parameters.realDt] - the difference (in seconds) between each frame, from the point of view of the player
+     * @param {?number} [parameters.realDt] - the difference (in seconds) between each frame, from the point of view of the player
+     * @param {?PhysicWorld} [parameters.physicWorld] - the object handling forces applied on all objects (gravity, friction, ...)
 	 */
 	constructor(parameters) {
 //______________________________________________________________________________________________________________________
@@ -165,6 +167,11 @@ class GameManager {
 		 * @type {number}
 		 */
 		this.realDt = 1/60;
+        /**
+		 * object handling physics forces applying to all physics objects (like gravity, or air friction)
+         * @type {PhysicWorld}
+         */
+		this.physicWorld = null;
 //______________________________________________________________________________________________________________________
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -methods - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //**********************************************************************************************************************
@@ -445,6 +452,8 @@ class GameManager {
 				this.gameDt = +parameters.gameDt;
 			if(!isNaN(+parameters.realDt))
 				this.realDt = +parameters.realDt;
+			if(parameters.physicWorld instanceof PhysicWorld)
+				this.physicWorld = parameters.physicWorld;
 		}
 	}
 	setViewer(viewer) {

@@ -467,7 +467,7 @@ class GameObject {
 //**********************************************************************************************************************
 	//noinspection JSSuspiciousNameCombination
 	/**
-	 * returns whether or not the object is outside the specified rectangle.
+	 * returns whether or not the object is outside the specified rectangle, augmaented of the specified margins.
 	 * @param {Rect} rect
 	 * @param {number} [marginX=0]
 	 * @param {number} [marginY=marginX]
@@ -511,8 +511,9 @@ class GameObject {
 /**
  * the render layer of this object. As it is generally common to all objects of the same class, <!--
  * -->this attribute is generally defined in the prototype of the class, but you can do it anywhere you want <!--
- * -->for your objects. The default value is {@link RenderLayer.OBJ1};
+ * -->for your objects. The default value is 0;
  * This attributes is used to define an order for the objects to be drawn on the screen.
+ * An object with a renderLayer of 0 will be above an object with the renderLayer of 1
  * @name GameObject#renderLayer
  * @type {number}
  */
