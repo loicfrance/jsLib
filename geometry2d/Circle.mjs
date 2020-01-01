@@ -350,7 +350,7 @@ class Circle extends Shape {
         else {
             const pos = new Vec2(
                     (AC.y*E - AB.y*F) / G,
-                    (AB.x* - AC.x*EF) / G),
+                    (AB.x*F - AC.x*E) / G),
                 dX = pos.x - A.x,
                 dY = pos.y - A.y;
             return new Circle(pos, Math.sqrt(dX*dX + dY*dY));
