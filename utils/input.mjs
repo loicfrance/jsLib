@@ -16,11 +16,16 @@ import Vec2 from "../geometry2d/Vec2.mjs"
  */
 /**
  * @callback mouseCallback
- * @param {MouseEvents} event
- * @param {MouseEvents} eventType
+ * @param {MouseEvent} event
+ * @param {MouseEvents} evtType
  * @param {MouseButton} button
  * @param {Vec2} position
  * @returns {void|boolean} prevent default behavior.
+ */
+/**
+ * @callback gamepadCallback
+ * @param {GamepadEvent} event
+ * @param {Gamepad} gamepad
  */
 /**
  * @callback InputManager.focusCallback
@@ -72,7 +77,7 @@ const MouseEvents = {
 const MouseButton = { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 };
 const GamepadEvents = {
 	CONNECTED: 'gamepadconnected', DISCONNECTED: 'gamepaddisconnected'
-}
+};
 
 //######################################################################################################################
 //#                                                    InputManager                                                    #
@@ -83,13 +88,16 @@ const KEYS_NUMBER = Key.number;
 const KEY_STATE = KeyState;
 const MOUSE_BTN = MouseButton;
 
-const fixMouseWhich = evt => {
-	if (!evt.which && evt.button) {
-		evt.which =
-			((evt.button % 8 - evt.button % 4) === 4) ? MOUSE_BTN.MIDDLE :
-				((evt.button % 4 - evt.button % 2) === 2) ? MOUSE_BTN.RIGHT :
-					((evt.button % 2) === 1) ? MOUSE_BTN.LEFT :
-						MOUSE_BTN.UNKNOWN;
+const getMouseButton = evt => {
+	if (evt.which) return evt.which;
+	else if (evt.button) {
+		return ((evt.button % 8 - evt.button % 4) === 4) ? MOUSE_BTN.MIDDLE :
+			((evt.button % 4 - evt.button % 2) === 2) ? MOUSE_BTN.RIGHT :
+				((evt.button % 2) === 1) ? MOUSE_BTN.LEFT :
+					MOUSE_BTN.UNKNOWN;
+	}
+	else {
+		return MOUSE_BTN.UNKNOWN;
 	}
 };
 const onKeyEvt = (keyStates, callbacks, state, evt) => {
@@ -136,14 +144,17 @@ class InputManager {
 				evt.pageX - elmtRect.left,
 				evt.pageY - elmtRect.top);
 		};
-		const onMouseEvt = (callback, evtType, evt) => {
-			fixMouseWhich(evt);
-			if (callback(evt, evtType, evt.which, getVec(evt))) evt.preventDefault();
+		/**
+		 * @param {mouseCallback} callback
+		 * @param {MouseEvent} evt
+		 * @param evt
+		 */
+		const onMouseEvt = (callback, evt, evtType) => {
+			if (callback(evt, evtType, MousegetMouseButton(evt), getVec(evt))) evt.preventDefault();
 		};
-		let gamepads = [];
 		const onGamepadEvt = (callback, evtType, evt) => {
 			callback(evtType, evt.gamepad);
-		}
+		};
 //____________________________________________________public methods____________________________________________________
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *keyboard* * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		/**
@@ -156,7 +167,7 @@ class InputManager {
 		 */
 		this.enableKeyboardListener = function (enable, capturingMode = true) {
 			if (enable) {
-				if (this.element != document && !this.element.hasAttribute('tabindex')) {
+				if (this.element !== document && !this.element.hasAttribute('tabindex')) {
 					this.element.setAttribute('tabindex', -1); // so it can receive keyboard events
 				}
 				this.element.addEventListener('keydown', onKeyDown, capturingMode);
@@ -183,7 +194,7 @@ class InputManager {
 		 * @param {keyboardCallback} callback
 		 */
 		this.removeKeyCallback = (callback) => {
-			keyboardCallbacks.remove(callback);
+			keyboardCallbacks.splice(keyboardCallbacks.indexOf(callback), 1);
 		};
 		/**
 		 * returns the state of the key
@@ -219,11 +230,16 @@ class InputManager {
 			}
 		};
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *gamepad * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+		/**
+		 *
+		 * @param {gamepadCallback} callback
+		 * @param {number} autoUpdatePeriod
+		 */
 		this.setGamePadEventsCallback = function (callback, autoUpdatePeriod=1/60) {
 			if(callback) {
 				for (let evtType in GamepadEvents) {
 					if(GamepadEvents.hasOwnProperty(evtType)) {
-						e = GamepadEvents[evtType];
+						const e = GamepadEvents[evtType];
 						this.element[e] = onGamepadEvt.bind(this, callback, e);
 					}
 				}
@@ -234,7 +250,7 @@ class InputManager {
                     }
                 }
 			}
-		}
+		};
 //* * * * * * * * * * * * * * * * * * * * * * focus, pointer lock, fullscreen* * * * * * * * * * * * * * * * * * * * * *
 		/**
 		 * @function
@@ -340,8 +356,8 @@ class KeyMap {
 				}
 			}
 			else {
-				if(action == undefined) {
-					if(actions[keyCode] != undefined) actions[keyCode] = undefined;
+				if(action === undefined || action === null) {
+					if(actions[keyCode] !== undefined) actions[keyCode] = undefined;
 				} else actions[keyCode] = action;
 			}
 		};
@@ -367,7 +383,7 @@ class KeyMap {
 			do {
 				code = actions.indexOf(action, code+1);
 				if(code!== -1)
-					if(inputManager.getKeyState(code) === InputManager.KeyState.DOWN) return true;
+					if(inputManager.getKeyState(code) === KeyState.PRESSED) return true;
 			} while(code!==-1);
 			return false;
 		};
@@ -376,7 +392,7 @@ class KeyMap {
 		 * @function
 		 * @name KeyMap#getKeys
 		 * @param {*} action
-		 * @returns {InputManager.Key[]|number[]} key codes
+		 * @returns {Key[]|number[]} key codes
 		 */
 		this.getKeys = action => {
 			let codes = [], i = actions.indexOf(action);
