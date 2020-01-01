@@ -36,38 +36,39 @@ class CellularTiledMapLayer extends TiledMapLayer {
         this.array[line][column] = value;
     }
     mooreSum(column, line) {
-        return (line === 0) ? (
-            (column === 0) ? (
-                                                                            this.array[line  ][column+1] +  // X#
-                                               this.array[line+1][column] + this.array[line+1][column+1]    // ##
-            ) : (column === this.array[line].length-1) ? (
-                this.array[line  ][column-1] +                                                              // #X
-                this.array[line+1][column-1] + this.array[line+1][column]                                   // ##
+        const arr = this.array, l = line, c = column;
+        return (l === 0) ? (
+            (c === 0) ? (
+                                              arr[l  ][c+1] +  //  #
+                                arr[l+1][c] + arr[l+1][c+1]    // ##
+            ) : (c === arr[l].length-1) ? (
+                arr[l  ][c-1] +                                // #
+                arr[l+1][c-1] + arr[l+1][c]                    // ##
             ) :
-                this.array[line  ][column-1]                              + this.array[line  ][column+1] +  // #X#
-                this.array[line+1][column-1] + this.array[line+1][column] + this.array[line+1][column+1]    // ###
-        ) : (line === this.array.length-1) ? (
-            (column === 0) ? (
-                                               this.array[line-1][column] + this.array[line-1][column+1] +  // ##
-                                                                            this.array[line  ][column+1]    // X#
-            ) : (column === this.array[line].length-1) ? (
-                this.array[line-1][column-1] + this.array[line-1][column] +                                 // ##
-                this.array[line  ][column-1]                                                                // #X
+                arr[l  ][c-1]               + arr[l  ][c+1] +  // # #
+                arr[l+1][c-1] + arr[l+1][c] + arr[l+1][c+1]    // ###
+        ) : (l === arr.length-1) ? (
+            (c === 0) ? (
+                                arr[l-1][c] + arr[l-1][c+1] +  // ##
+                                              arr[l  ][c+1]    //  #
+            ) : (c === arr[l].length-1) ? (
+                arr[l-1][c-1] + arr[l-1][c] +                                 // ##
+                arr[l  ][c-1]                                                                // #
             ) :
-                this.array[line-1][column-1] + this.array[line-1][column] + this.array[line-1][column+1] +  // ###
-                this.array[line  ][column-1] +                              this.array[line  ][column+1]    // #X#
-        ) : (column === 0) ? (
-                                               this.array[line-1][column] + this.array[line-1][column+1] +  // ##
-                                                                            this.array[line  ][column+1] +  // X#
-                                               this.array[line+1][column] + this.array[line+1][column+1]    // ##
-        ) : (column === this.array[line].length-1) ? (
-                this.array[line-1][column-1] + this.array[line-1][column] +                                 // ##
-                this.array[line  ][column-1] +                                                              // #X
-                this.array[line+1][column-1] + this.array[line+1][column]                                   // ##
+                arr[l-1][c-1] + arr[l-1][c] + arr[l-1][c+1] +  // ###
+                arr[l  ][c-1] +               arr[l  ][c+1]    // # #
+        ) : (c === 0) ? (
+                                arr[l-1][c] + arr[l-1][c+1] +  // ##
+                                              arr[l  ][c+1] +  //  #
+                                arr[l+1][c] + arr[l+1][c+1]    // ##
+        ) : (c === arr[l].length-1) ? (
+                arr[l-1][c-1] + arr[l-1][c] +                  // ##
+                arr[l  ][c-1] +                                // #
+                arr[l+1][c-1] + arr[l+1][c]                    // ##
             ) :
-            this.array[line-1][column-1] + this.array[line-1][column] + this.array[line-1][column+1] +      // ###
-            this.array[line  ][column-1] +                              this.array[line  ][column+1] +      // #X#
-            this.array[line+1][column-1] + this.array[line+1][column] + this.array[line+1][column+1];       // ###
+                arr[l-1][c-1] + arr[l-1][c] + arr[l-1][c+1] +  // ###
+                arr[l  ][c-1] +               arr[l  ][c+1] +  // # #
+                arr[l+1][c-1] + arr[l+1][c] + arr[l+1][c+1];   // ###
     }
 }
 
@@ -85,7 +86,14 @@ const CaveGenerationAlgorithm = function(layer, array, row, column) {
     const sum = layer.mooreSum(column, row);
     return (sum < 3) ? 0 : (sum < 5) ? array[row][column] : 1 ;
 };
+/**
+ * @return {number}
+ */
+const HighLifeAlgorithm = function(layer, array, row, column) {
+    const sum = layer.mooreSum(column, row);
+    return (sum === 3) ? 1 : (sum === 2) ? array[row][column] : (sum === 6) ? !array[row][column] : 0 ;
+};
 
 
-export {CellularTiledMapLayer, ConwayGameOfLifeAlgorithm, CaveGenerationAlgorithm};
+export {CellularTiledMapLayer, ConwayGameOfLifeAlgorithm, CaveGenerationAlgorithm, HighLifeAlgorithm};
 export default CellularTiledMapLayer;
