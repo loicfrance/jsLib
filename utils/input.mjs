@@ -125,6 +125,10 @@ class InputManager {
 		 */
 		this.element = element;
 
+		/**
+		 *
+		 * @type {Uint8Array|KeyState[]}
+		 */
 		let keyStates = new Uint8Array(KEYS_NUMBER);
 		for (let i = KEYS_NUMBER - 1; i >= 0; i--) {
 			keyStates[i] = KEY_STATE.RELEASED;
@@ -146,11 +150,11 @@ class InputManager {
 		};
 		/**
 		 * @param {mouseCallback} callback
+		 * @param {MouseEvents} evtType
 		 * @param {MouseEvent} evt
-		 * @param evt
 		 */
-		const onMouseEvt = (callback, evt, evtType) => {
-			if (callback(evt, evtType, MousegetMouseButton(evt), getVec(evt))) evt.preventDefault();
+		const onMouseEvt = (callback, evtType, evt) => {
+			if (callback(evt, evtType, getMouseButton(evt), getVec(evt))) evt.preventDefault();
 		};
 		const onGamepadEvt = (callback, evtType, evt) => {
 			callback(evtType, evt.gamepad);

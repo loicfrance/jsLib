@@ -12,116 +12,130 @@
  * @returns {*}
  */
 function getContext(canvas) {
-		return canvas.getContext("webgl2")
-			|| canvas.getContext("webgl")
-			|| canvas.getContext("experimental-webgl");
-	}
-	/**
-	 * @param {WebGLRenderingContext} gl
-	 */
+	return canvas.getContext("webgl2")
+		|| canvas.getContext("webgl")
+		|| canvas.getContext("experimental-webgl");
+}
+/**
+ * @param {WebGLRenderingContext} gl
+ */
 function initContext(gl) {
-		gl.clearColor(0.0, 0.0, 0.0, 1.0); // set clear color to opaque black
-		gl.enable(gl.CULL_FACE);
-		gl.enable(gl.DEPTH_TEST);
-		gl.depthFunc(gl.LEQUAL); // near objects hide far objects
-		gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT); //clear depth and color buffer
-	}
+	gl.clearColor(0.0, 0.0, 0.0, 1.0); // set clear color to opaque black
+	gl.enable(gl.CULL_FACE);
+	gl.enable(gl.DEPTH_TEST);
+	gl.depthFunc(gl.LEQUAL); // near objects hide far objects
+	gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT); //clear depth and color buffer
+}
 function setAlphaEnabled(gl, enable) {
-		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-		if(enable) gl.enable(gl.BLEND);
-		else gl.disable(gl.BLEND);
-	}
+	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+	if(enable) gl.enable(gl.BLEND);
+	else gl.disable(gl.BLEND);
+}
 function createShader(gl, shaderScript, type) {
-		let shader;
-		if((type != WebGLRenderingContext.VERTEX_SHADER) || type != (WebGLRenderingContext.FRAGMENT_SHADER)) {
-			switch (type) {
-				case 'vertex' : type = WebGLRenderingContext.VERTEX_SHADER; break;
-				case 'fragment' : type = WebGLRenderingContext.FRAGMENT_SHADER; break;
-				default :
-					console.error(new Error(
-						`'${type}' is not a valid shader type. only 'vertex' and 'fragment' are accepted as shader type.
-						you can also use VERTEX_SHADER or FRAGMENT_SHADER constants of the WebGLRenderingContext class`
-					).stack);
-					return;
-			}
+	let shader;
+	if((type !== WebGLRenderingContext.VERTEX_SHADER) || type !== (WebGLRenderingContext.FRAGMENT_SHADER)) {
+		switch (type) {
+			case 'vertex' : type = WebGLRenderingContext.VERTEX_SHADER; break;
+			case 'fragment' : type = WebGLRenderingContext.FRAGMENT_SHADER; break;
+			default :
+				console.error(new Error(
+					`'${type}' is not a valid shader type. only 'vertex' and 'fragment' are accepted as shader type.
+					you can also use VERTEX_SHADER or FRAGMENT_SHADER constants of the WebGLRenderingContext class`
+				).stack);
+				return;
 		}
-		shader = gl.createShader(type);
-		gl.shaderSource(shader, shaderScript);
-		gl.compileShader(shader);
-
-		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-			console.error(new Error(gl.getShaderInfoLog(shader)).stack);
-			gl.deleteShader(shader);
-			return null;
-		}
-		return shader;
 	}
-	/**
-	 *
-	 * @param {WebGLRenderingContext|WebGL2RenderingContext} gl
-	 * @param {WebGLShader|string} vertexShader
-	 * @param {WebGLShader|string} fragmentShader
-	 * @returns {WebGLProgram}
-	 */
+	shader = gl.createShader(type);
+	gl.shaderSource(shader, shaderScript);
+	gl.compileShader(shader);
+
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		console.error(new Error(gl.getShaderInfoLog(shader)).stack);
+		gl.deleteShader(shader);
+		return null;
+	}
+	return shader;
+}
+/**
+ *
+ * @param {WebGLRenderingContext|WebGL2RenderingContext} gl
+ * @param {WebGLShader|string} vertexShader
+ * @param {WebGLShader|string} fragmentShader
+ * @returns {WebGLProgram}
+ */
 function createProgram(gl, vertexShader, fragmentShader) {
-		const prog = gl.createProgram();
-		if(  vertexShader.substr)
-			gl.attachShader(prog, webgl.createShader(gl,   vertexShader, 'vertex'  ));
-		else gl.attachShader(prog, vertexShader);
-		if(fragmentShader.substr)
-			gl.attachShader(prog, webgl.createShader(gl, fragmentShader, 'fragment'));
-		else gl.attachShader(prog, fragmentShader);
+	const prog = gl.createProgram();
+	if(  vertexShader.substr)
+		gl.attachShader(prog, createShader(gl,   vertexShader, 'vertex'  ));
+	else gl.attachShader(prog, vertexShader);
+	if(fragmentShader.substr)
+		gl.attachShader(prog, createShader(gl, fragmentShader, 'fragment'));
+	else gl.attachShader(prog, fragmentShader);
 
-		gl.linkProgram(prog);
-		if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-			console.error(new Error(gl.getProgramInfoLog(prog)).stack);
-			gl.deleteProgram(prog);
-			return;
-		}
-		return prog;
+	gl.linkProgram(prog);
+	if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+		console.error(new Error(gl.getProgramInfoLog(prog)).stack);
+		gl.deleteProgram(prog);
+		return null;
 	}
+	return prog;
+}
 function getAttribLocations(gl, program, names) {
-		let result = new Array(names.length);
-		for(let i=0; i<names.length; i++) {
-			result[i] = gl.getAttribLocation(program, names[i]);
-		}
-		return result;
+	let result = new Array(names.length);
+	for(let i=0; i<names.length; i++) {
+		result[i] = gl.getAttribLocation(program, names[i]);
 	}
+	return result;
+}
+function getAttribLocationsDictionary(gl, program, name_dict) {
+	const result = {};
+	Object.keys(name_dict).forEach(key=> {
+		result[key] = gl.getAttribLocation(program, name_dict[key]);
+	});
+	return result;
+}
 function getUniformLocations(gl, program, names) {
-		let result = new Array(names.length);
-		for(let i=0; i<names.length; i++) {
-			result[i] = gl.getUniformLocation(program, names[i]);
-		}
-		return result;
+	let result = new Array(names.length);
+	for(let i=0; i<names.length; i++) {
+		result[i] = gl.getUniformLocation(program, names[i]);
 	}
-	/**
-	 * creates a {@link WebGLBuffer} buffer, binds it and copy the datas in it, using the methods <!--
-	 * -->{@link https://developer.mozilla.org/fr/docs/Web/API/WebGLRenderingContext/bufferData} and <!--
-	 * -->{@link https://developer.mozilla.org/fr/docs/Web/API/WebGLRenderingContext/bindBuffer}. <!--
-	 * -->Use these links for more details
-	 *
-	 * @param {WebGLRenderingContext|WebGL2RenderingContext} gl - the WebGL context used
-	 * @param {GLEnum|number} target - specifies the binding point. e.g: gl.ARRAY_BUFFER, for vertex attributes, or <!--
-	 * -->gl.ELEMENT_ARRAY_BUFFER, for element indices.
-	 * @param {ArrayBuffer} srcData - data that will be copied in the data store
-	 * @param {GLEnum|number} usage - specifies the usage of the data store. e.g: gl.STATIC_DRAW, <!--
-	 * -->gl.DYNAMIC_DRAW, gl.STREAM_DRAW.
-	 * @param {GLuint|number} srcOffset - specifies the element index offset where to start reading the buffer
-	 * @param {GLuint|number} length - specifies the number of elements to read from the buffer. <!--
-	 * -->Default to 0 (read to the end)
-	 */
+	return result;
+}
+function getUniformLocationsDictionary(gl, program, name_dict) {
+	const result = {};
+	Object.keys(name_dict).forEach(key=> {
+		result[key] = gl.getUniformLocation(program, name_dict[key]);
+	});
+	return result;
+}
+/**
+ * creates a {@link WebGLBuffer} buffer, binds it and copy the datas in it, using the methods <!--
+ * -->{@link https://developer.mozilla.org/fr/docs/Web/API/WebGLRenderingContext/bufferData} and <!--
+ * -->{@link https://developer.mozilla.org/fr/docs/Web/API/WebGLRenderingContext/bindBuffer}. <!--
+ * -->Use these links for more details
+ *
+ * @param {WebGLRenderingContext|WebGL2RenderingContext} gl - the WebGL context used
+ * @param {GLEnum|number} target - specifies the binding point. e.g: gl.ARRAY_BUFFER, for vertex attributes, or <!--
+ * -->gl.ELEMENT_ARRAY_BUFFER, for element indices.
+ * @param {ArrayBuffer} srcData - data that will be copied in the data store
+ * @param {GLEnum|number} usage - specifies the usage of the data store. e.g: gl.STATIC_DRAW, <!--
+ * -->gl.DYNAMIC_DRAW, gl.STREAM_DRAW.
+ * @param {GLuint|number} srcOffset - specifies the element index offset where to start reading the buffer
+ * @param {GLuint|number} length - specifies the number of elements to read from the buffer. <!--
+ * -->Default to 0 (read to the end)
+ */
 function createAttribBuffer(gl, target, srcData, usage = WebGLRenderingContext.STATIC_DRAW, srcOffset=0, length = 0) {
-		const buffer = gl.createBuffer();
-		gl.bindBuffer(target, buffer);
-		gl.bufferData(target, srcData, usage, srcOffset, length);
-		return buffer;
-	}
+	const buffer = gl.createBuffer();
+	gl.bindBuffer(target, buffer);
+	gl.bufferData(target, srcData, usage, srcOffset, length);
+	return buffer;
+}
 const standardFragmentShader = `#version 300 es
 precision mediump float;
 in vec4 v_color;
 out vec4 outColor;
 void main() { outColor = v_color; }
-	`;
+`;
 const Matrix = {
 	createMVMat3 : function(tx, ty, rad, scaleX, scaleY) {
             let cos = Math.cos(rad), sin = Math.sin(rad);
@@ -176,15 +190,15 @@ class ShaderInfo {
         /**
          * @type {WebGLProgram}
          */
-        this.program = webgl.createProgram(gl, vertexShader, fragmentShader);
+        this.program = createProgram(gl, vertexShader, fragmentShader);
         /**
          * @type Array
          */
-        this.attr_locs = webgl.getAttribLocations(gl, this.program, attributes);
+        this.attr_locs = getAttribLocations(gl, this.program, attributes);
         /**
          * @type Array
          */
-        this.uni_locs = webgl.getUniformLocations(gl, this.program, uniforms);
+        this.uni_locs = getUniformLocations(gl, this.program, uniforms);
     }
 }
 export {
@@ -194,7 +208,9 @@ export {
 	createShader,
 	createProgram,
 	getAttribLocations,
+	getAttribLocationsDictionary,
 	getUniformLocations,
+	getUniformLocationsDictionary,
 	createAttribBuffer,
 	standardFragmentShader,
 	Matrix,

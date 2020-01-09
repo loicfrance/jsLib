@@ -147,7 +147,7 @@ class ImageParticle extends Particle {
 		this.imgH = this.image.height;
 	}
 	render( ctx ) {
-		const w = this.imgW*this.scaleX; h = this.imgH*this.scaleY;
+		const w = this.imgW*this.scaleX, h = this.imgH*this.scaleY;
 		if(this.angle) {
 			ctx.translate(this.position.x, this.position.y);
 			ctx.rotate(this.angle);

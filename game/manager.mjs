@@ -132,6 +132,7 @@ class GameManager {
 	 * @param {?Viewer} [parameters.viewer] - the object that will be used to render the game
 	 * @param {?number} [parameters.gameDt] - the difference (in seconds) between each frame, from the point of view of objects
      * @param {?number} [parameters.realDt] - the difference (in seconds) between each frame, from the point of view of the player
+	 * @param {?number} [parameters.dt] - fallback value for gameDt and readDt. Default value is 1/60
      * @param {?PhysicWorld} [parameters.physicWorld] - the object handling forces applied on all objects (gravity, friction, ...)
 	 */
 	constructor(parameters) {
@@ -448,10 +449,13 @@ class GameManager {
 				this.setViewer(parameters.viewer);
 			if(parameters.onGameEvent instanceof Function)
 				this.setEventsCallback(parameters.onGameEvent);
+			if(!isNaN(+parameters.dt))
+				this.gameDt = this.realDt = +parameters.dt;
 			if(!isNaN(+parameters.gameDt))
 				this.gameDt = +parameters.gameDt;
 			if(!isNaN(+parameters.realDt))
 				this.realDt = +parameters.realDt;
+
 			if(parameters.physicWorld instanceof PhysicWorld)
 				this.physicWorld = parameters.physicWorld;
 		}

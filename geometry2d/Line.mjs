@@ -331,7 +331,7 @@ class Line extends Shape {
      * check if the line intersect with the shape.
      * The checking is only made for {@link Circle} and {@link Line} instances.
      * if the specified shape is not an instance of those classes, this function returns the result of <!--
-     * --><code>shape.intersect(this)</code>
+     * --> <code>shape.intersect(this)</code>
      * @param {Shape} shape
      * @returns {boolean}
      */
@@ -363,7 +363,7 @@ class Line extends Shape {
             /*
             return asm.linesIntersect(this.p0.x, this.p0.y, this.p1.x, this.p1.y, C.x, C.y, D.x, D.y);
             /*/
-            //ccw(AC, AD) != ccw(BC, BD)
+            //ccw(AC, AD) != ccw(BC, BD) and ccw(AB, AC) != ccw(AB, AD)
             if (Vec2.ccw2(AC.set(shape.p0).remove(this.p0), AD.set(shape.p1).remove(this.p0))
                 !== Vec2.ccw(this.p1, shape.p0, shape.p1)) {
                 AB.set(this.p1).remove(this.p0);

@@ -393,6 +393,9 @@ class WebGLObjectRenderer extends ObjectRenderer {
 	}
 	scale(factor) {
 	}
+	/**
+	 * @param {WebGL2RenderingContext} glContext
+	 */
 	render(glContext) {
 		glContext.useProgram(this.shaderProgram);
 	}
@@ -402,8 +405,7 @@ class WebGLObjectRenderer extends ObjectRenderer {
 //######################################################################################################################
 class WebGL2dTransformableObjectRenderer extends WebGLObjectRenderer {
 	constructor(shaderProgram) {
-		super();
-		this.shaderProgram = shaderProgram;
+		super(shaderProgram);
 		this.transformMatrices =[
 			[1,0,0,
 			 0,1,0,

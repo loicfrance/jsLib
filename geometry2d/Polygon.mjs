@@ -252,7 +252,7 @@ class Polygon extends Shape {
      * @returns {Polygon} <code>this</code>
      */
     invertPointsOrder() {
-        let l = (this.points.length-1)/2, r = l>>0
+        let l = (this.points.length-1)/2, r = l>>0;
         l = r==l ? l : r+1;
         while(r++,l--)
             [this.points[l], this.points[r]] = [this.points[r], this.points[l]];
@@ -317,7 +317,7 @@ class Polygon extends Shape {
         let i = 0;
         while(i < n) {
             if(i>1) {
-                indicesArray[iOffset++] = o
+                indicesArray[iOffset++] = o;
                 indicesArray[iOffset++] = o+i-1;
                 indicesArray[iOffset++] = o+i;
             }
@@ -543,22 +543,21 @@ class Polygon extends Shape {
         for(i=0; i< n; i++) {
             A.set(B);
             B.set(this.points[(i+1) % n]);
-            // skip lines completely above or below the point, ...
-            if( ((A.y > point.y) && (B.y > point.y)) ||
-                ((A.y < point.y) && (B.y < point.y)) ||
-                // ... lines completely on the left of the point, ...
-                ((A.x < point.x) && (B.x < point.x)) ||
-                ((A.y == point.y) && (B.y < point.y)) ||
-                ((A.y < point.y) && (B.y == point.y)) ||
-                // ... horizontal lines,
-                (A.y == B.y) ||
-                // and lines that cross the horizontal line on the left of the point
-                (((A.x > point.x) && (B.x < point.x)) && Vec2.ccw(point, B, A)) ||
-                (((A.x < point.x) && (B.x > point.x)) && Vec2.ccw(point, A, B))
-            )
-                continue;
 
-            nb++;
+            const cond1 = (A.x >= point.x), cond2 = (B.x >= point.x), cond3 = (B.y < point.y);
+            //Z = PA ^ PB
+            const Z = (B.y - point.y) * (A.x - point.x) - (A.y - point.y) * (B.x - point.x);
+            const c = (cond1 == cond2);
+            if(c != ((A.y < point.y)==cond3) ) {
+                //[AB] completely above, below, on the left or on the right,
+                //but not two at the same time (e.g. above and on the left)
+                if(Z == 0) return true; // point [AB]
+                if(cond1 && cond2) nb++; // line on the right
+            } else if(!c) {
+                // [AB] cross the horizontal line, with 1 point on the left and the other point on the right
+                if(Z == 0) return true; // point on [AB]
+                if(cond3 == (Z < 0)) nb++; // [AB] crosses the horizontal line on the right
+            }
         }
         return (nb % 2) === 1;
     }
@@ -754,6 +753,7 @@ class Polygon extends Shape {
         }
         return p;
     }
+
 }
 class ConvexPolygon extends Polygon {
     constructor(center, relativePoints)
@@ -771,7 +771,7 @@ class ConvexPolygon extends Polygon {
             while(i--)
             {
                 const norm = this.getNormalVectForLine(i);
-                const support = shape.center.add(norm.clone().mul(shape.radius))
+                const support = shape.center.add(norm.clone().mul(shape.radius));
                 const d = Vec2.dotProd(norm, support.remove(this.points[i]).remove(this.center));
                 if(d > 0) return false;
                 /*

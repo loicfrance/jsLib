@@ -379,6 +379,25 @@ const listenDevToolsOpening = function() {
 	});
 };
 
+const shuffleArray = function(array, randFunction = Math.random) {
+    return array.map(x=>[randFunction(), x])
+        .sort((a,b)=>a[0]-b[0])
+        .map(x=>x[1]);
+};
+/**
+ * creates a one-dimension gaussian function
+ * @param mu - position of the peak
+ * @param sigma - standard deviation
+ * @returns {function(number): number}
+ */
+const createOneDimensionGaussianFunction = function(mu = 0, sigma = 1)
+{
+	const val_1 = 1/(sigma + Math.sqrt(2*Math.PI));
+	const denom = - 1 / (2*(sigma**2));
+	const val_2 = Math.exp((mu**2)/(2*(sigma**2)));
+	const factor = val_1 * val_2;
+	return (x)=> factor*Math.exp(x * denom);
+};
 export {
     mix,
     merge,
@@ -398,5 +417,7 @@ export {
 	PRNG,
     wrapText,
 	hashCode,
-	listenDevToolsOpening
+	shuffleArray,
+	listenDevToolsOpening,
+	createOneDimensionGaussianFunction,
 };
