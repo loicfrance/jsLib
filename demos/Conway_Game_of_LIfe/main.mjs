@@ -60,7 +60,8 @@ for (let i=0; i<accumulator.length; i++) {
 GM.addObject(tiledMap);
 
 tiledMap.setLayer('cellular', new CellularTiledMapLayer(0,0,tiledMap.lines,tiledMap.columns,
-    CaveGenerationAlgorithm, 0));
+    ConwayGameOfLifeAlgorithm, 0));
+/*
 {
     const layer = tiledMap.getLayer('cellular');
     const factor = 2 / (tiledMap.columns);
@@ -103,7 +104,7 @@ tiledMap.setLayer('cellular', new CellularTiledMapLayer(0,0,tiledMap.lines,tiled
     }
     window.accumulator = accumulator;
 }
-
+*/
 GM.viewer.setCallback(function(evt, context) {
     if(evt === RenderEvent.RENDER_BEGIN) {
         window.context = context;

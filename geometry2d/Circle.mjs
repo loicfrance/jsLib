@@ -240,10 +240,10 @@ class Circle extends Shape {
             return !!(asm.circlesIntersect(this.center.x, this.center.y, this.radius,
                                 shape.center.x, shape.center.y, shape.radius));
             /*/
-            let d = Vec2.distance(this.center, shape.center);
-            return d <= this.radius + shape.radius &&
-                this.radius <= d + shape.radius && // the other circle is not inside this circle
-                shape.radius <= d + this.radius; // this circle is not inside the other circle
+            const d2 = Vec2.squareDistance(this.center, shape.center);
+            const radSum = this.radius + shape.radius;
+            const radDiff = this.radius - shape.radius;
+            return d2 <= (radSum * radSum) && d2 >= (radDiff * radDiff);
             //*/
         }
         else return shape.intersect(this);

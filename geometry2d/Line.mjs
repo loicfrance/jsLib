@@ -65,6 +65,16 @@ class Line extends Shape {
         this.p1.add(d);
         this.p0.remove(d);
     }
+
+    /**
+     * the square length of the line
+     * @name Line#squareLength
+     * @type {number}
+     */
+    get squareLength() {
+        return Vec2.squareDistance(this.p0, this.p1);
+    }
+
     /**
      * the angle, in radians, of the line.
      * @name Line#angle
@@ -345,10 +355,29 @@ class Line extends Shape {
             return asm.circleLineIntersect(shape.center.x, shape.center.y, shape.radius, this.p0.x, this.p0.y,
                                             this.p1.x, this.p1.y);
             /*/
+            const A_in_C = shape.contains(this.p0),
+                  B_in_C = shape.contains(this.p1);
+            if(A_in_C && B_in_C)
+                return false;
+            else if (A_in_C != B_in_C)
+                return true;
+            else {            
+                AC.set(shape.center).remove(this.p0);
+                AB.set(this.p1).remove(this.p0);
+
+                const ratio = Vec2.dotProd(AB, AC)/this.squareLength;
+                if (ratio < 0 || ratio > 1)
+                    return false;
+                
+                AD.set(AB).mul(ratio).remove(AC);
+                const squareRadius = shape.radius * shape.radius;
+                return AD.squareMagnitude < squareRadius;
+            }
+/*
             if (shape.contains(this.p0) != shape.contains(this.p1)) return true;
             const l = this.length;
             AC.set(shape.center).remove(this.p0);
-            u.set(this.p1).remove(this.p0).mul(1/this.length);
+            u.set(this.p1).remove(this.p0).mul(1/l);
             d = Vec2.dotProd(u, AC);
 
             //checking d < 0 and d > length is useless because it would mean A or B is in the circle,
@@ -357,6 +386,7 @@ class Line extends Shape {
 
             return  (d >= 0 && d <= l && Vec2.squareDistance(u.mul(d).add(this.p0), shape.center)
                 <= shape.radius*shape.radius);
+                */
             //*/
         }
         else if (shape instanceof Line) {

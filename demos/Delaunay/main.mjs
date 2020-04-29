@@ -131,7 +131,7 @@ IM.setMouseEventsCallback((evt, evtType, btn, pos)=> {
             mouseTriangles.splice(0, mouseTriangles.length);
             mouseCursor.setCenter(pos);
             for(let i = 0; i < triangles.length; i++) {
-                if(triangles[i].circle.contains(pos)) {
+                if(triangles[i].shape.contains(pos)) {
                     mouseTriangles.push(triangles[i].shape);
                 }
             }

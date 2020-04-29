@@ -213,6 +213,19 @@ class Simplex {
     }
 }
 
+class DomainWarping {
+
+}
+class Turbulence {
+
+}
+class Worley {
+
+}
+class Ridge {
+
+}
+
 export {
     Perlin,
     Simplex,
