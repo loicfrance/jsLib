@@ -4,7 +4,8 @@ import {Vec2, Shape, Circle, Polygon, ConvexPolygon} from "./geometry2d.mjs";
  */
 /**
  * @class Rect
- * @classdesc a class with four attributes : <code>{@link Rect#left|xMin}</code>, <!--
+ * a class with four attributes :
+ * <code>{@link Rect#left|xMin}</code>, <!--
  * --><code>{@link Rect#top|yMin}</code>, <!--
  * --><code>{@link Rect#right|xMax}</code> and <!--
  * --><code>{@link Rect#bottom|yMax}</code>, used to represent a non-rotated rectangle.
@@ -141,9 +142,23 @@ class Rect extends Shape{
         this.yMax = y + h;
         return this;
     }
+    setDimensions(spanX, spanY) {
+        const dx = (spanX - this.width)/2, dy = (spanY - this.height)/2;
+        this.xMin -= dx;
+        this.xMax += dx;
+        this.yMin -= dy;
+        this.yMax += dy;
+    }
+    setCenterWidthHeight(center, width, height) {
+        const halfW = width/2, halfH = height/2;
+        this.xMin = center.x - halfW;
+        this.xMax = center.x + halfW;
+        this.yMin = center.y - halfH;
+        this.yMax = center.y + halfH;
+    }
 
     /**
-     * modifes the width and height and keep the center
+     * modifies the width and height and keep the center
      * @param {number} scaleX
      * @param {number} scaleY
      * @returns {Rect} <code>this</code>.
@@ -154,6 +169,21 @@ class Rect extends Shape{
         this.xMax += dw;
         this.yMin -= dh;
         this.yMax += dh;
+        return this;
+    }
+
+    /**
+     * modifies the coordinates of the rectangle to scale it relatively to the specified point
+     * @param {Vec2} origin
+     * @param {number} scaleX
+     * @param {number} scaleY
+     * @returns {Rect} <code>this</code>.
+     */
+    relativeScale(origin, scaleX, scaleY = scaleX) {
+        this.xMin = (this.xMin - origin.x) * scaleX + origin.x;
+        this.xMax = (this.xMax - origin.x) * scaleX + origin.x;
+        this.yMin = (this.yMin - origin.y) * scaleY + origin.y;
+        this.yMax = (this.yMax - origin.y) * scaleY + origin.y;
         return this;
     }
 
@@ -682,7 +712,7 @@ class Rect extends Shape{
      * @returns {string} [left, top, right, bottom]
      */
     toString() {
-        return ['[', this.xMin, ', ', this.yMin, ', ', this.xMax, ', ', this.yMax, ']'].join('');
+        return `[${this.xMin}, ${this.yMin}, ${this.xMax}, ${this.yMax}]`;
     }
 
     /**

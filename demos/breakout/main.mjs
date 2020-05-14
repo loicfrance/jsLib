@@ -9,14 +9,18 @@ import {BBCodeToHTML} from "../../utils/tools.mjs";
 import ScoreView from "./ScoreView.mjs";
 
 //<editor-fold desc="Game Manager init" default-state="collapsed">
-const gameRect = new Rect(0,0, 160, 100);
+const gameRect = new Rect(0,0, 160, 90);
 const scoreView = new ScoreView();
 const GM = new GameManager({
     gameDt: 1/60,
     realDt: 1/60,
     viewer : new StandardViewer({
         canvas: document.getElementById('game_canvas'),
-        visibleRect: gameRect,
+        inGameView: {
+            spanX: gameRect.width,
+            spanY: gameRect.height,
+            center: gameRect.center
+        },
         cursor: 'crosshair',
         autoResize: {use: true},
         resolution: {width: 1280, height: 720},
@@ -59,11 +63,16 @@ function gameInit() {
 //<editor-fold desc="Input">
 const Input = new InputManager(document.body);
 const keyMap = new KeyMap({
-    mapping: {
-        'left':  [Key.LEFT, Key.Q, Key.A],
-        'right': [Key.RIGHT, Key.D],
-        "pause": [Key.SPACE, Key.ENTER, Key.ESCAPE]
-    },
+    mapping: [
+        {keys: Key.LEFT, action: 'left'},
+        {keys: Key.Q, action: 'left'},
+        {keys: Key.A, action: 'left'},
+        {keys: Key.RIGHT, action: 'right'},
+        {keys: Key.D, action: 'right'},
+        {keys: Key.SPACE, action: 'pause'},
+        {keys: Key.ENTER, action: 'pause'},
+        {keys: Key.ESCAPE, action: 'pause'},
+    ],
     callback: (action, keyState) => {
         switch(action) {
             case 'left'  : paddle.speed.x = (keyState === KeyState.PRESSED) ? -60 : 0; break;

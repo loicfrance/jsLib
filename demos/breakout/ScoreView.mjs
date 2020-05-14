@@ -13,7 +13,7 @@ class ScoreView extends UIElement{
         p.style.display = 'inline-block';
         p.style.webkitTextStroke = "0.5px #000";
         p.style.color = "white";
-        super(p, Vec2.ZERO, false);
+        super(p, Vec2.ZERO, true, true);
         this.anchor.setXY(0,0);
         this.scale = 0.3;
         this.setScore(0);

@@ -1,11 +1,21 @@
 /**
- * @module math_animation
+ * functions adapted from http://gizma.com/easing/
+ * @module transitions
  */
 class Transition {
     constructor({easeIn, easeOut, easeInOut}) {
         Object.defineProperties(this, {
+            /**
+             * @function
+             */
             easeIn      : { value: easeIn   ,  writable: false },
+            /**
+             * @function
+             */
             easeOut     : { value: easeOut  ,  writable: false },
+            /**
+             * @function
+             */
             easeInOut   : { value: easeInOut,  writable: false },
         });
     }
@@ -14,15 +24,15 @@ const Linear = new Transition({
     easeIn: function(t) {return t;},
     easeOut: function(t) {return t;},
     easeInOut: function(t) {return t;},
-})
+});
 const Quadratic = new Transition({
     easeIn: function (t) { return t * t; },
-    easeOut: function (t) { return t * (t - 2); },
+    easeOut: function (t) { return -t * (t - 2); },
     easeInOut: function (t) {
         return (t < 0.5) ?
             (t * t * 2)
             : (t < 1) ?
-            (-2 * t*t + 3 * t - 0.5)
+            (-2 * t*t + 4 * t - 1)
             : 1;
     }
 });

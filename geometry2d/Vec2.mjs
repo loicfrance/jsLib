@@ -317,7 +317,7 @@ class Vec2 {
      * @return {number} rounded value of x coordinate.
      */
     getRoundedX(digits = 0) {
-        if (digits) return parseInt(this.x.toPrecision(digits));
+        if (digits) return parseFloat(this.x.toPrecision(digits));
         else return Math.round(this.x);
     }
 
@@ -327,7 +327,7 @@ class Vec2 {
      * @return {number} rounded value of y coordinate.
      */
     getRoundedY(digits = 0) {
-        if (digits) return parseInt(this.y.toPrecision(digits));
+        if (digits) return parseFloat(this.y.toPrecision(digits));
         else return Math.round(this.y);
     }
 

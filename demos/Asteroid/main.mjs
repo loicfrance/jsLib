@@ -3,7 +3,7 @@
  */
 import {GameManager} from "../../game/manager.mjs";
 import {StandardViewer} from "../../game/viewers.mjs";
-import {Rect} from "../../geometry2d/Rect.mjs";
+import {Vec2, Rect} from "../../geometry2d/geometry2d.mjs";
 import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mjs";
 import {GameEvent} from "../../game/manager.min.mjs";
 import {AsteroidSpawner} from "./Asteroid.mjs";
@@ -13,7 +13,11 @@ const GM = new GameManager({
     dt: 1/60,
     viewer: new StandardViewer({
         canvas: document.getElementById('game_canvas'),
-        visibleRect: new Rect(0, 0, 1280, 720),
+        inGameView: {
+            spanX: 1280,
+            spanY: 720,
+            center: new Vec2(1280, 720).mul(0.5)
+        },
         cursor: 'crosshair',
         autoResize: {use: true},
         resolution: {width: 1280, height: 720},
@@ -30,16 +34,23 @@ const ship = new SpaceShip(GM.viewer.visibleRect.center);
 GM.addObject(ship);
 
 let keyMap = new KeyMap({
-    mapping: {
-        'left': [Key.LEFT, Key.Q, Key.A],
-        'up': [Key.UP, Key.Z, Key.W],
-        'right': [Key.RIGHT, Key.D],
-        'down': [Key.DOWN, Key.S],
-        'pause': [Key.ESCAPE, Key.ENTER],
-        'shoot': [Key.SPACE],
-        "faster": [Key.P],
-        "slower": [Key.M],
-    },
+    mapping: [
+        {keys: Key.LEFT, action: 'left'},
+        {keys: Key.Q, action: 'left'},
+        {keys: Key.A, action: 'left'},
+        {keys: Key.UP, action: 'up'},
+        {keys: Key.Z, action: 'up'},
+        {keys: Key.W, action: 'up'},
+        {keys: Key.RIGHT, action: 'right'},
+        {keys: Key.D, action: 'right'},
+        {keys: Key.DOWN, action: 'down'},
+        {keys: Key.S, action: 'down'},
+        {keys: Key.ESCAPE, action: 'pause'},
+        {keys: Key.ENTER, action: 'pause'},
+        {keys: Key.SPACE, action: 'shoot'},
+        {keys: Key.P, action: 'faster'},
+        {keys: Key.M, action: 'slower'},
+    ],
     callback: (evt, keyState)=> {
         switch(evt) {
             case 'left': ship.control.rotateLeft = (keyState === KeyState.PRESSED); break;

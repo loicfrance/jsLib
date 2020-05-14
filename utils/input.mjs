@@ -12,6 +12,7 @@ import Vec2 from "../geometry2d/Vec2.mjs"
  * @callback keyboardCallback
  * @param {Key|number} keyCode
  * @param {KeyState} keyState
+ * @param {InputManager} inputManager
  * @returns {void|boolean} prevent default behavior if returned value interpreted as <code>true</code>
  */
 /**
@@ -54,7 +55,7 @@ const Key = {
 	PAGE_DOWN: 34, END: 35, HOME: 36, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, PRINT_SCR: 44,	INSERT: 45, DELETE: 46,
 	ZERO: 48, ONE: 49, TWO: 50, THREE: 51, FOUR: 52, FIVE: 53, SIX: 54, SEVEN: 55, EIGHT: 56, NINE: 57, A: 65, B: 66,
 	C: 67, D: 68, E: 69, F: 70, G: 71, H: 72, I: 73, J: 74, K: 75, L: 76, M: 77, N: 78, O: 79, P: 80, Q: 81, R: 82,
-	S: 83, T: 84, U: 85, V: 86, W: 87, X: 88, Y: 89, Z: 90, LEFT_WIN: 91, RIGH_WIN: 92, SELECT: 93,	NUM_0: 96,
+	S: 83, T: 84, U: 85, V: 86, W: 87, X: 88, Y: 89, Z: 90, LEFT_WIN: 91, RIGHT_WIN: 92, SELECT: 93,	NUM_0: 96,
 	NUM_1: 97, NUM_2: 98, NUM_3: 99, NUM_4: 100, NUM_5: 101, NUM_6: 102, NUM_7: 103, NUM_8: 104, NUM_9: 105,
 	MULTIPLY: 106, ADD: 107, SUBTRACT: 109, DECIMAL_POINT: 110, DIVIDE: 111, F1: 112, F2: 113, F3: 114, F4: 115,
 	F5: 116, F6: 117, F7: 118, F8: 119, F9: 120, F10: 121, F11: 122, F12: 123, NUM_LOCK: 144, SCROLL_LOCK: 145,
@@ -67,14 +68,37 @@ const Key = {
  * @readonly
  */
 const MouseEvents = {
-	UP: 'onmouseup', DOWN: 'onmousedown', CLICK: 'onclick', DBCLICK: 'ondbclick',
-	MOVE: 'onmousemove', ENTER: 'onmouseover', EXIT: 'onmouseout', CTX_MENU: 'oncontextmenu'
+	UP: 'mouseup', DOWN: 'mousedown', CLICK: 'click', DBCLICK: 'dbclick',
+	MOVE: 'mousemove', ENTER: 'mouseover', EXIT: 'mouseout', CTX_MENU: 'contextmenu',
+	WHEEL: 'wheel', DRAG: 'drag'
 };
 /**
  * @enum {number}
  * @readonly
  */
-const MouseButton = { UNKNOWN: 0, LEFT: 1, MIDDLE: 2, RIGHT: 3 };
+const MouseButton = {
+	UNKNOWN: 0, LEFT: 1, RIGHT: 2, MIDDLE: 4, BACK: 8, FORWARD: 16,
+	isPressed(evt, button) {
+		return evt.buttons ? (evt.buttons & button) !== 0 : false;
+	},
+	/**
+	 *
+	 * @param evt
+	 * @returns {number} one of {@link MouseButton.LEFT}, {@link MouseButton.RIGHT}, {@link MouseButton.MIDDLE},
+	 * 			{@link MouseButton.BACK}, {@link MouseButton.FORWARD}, or {@link MouseButton.UNKNOWN}
+	 * 			if the attribute {@link MouseEvent#button} is not defined for the event
+	 */
+	getEventSource(evt) {
+		switch(evt.button) {
+			case 0 : return MouseButton.LEFT;
+			case 1 : return MouseButton.MIDDLE;
+			case 2 : return MouseButton.RIGHT;
+			case 3 : return MouseButton.BACK;
+			case 4 : return MouseButton.FORWARD;
+			default : return MouseButton.UNKNOWN
+		}
+	}
+};
 const GamepadEvents = {
 	CONNECTED: 'gamepadconnected', DISCONNECTED: 'gamepaddisconnected'
 };
@@ -88,26 +112,46 @@ const KEYS_NUMBER = Key.number;
 const KEY_STATE = KeyState;
 const MOUSE_BTN = MouseButton;
 
-const getMouseButton = evt => {
-	if (evt.which) return evt.which;
-	else if (evt.button) {
-		return ((evt.button % 8 - evt.button % 4) === 4) ? MOUSE_BTN.MIDDLE :
-			((evt.button % 4 - evt.button % 2) === 2) ? MOUSE_BTN.RIGHT :
-				((evt.button % 2) === 1) ? MOUSE_BTN.LEFT :
-					MOUSE_BTN.UNKNOWN;
+const modifierKeys = [
+	Key.SHIFT,
+	Key.CTRL,
+	Key.ALT,
+	Key.LEFT_WIN,
+	Key.RIGHT_WIN
+];
+
+function isModifierKey(key) {
+	switch(key) {
+		case Key.SHIFT :
+		case Key.CTRL :
+		case Key.ALT :
+		case Key.LEFT_WIN :
+		case Key.RIGHT_WIN :
+			return true;
+		default:
+			return false;
 	}
-	else {
-		return MOUSE_BTN.UNKNOWN;
-	}
-};
-const onKeyEvt = (keyStates, callbacks, state, evt) => {
+}
+
+function onKeyEvt(keyStates, callbacks, state, evt) {
 	if (keyStates[evt.keyCode] !== state) {
 		keyStates[evt.keyCode] = state;
 		let len = callbacks.length;
 		for (let i = 0; i < len; i++)
-			if (callbacks[i](evt.keyCode, state)) evt.preventDefault();
+			if (callbacks[i](evt.keyCode, state, this)) evt.preventDefault();
 	}
-};
+}
+function actionFilter(modifierKeys, action) {
+	if (action.modifierKeys.length === modifierKeys.length) {
+		for (let i = 0; i < modifierKeys.length; i++) {
+			if (action.modifierKeys.indexOf(modifierKeys[i]) < 0)
+				return false;
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
 
 /**
  * @class InputManager
@@ -142,20 +186,7 @@ class InputManager {
 //____________________________________________________private methods___________________________________________________
 		const onKeyUp = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.RELEASED);
 		const onKeyDown = onKeyEvt.bind(this, keyStates, keyboardCallbacks, KEY_STATE.PRESSED);
-		const getVec = evt => {
-			let elmtRect = this.element.getBoundingClientRect();
-			return new Vec2(
-				evt.pageX - elmtRect.left,
-				evt.pageY - elmtRect.top);
-		};
-		/**
-		 * @param {mouseCallback} callback
-		 * @param {MouseEvents} evtType
-		 * @param {MouseEvent} evt
-		 */
-		const onMouseEvt = (callback, evtType, evt) => {
-			if (callback(evt, evtType, getMouseButton(evt), getVec(evt))) evt.preventDefault();
-		};
+
 		const onGamepadEvt = (callback, evtType, evt) => {
 			callback(evtType, evt.gamepad);
 		};
@@ -210,29 +241,54 @@ class InputManager {
 		 * -->{@link KeyState.PRESSED|PRESSED}
 		 */
 		this.getKeyState = keyCode => keyStates[keyCode];
+
+		/**
+		 * returns the list of pressed modifier keys
+		 * @function
+		 * @name InputManager#getActiveModifiers
+		 * @returns {(Key|number)[]}
+		 */
+		this.getActiveModifiers = ()=> {
+			return modifierKeys.filter(k=>this.getKeyState(k) === KeyState.PRESSED);
+		};
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * * mouse* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		/**
-		 * @function
-		 * @name InputManager#setMouseEventsCallback
-		 * @param {mouseCallback} callback
+		 * returns the position of the mouse relative to the element bounding rectangle
+		 * @param {MouseEvent} evt
+		 * @returns {Vec2}
 		 */
-		this.setMouseEventsCallback = function (callback) {
-			if (callback) {
-				let e;
-				for (let evtType in MouseEvents) {
-					if (MouseEvents.hasOwnProperty(evtType)) {
-						e = MouseEvents[evtType];
-						this.element[e] = onMouseEvt.bind(this, callback, e);
-					}
-				}
-			} else {
-				for (let evtType in MouseEvents) {
-					if (MouseEvents.hasOwnProperty(evtType)) {
-						this.element[MouseEvents[evtType]] = null;
-					}
-				}
+		this.getRelativeEvtPos = evt => {
+			let elmtRect = this.element.getBoundingClientRect();
+			return new Vec2(
+				evt.pageX - elmtRect.left,
+				evt.pageY - elmtRect.top);
+		};
+		/**
+		 * @function
+		 * @name InputManager#addEventsCallback
+		 * @param {string[]} events
+		 * @param {EventListener} callback
+		 * @param {boolean | AddEventListenerOptions} options
+		 */
+		this.addEventsCallback = function (events, callback, options = undefined) {
+			let i = events.length;
+			while(i--) {
+				this.element.addEventListener(events[i], callback, options);
 			}
 		};
+		/**
+		 * @function
+		 * @name InputManager#removeEventsCallback
+		 * @param {string[]} events
+		 * @param {EventListener} callback
+		 * @param {boolean| AddEventListenerOptions}
+		 */
+		this.removeEventsCallback = function(events, callback, options = undefined) {
+			let i = events.length;
+			while(i--) {
+				this.element.removeEventListener(events[i], callback, options);
+			}
+		}
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * *gamepad * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		/**
 		 *
@@ -332,63 +388,117 @@ class InputManager {
 class KeyMap {
 
     /**
-	 *
-     * @param {Object.<*,Key|Key[]|number|number[]>} mapping
+	 * @param {{keys: Key|Key[]|number|number[]?, action:*}[]} mapping
      * @param {KeyMap.keyMapCallback} callback
      */
 	constructor({ mapping = null, callback = null}) {
-		let actions = new Array(Key.number);
+		/**
+		 *
+		 * @type {{key: Key|number, modifiers: Key|Key[]|number|number[]?, action:*}[]}
+		 */
+		let actions = [];
 		let cb = undefined;
 //--------------------------------------------------- private methods --------------------------------------------------
-		const inputCallback = (keyCode, keyState)=> {
+		const inputCallback = (keyCode, keyState, inputManager)=> {
 			if (cb) {
-				let a = this.getAction(keyCode);
+				const modifiers = inputManager.getActiveModifiers();
+				if(modifiers.indexOf(keyCode) >= 0) {
+					keyCode = modifiers.unshift();
+				}
+				let a = this.getAction(keyCode, modifiers);
+
 				return (a && cb(a, keyState)) || false;
 			}
+		};
+		const getActionIndex = (key, modifiers)=> {
+			if (!Array.isArray(modifiers))
+				modifiers = [modifiers];
+
+			modifiers = modifiers.sort((a,b)=>a-b);
+
+			for(let i=0; i< actions.length; i++) {
+				if(key === actions[i].key) {
+					if (modifiers.length === actions[i].modifiers.length) {
+						let found = true;
+						for(let j=0; j<modifiers.length; j++) {
+							if(modifiers[j] !== actions[i].modifiers[j]) {
+								found = false;
+								break;
+							}
+						}
+						if(found) {
+							return i;
+						}
+					}
+				}
+			}
+			return -1;
 		};
 //--------------------------------------------------- public methods ---------------------------------------------------
 		/**
 		 * @function
 		 * @name KeyMap#setAction
-		 * @param {Key|Key[]|number|number[]} keyCode
-		 * @param {number|string|*} action
+		 * @param {Key|Key[]|number|number[]} keys
+		 * @param {*?} action
 		 */
-		this.setAction = (action, keyCode)=> {
-			if(keyCode.length) {
-				for(let i=0; i<keyCode.length; i++) {
-					this.setAction(action, keyCode[i]);
-				}
+		this.setAction = (keys, action = null)=> {
+			if (!Array.isArray(keys))
+				keys = [keys];
+
+			const mainKeys = keys.filter(k=>!isModifierKey(k));
+			const modifierKeys = keys.filter(k=>isModifierKey(k)).sort((k1,k2)=>k1-k2);
+			if(mainKeys.length > 1) {
+				console.error("cannot use multiple primary keys at the same time :", mainKeys);
+				return;
 			}
-			else {
-				if(action === undefined || action === null) {
-					if(actions[keyCode] !== undefined) actions[keyCode] = undefined;
-				} else actions[keyCode] = action;
+			if(mainKeys.length === 0)
+				mainKeys.push(modifierKeys.unshift());
+
+			const key = mainKeys[0];
+			let found = false;
+			const newAction = {key: key, modifiers: modifierKeys, action: action};
+			const idx = getActionIndex(key, modifierKeys);
+
+			if (action === null || action === undefined) {
+				if(idx >= 0) actions.splice(idx, 1);
+			} else {
+				if(idx >= 0) actions[idx] = newAction;
+				else actions.push(newAction);
 			}
 		};
 		/**
 		 * @function
 		 * @name KeyMap#getAction
-		 * @param {Key|number} keyCode
-		 * @returns {number|string|*} action associated to the key
+		 * @param {Key|number} key
+		 * @param {Key|Key[]|number|number[]} modifiers
+		 * @returns {*|null} action associated to the specified key with specified modifiers
 		 */
-		this.getAction = keyCode => {
-			return actions[keyCode];
+		this.getAction = (key, modifiers = []) => {
+			const idx = getActionIndex(key, modifiers);
+			return (idx >= 0)
+				? actions[idx].action
+				: null;
 		};
 		/**
 		 * returns whether or not at least one key associated to the specified action is pressed
 		 * @function
-		 * @name KeyMap#isKeyDown
+		 * @name KeyMap#isKeyPressed
 		 * @param {InputManager} inputManager
 		 * @param {*} action
 		 * @returns {boolean} true if at least one key associated to the specified action is pressed
 		 */
-		this.isKeyDown = (inputManager, action) => {
-			let code=-1;
-			do {
-				code = actions.indexOf(action, code+1);
-				if(code!== -1)
-					if(inputManager.getKeyState(code) === KeyState.PRESSED) return true;
-			} while(code!==-1);
+		this.isKeyPressed = (inputManager, action) => {
+			for(let i=0; i < actions.length; i++) {
+				if(actions[i].action === action) {
+					let ok = (inputManager.getKeyState(actions[i].key) === KeyState.PRESSED);
+					let j = 0;
+					while(ok && j < actions[i].modifiers.length) {
+						ok = (inputManager.getKeyState(actions[i].modifiers[j]) === KeyState.PRESSED);
+						j++;
+					}
+					if(ok) return true;
+				}
+			}
 			return false;
 		};
 		/**
@@ -396,12 +506,18 @@ class KeyMap {
 		 * @function
 		 * @name KeyMap#getKeys
 		 * @param {*} action
-		 * @returns {Key[]|number[]} key codes
+		 * @returns {(Key[]|number[])[]} key codes
 		 */
 		this.getKeys = action => {
-			let codes = [], i = actions.indexOf(action);
-			while(i !== -1) { codes.push(i); i = actions.indexOf(action, i+1); }
-			return codes;
+			const result = [];
+			for(let i=0; i< actions.length; i++) {
+				if(actions[i].action === action) {
+					const keys = [action[i].key];
+					keys.push(action[i].modifiers);
+					result.push(keys);
+				}
+			}
+			return result;
 		};
 		/**
 		 * sets the callback function which will be called when a useful keyboard event happens.
@@ -433,10 +549,8 @@ class KeyMap {
 		};
 
 		if(mapping != null) {
-			for (let action in mapping) {
-				if(mapping.hasOwnProperty(action)) {
-					this.setAction(action, mapping[action]);
-				}
+			for (let i=0; i<mapping.length; i++) {
+				this.setAction(mapping[i].keys, mapping[i].action);
 			}
 		}
 		if(callback != null && callback instanceof Function) {

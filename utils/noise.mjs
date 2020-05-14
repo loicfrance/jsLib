@@ -214,16 +214,16 @@ class Simplex {
 }
 
 class DomainWarping {
-
+    //TODO
 }
 class Turbulence {
-
+    //TODO
 }
 class Worley {
-
+    //TODO
 }
 class Ridge {
-
+    //TODO
 }
 
 export {

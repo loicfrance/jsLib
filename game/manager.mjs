@@ -146,7 +146,6 @@ class GameManager {
 			objectsToRemove = [];
 
 		let objects_length = 0,
-			lastStamp = 0,
 			callback = null,
 			interval = null,
 			rafHandler = null;
@@ -294,7 +293,6 @@ class GameManager {
 		 */
 		this.start = function() {
 			if(!this.isRunning()) {
-				lastStamp = 0;
 				if (callback) callback(GameEvent.GAME_START, 0, null);
 				interval = setInterval(gameLoop, this.realDt * 1000);
 			}
@@ -311,6 +309,16 @@ class GameManager {
 				interval = null;
 				if (callback) callback(GameEvent.GAME_STOP, 0, null);
 			}
+		};
+
+		/**
+		 * run one frame and, if the game was running before, stops it by calling the {@link GameManager#stop} method
+		 * @method
+		 * @name GameManager#runOnce
+		 */
+		this.runOnce = function() {
+			gameLoop();
+			this.stop(); // call callback if necessary
 		};
 		/**
 		 * tells if the game is currently running.

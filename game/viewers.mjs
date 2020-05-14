@@ -10,9 +10,9 @@ import {renderLayerSort, renderableFilter} from "./manager.mjs";
  * @enum {number}
  */
 const RenderEvent = {
-    RENDER_BEGIN : 6,
-    RENDER_END : 7,
-    CANVAS_RESIZE : 8
+	RENDER_BEGIN : 6,
+	RENDER_END : 7,
+	CANVAS_RESIZE : 8
 };
 /**
  * @module game/viewer
@@ -25,13 +25,13 @@ class UIElement {
 	 * @param {Vec2} position
 	 * @param {boolean} staticPos
 	 */
-	constructor(elmt, position, staticPos = false) {
+	constructor(elmt, position, autoScale = true, staticPos = false) {
 		/**
 		 * @type {HTMLElement}
 		 * @name UIElement#elmt
 		 */
 		this.elmt = elmt;
-		this.elmt.className = this.elmt.className + ' game_ui';
+		this.elmt.classList.add("game_ui");
 		/**
 		 * @type {Vec2}
 		 * @name UIElement#position
@@ -41,9 +41,14 @@ class UIElement {
 		 * @type {boolean}
 		 * @name UIElement#staticPos
 		 */
-		this.staticPos = !!staticPos; //convert to bool if not already bool
+		this.staticPos = !!staticPos;
+		/**
+		 * @type {boolean}
+		 * @name UIElement#autoScale
+		 */
+		this.autoScale = !!autoScale;
 		this.scale = 1;
-		this.anchor = new Vec2(0.5, 0.5);
+		this.anchor = new Vec2(0.5, 0.5); // position maps to the center of the element
 	}
 
 	/**
@@ -52,75 +57,112 @@ class UIElement {
 	 * @param viewer
 	 */
 	update(viewer) {
-		let scaleX = this.scale/viewer.scaleX, scaleY = this.scale/viewer.scaleY;
-		if(this.position && !isNaN(this.position.x) && !isNaN(this.position.y)) {
-			let pos = this.position.clone();
-			if(!this.staticPos) {
-				pos.addXY(- viewer.visibleRect.xMin, - viewer.visibleRect.yMin);
+		//TODO
+
+		if (this.position && !isNaN(this.position.x) && !isNaN(this.position.y)) {
+			let transform = ""
+			if (!this.staticPos) {
+				let pixelPos = viewer.gameToPixelCoordinatesTransform(this.position);
+				this.elmt.style.left = `${Math.round(pixelPos.x)}px`;
+				this.elmt.style.top = `${Math.round(pixelPos.y)}px`;
 			}
-			pos.x *= scaleX;
-			pos.y *= scaleY;
-			const canvasStyle = viewer.getCanvasStyle();
-			pos.x += (parseFloat(canvasStyle.left) || 0);
-			pos.y += (parseFloat(canvasStyle.top ) || 0);
+			if (this.autoScale) {
+				const scale = viewer.gameToPixelVectorTransform(new Vec2(1,1)).mul(this.scale);
+				transform = `scale(${Math.abs(scale.x)}, ${Math.abs(scale.y)}) `;
+				this.elmt.style.transformOrigin = 'left top';
+			}
 			const translate = this.anchor.clone().mul(-100).roundedVec(4);
-			this.elmt.style.transform = `scale(${scaleX}, ${scaleY}) translate(${translate.x}%, ${translate.y}%)`;
-			this.elmt.style.transformOrigin = 'left top';
-			this.elmt.style.left = `${Math.round(pos.x)}px`;
-			this.elmt.style.top  = `${Math.round(pos.y)}px`;
+			transform += `translate(${translate.x}%, ${translate.y}%)`;
+			this.elmt.style.transform = transform;
 		}
 	}
 }
-const defaultResizeFunction = (viewer, maxW, maxH)=> {
-	const ratio = viewer.visibleRect.ratio;
+
+const defaultResizeFunction = (viewer, maxW, maxH, preferredRatio= 0)=> {
+	let ratio = preferredRatio;
+	if(ratio === 0) {
+		const rect = viewer.visibleRect;
+		const diagonal = new Vec2(rect.width, rect.height);
+		viewer.gameToPixelCoordinatesTransform(diagonal, diagonal);
+		ratio = diagonal.x/diagonal.y;
+	}
+
 	if(maxH * ratio > maxW) maxH = Math.floor(maxW / ratio);
 	else if(maxH * ratio < maxW) maxW = Math.floor(maxH * ratio);
 	return new Vec2(maxW, maxH);
 };
+
 /**
  * The class used by the game manager for the rendering.
  * @class Viewer
  */
 class Viewer {
-    /**
+	/**
 	 * @constructor
-     * @param context
-     * @param visibleRect
-     * @param res_x
-     * @param res_y
-     * @param autoResize
-     * @param resizeMargin
-     * @param cursor
-     */
+	 * @param context
+	 * @param res_x
+	 * @param res_y
+	 * @param autoResize
+	 * @param resizeMargin
+	 * @param cursor
+	 */
 	constructor({
-					context, visibleRect,
-					resolution: {width:res_x = 0, height: res_y = 0},
+					context,
+					inGameView: {
+						spanX= 1,
+						spanY= 1,
+						tilt= 0,
+						center = Vec2.ZERO,
+						mirrorV = false,
+						mirrorH = false
+					} = {spanX: 0, spanY: 0, tilt: 0, center: Vec2.ZERO, mirrorV: false, mirroH: false},
+					resolution: {width: res_x, height: res_y} = {width: 0, height: 0},
 					autoResize: {use = false, margin = 1},
 					cursor = null}) {
 		//private variables used for resize
 		let autoResize = false;
 		let onWindowResize = null;
 		let resizeMargin = 1;
+		let requestRatio = 1;
 		let callback = null;
 		let uiDiv = null;
 		let uiElmts = [];
+		this.transformMatrix = [
+			[1,0,0],
+			[0,1,0],
+			//[0,0,1] unnecessary
+		];
+		this.inverseTransformMatrix = [
+			[1,0,0],
+			[0,1,0],
+			//[0,0,1] unnecessary
+		];
+		this.inGameSpanX = spanX;
+		this.inGameSpanY = spanY;
+		this.inGameViewCenter = center.clone();
+		this.viewTiltAngle = tilt;
+		this.mirrorH = mirrorH;
+		this.mirrorV = mirrorV;
+		this.visibleRect = new Rect(-1, -1, 1, 1);
+
 		let resizeFunction = defaultResizeFunction;
 		/**
 		 * @name Viewer#context
 		 * @type {CanvasRenderingContext2D|WebGLRenderingContext}
 		 */
 		this.context = context || null;
+		/*
 		/**
 		 * @name Viewer#visibleRect
 		 * @type {Rect}
-		 */
+		 //
 		this.visibleRect =
 			visibleRect ?
 				visibleRect.clone()
 			: (this.context && this.context.canvas) ?
 				new Rect(0, 0, this.context.canvas.width, this.context.canvas.height)
 			: new Rect(0,0,0,0);
-
+		*/
 		/**
 		 * allows the canvas to resize automatically when the window size changes.
 		 * The callback function is called after the resize with the first parameter equal to <!--
@@ -131,8 +173,11 @@ class Viewer {
 		 * @param {number} [borderMargin]. first use : default to 1. next uses : default to previous values.
 		 *
 		 */
-		this.useAutoResize = function (use = true, borderMargin = resizeMargin) {
+
+
+		this.useAutoResize = function (use = true, borderMargin = resizeMargin, preferredRatio = requestRatio) {
 			resizeMargin = borderMargin;
+			requestRatio = preferredRatio;
 			if (autoResize && !use) {
 				window.removeEventListener('resize', onWindowResize, false);
 				window.removeEventListener('fullscreenchange', onWindowResize, false);
@@ -142,30 +187,7 @@ class Viewer {
 				autoResize = true;
 				if (!onWindowResize) {
 					onWindowResize = function (event) {
-						const canvas = this.context.canvas,
-							  parent = canvas.parentNode,
-							  display = getComputedStyle(parent).display;
-						parent.style.display = 'none';
-						const  container = parent.parentNode || parent,
-						/*
-							containerMarginW = container.offsetWidth - container.clientWidth,
-							containerMarginH = container.offsetHeight - container.clientHeight,
-							containerStyle = getComputedStyle(container),
-							containerW = parseFloat(containerStyle.maxWidth) - containerMarginW,
-							containerH = parseFloat(containerStyle.maxHeight) - containerMarginH;
-						/*/
-							containerW = container.clientWidth,
-							containerH = container.clientHeight;
-						//*/
-
-						let w = containerW - (borderMargin * 2),
-							h = containerH - (borderMargin * 2);
-						const wh = resizeFunction(this, w,h);
-						w = wh.x; h = wh.y;
-						parent.style.display = display;
-						w -= Math.ceil(canvas.offsetWidth - canvas.clientWidth);
-						h -= Math.ceil(canvas.offsetHeight - canvas.clientHeight);
-						this.setCanvasSize(w, h);
+						this.updateCanvasSize();
 					}.bind(this);
 				}
 				window.addEventListener('resize', onWindowResize, false);
@@ -175,6 +197,25 @@ class Viewer {
 				onWindowResize(null);
 			}
 		};
+
+		this.updateCanvasSize = function() {
+			const canvas = this.context.canvas,
+			parent = canvas.parentNode,
+			display = getComputedStyle(parent).display;
+			parent.style.display = 'none';
+			const  container = parent.parentNode || parent,
+				containerW = container.clientWidth,
+				containerH = container.clientHeight;
+
+			let w = containerW - (resizeMargin * 2),
+				h = containerH - (resizeMargin * 2);
+			const wh = resizeFunction(this, w,h, requestRatio);
+			parent.style.display = display;
+			w = wh.x - Math.ceil(canvas.offsetWidth - canvas.clientWidth);
+			h = wh.y - Math.ceil(canvas.offsetHeight - canvas.clientHeight);
+			this.setCanvasSize(w, h);
+		}
+
 		/**
 		 * sets the callback function called for rendering events. See {@link RenderEvent} <!--
 		 * -->for a list of all possible events
@@ -199,10 +240,12 @@ class Viewer {
 		 * @param {function(viewer: Viewer, maxW: number, maxH: number) : Vec2 } func - takes the maximum <!--
 		 * -->width and height in parameters and return the actual width and height of the canvas as <!--
 		 * -->{@link Vec2#x|x} and {@link Vec2#y|y} attributes of a <!--
-		 * {@link Vec2} instance
+		 * {@link Vec2} instance.
+		 * The function is immediately called
 		 */
 		this.setResizeFunction = function(func) {
 			resizeFunction = func || defaultResizeFunction;
+			this.updateCanvasSize();
 		};
 		/**
 		 * sets the {@link HTMLDivElement } used to place UI elements. <!--
@@ -257,8 +300,11 @@ class Viewer {
 		if(!isNaN(res_x) && !isNaN(res_y) && res_x > 0 && res_y > 0) {
 			this.setCanvasResolution(res_x, res_y);
 		}
-		this.useAutoResize(use, margin);
+		if (context)
+			this.useAutoResize(use, margin, context.canvas.width / context.canvas.height);
 		if(cursor != null) this.cursor = cursor;
+
+		this.setTransform(tilt, mirrorH, mirrorV, spanX, spanY, center);
 	}
 	/**
 	 * manually changes the size of the canvas, and modifies the scale for the visible rectangle <!--
@@ -277,7 +323,6 @@ class Viewer {
 		canvas.style.height = `${height}px`;
 		parent.style.width = `${canvas.offsetWidth}px`;
 		parent.style.height = `${canvas.offsetHeight}px`;
-
 		this.updateTransform();
 		if (this.getCallback()) this.getCallback()(RenderEvent.CANVAS_RESIZE, this.context);
 	};
@@ -302,20 +347,91 @@ class Viewer {
 	getCanvasStyle() {
 		return getComputedStyle(this.context.canvas);
 	}
+
+	setTransform(rotation, mirrorH, mirrorV, spanX, spanY, viewCenter)
+	{
+		this.viewTiltAngle = rotation;
+		this.mirrorH = mirrorH;
+		this.mirrorV = mirrorV;
+		this.inGameSpanX = spanX;
+		this.inGameSpanY = spanY;
+		this.inGameViewCenter = viewCenter;
+		const sX = 2/spanX, sY = 2/spanY;
+		const cos = Math.cos(rotation);
+		const sin = Math.sin(rotation);
+		const mX = mirrorH ? -1 : 1;
+		const mY = mirrorV ? -1 : 1;
+		const a = mX*cos*sX;
+		const b = -mY*sin*sX;
+		const c = mX*sin*sY;
+		const d = mY*cos*sY;
+		const dx = -viewCenter.x * a + -viewCenter.y * c;
+		const dy = -viewCenter.x * b + -viewCenter.y * d;
+		this.transformMatrix[0][0] = a;
+		this.transformMatrix[1][0] = b;
+		this.transformMatrix[0][1] = c;
+		this.transformMatrix[1][1] = d;
+		this.transformMatrix[0][2] = dx;
+		this.transformMatrix[1][2] = dy;
+		const det = a*d - b*c;
+		this.inverseTransformMatrix[0][0] = d / det;
+		this.inverseTransformMatrix[0][1] = -c / det;
+		this.inverseTransformMatrix[0][2] = (c*dy - d*dx) / det;
+		this.inverseTransformMatrix[1][0] = -b / det;
+		this.inverseTransformMatrix[1][1] = a / det;
+		this.inverseTransformMatrix[1][2] = (b*dx - a*dy) / det;
+		this.visibleRect.setRect(Rect.createFromCenterWidthHeight(viewCenter, spanX, spanY)); // TODO change to consider rotation and mirror
+		this.updateTransform();
+	}
+
+	// noinspection JSSuspiciousNameCombination
+	/**
+	 * @param {number} factorX
+	 * @param {number} factorY
+	 * @param {Vec2} origin
+	 */
+	zoom(factorX, factorY=factorX, origin=this.inGameViewCenter)
+	{
+		const newCenter = Vec2.translation(origin, this.inGameViewCenter);
+		newCenter.x /= factorX;
+		newCenter.y /= factorY;
+		newCenter.add(origin);
+		this.setTransform(this.viewTiltAngle, this.mirrorH, this.mirrorV,
+			this.inGameSpanX/factorX, this.inGameSpanY/factorY, newCenter);
+	}
+
+	/**
+	 * @param {number} radians
+	 * @param {Vec2} origin
+	 */
+	rotate(radians, origin=this.inGameViewCenter) {
+		const newCenter = Vec2.translation(origin, this.inGameViewCenter).rotate(-radians).add(origin);
+		this.setTransform(this.viewTiltAngle+radians, this.mirrorH, this.mirrorV,
+			this.inGameSpanX, this.inGameSpanY, newCenter);
+	}
+
+	/**
+	 * @param {Vec2} delta
+	 */
+	translate(delta) {
+		this.setTransform(this.viewTiltAngle, this.mirrorH, this.mirrorV,
+			this.inGameSpanX, this.inGameSpanY, this.inGameViewCenter.add(delta));
+	}
+
 	/**
 	 * number of game units by screen pixel (=(visible game width)/(canvas width))
 	 * @name Viewer#scaleX
 	 * @type {number}
 	 * @readonly
 	 */
-	get scaleX() { return this.visibleRect.width/parseInt(this.getCanvasStyle().width); }
+	//get scaleX() { return this.visibleRect.width/parseInt(this.getCanvasStyle().width); }
 	/**
 	 * number of game units by screen pixel (=(visible game height)/(canvas height))
 	 * @name Viewer#scaleY
 	 * @type {number}
 	 * @readonly
 	 */
-	get scaleY() { return this.visibleRect.height/parseInt(this.getCanvasStyle().height); }
+	//get scaleY() { return this.visibleRect.height/parseInt(this.getCanvasStyle().height); }
 	/**
 	 * changes the scale for the visible rect size to fit the canvas. Don't forget to call this method after <!--
 	 * --> you made manual modifications on the visible rect to avoid errors.
@@ -323,12 +439,48 @@ class Viewer {
 	 * -->as the rectangle's {@link Rect#ratio|ratio}
 	 */
 	updateTransform() {
-		const scaleX = this.context.canvas.width/this.visibleRect.width,
-			  scaleY = this.context.canvas.height/this.visibleRect.height;
-		this.context.setTransform(
-			scaleX, 0, 0, scaleY,
-			-this.visibleRect.xMin*scaleX, -this.visibleRect.yMin*scaleY);
+		const halfCanvasWidth = this.context.canvas.width/2;
+		const halfCanvasHeight = this.context.canvas.height/2;
+
+		// set rectangle to unit rectangle
+		// (-1,-1)---(+1,-1)
+		//    |			|
+		// (-1,+1)---(+1,+1)
+		this.context.setTransform(halfCanvasWidth, 0, 0, halfCanvasHeight, halfCanvasWidth, halfCanvasHeight);
+
+		this.context.transform(
+			this.transformMatrix[0][0],
+			this.transformMatrix[1][0],
+			this.transformMatrix[0][1],
+			this.transformMatrix[1][1],
+			this.transformMatrix[0][2],
+			this.transformMatrix[1][2]);
 		this.updateUI();
+	}
+	/**
+	 * gives you the in-game equivalent vector of a vector given in pixel coordinates.
+	 * @param {Vec2} pixelVector
+	 * @param {Vec2} out
+	 * @returns {Vec2} out
+	 */
+	pixelToGameVectorTransform(pixelVector, out = Vec2.zero) {
+		const M = this.inverseTransformMatrix;
+		const style = this.getCanvasStyle();
+		const halfW = parseInt(style.width)/2;
+		const halfH = parseInt(style.height)/2;
+		out.set(pixelVector);
+		out.x /= halfW;
+		out.y /= halfH;
+		return out.setXY(
+			out.x*M[0][0]+out.y*M[0][1],
+			out.x*M[1][0]+out.y*M[1][1]);
+	}
+	pageToPixelCoordinatesTransform(pageCoords, out = Vec2.zero) {
+		const elmtRect = this.context.canvas.getBoundingClientRect();
+		return out.setXY(pageCoords.x - elmtRect.left, pageCoords.y - elmtRect.top);
+	}
+	pageToGameCoordinatesTransform(pageCoords, out = Vec2.zero) {
+		return this.pixelToGameCoordinatesTransform(this.pageToPixelCoordinatesTransform(pageCoords, out), out);
 	}
 	/**
 	 * gives you the game coordinates of a point given in pixel coordinates relative to the canvas.
@@ -337,29 +489,61 @@ class Viewer {
 	 * @returns {Vec2} out
 	 */
 	pixelToGameCoordinatesTransform(pixelCoords, out = Vec2.zero) {
+		const M = this.inverseTransformMatrix;
+		const style = this.getCanvasStyle();
+		const halfW = parseInt(style.width)/2;
+		const halfH = parseInt(style.height)/2;
+		out.set(pixelCoords).addXY(-halfW, -halfH); // relative to center
+		out.x /= halfW;
+		out.y /= halfH;
 		return out.setXY(
-			pixelCoords.x*this.scaleX+this.visibleRect.xMin,
-			pixelCoords.y*this.scaleY+this.visibleRect.yMin);
+			out.x*M[0][0]+out.y*M[0][1] + M[0][2],
+			out.x*M[1][0]+out.y*M[1][1] + M[1][2]);
 	}
 	/**
-	 * gives you the pixel coordinates, relative to the canvas, of a point in the 
+	 * gives you the pixel equivalent, of a vector in the game coordinates
+	 * @param {Vec2} gameVector
+	 * @param {Vec2} out
+	 * @returns {Vec2} out
+	 */
+	gameToPixelVectorTransform(gameVector, out = Vec2.zero) {
+		const M = this.transformMatrix;
+		const style = this.getCanvasStyle();
+		const halfW = parseInt(style.width)/2;
+		const halfH = parseInt(style.height)/2;
+		out.setXY(
+			gameVector.x*M[0][0]+gameVector.y*M[0][1],
+			gameVector.x*M[1][0]+gameVector.y*M[1][1]);
+		out.x *= halfW;
+		out.y *= halfH;
+		return out;
+	}
+
+	/**
+	 * gives you the pixel coordinates, relative to the canvas, of a point in the game coordinates
 	 * @param {Vec2} gameCoords
 	 * @param {Vec2} out
 	 * @returns {Vec2} out
 	 */
 	gameToPixelCoordinatesTransform(gameCoords, out = Vec2.zero) {
-		return out.setXY(
-			(gameCoords.x-this.visibleRect.xMin)/this.scaleX,
-			(gameCoords.y-this.visibleRect.yMin)/this.scaleY);
+		const M = this.transformMatrix;
+		const style = this.getCanvasStyle();
+		const halfW = parseInt(style.width)/2;
+		const halfH = parseInt(style.height)/2;
+		out.setXY(
+			gameCoords.x*M[0][0]+gameCoords.y*M[0][1] + M[0][2],
+			gameCoords.x*M[1][0]+gameCoords.y*M[1][1] + M[1][2]);
+		out.x *= halfW;
+		out.y *= halfH;
+		return out.addXY(halfW, halfH);
 	}
 
-    /**
+	/**
 	 *
-     * @param rect
-     */
+	 * @param rect
+	 */
 	setVisibleRect(rect) {
-		this.visibleRect.setRect(rect);
-		this.updateTransform();
+		this.setTransform(0, this.mirrorH, this.mirrorV, rect.width, rect.height, rect.center)
 	}
 	/**
 	 * called by the game manager after a frame to draw objects on the canvas.
@@ -375,7 +559,7 @@ class Viewer {
 	 */
 	render( gameManager, objects) { }
 
-	get cursor() { return this.context.canvas.getComputedStyle().cursor; }
+	get cursor() { return this.getCanvasStyle().cursor; }
 	set cursor(cursor) { this.context.canvas.style.cursor = cursor; }
 }
 
@@ -390,10 +574,15 @@ class StandardViewer extends Viewer {
 		if((!parameters.context) && parameters.canvas)
 			parameters.context = parameters.canvas.getContext('2d');
 		super(parameters);
+		this.context.lineWidth = Math.min(this.visibleRect.width, this.visibleRect.height)/500;
+	}
+	drawBackground() {
+		const rect = this.visibleRect;
+		this.context.clearRect(rect.xMin, rect.yMin, rect.width, rect.height);
 	}
 	render(gameManager, objects) {
 		let rect = this.visibleRect, objs, ctx = this.context, l, i, callback = this.getCallback();
-		ctx.clearRect(rect.xMin, rect.yMin, rect.width, rect.height);
+		this.drawBackground();
 		if(callback) {
 			ctx.save();
 			callback(RenderEvent.RENDER_BEGIN, ctx);

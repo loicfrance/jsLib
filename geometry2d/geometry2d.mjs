@@ -30,8 +30,8 @@ const PI_2 = Math.PI/2;
  * c d y
  *
  * @param rotation : number
- * @param mirrorH : number
- * @param mirrorV : number
+ * @param mirrorH : boolean
+ * @param mirrorV : boolean
  * @param scaleX : number
  * @param scaleY : number
  * @param translateX : number
@@ -73,7 +73,7 @@ function transformMatrix(rotation, mirrorH, mirrorV, scaleX, scaleY,
 
 }
 
-export { PI2, PI_2 };
+export { PI2, PI_2, transformMatrix };
 export { Vec2 } from "./Vec2.mjs";
 export { Shape } from "./Shape.mjs";
 export { Rect } from "./Rect.mjs";

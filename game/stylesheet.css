@@ -15,6 +15,7 @@ html, body {
 */
 .game_div {
     position : absolute;
+    overflow: hidden;
     display: block;
     margin : auto;
     padding : 0;
@@ -38,8 +39,10 @@ html, body {
     background: transparent;
 }
 .game_ui {
-    left: 50%;
-    top: 50%;
+    /*left: 50%;
+    top: 50%;*/
+    width: fit-content;
+    height: fit-content;
     display: inline-block;
     transform : translate(-50%, -50%);
     transform-origin: left top;

@@ -123,14 +123,15 @@ function polyfill(container, name, vendors) {
 						  container[vendors[i] + name[0].toUpperCase() + name.substr(1)];
 	}
 }
-function waitForEvent(object, event) {
-	const attr = `on${event}`;
-	return new Promise(r=>{
-		const old = object[attr];
-		object[attr] = evt => {
-			object[attr] = old;
-			r(evt)
-		};
+
+/**
+ * @param {HTMLElement} elmt
+ * @param {string} event
+ * @returns {Promise<Event>}
+ */
+function waitForEvent(elmt, event) {
+	return new Promise(r=> {
+		object.addEventListener(event, r, {once: true})
 	});
 }
 function delay(ms) {
@@ -148,7 +149,7 @@ function textFileUserDownload(text, fileName) {
 /**
  * convert text with BB code to html text with equivalent tags
  * @param {string} bbCode
- * @returns {*}
+ * @return {string}
  */
 function BBCodeToHTML(bbCode) {
 	let str = bbCode;
@@ -180,19 +181,18 @@ function BBCodeToHTML(bbCode) {
 
 	return str;
 }
-	/**
-	 * TODO improve using https://developers.google.com/web/updates/2018/04/loading-wasm
-	 * @param {string} wasmUrl - url to WebAssembly file.
-	 * @param {object} imports - objects to import in wasm
-	 */
-const loadWASM = (wasmUrl, imports)=>
-		fetch(wasmUrl)
-			.then(response => response.arrayBuffer())
-			.then(bytes => WebAssembly.instantiate(bytes, imports));
+/**
+ * @param {string} wasmUrl - url to WebAssembly file.
+ */
+const loadWasmModule = (wasmUrl)=>
+		WebAssembly.compileStreaming(fetch(wasmUrl));
 
-const instanciateWASM = (wasmUrl, imports)=>
-		loadWASM(wasmUrl, imports)
-			.then(results => results.instance);
+/**
+ * @param {string} wasmUrl - url to WebAssembly file.
+ * @param {object} imports - objects to import in wasm
+ */
+const instantiateWASM = (wasmUrl, imports)=>
+	loadWasmModule(wasmUrl).then(module=> WebAssembly.instantiate(module, imports));
 /**
  *
  * @param {number} min
@@ -410,8 +410,8 @@ export {
 	delay,
     textFileUserDownload,
     BBCodeToHTML,
-    loadWASM,
-    instanciateWASM,
+	loadWasmModule,
+    instantiateWASM,
 	rangedRandom,
     gaussianRandom,
 	PRNG,
