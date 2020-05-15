@@ -1,11 +1,11 @@
 /**
  * @module main
  */
-import {GameManager} from "../../game/manager.mjs";
-import {StandardViewer} from "../../game/viewers.mjs";
-import {Vec2, Rect} from "../../geometry2d/geometry2d.mjs";
-import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mjs";
-import {GameEvent} from "../../game/manager.min.mjs";
+import {GameManager} from "../../game/manager.mod.js";
+import {StandardViewer} from "../../game/viewers.mod.js";
+import {Vec2, Rect} from "../../geometry2d/geometry2d.mod.js";
+import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mod.js";
+import {GameEvent} from "../../game/manager.mod.js";
 import {AsteroidSpawner} from "./Asteroid.mjs";
 import SpaceShip from "./SpaceShip.mjs";
 

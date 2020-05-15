@@ -2,10 +2,10 @@
  * @module Platform
  */
 import {Materials, RigidBody} from "../../game/physics.min.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {GameObject} from "../../game/object.mjs";
-import {AABBObject2dCollider, ShapedObjectRenderer} from "../../game/renderer_collider.mjs";
-import {randomColor} from "../../utils/colors.mjs";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {GameObject} from "../../game/object.mod.js";
+import {AABBObject2dCollider, ShapedObjectRenderer} from "../../game/renderer_collider.mod.js";
+import {randomColor} from "../../utils/colors.mod.js";
 
 class Platform extends GameObject {
     constructor(rect) {

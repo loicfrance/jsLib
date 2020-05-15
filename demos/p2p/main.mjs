@@ -1,5 +1,5 @@
-import {PeerConnection} from "../../utils/p2p.mjs";
-import {delay, waitForEvent} from "../../utils/tools.mjs";
+import {PeerConnection} from "../../utils/p2p.mod.js";
+import {delay, waitForEvent} from "../../utils/tools.mod.js";
 
 var peer1 = new PeerConnection();
 peer1.tx = peer1.createDataChannel("peer 1 -> 2");

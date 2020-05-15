@@ -1,10 +1,10 @@
 /**
  * @module Asteroid
  */
-import {GameObject} from "../../game/object.mjs";
-import {ShapedObject2dCollider, ShapedObjectRenderer} from "../../game/renderer_collider.mjs";
-import {merge, PRNG} from "../../utils/tools.mjs";
-import {Quadratic} from "../../utils/transitions.mjs";
+import {GameObject} from "../../game/object.mod.js";
+import {ShapedObject2dCollider, ShapedObjectRenderer} from "../../game/renderer_collider.mod.js";
+import {merge, PRNG} from "../../utils/tools.mod.js";
+import {Quadratic} from "../../utils/transitions.mod.js";
 import {
     ASTEROID_BIG_POINTS as BIG_POINTS,
     ASTEROID_SMALL_POINTS as SMALL_POINTS,
@@ -15,9 +15,9 @@ import {
     ASTEROID_MAX_SPEED as MAX_SPEED,
     ASTEROID_MAX_ROTATION_SPEED as MAX_ROT_SPEED, SHIP_COLLISION_LAYER, BULLET_COLLISION_LAYER
 } from "./constants.mjs";
-import Polygon from "../../geometry2d/Polygon.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {ParticleExplosion} from "../../game/particles.mjs";
+import Polygon from "../../geometry2d/Polygon.mod.js";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {ParticleExplosion} from "../../game/particles.mod.js";
 
 const Random = new PRNG(123);
 

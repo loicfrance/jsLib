@@ -2,9 +2,9 @@
  * @module PlayerCharacter
  */
 import {Character} from "./Character.mjs";
-import {Polygon} from "../../geometry2d/Polygon.mjs";
-import Vec2 from "../../geometry2d/Vec2.mjs";
-import {ShapedObjectRenderer, ShapedObject2dCollider} from "../../game/renderer_collider.mjs";
+import {Polygon} from "../../geometry2d/Polygon.mod.js";
+import Vec2 from "../../geometry2d/Vec2.mod.js";
+import {ShapedObjectRenderer, ShapedObject2dCollider} from "../../game/renderer_collider.mod.js";
 
 class PlayerCharacter extends Character {
     constructor(pos) {

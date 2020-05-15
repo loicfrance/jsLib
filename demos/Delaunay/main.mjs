@@ -1,19 +1,19 @@
 /**
  * @module main
  */
-import {GameManager} from "../../game/manager.mjs";
-import {RenderEvent, StandardViewer} from "../../game/viewers.mjs";
-import {Rect} from "../../geometry2d/Rect.mjs";
-import {InputManager, Key, KeyMap, KeyState, MouseEvents} from "../../utils/input.mjs";
+import {GameManager} from "../../game/manager.mod.js";
+import {RenderEvent, StandardViewer} from "../../game/viewers.mod.js";
+import {Rect} from "../../geometry2d/Rect.mod.js";
+import {InputManager, Key, KeyMap, KeyState, MouseEvents} from "../../utils/input.mod.js";
 import {GameEvent} from "../../game/manager.min.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {loadImage, PRNG, shuffleArray} from "../../utils/tools.mjs";
-import {Arc, Graph} from "../../utils/graph.mjs";
-import {Circle} from "../../geometry2d/Circle.mjs";
-import {Line} from "../../geometry2d/Line.mjs";
-import {Polygon} from "../../geometry2d/Polygon.mjs";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {loadImage, PRNG, shuffleArray} from "../../utils/tools.mod.js";
+import {Arc, Graph} from "../../utils/graph.mod.js";
+import {Circle} from "../../geometry2d/Circle.mod.js";
+import {Line} from "../../geometry2d/Line.mod.js";
+import {Polygon} from "../../geometry2d/Polygon.mod.js";
 import {buildDelaunayGraph, createPoints, DelaunayNode, DelaunayTriangleNode} from "./delaunay.mjs";
-import {ImageParticle} from "../../game/particles.mjs";
+import {ImageParticle} from "../../game/particles.mod.js";
 /*
 const rSeed = Math.random()*Number.MAX_SAFE_INTEGER;
 /*/

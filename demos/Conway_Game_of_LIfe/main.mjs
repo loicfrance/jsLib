@@ -1,20 +1,20 @@
 /**
  * @module main
  */
-import {GameManager} from "../../game/manager.mjs";
-import {RenderEvent, StandardViewer} from "../../game/viewers.mjs";
-import {Rect} from "../../geometry2d/Rect.mjs";
-import {InputManager, Key, KeyMap, KeyState, MouseButton} from "../../utils/input.mjs";
+import {GameManager} from "../../game/manager.mod.js";
+import {RenderEvent, StandardViewer} from "../../game/viewers.mod.js";
+import {Rect} from "../../geometry2d/Rect.mod.js";
+import {InputManager, Key, KeyMap, KeyState, MouseButton} from "../../utils/input.mod.js";
 import {GameEvent} from "../../game/manager.min.mjs";
-import {DebugTiledMapRenderer, TiledMap} from "../../game/TiledMap.mjs";
+import {DebugTiledMapRenderer, TiledMap} from "../../game/TiledMap.mod.js";
 import {
     CaveGenerationAlgorithm,
     CellularTiledMapLayer,
     ConwayGameOfLifeAlgorithm,
     HighLifeAlgorithm
-} from "../../game/plug-ins/CellularTiledMapLayer.mjs";
-import {PRNG, createOneDimensionGaussianFunction} from "../../utils/tools.mjs";
-import {Perlin, Simplex} from "../../utils/noise.mjs";
+} from "../../game/plug-ins/CellularTiledMapLayer.mod.js";
+import {PRNG, createOneDimensionGaussianFunction} from "../../utils/tools.mod.js";
+import {Perlin, Simplex} from "../../utils/noise.mod.js";
 
 const Random = new PRNG(Math.round(Math.random()*Number.MAX_SAFE_INTEGER));
 console.log("PRNG seed : " + Random.seed);
@@ -140,7 +140,7 @@ GM.viewer.setCallback(function(evt, context) {
         }
     } else if(evt === RenderEvent.RENDER_END) {
         //context.fillStyle = "#F00";
-        //new Circle(tiledMap.position, 10).draw(context, true);
+        //new CircleMod(tiledMap.position, 10).draw(context, true);
     }
 });
 

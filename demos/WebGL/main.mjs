@@ -1,12 +1,12 @@
-import {GameManager} from "../../game/manager.mjs";
-import {WebGLViewer} from "../../game/viewers.mjs";
-import {Rect} from "../../geometry2d/Rect.mjs";
-import {GameObject} from "../../game/object.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {WebGLObjectRenderer} from "../../game/renderer_collider.mjs";
-import {createProgram, createShader, standardFragmentShader} from "../../utils/webgl";
-import {loadString} from "../../utils/tools";
-import {SimpleShapedObject} from "../../game/object.mjs";
+import {GameManager} from "../../game/manager.mod.js";
+import {WebGLViewer} from "../../game/viewers.mod.js";
+import {Rect} from "../../geometry2d/Rect.mod.js";
+import {GameObject} from "../../game/object.mod.js";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {WebGLObjectRenderer} from "../../game/renderer_collider.mod.js";
+import {createProgram, createShader, standardFragmentShader} from "../../utils/webgl.mod.js";
+import {loadString} from "../../utils/tools.mod.js";
+import {SimpleShapedObject} from "../../game/object.mod.js";
 import {SimpleWebGLRenderer} from "./SimpleWebGLRenderer.mjs";
 
 const width  = 1280;

@@ -1,11 +1,11 @@
-import {GameEvent, GameManager} from "../../game/manager.mjs";
-import {StandardViewer, UIElement} from "../../game/viewers.mjs";
-import {Circle, Rect, Vec2} from "../../geometry2d/geometry2d.mjs";
-import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mjs";
+import {GameEvent, GameManager} from "../../game/manager.mod.js";
+import {StandardViewer, UIElement} from "../../game/viewers.mod.js";
+import {Circle, Rect, Vec2} from "../../geometry2d/geometry2d.mod.js";
+import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mod.js";
 
 import {Ball, Brick, Paddle} from "./Breakout_Objects.mjs";
-import {HSVtoRGB, RGBtoHex} from "../../utils/colors.mjs";
-import {BBCodeToHTML} from "../../utils/tools.mjs";
+import {HSVtoRGB, RGBtoHex} from "../../utils/colors.mod.js";
+import {BBCodeToHTML} from "../../utils/tools.mod.js";
 import ScoreView from "./ScoreView.mjs";
 
 //<editor-fold desc="Game Manager init" default-state="collapsed">

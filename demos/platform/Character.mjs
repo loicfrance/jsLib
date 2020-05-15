@@ -1,13 +1,13 @@
-import {GameObject} from "../../game/object.mjs";
+import {GameObject} from "../../game/object.mod.js";
 
 import {
     Impulse, Materials, RigidBody,
     UniDirectionalControllerForce, BreakerControllerForce
-} from "../../game/physics.mjs";
+} from "../../game/physics.mod.js";
 
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {AABBObject2dCollider, ShapedObjectRenderer} from "../../game/renderer_collider.mjs";
-import {ShapedParticle} from "../../game/particles.mjs";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {AABBObject2dCollider, ShapedObjectRenderer} from "../../game/renderer_collider.mod.js";
+import {ShapedParticle} from "../../game/particles.mod.js";
 
 /**
  * @module Character

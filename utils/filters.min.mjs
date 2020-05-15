@@ -1,1 +1,0 @@
-'use strict';const inclusionFilter=(array,x)=>array.indexOf(x)!==-1;const exclusionFilter=(array,x)=>array.indexOf(x)===-1;const instanceFilter=(_class,x)=>x instanceof _class;export{inclusionFilter,exclusionFilter,instanceFilter};

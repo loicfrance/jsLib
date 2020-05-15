@@ -1,10 +1,10 @@
-import {GameEvent, GameManager} from "../../game/manager.mjs"
-import {StandardViewer} from "../../game/viewers.mjs";
-import {Rect} from "../../geometry2d/Rect.mjs";
-import {AmbientFriction, Force, PhysicWorld} from "../../game/physics.mjs";
-import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mjs";
+import {GameEvent, GameManager} from "../../game/manager.mod.js"
+import {StandardViewer} from "../../game/viewers.mod.js";
+import {Rect} from "../../geometry2d/Rect.mod.js";
+import {AmbientFriction, Force, PhysicWorld} from "../../game/physics.mod.js";
+import {InputManager, Key, KeyMap, KeyState} from "../../utils/input.mod.js";
 import Platform from "./Platform.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
 import Character from "./Character.mjs";
 
 const GM = new GameManager({

@@ -1,10 +1,10 @@
 /**
  * @module Character
  */
-import {GameObject} from "../../game/object.mjs";
-import {merge, mix} from "../../utils/tools.mjs";
-import {energy, health, tag} from "../../game/object_mixins.mjs";
-import {Vec2} from "../../geometry2d/geometry2d.mjs"
+import {GameObject} from "../../game/object.mod.js";
+import {merge, mix} from "../../utils/tools.mod.js";
+import {energy, health, tag} from "../../game/object_mixins.mod.js";
+import {Vec2} from "../../geometry2d/geometry2d.mod.js"
 
 class Character extends mix(GameObject, tag, health, energy) {
     constructor(position) {

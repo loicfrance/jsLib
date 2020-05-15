@@ -1,9 +1,9 @@
 /**
  * @module ScoreView
  */
-import {UIElement} from "../../game/viewers.mjs";
-import {BBCodeToHTML} from "../../utils/tools.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
+import {UIElement} from "../../game/viewers.mod.js";
+import {BBCodeToHTML} from "../../utils/tools.mod.js";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
 
 class ScoreView extends UIElement{
     constructor() {

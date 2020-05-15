@@ -1,10 +1,10 @@
 /**
  * @module Breakout_Objects
  */
-import {Vec2} from "../../geometry2d/geometry2d.mjs";
-import {randomColor} from "../../utils/colors.mjs";
-import {SimpleShapedObject} from "../../game/object.mjs";
-import {TraceDrawer} from "../../game/particles.mjs"
+import {Vec2} from "../../geometry2d/geometry2d.mod.js";
+import {randomColor} from "../../utils/colors.mod.js";
+import {SimpleShapedObject} from "../../game/object.mod.js";
+import {TraceDrawer} from "../../game/particles.mod.js"
 
 class Brick extends SimpleShapedObject {}
 Brick.prototype.living = false;

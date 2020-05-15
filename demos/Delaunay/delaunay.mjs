@@ -1,12 +1,12 @@
 /**
  * @module delaunay
  */
-import {Circle} from "../../geometry2d/Circle.mjs";
-import {Arc, Node as GraphNode} from "../../utils/graph.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {Rect} from "../../geometry2d/Rect.mjs";
-import {Line} from "../../geometry2d/Line.mjs";
-import {Polygon} from "../../geometry2d/Polygon.mjs";
+import {Circle} from "../../geometry2d/Circle.mod.js";
+import {Arc, Node as GraphNode} from "../../utils/graph.mod.js";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {Rect} from "../../geometry2d/Rect.mod.js";
+import {Line} from "../../geometry2d/Line.mod.js";
+import {Polygon} from "../../geometry2d/Polygon.mod.js";
 
 class DelaunayNode extends GraphNode {
     constructor(position) {

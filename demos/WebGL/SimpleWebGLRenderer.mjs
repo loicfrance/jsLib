@@ -1,7 +1,7 @@
-import {WebGLObjectRenderer} from "../../game/renderer_collider.mjs";
-import {loadString} from "../../utils/tools.mjs";
-import {standardFragmentShader, getUniformLocations, ShaderInfo} from "../../utils/webgl.mjs";
-import {createAttribBuffer} from "../../utils/webgl";
+import {WebGLObjectRenderer} from "../../game/renderer_collider.mod.js";
+import {loadString} from "../../utils/tools.mod.js";
+import {standardFragmentShader, getUniformLocations, ShaderInfo} from "../../utils/webgl.mod.js";
+import {createAttribBuffer} from "../../utils/webgl.mod.js";
 
 /**
  *

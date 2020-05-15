@@ -1,13 +1,13 @@
 /**
  * @module SpaceShip
  */
-import {Polygon} from "../../geometry2d/Polygon.mjs";
-import {Vec2} from "../../geometry2d/Vec2.mjs";
-import {GameObject} from "../../game/object.mjs";
-import {ShapedObjectRenderer, ShapedObject2dCollider} from "../../game/renderer_collider.mjs";
-import {merge, mix} from "../../utils/tools.mjs";
-import {health, energy} from "../../game/object_mixins.mjs";
-import {Weapon, Bullet} from "../../game/bullets.mjs";
+import {Polygon} from "../../geometry2d/Polygon.mod.js";
+import {Vec2} from "../../geometry2d/Vec2.mod.js";
+import {GameObject} from "../../game/object.mod.js";
+import {ShapedObjectRenderer, ShapedObject2dCollider} from "../../game/renderer_collider.mod.js";
+import {merge, mix} from "../../utils/tools.mod.js";
+import {health, energy} from "../../game/object_mixins.mod.js";
+import {Weapon, Bullet} from "../../game/bullets.mod.js";
 import {ASTEROID_COLLISION_LAYER, BULLET_COLLISION_LAYER, SHIP_COLLISION_LAYER} from "./constants.mjs";
 
 const spaceShipShape = new Polygon(Vec2.ZERO, Vec2.createVec2Array([
