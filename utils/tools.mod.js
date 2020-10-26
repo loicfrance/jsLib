@@ -36,10 +36,10 @@ import {LayoutGravity as G} from "./layout.mod.js"
  * @returns created class
  */
 function mix(superclass, ...mixins) {
-	class C extends superclass { }
+	class mixin extends superclass { }
 	let len = mixins.length, i = -1;
-	while (++i < len) merge(C.prototype, mixins[i], true);
-	return C;
+	while (++i < len) merge(mixin.prototype, mixins[i], true);
+	return mixin;
 }
 /**
  * puts all properties of src in out. if override is false or not set, if a property, <!--
@@ -53,7 +53,7 @@ function merge(out, src, override = false) {
 	for (let p in src) if (src.hasOwnProperty(p) && (override || !out.hasOwnProperty(p))) out[p] = src[p];
 }
 /**
- * 
+ *
  * @param {string} url
  * @returns {Promise} promise resolved with a {@link String} object when string is loaded
  */
@@ -146,6 +146,18 @@ function textFileUserDownload(text, fileName) {
 	element.click();
 	document.body.removeChild(element);
 }
+const debug = {
+	allowedTags: [],
+
+	log(tag, ...args) {
+		if (tag in debug.allowedTags)
+			console.log("["+tag+"]", ...args);
+	},
+	err(tag, ...args) {
+		if(tag in debug.allowedTags)
+			console.error("["+tag+"]", ...args);
+	}
+}
 /**
  * convert text with BB code to html text with equivalent tags
  * @param {string} bbCode
@@ -215,21 +227,21 @@ class PRNG {
 	 * @param {number} seed - Pseudo-Random Number Generator seed value
      */
     constructor(seed) {
-        this.seed = seed % 2147483647;
-        if (this.seed <= 0) this.seed += 2147483646;
+        this.seed = seed % 0x7fffffff;
+        if (this.seed <= 0) this.seed += 0x7ffffffe;
     }
 
     /**
-     * Returns a pseudo-random value in range [<code>1</code>, <code>2^32 - 2</code>].
+     * Returns a pseudo-random value in range [<code>1</code>, <code>2^31 - 2</code>].
      */
     next() {
-        return (this.seed = (this.seed * 16807) % 2147483647);
+        return (this.seed = (this.seed * 0x41a7) % 0x7fffffff);
     }
 
     /**
      * Returns a pseudo-random value in range [<code>min</code>, <code>max-1</code>].
-     * @param {number} min in range [<code>1</code>, <code>2^32 - 2</code>].
-     * @param {number} max in range [<code>1</code>, <code>2^32 - 2</code>].
+     * @param {number} min in range [<code>1</code>, <code>2^31 - 2</code>].
+     * @param {number} max in range [<code>1</code>, <code>2^31 - 2</code>].
      */
     nextRanged(min, max) {
     	return this.next() % (max-min)+min;
@@ -239,7 +251,7 @@ class PRNG {
      */
     nextFloat() {
         // We know that result of next() will be 1 to 2147483646 (inclusive).
-        return (this.next() - 1) / 2147483646;
+        return (this.next() - 1) / 0x7ffffffe;
     }
 
     /**
@@ -390,14 +402,38 @@ const shuffleArray = function(array, randFunction = Math.random) {
  * @param sigma - standard deviation
  * @returns {function(number): number}
  */
-const createOneDimensionGaussianFunction = function(mu = 0, sigma = 1)
-{
+const createOneDimensionGaussianFunction = function(mu = 0, sigma = 1)  {
 	const val_1 = 1/(sigma + Math.sqrt(2*Math.PI));
 	const denom = - 1 / (2*(sigma**2));
 	const val_2 = Math.exp((mu**2)/(2*(sigma**2)));
 	const factor = val_1 * val_2;
 	return (x)=> factor*Math.exp(x * denom);
 };
+
+/**
+ * tests if the two specified objects have the same values for all their attributes
+ * @param {Object} obj1
+ * @param {Object} obj2
+ * @return {boolean}
+ */
+const objectsEqual = function(obj1, obj2) {
+	return objectMatch(obj1, obj2) && objectMatch(obj2, obj1);
+}
+
+/**
+ * tests if the first parameter, has the same values as the ones in the second parameter
+ * for all attributes of the second parameter
+ * @param {Object} toTest
+ * @param {Object} minKeys
+ * @return {boolean}
+ */
+const objectMatch = function(toTest, minKeys) {
+	for(let p in minKeys) {
+		if(minKeys.hasOwnProperty(p) && !(p in toTest) || minKeys[p] !== toTest[p])
+			return false;
+	}
+	return true;
+}
 export {
     mix,
     merge,
@@ -420,4 +456,7 @@ export {
 	shuffleArray,
 	listenDevToolsOpening,
 	createOneDimensionGaussianFunction,
+	objectsEqual,
+	objectMatch,
+	debug,
 };
