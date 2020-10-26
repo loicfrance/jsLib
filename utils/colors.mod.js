@@ -93,7 +93,7 @@ const RGBtoHex = (r, g, b)=> ((r<16 && g < 16 && b < 16) || (r >= 16 && g >= 16 
  * @return {{r:number,g:number,b:number,a:number}} rgba (in [0-255] format)
  */
 const hexToRGBA = (hex) => {
-    const result = {r: 0, g: 0, b: 0, a: 0};
+    const result = {r: 0, g: 0, b: 0, a: 1};
     switch(hex.length) {
         case 5:
             result.a = parseInt(hex.charAt(4), 16) * 0x11;

@@ -60,7 +60,7 @@ class DelaunayTriangle {
             point1,
             point2,
             point3];
-        this.triangles = new Array(3);
+        this.triangles = new Array(3); // neighbors
         this.shape = Polygon.Absolute(this.points);
         this.circle = Circle.CircumCircle(point1, point2, point3);
         this.searchedActive = false;

@@ -2,6 +2,7 @@
  * Created by Loic France on 12/20/2016.
  */
 import Vec2 from "../geometry2d/Vec2.mod.js"
+import {objectMatch, objectsEqual} from "./tools.mod.js"
 /**
  * @module utils/input
  */
@@ -297,14 +298,14 @@ class InputManager {
 		 */
 		this.setGamePadEventsCallback = function (callback, autoUpdatePeriod=1/60) {
 			if(callback) {
-				for (let evtType in GamepadEvents) {
+				for (const evtType of GamepadEvents) {
 					if(GamepadEvents.hasOwnProperty(evtType)) {
 						const e = GamepadEvents[evtType];
 						this.element[e] = onGamepadEvt.bind(this, callback, e);
 					}
 				}
 			} else {
-                for (let evtType in GamepadEvents) {
+                for (const evtType of GamepadEvents) {
                     if (GamepadEvents.hasOwnProperty(evtType)) {
                         this.element[GamepadEvents[evtType]] = null;
                     }
@@ -377,6 +378,11 @@ class InputManager {
 //######################################################################################################################
 //#                                                       KeyMap                                                       #
 //######################################################################################################################
+
+const keyEventListenerSym = Symbol();
+const callbackSym = Symbol();
+const mappingSym = Symbol();
+
 /**
  * @class KeyMap
  * @classdesc a useful class to use with {@link InputManager|InputManager} class to make <!--
@@ -386,176 +392,142 @@ class InputManager {
  * -->selected keys.
  */
 class KeyMap {
+	[keyEventListenerSym] = ((evt)=> {
+		if(this[callbackSym]) {
+			let action = this.getAction(evt);
+			if(action)
+				return this[callbackSym](action, evt) || false;
+			else return false;
+		}
+	}).bind(this);
+
+	/**
+	 * @type {function(action:*, evt:KeyboardEvent):(boolean?)}
+	 */
+	[callbackSym] = undefined;
+	[mappingSym] = new Map();
 
     /**
-	 * @param {{keys: Key|Key[]|number|number[]?, action:*}[]} mapping
-     * @param {KeyMap.keyMapCallback} callback
+	 * @param {Map} mapping - action -> keys dictionary
+     * @param {function(action:*, evt:KeyboardEvent):(boolean|void)} callback
      */
-	constructor({ mapping = null, callback = null}) {
-		/**
-		 *
-		 * @type {{key: Key|number, modifiers: Key|Key[]|number|number[]?, action:*}[]}
-		 */
-		let actions = [];
-		let cb = undefined;
-//--------------------------------------------------- private methods --------------------------------------------------
-		const inputCallback = (keyCode, keyState, inputManager)=> {
-			if (cb) {
-				const modifiers = inputManager.getActiveModifiers();
-				if(modifiers.indexOf(keyCode) >= 0) {
-					keyCode = modifiers.unshift();
-				}
-				let a = this.getAction(keyCode, modifiers);
+	constructor({ mapping = undefined, callback = undefined}) {
 
-				return (a && cb(a, keyState)) || false;
-			}
-		};
-		const getActionIndex = (key, modifiers)=> {
-			if (!Array.isArray(modifiers))
-				modifiers = [modifiers];
-
-			modifiers = modifiers.sort((a,b)=>a-b);
-
-			for(let i=0; i< actions.length; i++) {
-				if(key === actions[i].key) {
-					if (modifiers.length === actions[i].modifiers.length) {
-						let found = true;
-						for(let j=0; j<modifiers.length; j++) {
-							if(modifiers[j] !== actions[i].modifiers[j]) {
-								found = false;
-								break;
-							}
-						}
-						if(found) {
-							return i;
-						}
-					}
-				}
-			}
-			return -1;
-		};
-//--------------------------------------------------- public methods ---------------------------------------------------
-		/**
-		 * @function
-		 * @name KeyMap#setAction
-		 * @param {Key|Key[]|number|number[]} keys
-		 * @param {*?} action
-		 */
-		this.setAction = (keys, action = null)=> {
-			if (!Array.isArray(keys))
-				keys = [keys];
-
-			const mainKeys = keys.filter(k=>!isModifierKey(k));
-			const modifierKeys = keys.filter(k=>isModifierKey(k)).sort((k1,k2)=>k1-k2);
-			if(mainKeys.length > 1) {
-				console.error("cannot use multiple primary keys at the same time :", mainKeys);
-				return;
-			}
-			if(mainKeys.length === 0)
-				mainKeys.push(modifierKeys.unshift());
-
-			const key = mainKeys[0];
-			let found = false;
-			const newAction = {key: key, modifiers: modifierKeys, action: action};
-			const idx = getActionIndex(key, modifierKeys);
-
-			if (action === null || action === undefined) {
-				if(idx >= 0) actions.splice(idx, 1);
-			} else {
-				if(idx >= 0) actions[idx] = newAction;
-				else actions.push(newAction);
-			}
-		};
-		/**
-		 * @function
-		 * @name KeyMap#getAction
-		 * @param {Key|number} key
-		 * @param {Key|Key[]|number|number[]} modifiers
-		 * @returns {*|null} action associated to the specified key with specified modifiers
-		 */
-		this.getAction = (key, modifiers = []) => {
-			const idx = getActionIndex(key, modifiers);
-			return (idx >= 0)
-				? actions[idx].action
-				: null;
-		};
-		/**
-		 * returns whether or not at least one key associated to the specified action is pressed
-		 * @function
-		 * @name KeyMap#isKeyPressed
-		 * @param {InputManager} inputManager
-		 * @param {*} action
-		 * @returns {boolean} true if at least one key associated to the specified action is pressed
-		 */
-		this.isKeyPressed = (inputManager, action) => {
-			for(let i=0; i < actions.length; i++) {
-				if(actions[i].action === action) {
-					let ok = (inputManager.getKeyState(actions[i].key) === KeyState.PRESSED);
-					let j = 0;
-					while(ok && j < actions[i].modifiers.length) {
-						ok = (inputManager.getKeyState(actions[i].modifiers[j]) === KeyState.PRESSED);
-						j++;
-					}
-					if(ok) return true;
-				}
-			}
-			return false;
-		};
-		/**
-		 * returns the set of keys associated with the specified action.
-		 * @function
-		 * @name KeyMap#getKeys
-		 * @param {*} action
-		 * @returns {(Key[]|number[])[]} key codes
-		 */
-		this.getKeys = action => {
-			const result = [];
-			for(let i=0; i< actions.length; i++) {
-				if(actions[i].action === action) {
-					const keys = [action[i].key];
-					keys.push(action[i].modifiers);
-					result.push(keys);
-				}
-			}
-			return result;
-		};
-		/**
-		 * sets the callback function which will be called when a useful keyboard event happens.
-		 * @function
-		 * @name KeyMap#setCallback
-		 * @param {KeyMap.keyMapCallback} callback
-		 */
-		this.setCallback = callback => { cb = callback; };
-		/**
-		 * allow the instance to catch keyboard events by adding a callback function using the parameter's <!--
-		 * -->{@link InputManager#addKeyCallback|addKeyCallback} method.
-		 * @function
-		 * @name KeyMap#enable
-		 * @param {InputManager} inputManager
-		 */
-		this.enable = function(inputManager) {
-			inputManager.addKeyCallback(inputCallback);
-			inputManager.enableKeyboardListener(true);
-		};
-		/**
-		 * removes the callback function from the keyboard listener of the parameter.
-		 * @function
-		 * @name KeyMap#disable
-		 * @param {InputManager} inputManager
-		 */
-		this.disable = function(inputManager) {
-			inputManager.removeKeyCallback(inputCallback);
-			inputManager.enableKeyboardListener(false);
-		};
-
-		if(mapping != null) {
-			for (let i=0; i<mapping.length; i++) {
-				this.setAction(mapping[i].keys, mapping[i].action);
+		if (mapping) {
+			for(const [key, evtFilter] of mapping) {
+				if (Array.isArray(evtFilter)) {
+					for (let i = 0; i < evtFilter.length; i++)
+						this.setAction(evtFilter[i], key);
+				} else this.setAction(evtFilter, key);
 			}
 		}
-		if(callback != null && callback instanceof Function) {
+		if (callback != null && callback instanceof Function) {
 			this.setCallback(callback)
 		}
+	}
+
+	/**
+	 * @param {function(action:*, evt:KeyboardEvent):(boolean|void)} callback
+	 */
+	setCallback(callback) { this[callbackSym] = callback; }
+
+	/**
+	 * @param {HTMLElement} element
+	 * @param {string} events
+	 */
+	enable(element, events, options) {
+		if(Array.isArray(events)) {
+			for(let i=0; i<events.length; i++) {
+				element.addEventListener(events[i], this[keyEventListenerSym], options);
+			}
+		} else element.addEventListener(events, this[keyEventListenerSym], options);
+	};
+
+	/**
+	 * @param {HTMLElement} element
+	 * @param {string} events
+	 */
+	disable(element, events, options) {
+		if(Array.isArray(events)) {
+			for(let i=0; i<events.length; i++) {
+				element.removeEventListener(events[i], this[keyEventListenerSym], options);
+			}
+		} else element.removeEventListener(events, this[keyEventListenerSym], options);
+	};
+
+	/**
+	 * @function
+	 * @name KeyMap#setAction
+	 * @param {Object} keyEventFilter
+	 * @param {string} keyEventFilter.code?
+	 * @param {string} keyEventFilter.key?
+	 * @param {*?} action
+	 */
+	setAction = (keyEventFilter, action = undefined)=> {
+		if(!keyEventFilter.code && !keyEventFilter.key)
+			throw Error("one of the attrributes 'code' or 'key' must be defined");
+
+		const id = keyEventFilter.hasOwnProperty('code') ? keyEventFilter.code
+				: /^a-z$/.test(keyEventFilter.key) ? keyEventFilter.key.toUpperCase()
+				: keyEventFilter.key;
+		const actions = this[mappingSym].get(id);
+
+		if (actions === undefined) {
+			if (action)
+				this[mappingSym].set(id, [{keyEventFilter: keyEventFilter, action: action}]);
+		}
+		else {
+			let alreadyThere = false;
+			for(let i = 0; i < actions.length; i++) {
+				if(objectsEqual(actions[i].keyEventFilter, keyEventFilter)) {
+					if(action)
+						actions[i].action = action;
+					else
+						actions.splice(i, 1);
+					break;
+				}
+			}
+			if(action)
+				actions.push({keyEventFilter: keyEventFilter, action: action});
+		}
+	}
+
+	/**
+	 * @function
+	 * @name KeyMap#getAction
+	 * @param {KeyboardEvent} evt
+	 * @returns {*|null} action associated to the keyboard event
+	 */
+	getAction(evt) {
+		let key = evt.code, modifyKey = false;
+		let actions = this[mappingSym].get(key);
+		if(!actions) {
+			const key = /^[a-z]$/.test(evt.key) ? evt.key.toUpperCase() : evt.key;
+			if(evt.key !== key)
+				modifyKey = true;
+			actions = this[mappingSym].get(key);
+		}
+
+		if(actions) {
+			let maxAttrLen = 0;
+			let action;
+			for(let i=0; i<actions.length; i++) {
+				const attrLen = Object.keys(actions[i].keyEventFilter).length
+				const filter = actions[i].keyEventFilter;
+				if(modifyKey)
+					filter.key = evt.key;
+				if(attrLen > maxAttrLen && objectMatch(evt, filter)) {
+					maxAttrLen = attrLen;
+					action = actions[i].action;
+				}
+				if(modifyKey)
+					filter.key = key;
+			}
+			if(maxAttrLen > 0) {
+				return action;
+			}
+		}
+		return undefined;
 	}
 }
 //TODO add gamepad support
