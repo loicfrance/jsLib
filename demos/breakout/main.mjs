@@ -63,21 +63,28 @@ function gameInit() {
 //<editor-fold desc="Input">
 const Input = new InputManager(document.body);
 const keyMap = new KeyMap({
-    mapping: [
-        {keys: Key.LEFT, action: 'left'},
-        {keys: Key.Q, action: 'left'},
-        {keys: Key.A, action: 'left'},
-        {keys: Key.RIGHT, action: 'right'},
-        {keys: Key.D, action: 'right'},
-        {keys: Key.SPACE, action: 'pause'},
-        {keys: Key.ENTER, action: 'pause'},
-        {keys: Key.ESCAPE, action: 'pause'},
-    ],
-    callback: (action, keyState) => {
+    mapping: new Map(Object.entries({
+        "left": [
+            {code: "ArrowLeft"},
+            {code: "Q"},
+            {code: "A"},
+        ],
+        "right": [
+            {code: "ArrowRight"},
+            {code: "D"},
+        ],
+        "pause": [
+            {code: "Space"},
+            {code: "Enter"},
+            {code: "Escape"},
+        ],
+    })),
+    callback: (action, evt) => {
+
         switch(action) {
-            case 'left'  : paddle.speed.x = (keyState === KeyState.PRESSED) ? -60 : 0; break;
-            case 'right' : paddle.speed.x = (keyState === KeyState.PRESSED) ?  60 : 0; break;
-            case 'pause' : if(keyState === KeyState.RELEASED) GM.isRunning() ? GM.stop() : GM.start(); break;
+            case 'left'  : paddle.speed.x = (evt.type === "keydown") ? -60 : 0; break;
+            case 'right' : paddle.speed.x = (evt.type === "keydown") ?  60 : 0; break;
+            case 'pause' : if(evt.type === "keyup") GM.isRunning() ? GM.stop() : GM.start(); break;
         }
     }
 });
@@ -86,4 +93,4 @@ const keyMap = new KeyMap({
 GM.viewer.addUIElement(scoreView);
 gameInit();
 GM.startRendering();
-keyMap.enable(Input);
+keyMap.enable(document.body, ["keydown", "keyup"]);

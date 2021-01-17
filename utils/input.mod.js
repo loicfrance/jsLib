@@ -425,6 +425,22 @@ class KeyMap {
 			this.setCallback(callback)
 		}
 	}
+	/**
+	 * @param {Map} mapping
+	 */
+	setMapping(mapping) {
+		this.clearMapping();
+		for(const [key, evtFilter] of mapping) {
+			if (Array.isArray(evtFilter)) {
+				for (let i = 0; i < evtFilter.length; i++)
+					this.setAction(evtFilter[i], key);
+			} else this.setAction(evtFilter, key);
+		}
+	}
+
+	clearMapping() {
+		this[mappingSym].clear();
+	}
 
 	/**
 	 * @param {function(action:*, evt:KeyboardEvent):(boolean|void)} callback
@@ -433,7 +449,8 @@ class KeyMap {
 
 	/**
 	 * @param {HTMLElement} element
-	 * @param {string} events
+	 * @param {string|string[]} events
+	 * @param {boolean|AddEventListenerOptions?} options
 	 */
 	enable(element, events, options) {
 		if(Array.isArray(events)) {
@@ -459,8 +476,8 @@ class KeyMap {
 	 * @function
 	 * @name KeyMap#setAction
 	 * @param {Object} keyEventFilter
-	 * @param {string} keyEventFilter.code?
-	 * @param {string} keyEventFilter.key?
+	 * @param {string} [keyEventFilter.code]
+	 * @param {string} [keyEventFilter.key]
 	 * @param {*?} action
 	 */
 	setAction = (keyEventFilter, action = undefined)=> {
@@ -502,17 +519,17 @@ class KeyMap {
 		let key = evt.code, modifyKey = false;
 		let actions = this[mappingSym].get(key);
 		if(!actions) {
-			const key = /^[a-z]$/.test(evt.key) ? evt.key.toUpperCase() : evt.key;
+			key = /^[a-z]$/.test(evt.key) ? evt.key.toUpperCase() : evt.key;
 			if(evt.key !== key)
 				modifyKey = true;
 			actions = this[mappingSym].get(key);
 		}
 
 		if(actions) {
-			let maxAttrLen = 0;
+			let maxAttrLen = 0; // filters with biggest constraints are prefered
 			let action;
 			for(let i=0; i<actions.length; i++) {
-				const attrLen = Object.keys(actions[i].keyEventFilter).length
+				const attrLen = Object.keys(actions[i].keyEventFilter).length; //constraints number
 				const filter = actions[i].keyEventFilter;
 				if(modifyKey)
 					filter.key = evt.key;

@@ -53,9 +53,8 @@ function merge(out, src, override = false) {
 	for (let p in src) if (src.hasOwnProperty(p) && (override || !out.hasOwnProperty(p))) out[p] = src[p];
 }
 /**
- *
  * @param {string} url
- * @returns {Promise} promise resolved with a {@link String} object when string is loaded
+ * @returns {Promise<string>} promise resolved with a {@link String} object when string is loaded
  */
 const loadString = (url) =>
 	new Promise(resolve => {
@@ -69,21 +68,20 @@ const loadString = (url) =>
 
 	});
 /**
- *
  * @param {string} url
- * @return {Promise} promise resolved with a {@link XMLDocument} once the file is loaded
+ * @returns {Promise<Document, ProgressEvent>} promise resolved with a {@link Document} object when xml is loaded,
+ * 					  or rejected with the response document when failed
  */
-const loadXml = (url) => {
-	return loadString(url).then((text)=>{
-		if(window.DOMParser) return new DOMParser().parseFromString(text, "text/xml");
-		else { // Internet Explorer
-            const xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-            xmlDoc.async = false;
-            xmlDoc.loadXML(text);
-            return xmlDoc;
-		}
-	})
-};
+const loadXml = (url)=> {
+	return new Promise((resolve, reject) => {
+		const xhr = new XMLHttpRequest();
+		xhr.onload  = (progress)=> { resolve(xhr.responseXML, progress); }
+		xhr.onerror = (progress)=> { reject(xhr.responseXML, progress); }
+		xhr.open("GET", url);
+		xhr.setRequestHeader("Content-type", "text/xml");
+		xhr.send();
+	});
+}
 /**
  * 
  * @param {string} url
@@ -146,17 +144,59 @@ function textFileUserDownload(text, fileName) {
 	element.click();
 	document.body.removeChild(element);
 }
+
+/**
+ * requests a file from the user
+ * @param {Object} options
+ * @param {boolean?} options.multiple
+ * @param {string?} options.accept
+ * @param {string?} options.capture
+ * @return {Promise<File[]>}
+ */
+function requestFilesFromUser({multiple = false, accept, capture, }) {
+	return new Promise(((resolve) => {
+		const input = document.createElement('input');
+		input.setAttribute("type", "file");
+
+		if (accept.substr)
+			input.setAttribute("accept", accept);
+
+		if (multiple)
+			input.toggleAttribute("multiple", true);
+
+		input.addEventListener("change", (evt)=> {
+			resolve(input.files);
+		})
+		input.click();
+	}));
+}
 const debug = {
 	allowedTags: [],
-
+	enableTags(...tags) {
+		tags.forEach(t=> {
+			if (!this.allowedTags.includes(t))
+				this.allowedTags.push(t)
+		});
+	},
+	disableTags(...tags) {
+		tags.forEach(t=> {
+			const idx = this.allowedTags.indexOf(t);
+			this.allowedTags.splice(idx, 1);
+		});
+	},
 	log(tag, ...args) {
 		if (tag in debug.allowedTags)
-			console.log("["+tag+"]", ...args);
+			console.debug("["+tag+"]", ...args);
+	},
+	warn(tag, ...args) {
+		if(tag in debug.allowedTags)
+			console.warn("["+tag+"]", ...args);
 	},
 	err(tag, ...args) {
 		if(tag in debug.allowedTags)
 			console.error("["+tag+"]", ...args);
 	}
+
 }
 /**
  * convert text with BB code to html text with equivalent tags
@@ -434,6 +474,20 @@ const objectMatch = function(toTest, minKeys) {
 	}
 	return true;
 }
+
+/**
+ * create HTML elment nodes from strings
+ * @param {String} htmlStringNodes
+ * @return {NodeListOf<ChildNode>}
+ */
+const htmlToElements = function(...htmlStringNodes) {
+	var template = document.createElement('template');
+	template.innerHTML = htmlStringNodes
+			.map(txt=>txt.trim())
+			.join("");
+	return template.content.childNodes;
+}
+
 export {
     mix,
     merge,
@@ -445,6 +499,7 @@ export {
 	waitForEvent,
 	delay,
     textFileUserDownload,
+	requestFilesFromUser,
     BBCodeToHTML,
 	loadWasmModule,
     instantiateWASM,
@@ -459,4 +514,5 @@ export {
 	objectsEqual,
 	objectMatch,
 	debug,
+	htmlToElements,
 };
