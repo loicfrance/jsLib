@@ -1,0 +1,65 @@
+
+/******************************************************************************
+ *                              MAIN ENVIRONMENT                              *
+ ******************************************************************************/
+
+.web-env {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    position: relative;
+    grid-template-areas:
+    "top    top    top"
+    "left   main   right"
+    "bottom bottom bottom"
+    "footer footer footer";
+    grid-template-rows: min-content 1fr min-content min-content;
+    grid-template-columns: min-content 1fr min-content;
+    user-select: none;
+    color: var(--web-env-menu-text-color)
+}
+.web-env :is(*[contenteditable=true], input[type=text]) {
+    user-select: initial;
+}
+.web-env :is(slot[name="top"], slot[name="left"],
+             slot[name="right"], slot[name="bottom"]) {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: var(--web-env-menu-background, #FFF);
+    border: 1px var(--web-env-menu-separator, #0004);
+}
+.web-env slot[name="top"] { grid-area: top; }
+.web-env slot[name="left"] { grid-area: left; border-width: 0 1px; }
+.web-env slot[name="right"] { grid-area: right; border-width: 0 1px; }
+.web-env slot[name="bottom"] { grid-area: bottom; }
+.web-env slot[name="main"] {
+    grid-area: main;
+    background: var(--web-env-content-background, #FFF);
+}
+
+/******************************************************************************
+ *                                 SCROLL BARS                                 *
+ ******************************************************************************/
+
+* {
+    scrollbar-color: #8888 transparent;
+    scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+    width: 3mm;
+    height: 3mm;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #FFFFFF4E;
+    border-radius: 100vh;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #FFFFFF5E;
+}

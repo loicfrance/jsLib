@@ -2,6 +2,8 @@
  * @module utils/tools
  */
 import {LayoutGravity as G} from "./layout.mod.js"
+import {MouseButton} from "./input.mod.js";
+import {Vec2} from "../geometry2d/Vec2.mod.js";
 /**
  * creates a mix of a superclass and several mixins to make a class extend a class and implements mixins.
  * 
@@ -476,17 +478,69 @@ const objectMatch = function(toTest, minKeys) {
 }
 
 /**
- * create HTML elment nodes from strings
- * @param {String} htmlStringNodes
- * @return {NodeListOf<ChildNode>}
+ * function to be used as mousedown listener to handle element drag, even when the mouse leaves the element.
+ * all the parameters (except the last one) should bound before using the function as a listener
+ * @param buttonMask
+ * @param cursor
+ * @param {function(evt:MouseEvent, pos:Vec2)} onStart
+ * @param {function(evt:MouseEvent, pos:Vec2, delta: Vec2)} onMove
+ * @param {function(evt:MouseEvent, pos:Vec2)} onStop
+ * @param {function(evt:MouseEvent, pagePos:Vec2): Vec2} [positionTransform]
+ * @param {MouseEvent} evt
  */
-const htmlToElements = function(...htmlStringNodes) {
-	var template = document.createElement('template');
-	template.innerHTML = htmlStringNodes
-			.map(txt=>txt.trim())
-			.join("");
-	return template.content.childNodes;
-}
+function dragListener(
+	{
+		buttonMask = MouseButton.LEFT,
+		cursor = undefined,
+		onStart = undefined,
+		onMove = undefined,
+		onStop = undefined,
+		positionTransform = undefined
+	},
+	evt) {
+	// noinspection JSBitwiseOperatorUsage
+	const firstElmt = evt.target;
+	const previousCursor = firstElmt.style.cursor;
+	if((MouseButton.getEventSource(evt) & buttonMask) !== 0) {
+		const lastPos = new Vec2(evt.pageX, evt.pageY);
+		if(positionTransform)
+			lastPos.set(positionTransform(evt, lastPos));
+
+		const mouseMove = (evt) => {
+			evt.preventDefault();
+			const pos = new Vec2(evt.pageX, evt.pageY);
+			if(positionTransform)
+				pos.set(positionTransform(evt, pos));
+			const delta = Vec2.translation(lastPos, pos);
+			lastPos.set(pos);
+			if(onMove)
+				onMove(evt, pos, delta);
+		};
+
+		const mouseUp = (evt) => {
+			if(cursor) {
+				firstElmt.style.cursor = previousCursor;
+			}
+			window.removeEventListener('mousemove', mouseMove);
+			window.removeEventListener('mouseup', mouseUp);
+			if(onStop) {
+				const pos = new Vec2(evt.pageX, evt.pageY);
+				if(positionTransform)
+					pos.set(positionTransform(evt, pos));
+				onStop(evt, pos);
+			}
+		};
+
+		if(!onStart || !(onStart(evt, lastPos) === false)) {
+			if(cursor) {
+				firstElmt.style.cursor = cursor;
+			}
+			window.addEventListener('mousemove', mouseMove);
+			window.addEventListener('mouseup', mouseUp);
+		}
+	}
+};
+
 
 export {
     mix,
@@ -514,5 +568,5 @@ export {
 	objectsEqual,
 	objectMatch,
 	debug,
-	htmlToElements,
+	dragListener
 };

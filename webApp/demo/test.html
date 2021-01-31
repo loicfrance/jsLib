@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 100%; height: 100%; overflow: hidden; margin: 0; padding: 0;">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="module" src="../WebEnvironment.mod.js"></script>
+    <script type="module" src="../StretchPanel.mod.js"></script>
+</head>
+<body style="width: 100%; height: 100%; margin: 0; padding: 0;">
+<web-env style="width: 100%; height: 100%; margin: 0; padding: 0;">
+    <link rel="stylesheet" href="theme.css" slot="theme"/>
+    <ul slot="top"><li>Files</li></ul>
+    <stretch-panel slot="left" tabs-pos="left" open><li slot="tabs">P</li></stretch-panel>
+    <stretch-panel slot="right" tabs-pos="right" open><li slot="tabs">I</li></stretch-panel>
+    <stretch-panel slot="bottom" tabs-pos="bottom" open current-tab="p">
+        <li slot="tabs" tab-id="p">P</li>
+        <span slot="panel" tab-id="p"> [PANEL CONTENT 1] </span>
+        <li slot="tabs" tab-id="c">C</li>
+        <span slot="panel" tab-id="c"> [PANEL CONTENT 2] </span>
+    </stretch-panel>
+</web-env>
+</body>
+</html>

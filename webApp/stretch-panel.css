@@ -1,0 +1,210 @@
+
+/*******************************************************************************
+*                                STRETCH-PANEL                                 *
+*******************************************************************************/
+
+.stretch-panel {
+    background: var(--stretch-panel-background);
+    display: grid;
+    position: relative;
+    z-index: 1;
+    color: var(--stretch-panel-text-color);
+}
+.stretch-panel[tabs-pos=left],
+.stretch-panel[tabs-pos=right] {
+    width: fit-content;
+    height: 100%;
+}
+.stretch-panel[tabs-pos=top],
+.stretch-panel[tabs-pos=bottom] {
+    width: 100%;
+    height: fit-content;
+}
+.stretch-panel[tabs-pos=left] { grid-template-areas: "tabs panel resizer"; }
+.stretch-panel[tabs-pos=right] { grid-template-areas: "resizer panel tabs"; }
+.stretch-panel[tabs-pos=top] { grid-template-areas: "tabs" "panel" "resizer"; }
+.stretch-panel[tabs-pos=bottom] { grid-template-areas: "resizer" "panel" "tabs"; }
+
+/*******************************************************************************
+*                                     TABS                                     *
+*******************************************************************************/
+
+.stretch-panel > .tabs {
+    grid-area: tabs;
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.stretch-panel > .tabs > slot::slotted(*) {
+    display: inline-block;
+}
+.stretch-panel > .tabs > slot::slotted(* img) {
+    filter: var(--stretch-panel-icon-img-filter);
+}
+:is(.stretch-panel[tabs-pos=left],.stretch-panel[tabs-pos=right]) > .tabs > slot::slotted(*) {
+    width: 100%;
+}
+:is(.stretch-panel[tabs-pos=top],.stretch-panel[tabs-pos=bottom]) > .tabs > slot::slotted(*) {
+    height: 100%;
+}
+:is(.stretch-panel[tabs-pos=left],.stretch-panel[tabs-pos=right]) > .tabs {
+    width: var(--stretch-panel-tabs-thickness, 20pt);
+    height: 100%;
+}
+:is(.stretch-panel[tabs-pos=top],.stretch-panel[tabs-pos=bottom]) > .tabs {
+    height: var(--stretch-panel-tabs-thickness, 20pt);
+    width: 100%;
+}
+
+/*******************************************************************************
+*                                    PANEL                                     *
+*******************************************************************************/
+
+.stretch-panel > .panel {
+    grid-area: panel;
+    display: inline-block;
+    border: 0 solid var(--stretch-panel-border-color, #8884);
+}
+:is(.stretch-panel[tabs-pos=left][open],
+    .stretch-panel[tabs-pos=right][open]) > .panel {
+    min-width: 10px;
+}
+:is(.stretch-panel[tabs-pos=top][open],
+    .stretch-panel[tabs-pos=bottom][open]) > .panel {
+    min-height: 10px;
+}
+.stretch-panel[tabs-pos=top][open] > .panel { border-top-width: 1px; }
+.stretch-panel[tabs-pos=bottom][open] > .panel { border-bottom-width: 1px; }
+.stretch-panel[tabs-pos=left][open] > .panel { border-left-width: 1px; }
+.stretch-panel[tabs-pos=right][open] > .panel { border-right-width: 1px; }
+
+:is(.stretch-panel:not([open]), .stretch-panel[no-content]) > .panel { display: none; }
+
+.stretch-panel > .panel::slotted(*:not([current-tab])) { display: none; }
+
+/*******************************************************************************
+*                                   RESIZER                                    *
+*******************************************************************************/
+
+.stretch-panel > .resizer {
+    --resizer-thickness: var(--stretch-panel-resizer-thickness, 5px);
+    grid-area: resizer;
+    position: relative;
+    list-style: none;
+    user-select: none;
+    display: inline-block;
+}
+.stretch-panel > .resizer[transparent] {
+    background: transparent;
+}
+.stretch-panel > .resizer:not([transparent]) {
+    background: var(--stretch-panel-resizer-color, #8884);
+    --chevron-color: var(--stretch-panel-resizer-handle-color, currentColor);
+    --chevron-size: calc(var(--resizer-thickness) * 0.943); /*(2*sqrt(2)/3)*/
+    outline: none;
+}
+.stretch-panel[no-content] > .resizer {
+    display: none;
+}
+
+.stretch-panel[tabs-pos=left] > .resizer,
+.stretch-panel[tabs-pos=right] > .resizer {
+    height: 100%;
+    cursor: ew-resize;
+}
+.stretch-panel[tabs-pos=top] > .resizer,
+.stretch-panel[tabs-pos=bottom] > .resizer {
+    width: 100%;
+    cursor: ns-resize;
+}
+
+:is(.stretch-panel[tabs-pos=left], .stretch-panel[tabs-pos=right]) > .resizer:not([transparent]) {
+    width: var(--resizer-thickness);
+}
+:is(.stretch-panel[tabs-pos=top], .stretch-panel[tabs-pos=bottom]) > .resizer:not([transparent]) {
+    height: var(--resizer-thickness);
+}
+:is(.stretch-panel[tabs-pos=left], .stretch-panel[tabs-pos=right]) > .resizer[transparent] {
+    width: 0;
+}
+:is(.stretch-panel[tabs-pos=top], .stretch-panel[tabs-pos=bottom]) > .resizer[transparent] {
+    height: 0;
+}
+
+/*******************************************************************************
+*                               RESIZER::before                                *
+*******************************************************************************/
+
+.stretch-panel > .resizer:not([transparent])::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--stretch-panel-resizer-center-color, #8888);
+}
+.stretch-panel > .resizer[transparent]::before {
+    content:'';
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+:is(.stretch-panel[tabs-pos=left], .stretch-panel[tabs-pos=right]) > .resizer:not([transparent])::before {
+    height: calc(var(--chevron-size)*15);
+    width: var(--resizer-thickness);
+}
+:is(.stretch-panel[tabs-pos=top], .stretch-panel[tabs-pos=bottom]) > .resizer:not([transparent])::before {
+    height: var(--resizer-thickness);
+    width: calc(var(--chevron-size)*15);
+}
+:is(.stretch-panel[tabs-pos=left], .stretch-panel[tabs-pos=right]) > .resizer[transparent]::before {
+    height: 100%;
+    width: var(--resizer-thickness);
+    transform: translateX(-50%);
+}
+:is(.stretch-panel[tabs-pos=top], .stretch-panel[tabs-pos=bottom]) > .resizer[transparent]::before {
+    height: var(--resizer-thickness);
+    width: 100%;
+    transform: translateY(-50%);
+}
+
+/*******************************************************************************
+*                                RESIZER::after                                *
+*******************************************************************************/
+
+.stretch-panel > .resizer:not([transparent])::after {
+    content: '';
+    position: absolute;
+    width: var(--chevron-size);
+    height: var(--chevron-size);
+    box-sizing: border-box;
+    border: calc(var(--chevron-size)/2) solid var(--chevron-color, currentColor);
+    border-top-width: 0;
+    border-right: 0;
+}
+.stretch-panel[tabs-pos=right]:not([open]) > .resizer:not([transparent])::after,
+.stretch-panel[tabs-pos=left][open] > .resizer:not([transparent])::after {
+    top: 50%;
+    left:20.4%;
+    transform: translateY(-50%) rotate(45deg);
+}
+.stretch-panel[tabs-pos=left]:not([open]) > .resizer:not([transparent])::after,
+.stretch-panel[tabs-pos=right][open] > .resizer:not([transparent])::after {
+    top: 50%;
+    right:20.4%;
+    transform: translateY(-50%) rotate(-135deg);
+}
+.stretch-panel[tabs-pos=bottom]:not([open]) > .resizer:not([transparent])::after,
+.stretch-panel[tabs-pos=top][open] > .resizer:not([transparent])::after {
+    left: 50%;
+    top:20.4%;
+    transform: translateX(-50%) rotate(135deg);
+}
+.stretch-panel[tabs-pos=top]:not([open]) > .resizer:not([transparent])::after,
+.stretch-panel[tabs-pos=bottom][open] > .resizer:not([transparent])::after {
+    left: 50%;
+    bottom:20.4%;
+    transform: translateX(-50%) rotate(-45deg);
+}

@@ -1,0 +1,10 @@
+* {
+    --web-env-background: #2b2b2c;
+    --web-env-menu-background: #3c3f41;
+    --web-env-menu-text-color: #FFF;
+    --web-env-menu-separator: solid #323232;
+    --color-primary: royalblue;
+    --color-accent: orange;
+    --stretch-panel-icon-img-filter: brightness(0) invert(1) opacity(70%);
+    --stretch-panel-text-color: #FFF;
+}
